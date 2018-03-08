@@ -105,7 +105,8 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 === Locating persons by name: `find`
 
 Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format: `find KEYWORD [MORE_KEYWORDS]` +
+Default alias: `f`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
