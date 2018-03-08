@@ -48,7 +48,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             Remark remark = new Remark("");
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-            Person person = new Person(name, phone, email, address, remark,tagList);
+            Person person = new Person(name, phone, email, address, remark, tagList);
 
             return new AddCommand(person);
         } catch (IllegalValueException ive) {
