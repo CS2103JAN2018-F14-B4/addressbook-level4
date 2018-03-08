@@ -126,7 +126,8 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
-Format: `delete INDEX`
+Format: `delete INDEX` +
+Default alias: `d`
 
 ****
 * Deletes the person at the specified `INDEX`.
