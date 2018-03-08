@@ -147,7 +147,8 @@ Deletes the 1st person in the results of the `find` command.
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+Format: `select INDEX` +
+Default alias: `s`
 
 ****
 * Selects the person and loads the Google search page the person at the specified `INDEX`.
