@@ -8,11 +8,7 @@ import java.util.Objects;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.book.Author;
-import seedu.address.model.book.Book;
-import seedu.address.model.book.Category;
-import seedu.address.model.book.Description;
-import seedu.address.model.book.Title;
+import seedu.address.model.book.*;
 
 /**
  * JAXB-friendly version of the Book.
@@ -25,6 +21,8 @@ public class XmlAdaptedBook {
     private String title;
     @XmlElement(required = true)
     private String description;
+    @XmlElement(required = true)
+    private String rate;
 
     @XmlElement
     private List<XmlAdaptedAuthor> authors = new ArrayList<>();
@@ -40,10 +38,11 @@ public class XmlAdaptedBook {
     /**
      * Constructs an {@code XmlAdaptedBook} with the given book details.
      */
-    public XmlAdaptedBook(String title, String description, List<XmlAdaptedAuthor> authors,
+    public XmlAdaptedBook(String title, String description, String rate, List<XmlAdaptedAuthor> authors,
                           List<XmlAdaptedCategory> categories) {
         this.title = title;
         this.description = description;
+        this.rate = rate;
         if (authors != null) {
             this.authors = new ArrayList<>(authors);
         }
@@ -60,6 +59,7 @@ public class XmlAdaptedBook {
     public XmlAdaptedBook(Book source) {
         title = source.getTitle().title;
         description = source.getDescription().description;
+        rate = source.getRate().rate;
         authors = new ArrayList<>();
         for (Author author : source.getAuthors()) {
             authors.add(new XmlAdaptedAuthor(author));
@@ -95,8 +95,8 @@ public class XmlAdaptedBook {
                     Description.class.getSimpleName()));
         }
         final Description description = new Description(this.description);
-
-        return new Book(new HashSet<>(bookAuthors), title, new HashSet<>(bookCategories), description);
+        final Rate rate = new Rate(this.rate);
+        return new Book(new HashSet<>(bookAuthors), title, new HashSet<>(bookCategories), description, rate);
     }
 
     @Override
@@ -112,6 +112,7 @@ public class XmlAdaptedBook {
         XmlAdaptedBook otherBook = (XmlAdaptedBook) other;
         return Objects.equals(title, otherBook.title)
                 && Objects.equals(description, otherBook.description)
+                && Objects.equals(rate, otherBook.rate)
                 && authors.equals(otherBook.authors)
                 && categories.equals(otherBook.categories);
     }
