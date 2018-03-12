@@ -35,6 +35,7 @@ public class XmlUtilTest {
 
     private static final String VALID_TITLE = "Artemis";
     private static final String VALID_DESCRIPTION = "This is Artemis.";
+    private static final String VALID_RATE = "Good book";
     private static final List<XmlAdaptedAuthor> VALID_AUTHORS =
             Collections.singletonList(new XmlAdaptedAuthor("Andy Weir"));
     private static final List<XmlAdaptedCategory> VALID_CATEGORIES =
@@ -77,7 +78,8 @@ public class XmlUtilTest {
     public void xmlAdaptedBookFromFile_fileWithMissingBookField_validResult() throws Exception {
         XmlAdaptedBook actualBook = XmlUtil.getDataFromFile(
                 MISSING_BOOK_FIELD_FILE, XmlAdaptedBookWithRootElement.class);
-        XmlAdaptedBook expectedBook = new XmlAdaptedBook(null, VALID_DESCRIPTION, VALID_AUTHORS, VALID_CATEGORIES);
+        XmlAdaptedBook expectedBook = new XmlAdaptedBook(null, VALID_DESCRIPTION, VALID_RATE,
+                VALID_AUTHORS, VALID_CATEGORIES);
         assertEquals(expectedBook, actualBook);
     }
 
@@ -86,7 +88,7 @@ public class XmlUtilTest {
         XmlAdaptedBook actualBook = XmlUtil.getDataFromFile(
                 VALID_BOOK_FILE, XmlAdaptedBookWithRootElement.class);
         XmlAdaptedBook expectedBook = new XmlAdaptedBook(
-                VALID_TITLE, VALID_DESCRIPTION, VALID_AUTHORS, VALID_CATEGORIES);
+                VALID_TITLE, VALID_DESCRIPTION, VALID_RATE, VALID_AUTHORS, VALID_CATEGORIES);
         assertEquals(expectedBook, actualBook);
     }
 

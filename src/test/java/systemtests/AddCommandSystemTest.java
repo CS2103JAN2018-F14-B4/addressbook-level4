@@ -1,17 +1,7 @@
 package systemtests;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.CommandTestUtil.AUTHOR_DESC_ARTEMIS;
-import static seedu.address.logic.commands.CommandTestUtil.AUTHOR_DESC_BABYLON;
-import static seedu.address.logic.commands.CommandTestUtil.CATEGORY_DESC_ARTEMIS;
-import static seedu.address.logic.commands.CommandTestUtil.CATEGORY_DESC_BABYLON;
-import static seedu.address.logic.commands.CommandTestUtil.DESCRIPTION_DESC_ARTEMIS;
-import static seedu.address.logic.commands.CommandTestUtil.DESCRIPTION_DESC_BABYLON;
-import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_ARTEMIS;
-import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_BABYLON;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_AUTHOR_ARTEMIS;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_CATEGORY_ARTEMIS;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_ARTEMIS;
+import static seedu.address.logic.commands.CommandTestUtil.*;
 import static seedu.address.testutil.TypicalBooks.ARTEMIS;
 import static seedu.address.testutil.TypicalBooks.BABYLON_ASHES;
 import static seedu.address.testutil.TypicalBooks.COLLAPSING_EMPIRE;
@@ -43,7 +33,7 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
          */
         Book toAdd = ARTEMIS;
         String command = "   " + AddCommand.COMMAND_WORD + "  " + TITLE_DESC_ARTEMIS + "  " + AUTHOR_DESC_ARTEMIS + " "
-                + DESCRIPTION_DESC_ARTEMIS + "   " + CATEGORY_DESC_ARTEMIS + " ";
+                + DESCRIPTION_DESC_ARTEMIS + "   " + RATE_DESC_ARTEMIS + "   " + CATEGORY_DESC_ARTEMIS + " ";
         assertCommandSuccess(command, toAdd);
 
         /* Case: undo adding Artemis to the list -> Artemis deleted */
@@ -61,7 +51,7 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
         toAdd = new BookBuilder().withAuthors(VALID_AUTHOR_ARTEMIS).withCategories(VALID_CATEGORY_ARTEMIS)
                 .withDescription(VALID_DESCRIPTION_ARTEMIS).withTitle("Title 1").build();
         command = AddCommand.COMMAND_WORD + " t/Title 1" + AUTHOR_DESC_ARTEMIS
-                + DESCRIPTION_DESC_ARTEMIS + CATEGORY_DESC_ARTEMIS;
+                + DESCRIPTION_DESC_ARTEMIS + RATE_DESC_ARTEMIS + CATEGORY_DESC_ARTEMIS;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add to empty book shelf -> added */
@@ -71,7 +61,7 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
         /* Case: add a book, command with parameters in random order -> added */
         toAdd = BABYLON_ASHES;
         command = AddCommand.COMMAND_WORD + CATEGORY_DESC_BABYLON + AUTHOR_DESC_BABYLON
-                + DESCRIPTION_DESC_BABYLON + TITLE_DESC_BABYLON;
+                + DESCRIPTION_DESC_BABYLON + RATE_DESC_BABYLON + TITLE_DESC_BABYLON;
         assertCommandSuccess(command, toAdd);
 
         /* ------------------------ Perform add operation while a book card is selected --------------------------- */
@@ -88,7 +78,7 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
 
         /* Case: missing title -> rejected */
         command = AddCommand.COMMAND_WORD + CATEGORY_DESC_BABYLON + AUTHOR_DESC_BABYLON
-                + DESCRIPTION_DESC_BABYLON;
+                + DESCRIPTION_DESC_BABYLON + RATE_DESC_BABYLON;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         /* Case: invalid keyword -> rejected */

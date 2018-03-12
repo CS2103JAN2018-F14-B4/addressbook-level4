@@ -21,6 +21,7 @@ public class BookBuilder {
     public static final String DEFAULT_TITLE = "Artemis";
     public static final String DEFAULT_CATEGORY = "Science Fiction";
     public static final String DEFAULT_DESCRIPTION = "This is a description for Artemis.";
+    public static final String DEFAULT_RATE = "This is a rate for Artemis";
 
     private Set<Author> authors;
     private Title title;
@@ -33,6 +34,7 @@ public class BookBuilder {
         title = new Title(DEFAULT_TITLE);
         categories = Collections.singleton(new Category(DEFAULT_CATEGORY));
         description = new Description(DEFAULT_DESCRIPTION);
+        rate = new Rate(DEFAULT_RATE);
     }
 
     /**
