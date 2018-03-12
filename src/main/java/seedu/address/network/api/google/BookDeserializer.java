@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 
 import seedu.address.model.book.Book;
 import seedu.address.model.book.Description;
+import seedu.address.model.book.Rate;
 import seedu.address.model.book.Title;
 import seedu.address.model.util.BookDataUtil;
 
@@ -30,7 +31,8 @@ public class BookDeserializer extends StdDeserializer<Book> {
         JsonVolumeInfo volumeInfo = root.volumeInfo;
 
         return new Book(BookDataUtil.getAuthorSet(volumeInfo.authors), new Title(volumeInfo.title),
-                BookDataUtil.getCategorySet(volumeInfo.categories), new Description(volumeInfo.description));
+                BookDataUtil.getCategorySet(volumeInfo.categories), new Description(volumeInfo.description),
+                new Rate(volumeInfo.rate));
     }
 
     /** Temporary data holder used for deserialization. */
@@ -60,6 +62,7 @@ public class BookDeserializer extends StdDeserializer<Book> {
         private String publisher = "";
         private String publishedDate = "";
         private String description = "";
+        private String rate = "";
         private String[] categories = new String[0];
 
         public void setTitle(String title) {
@@ -81,6 +84,8 @@ public class BookDeserializer extends StdDeserializer<Book> {
         public void setDescription(String description) {
             this.description = description;
         }
+
+        public void setRate(String rate) { this.rate = description; }
 
         public void setCategories(String[] categories) {
             this.categories = categories;
