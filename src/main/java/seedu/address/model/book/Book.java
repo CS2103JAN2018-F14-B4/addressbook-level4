@@ -18,18 +18,20 @@ public class Book {
     private final Title title;
     private final UniqueList<Category> categories;
     private final Description description;
+    private final Rate rate;
 
     // TODO add more fields: gid, isbn13, publisher, publishedDate
 
     /**
      * Every field must be present and not null.
      */
-    public Book(Set<Author> authors, Title title, Set<Category> categories, Description description) {
+    public Book(Set<Author> authors, Title title, Set<Category> categories, Description description, Rate rate) {
         requireAllNonNull(authors, title, categories, description);
         this.authors = new UniqueList<>(authors);
         this.title = title;
         this.categories = new UniqueList<>(categories);
         this.description = description;
+        this.rate = rate;
     }
 
     /**
@@ -54,6 +56,10 @@ public class Book {
 
     public Description getDescription() {
         return description;
+    }
+
+    public Rate getRate() {
+        return rate;
     }
 
     @Override

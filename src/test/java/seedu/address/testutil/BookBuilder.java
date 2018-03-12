@@ -9,6 +9,7 @@ import seedu.address.model.book.Book;
 import seedu.address.model.book.Category;
 import seedu.address.model.book.Description;
 import seedu.address.model.book.Title;
+import seedu.address.model.book.Rate;
 import seedu.address.model.util.BookDataUtil;
 
 /**
@@ -25,6 +26,7 @@ public class BookBuilder {
     private Title title;
     private Set<Category> categories;
     private Description description;
+    private Rate rate;
 
     public BookBuilder() {
         authors = Collections.singleton(new Author(DEFAULT_AUTHOR));
@@ -41,6 +43,7 @@ public class BookBuilder {
         title = bookToCopy.getTitle();
         categories = new HashSet<>(bookToCopy.getCategories());
         description = bookToCopy.getDescription();
+        rate = bookToCopy.getRate();
     }
 
     /**
@@ -75,8 +78,13 @@ public class BookBuilder {
         return this;
     }
 
+    public BookBuilder withRate(String rate) {
+        this.rate = new Rate(rate);
+        return this;
+    }
+
     public Book build() {
-        return new Book(authors, title, categories, description);
+        return new Book(authors, title, categories, description, rate);
     }
 
 }
