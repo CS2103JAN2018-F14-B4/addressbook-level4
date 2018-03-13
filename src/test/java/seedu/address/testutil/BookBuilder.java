@@ -86,7 +86,7 @@ public class BookBuilder {
     }
 
     public Book build() {
-        return new Book(authors, title, categories, description, rate);
+        return new Book(authors, title, categories, description);
     }
 
 }

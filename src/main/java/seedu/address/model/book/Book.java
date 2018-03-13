@@ -34,6 +34,15 @@ public class Book {
         this.rate = new Rate("-1");
     }
 
+    public Book(Set<Author> authors, Title title, Set<Category> categories, Description description, Rate rate) {
+        requireAllNonNull(authors, title, categories, description, rate);
+        this.authors = new UniqueList<>(authors);
+        this.title = title;
+        this.categories = new UniqueList<>(categories);
+        this.description = description;
+        this.rate = rate;
+    }
+
     /**
      * Returns an immutable authors set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.

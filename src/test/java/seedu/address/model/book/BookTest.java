@@ -19,6 +19,8 @@ public class BookTest {
                 null, new Description("")));
         Assert.assertThrows(NullPointerException.class, () -> new Book(Collections.emptySet(), new Title(""),
                 Collections.emptySet(), null));
+        Assert.assertThrows(NullPointerException.class, () -> new Book(Collections.emptySet(), new Title(""),
+                Collections.emptySet(), new Description(""), null));
     }
 
 }

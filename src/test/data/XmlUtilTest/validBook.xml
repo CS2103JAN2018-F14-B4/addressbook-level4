@@ -3,6 +3,7 @@
 <book>
     <title>Artemis</title>
     <description>This is Artemis.</description>
+    <rate>-1</rate>>
     <authors>Andy Weir</authors>
     <categories>Fiction</categories>
 </book>

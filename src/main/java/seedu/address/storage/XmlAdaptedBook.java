@@ -38,6 +38,19 @@ public class XmlAdaptedBook {
     /**
      * Constructs an {@code XmlAdaptedBook} with the given book details.
      */
+    public XmlAdaptedBook(String title, String description, List<XmlAdaptedAuthor> authors,
+                          List<XmlAdaptedCategory> categories) {
+        this.title = title;
+        this.description = description;
+        this.rate = "-1";
+        if (authors != null) {
+            this.authors = new ArrayList<>(authors);
+        }
+        if (categories != null) {
+            this.categories = new ArrayList<>(categories);
+        }
+    }
+
     public XmlAdaptedBook(String title, String description, String rate, List<XmlAdaptedAuthor> authors,
                           List<XmlAdaptedCategory> categories) {
         this.title = title;
@@ -95,8 +108,13 @@ public class XmlAdaptedBook {
                     Description.class.getSimpleName()));
         }
         final Description description = new Description(this.description);
+
+        if (this.rate == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Rate.class.getSimpleName()));
+        }
         final Rate rate = new Rate(this.rate);
-        return new Book(new HashSet<>(bookAuthors), title, new HashSet<>(bookCategories), description);
+        return new Book(new HashSet<>(bookAuthors), title, new HashSet<>(bookCategories), description, rate);
     }
 
     @Override

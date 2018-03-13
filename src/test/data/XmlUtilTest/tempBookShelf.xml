@@ -3,6 +3,7 @@
     <books>
         <title>Artemis</title>
         <description>This is Artemis.</description>
+        <rate>-1</rate>>
         <authors>Andy Weir</authors>
         <categories>Fiction</categories>
         <githubUsername></githubUsername>
@@ -13,6 +14,7 @@
     <books>
         <title>Babylon's Ashes</title>
         <description>This is Babylon's Ashes.</description>
+        <rate>-1</rate>>
         <authors>James S. A. Corey</authors>
         <categories>Fiction</categories>
     </books>

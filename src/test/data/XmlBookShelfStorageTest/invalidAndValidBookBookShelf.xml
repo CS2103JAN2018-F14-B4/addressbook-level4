@@ -4,6 +4,7 @@
     <books>
         <title>Title</title>
         <description>Description</description>
+        <rate>Rate</rate>>
     </books>
     <!-- Book with invalid title field -->
     <books>

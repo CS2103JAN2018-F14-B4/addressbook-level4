@@ -35,7 +35,7 @@ public class XmlUtilTest {
 
     private static final String VALID_TITLE = "Artemis";
     private static final String VALID_DESCRIPTION = "This is Artemis.";
-    private static final String VALID_RATE = "Good book";
+    private static final String VALID_RATE = "-1";
     private static final List<XmlAdaptedAuthor> VALID_AUTHORS =
             Collections.singletonList(new XmlAdaptedAuthor("Andy Weir"));
     private static final List<XmlAdaptedCategory> VALID_CATEGORIES =
@@ -88,7 +88,7 @@ public class XmlUtilTest {
         XmlAdaptedBook actualBook = XmlUtil.getDataFromFile(
                 VALID_BOOK_FILE, XmlAdaptedBookWithRootElement.class);
         XmlAdaptedBook expectedBook = new XmlAdaptedBook(
-                VALID_TITLE, VALID_DESCRIPTION, VALID_RATE, VALID_AUTHORS, VALID_CATEGORIES);
+                VALID_TITLE, VALID_DESCRIPTION, VALID_AUTHORS, VALID_CATEGORIES);
         assertEquals(expectedBook, actualBook);
     }
 
