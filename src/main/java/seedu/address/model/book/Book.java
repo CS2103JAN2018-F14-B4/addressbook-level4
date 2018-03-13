@@ -25,13 +25,13 @@ public class Book {
     /**
      * Every field must be present and not null.
      */
-    public Book(Set<Author> authors, Title title, Set<Category> categories, Description description, Rate rate) {
+    public Book(Set<Author> authors, Title title, Set<Category> categories, Description description) {
         requireAllNonNull(authors, title, categories, description);
         this.authors = new UniqueList<>(authors);
         this.title = title;
         this.categories = new UniqueList<>(categories);
         this.description = description;
-        this.rate = rate;
+        this.rate = new Rate("-1");
     }
 
     /**
