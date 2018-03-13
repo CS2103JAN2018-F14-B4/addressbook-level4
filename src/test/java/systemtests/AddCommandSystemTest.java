@@ -1,7 +1,20 @@
 package systemtests;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.CommandTestUtil.*;
+
+import static seedu.address.logic.commands.CommandTestUtil.AUTHOR_DESC_ARTEMIS;
+import static seedu.address.logic.commands.CommandTestUtil.AUTHOR_DESC_BABYLON;
+import static seedu.address.logic.commands.CommandTestUtil.CATEGORY_DESC_ARTEMIS;
+import static seedu.address.logic.commands.CommandTestUtil.CATEGORY_DESC_BABYLON;
+import static seedu.address.logic.commands.CommandTestUtil.DESCRIPTION_DESC_ARTEMIS;
+import static seedu.address.logic.commands.CommandTestUtil.DESCRIPTION_DESC_BABYLON;
+import static seedu.address.logic.commands.CommandTestUtil.RATE_DESC_ARTEMIS;
+import static seedu.address.logic.commands.CommandTestUtil.RATE_DESC_BABYLON;
+import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_ARTEMIS;
+import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_BABYLON;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_AUTHOR_ARTEMIS;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_CATEGORY_ARTEMIS;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_ARTEMIS;
 import static seedu.address.testutil.TypicalBooks.ARTEMIS;
 import static seedu.address.testutil.TypicalBooks.BABYLON_ASHES;
 import static seedu.address.testutil.TypicalBooks.COLLAPSING_EMPIRE;

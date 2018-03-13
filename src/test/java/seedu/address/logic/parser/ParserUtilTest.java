@@ -15,7 +15,12 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.book.*;
+
+import seedu.address.model.book.Author;
+import seedu.address.model.book.Category;
+import seedu.address.model.book.Description;
+import seedu.address.model.book.Rate;
+import seedu.address.model.book.Title;
 import seedu.address.testutil.Assert;
 
 public class ParserUtilTest {

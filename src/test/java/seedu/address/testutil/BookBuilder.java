@@ -8,8 +8,8 @@ import seedu.address.model.book.Author;
 import seedu.address.model.book.Book;
 import seedu.address.model.book.Category;
 import seedu.address.model.book.Description;
-import seedu.address.model.book.Title;
 import seedu.address.model.book.Rate;
+import seedu.address.model.book.Title;
 import seedu.address.model.util.BookDataUtil;
 
 /**
@@ -80,6 +80,9 @@ public class BookBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Rate} of the {@code Book} that we are building.
+     */
     public BookBuilder withRate(String rate) {
         this.rate = new Rate(rate);
         return this;
