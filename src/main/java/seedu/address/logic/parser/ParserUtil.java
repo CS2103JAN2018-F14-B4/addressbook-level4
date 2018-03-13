@@ -10,7 +10,11 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
-import seedu.address.model.book.*;
+import seedu.address.model.book.Author;
+import seedu.address.model.book.Category;
+import seedu.address.model.book.Description;
+import seedu.address.model.book.Title;
+import seedu.address.model.book.Rate;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -113,7 +117,7 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String description} into a {@code Description}.
+     * Parses a {@code String rate} into a {@code Rate}.
      * Leading and trailing whitespaces will be trimmed.
      */
     public static Rate parseRate(String rate) {

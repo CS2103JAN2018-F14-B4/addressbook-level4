@@ -46,7 +46,8 @@ public class BookShelfDeserializer extends StdDeserializer<BookShelf> {
     private void convertAndAddBook(BookShelf bookShelf, JsonVolume volume) {
         JsonVolumeInfo volumeInfo = volume.volumeInfo;
         Book book = new Book(BookDataUtil.getAuthorSet(volumeInfo.authors), new Title(volumeInfo.title),
-                BookDataUtil.getCategorySet(volumeInfo.categories), new Description(volumeInfo.description));
+                BookDataUtil.getCategorySet(volumeInfo.categories), new Description(volumeInfo.description),
+                new Rate(volumeInfo.rate));
         try {
             bookShelf.addBook(book);
         } catch (DuplicateBookException e) {
@@ -118,7 +119,9 @@ public class BookShelfDeserializer extends StdDeserializer<BookShelf> {
             this.description = description;
         }
 
-        public void setRate(String rate) { this.rate = rate; }
+        public void setRate(String rate) {
+            this.rate = rate;
+        }
 
         public void setCategories(String[] categories) {
             this.categories = categories;

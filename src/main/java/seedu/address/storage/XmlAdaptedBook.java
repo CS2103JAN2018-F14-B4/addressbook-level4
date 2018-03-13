@@ -8,7 +8,12 @@ import java.util.Objects;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.book.*;
+import seedu.address.model.book.Author;
+import seedu.address.model.book.Book;
+import seedu.address.model.book.Description;
+import seedu.address.model.book.Rate;
+import seedu.address.model.book.Category;
+import seedu.address.model.book.Title;
 
 /**
  * JAXB-friendly version of the Book.
