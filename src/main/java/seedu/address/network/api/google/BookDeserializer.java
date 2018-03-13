@@ -31,8 +31,7 @@ public class BookDeserializer extends StdDeserializer<Book> {
         JsonVolumeInfo volumeInfo = root.volumeInfo;
 
         return new Book(BookDataUtil.getAuthorSet(volumeInfo.authors), new Title(volumeInfo.title),
-                BookDataUtil.getCategorySet(volumeInfo.categories), new Description(volumeInfo.description),
-                new Rate(volumeInfo.rate));
+                BookDataUtil.getCategorySet(volumeInfo.categories), new Description(volumeInfo.description));
     }
 
     /** Temporary data holder used for deserialization. */

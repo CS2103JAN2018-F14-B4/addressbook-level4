@@ -96,7 +96,7 @@ public class XmlAdaptedBook {
         }
         final Description description = new Description(this.description);
         final Rate rate = new Rate(this.rate);
-        return new Book(new HashSet<>(bookAuthors), title, new HashSet<>(bookCategories), description, rate);
+        return new Book(new HashSet<>(bookAuthors), title, new HashSet<>(bookCategories), description);
     }
 
     @Override
