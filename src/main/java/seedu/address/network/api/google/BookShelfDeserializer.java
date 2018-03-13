@@ -10,9 +10,9 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.BookShelf;
 import seedu.address.model.book.Book;
-import seedu.address.model.book.Title;
 import seedu.address.model.book.Description;
 import seedu.address.model.book.Rate;
+import seedu.address.model.book.Title;
 import seedu.address.model.book.exceptions.DuplicateBookException;
 import seedu.address.model.util.BookDataUtil;
 

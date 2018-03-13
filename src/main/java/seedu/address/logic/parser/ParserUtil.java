@@ -11,10 +11,10 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.book.Author;
-import seedu.address.model.book.Title;
 import seedu.address.model.book.Category;
 import seedu.address.model.book.Description;
 import seedu.address.model.book.Rate;
+import seedu.address.model.book.Title;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
