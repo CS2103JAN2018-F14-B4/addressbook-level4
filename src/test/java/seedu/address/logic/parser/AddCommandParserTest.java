@@ -7,8 +7,8 @@ import static seedu.address.logic.commands.CommandTestUtil.CATEGORY_DESC_ARTEMIS
 import static seedu.address.logic.commands.CommandTestUtil.CATEGORY_DESC_BABYLON;
 import static seedu.address.logic.commands.CommandTestUtil.DESCRIPTION_DESC_ARTEMIS;
 import static seedu.address.logic.commands.CommandTestUtil.DESCRIPTION_DESC_BABYLON;
-import static seedu.address.logic.commands.CommandTestUtil.RATE_DESC_ARTEMIS;
 import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_WHITESPACE;
+import static seedu.address.logic.commands.CommandTestUtil.RATE_DESC_ARTEMIS;
 import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_ARTEMIS;
 import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_BABYLON;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_AUTHOR_ARTEMIS;
