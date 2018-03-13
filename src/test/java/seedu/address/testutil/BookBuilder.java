@@ -21,7 +21,7 @@ public class BookBuilder {
     public static final String DEFAULT_TITLE = "Artemis";
     public static final String DEFAULT_CATEGORY = "Science Fiction";
     public static final String DEFAULT_DESCRIPTION = "This is a description for Artemis.";
-    public static final String DEFAULT_RATE = "This is a rate for Artemis";
+    public static final String DEFAULT_RATE = "-1";
 
     private Set<Author> authors;
     private Title title;
@@ -89,7 +89,7 @@ public class BookBuilder {
     }
 
     public Book build() {
-        return new Book(authors, title, categories, description);
+        return new Book(authors, title, categories, description, rate);
     }
 
 }

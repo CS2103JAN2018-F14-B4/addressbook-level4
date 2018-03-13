@@ -14,17 +14,19 @@ import seedu.address.model.book.exceptions.DuplicateBookException;
 public class TypicalBooks {
 
     public static final Book ARTEMIS = new BookBuilder().withAuthors("Andy Weir").withTitle("Artemis")
-            .withCategories("Fiction").withDescription("This is Artemis.").build();
+            .withCategories("Fiction").withDescription("This is Artemis.").withRate("-1").build();
     public static final Book BABYLON_ASHES = new BookBuilder().withAuthors("James S. A. Corey")
-            .withTitle("Babylon's Ashes").withCategories("Fiction").withDescription("This is Babylon's Ashes.").build();
+            .withTitle("Babylon's Ashes").withCategories("Fiction").withDescription("This is Babylon's Ashes.")
+            .withRate("-1").build();
     public static final Book COLLAPSING_EMPIRE = new BookBuilder().withAuthors("John Scalzi")
-            .withTitle("The Collapsing Empire").withCategories("Fiction")
+            .withTitle("The Collapsing Empire").withRate("-1").withCategories("Fiction")
             .withDescription("This is The Collapsing Empire.").build();
     public static final Book CONSIDER_PHLEBAS = new BookBuilder().withAuthors("Iain M. Banks")
             .withTitle("Consider Phlebas").withCategories("Fiction", "Science Fiction")
-            .withDescription("This is Consider Phlebas.").build();
+            .withDescription("This is Consider Phlebas.").withRate("-1").build();
     public static final Book WAKING_GODS = new BookBuilder().withAuthors("Sylvain Neuvel").withTitle("Waking Gods")
-            .withCategories("Fiction", "Science Fiction").withDescription("This is Waking Gods.").build();
+            .withCategories("Fiction", "Science Fiction").withDescription("This is Waking Gods.")
+            .withRate("-1").build();
 
     private TypicalBooks() {} // prevents instantiation
 
