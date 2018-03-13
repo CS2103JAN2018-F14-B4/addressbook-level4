@@ -11,9 +11,9 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.book.Author;
+import seedu.address.model.book.Title;
 import seedu.address.model.book.Category;
 import seedu.address.model.book.Description;
-import seedu.address.model.book.Title;
 import seedu.address.model.book.Rate;
 
 /**
@@ -117,16 +117,6 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String rate} into a {@code Rate}.
-     * Leading and trailing whitespaces will be trimmed.
-     */
-    public static Rate parseRate(String rate) {
-        requireNonNull(rate);
-        String trimmedRate = rate.trim();
-        return new Rate(trimmedRate);
-    }
-
-    /**
      * Parses a {@code Optional<String> description} into an {@code Optional<Description>}
      * if {@code description} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -134,6 +124,16 @@ public class ParserUtil {
     public static Optional<Description> parseDescription(Optional<String> description) {
         requireNonNull(description);
         return description.isPresent() ? Optional.of(parseDescription(description.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String rate} into a {@code Rate}.
+     * Leading and trailing whitespaces will be trimmed.
+     */
+    public static Rate parseRate(String rate) {
+        requireNonNull(rate);
+        String trimmedRate = rate.trim();
+        return new Rate(trimmedRate);
     }
 
     /**
