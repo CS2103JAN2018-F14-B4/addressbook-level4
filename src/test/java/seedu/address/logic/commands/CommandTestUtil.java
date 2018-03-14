@@ -6,6 +6,7 @@ import static org.junit.Assert.fail;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_AUTHOR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CATEGORY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ISBN;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_RATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
 
@@ -36,6 +37,9 @@ public class CommandTestUtil {
     public static final String VALID_DESCRIPTION_BABYLON = "This is Babylon's Ashes.";
     public static final String VALID_RATE_ARTEMIS = "This is Artemis.";
     public static final String VALID_RATE_BABYLON = "This is Babylon's Ashes.";
+    public static final String VALID_ISBN_ARTEMIS = "234910247";
+    public static final String VALID_ISBN_BABYLON = "907161513";
+
 
     public static final String TITLE_DESC_ARTEMIS = " " + PREFIX_TITLE + VALID_TITLE_ARTEMIS;
     public static final String TITLE_DESC_BABYLON = " " + PREFIX_TITLE + VALID_TITLE_BABYLON;
@@ -47,6 +51,9 @@ public class CommandTestUtil {
     public static final String DESCRIPTION_DESC_BABYLON = " " + PREFIX_DESCRIPTION + VALID_DESCRIPTION_BABYLON;
     public static final String RATE_DESC_ARTEMIS = " " + PREFIX_RATE + VALID_RATE_ARTEMIS;
     public static final String RATE_DESC_BABYLON = " " + PREFIX_RATE + VALID_RATE_BABYLON;
+    public static final String ISBN_DESC_ARTEMIS = " " + PREFIX_ISBN + VALID_ISBN_ARTEMIS;
+    public static final String ISBN_DESC_BABYLON = " " + PREFIX_ISBN + VALID_ISBN_BABYLON;
+
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
