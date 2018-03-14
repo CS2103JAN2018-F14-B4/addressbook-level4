@@ -14,6 +14,7 @@
         ],
         "publisher": "ABC Publishing House",
         "publishedDate": "2018-03-10",
+        "rate": "-1",
         "industryIdentifiers": [
           {
             "type": "ISBN_10",
@@ -54,6 +55,7 @@
         ],
         "publisher": "ABC Publishing House",
         "publishedDate": "2018-04-10",
+        "rate": "-1",
         "industryIdentifiers": [
           {
             "type": "ISBN_10",

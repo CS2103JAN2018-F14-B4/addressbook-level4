@@ -45,6 +45,7 @@ public class BookDeserializerTest {
         Book book = mapper.readValue(json, Book.class);
         assertEquals("The Book Without a Title", book.getTitle().title);
         assertEquals("This is a valid description.", book.getDescription().description);
+        assertEquals("-1", book.getRate().rate);
     }
 
     @Test
@@ -53,6 +54,7 @@ public class BookDeserializerTest {
         Book book = mapper.readValue(json, Book.class);
         assertEquals("The Book Without a Title", book.getTitle().title);
         assertEquals("", book.getDescription().description);
+        assertEquals("-1", book.getRate().rate);
     }
 
     @Test
