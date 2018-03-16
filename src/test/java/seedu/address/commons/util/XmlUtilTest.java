@@ -40,6 +40,10 @@ public class XmlUtilTest {
             Collections.singletonList(new XmlAdaptedAuthor("Andy Weir"));
     private static final List<XmlAdaptedCategory> VALID_CATEGORIES =
             Collections.singletonList(new XmlAdaptedCategory("Fiction"));
+    private static final String VALID_GID = "ry3GjwEACAAJ";
+    private static final String VALID_ISBN = "9780525572664";
+    private static final String VALID_PUBLISHER = "";
+    private static final String VALID_PUBLICATION_DATE = "2017-11-14";
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -78,8 +82,8 @@ public class XmlUtilTest {
     public void xmlAdaptedBookFromFile_fileWithMissingBookField_validResult() throws Exception {
         XmlAdaptedBook actualBook = XmlUtil.getDataFromFile(
                 MISSING_BOOK_FIELD_FILE, XmlAdaptedBookWithRootElement.class);
-        XmlAdaptedBook expectedBook = new XmlAdaptedBook(null, VALID_DESCRIPTION, VALID_RATE,
-                VALID_AUTHORS, VALID_CATEGORIES);
+        XmlAdaptedBook expectedBook = new XmlAdaptedBook(null, null, null,
+                VALID_DESCRIPTION, VALID_RATE, VALID_AUTHORS, VALID_CATEGORIES, null, null);
         assertEquals(expectedBook, actualBook);
     }
 
@@ -87,8 +91,8 @@ public class XmlUtilTest {
     public void xmlAdaptedBookFromFile_fileWithValidBook_validResult() throws Exception {
         XmlAdaptedBook actualBook = XmlUtil.getDataFromFile(
                 VALID_BOOK_FILE, XmlAdaptedBookWithRootElement.class);
-        XmlAdaptedBook expectedBook = new XmlAdaptedBook(
-                VALID_TITLE, VALID_DESCRIPTION, VALID_AUTHORS, VALID_CATEGORIES);
+        XmlAdaptedBook expectedBook = new XmlAdaptedBook(VALID_GID, VALID_ISBN, VALID_TITLE,
+                VALID_DESCRIPTION, VALID_AUTHORS, VALID_CATEGORIES, VALID_PUBLISHER, VALID_PUBLICATION_DATE);
         assertEquals(expectedBook, actualBook);
     }
 

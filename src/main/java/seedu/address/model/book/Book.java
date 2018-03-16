@@ -19,14 +19,19 @@ public class Book {
     private final UniqueList<Category> categories;
     private final Description description;
     private final Rate rate;
-
-    // TODO add more fields: gid, isbn13, publisher, publishedDate
+    private final Gid gid;
+    private final Isbn isbn;
+    private final PublicationDate publicationDate;
+    private final Publisher publisher;
 
     /**
      * Every field must be present and not null.
      */
-    public Book(Set<Author> authors, Title title, Set<Category> categories, Description description) {
-        requireAllNonNull(authors, title, categories, description);
+    public Book(Gid gid, Isbn isbn, Set<Author> authors, Title title, Set<Category> categories,
+                Description description, Publisher publisher, PublicationDate publicationDate) {
+        requireAllNonNull(gid, isbn, authors, title, categories, description, publisher, publicationDate);
+        this.gid = gid;
+        this.isbn = isbn;
         this.authors = new UniqueList<>(authors);
         this.title = title;
         this.categories = new UniqueList<>(categories);
@@ -41,6 +46,8 @@ public class Book {
         this.categories = new UniqueList<>(categories);
         this.description = description;
         this.rate = rate;
+        this.publicationDate = publicationDate;
+        this.publisher = publisher;
     }
 
     /**
@@ -69,6 +76,21 @@ public class Book {
 
     public Rate getRate() {
         return rate;
+
+    public Gid getGid() {
+        return gid;
+    }
+
+    public Isbn getIsbn() {
+        return isbn;
+    }
+
+    public PublicationDate getPublicationDate() {
+        return publicationDate;
+    }
+
+    public Publisher getPublisher() {
+        return publisher;
     }
 
     @Override
@@ -82,12 +104,12 @@ public class Book {
         }
 
         Book otherBook = (Book) other;
-        return otherBook.getTitle().equals(this.getTitle());
+        return otherBook.getIsbn().equals(this.getIsbn());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title);
+        return Objects.hash(isbn);
     }
 
     @Override
@@ -96,8 +118,6 @@ public class Book {
         builder.append(getTitle())
                 .append(" - Authors: ");
         getAuthors().forEach(author -> builder.append("[").append(author).append("]"));
-        builder.append(" Categories: ");
-        getCategories().forEach(category -> builder.append("[").append(category).append("]"));
         return builder.toString();
     }
 

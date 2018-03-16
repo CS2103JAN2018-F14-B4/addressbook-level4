@@ -11,6 +11,10 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.BookShelf;
 import seedu.address.model.book.Book;
 import seedu.address.model.book.Description;
+import seedu.address.model.book.Gid;
+import seedu.address.model.book.Isbn;
+import seedu.address.model.book.PublicationDate;
+import seedu.address.model.book.Publisher;
 import seedu.address.model.book.Rate;
 import seedu.address.model.book.Title;
 import seedu.address.model.book.exceptions.DuplicateBookException;
@@ -37,22 +41,41 @@ public class BookShelfDeserializer extends StdDeserializer<BookShelf> {
         BookShelf bookShelf = new BookShelf();
 
         for (JsonVolume volume : root.items) {
-            convertAndAddBook(bookShelf, volume);
+            convertAndAddBook(bookShelf, volume, new Gid(volume.id));
         }
         return bookShelf;
     }
 
     /** Converts a JsonVolume into a Book, and add it into the book shelf. */
-    private void convertAndAddBook(BookShelf bookShelf, JsonVolume volume) {
+    private void convertAndAddBook(BookShelf bookShelf, JsonVolume volume, Gid gid) {
         JsonVolumeInfo volumeInfo = volume.volumeInfo;
-        Book book = new Book(BookDataUtil.getAuthorSet(volumeInfo.authors), new Title(volumeInfo.title),
-                BookDataUtil.getCategorySet(volumeInfo.categories), new Description(volumeInfo.description),
-                new Rate(volumeInfo.rate));
+        Isbn isbn = getIsbnFromIndustryIdentifiers(volumeInfo.industryIdentifiers);
+
+        if (isbn == null) {
+            logger.warning("Found book without ISBN");
+            return;
+        }
+
+        Book book = new Book(gid, isbn,
+                BookDataUtil.getAuthorSet(volumeInfo.authors), new Title(volumeInfo.title),
+                BookDataUtil.getCategorySet(volumeInfo.categories), new Description(volumeInfo.description), 
+                new Rate(volumeInfo.rate), 
+                new Publisher(volumeInfo.publisher), new PublicationDate(volumeInfo.publishedDate));
+
         try {
             bookShelf.addBook(book);
         } catch (DuplicateBookException e) {
             logger.warning("Found duplicate book when deserializing: " + book);
         }
+    }
+
+    private Isbn getIsbnFromIndustryIdentifiers(JsonIndustryIdentifiers[] iiArray) {
+        for (JsonIndustryIdentifiers ii: iiArray) {
+            if ("ISBN_13".equals(ii.type)) {
+                return new Isbn(ii.identifier);
+            }
+        }
+        return null;
     }
 
     /** Temporary data holder used for deserialization. */
@@ -97,7 +120,12 @@ public class BookShelfDeserializer extends StdDeserializer<BookShelf> {
         private String publishedDate = "";
         private String description = "";
         private String rate = "";
+        private JsonIndustryIdentifiers[] industryIdentifiers = new JsonIndustryIdentifiers[0];
         private String[] categories = new String[0];
+
+        public void setIndustryIdentifiers(JsonIndustryIdentifiers[] industryIdentifiers) {
+            this.industryIdentifiers = industryIdentifiers;
+        }
 
         public void setTitle(String title) {
             this.title = title;
@@ -128,4 +156,17 @@ public class BookShelfDeserializer extends StdDeserializer<BookShelf> {
         }
     }
 
+    /** Temporary data holder used for deserialization. */
+    private static class JsonIndustryIdentifiers {
+        private String type;
+        private String identifier;
+
+        public void setIdentifier(String identifier) {
+            this.identifier = identifier;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+    }
 }
