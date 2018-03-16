@@ -173,7 +173,7 @@ public class XmlAdaptedBook {
         final PublicationDate publicationDate = new PublicationDate(this.publicationDate);
 
         return new Book(gid, isbn, new HashSet<>(bookAuthors), title,
-                new HashSet<>(bookCategories), description, publisher, publicationDate);
+                new HashSet<>(bookCategories), description, rate, publisher, publicationDate);
     }
 
     @Override
