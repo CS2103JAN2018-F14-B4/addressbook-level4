@@ -76,7 +76,8 @@ public class Book {
 
     public Rate getRate() {
         return rate;
-
+    }
+    
     public Gid getGid() {
         return gid;
     }
