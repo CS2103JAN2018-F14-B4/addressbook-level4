@@ -11,11 +11,11 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import seedu.address.model.book.Book;
 import seedu.address.model.book.Category;
 import seedu.address.model.book.Description;
-import seedu.address.model.book.Rate;
 import seedu.address.model.book.Gid;
 import seedu.address.model.book.Isbn;
 import seedu.address.model.book.PublicationDate;
 import seedu.address.model.book.Publisher;
+import seedu.address.model.book.Rate;
 import seedu.address.model.book.Title;
 import seedu.address.model.book.exceptions.InvalidBookException;
 import seedu.address.model.util.BookDataUtil;
@@ -45,8 +45,8 @@ public class BookDeserializer extends StdDeserializer<Book> {
 
         return new Book(new Gid(root.id), isbn,
                 BookDataUtil.getAuthorSet(volumeInfo.authors), new Title(volumeInfo.title),
-                getCategorySet(volumeInfo.categories), getDescription(volumeInfo.description), 
-                new Rate(volumeInfo.rate), new Publisher(volumeInfo.publisher), 
+                getCategorySet(volumeInfo.categories), getDescription(volumeInfo.description),
+                new Rate(volumeInfo.rate), new Publisher(volumeInfo.publisher),
                 new PublicationDate(volumeInfo.publishedDate));
     }
 

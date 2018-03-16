@@ -103,7 +103,7 @@ public class BookBuilder {
         this.rate = new Rate(rate);
         return this;
     }
-     
+
     /**
      * Sets the {@code Gid} of the {@code Book} that we are building.
      */

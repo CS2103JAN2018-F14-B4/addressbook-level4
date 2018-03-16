@@ -43,7 +43,7 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
         command = UndoCommand.COMMAND_WORD;
         String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);
-      
+
         /* Case: add to empty book shelf -> added */
         deleteAllBooks();
 

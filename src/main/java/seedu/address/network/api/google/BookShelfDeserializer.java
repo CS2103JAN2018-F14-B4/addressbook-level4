@@ -58,8 +58,8 @@ public class BookShelfDeserializer extends StdDeserializer<BookShelf> {
 
         Book book = new Book(gid, isbn,
                 BookDataUtil.getAuthorSet(volumeInfo.authors), new Title(volumeInfo.title),
-                BookDataUtil.getCategorySet(volumeInfo.categories), new Description(volumeInfo.description), 
-                new Rate(volumeInfo.rate), 
+                BookDataUtil.getCategorySet(volumeInfo.categories), new Description(volumeInfo.description),
+                new Rate(volumeInfo.rate),
                 new Publisher(volumeInfo.publisher), new PublicationDate(volumeInfo.publishedDate));
 
         try {

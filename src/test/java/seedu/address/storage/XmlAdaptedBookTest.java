@@ -62,6 +62,7 @@ public class XmlAdaptedBookTest {
         Assert.assertThrows(IllegalValueException.class, expectedMessage, book::toModelType);
     }
 
+    @Test
     public void toModelType_nullGid_throwsIllegalValueException() {
         XmlAdaptedBook book = new XmlAdaptedBook(null, VALID_ISBN, VALID_TITLE, VALID_DESCRIPTION,
                 VALID_AUTHORS, VALID_CATEGORIES, VALID_PUBLISHER, VALID_PUBLICATION_DATE);
