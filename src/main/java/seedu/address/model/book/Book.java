@@ -37,10 +37,15 @@ public class Book {
         this.categories = new UniqueList<>(categories);
         this.description = description;
         this.rate = new Rate("-1");
+        this.publicationDate = publicationDate;
+        this.publisher = publisher;
     }
 
-    public Book(Set<Author> authors, Title title, Set<Category> categories, Description description, Rate rate) {
-        requireAllNonNull(authors, title, categories, description, rate);
+    public Book(Gid gid, Isbn isbn, Set<Author> authors, Title title, Set<Category> categories,
+                Description description, Rate rate, Publisher publisher, PublicationDate publicationDate) {
+        requireAllNonNull(gid, isbn, authors, title, categories, description, publisher, publicationDate);
+        this.gid = gid;
+        this.isbn = isbn;
         this.authors = new UniqueList<>(authors);
         this.title = title;
         this.categories = new UniqueList<>(categories);

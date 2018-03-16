@@ -17,5 +17,9 @@
         <rate>-1</rate>>
         <authors>James S. A. Corey</authors>
         <categories>Fiction</categories>
+        <githubUsername></githubUsername>
+        <street></street>
+        <postalCode></postalCode>
+        <city></city>
     </books>
 </bookshelf>

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 
 <book>
+    <gid>ry3GjwEACAAJ</gid>
+    <isbn>9780525572664</isbn>
     <title>Artemis</title>
     <description>This is Artemis.</description>
     <rate>-1</rate>>
     <authors>Andy Weir</authors>
     <categories>Fiction</categories>
-    <gid>ry3GjwEACAAJ</gid>
-    <isbn>9780525572664</isbn>
-    <publisher></publisher>
+    <publisher> </publisher>
     <publicationDate>2017-11-14</publicationDate>
 </book>

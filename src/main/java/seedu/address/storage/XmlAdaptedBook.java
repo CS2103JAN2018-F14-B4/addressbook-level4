@@ -36,6 +36,7 @@ public class XmlAdaptedBook {
     private String description;
     @XmlElement(required = true)
     private String rate;
+    @XmlElement(required = true)
     private String publisher;
     @XmlElement(required = true)
     private String publicationDate;
@@ -55,6 +56,24 @@ public class XmlAdaptedBook {
      * Constructs an {@code XmlAdaptedBook} with the given book details.
      */
     public XmlAdaptedBook(String gid, String isbn, String title, String description,
+                           List<XmlAdaptedAuthor> authors, List<XmlAdaptedCategory> categories,
+                           String publisher, String publicationDate) {
+        this.title = title;
+        this.description = description;
+        this.rate = "-1";
+        if (authors != null) {
+            this.authors = new ArrayList<>(authors);
+        }
+        if (categories != null) {
+            this.categories = new ArrayList<>(categories);
+        }
+        this.gid = gid;
+        this.isbn = isbn;
+        this.publicationDate = publicationDate;
+        this.publisher = publisher;
+    }
+
+    public XmlAdaptedBook(String gid, String isbn, String title, String description, String rate,
                           List<XmlAdaptedAuthor> authors, List<XmlAdaptedCategory> categories,
                           String publisher, String publicationDate) {
         this.title = title;
@@ -66,19 +85,7 @@ public class XmlAdaptedBook {
         if (categories != null) {
             this.categories = new ArrayList<>(categories);
         }
-    }
-
-    public XmlAdaptedBook(String title, String description, String rate, List<XmlAdaptedAuthor> authors,
-                          List<XmlAdaptedCategory> categories) {
-        this.title = title;
-        this.description = description;
         this.rate = rate;
-        if (authors != null) {
-            this.authors = new ArrayList<>(authors);
-        }
-        if (categories != null) {
-            this.categories = new ArrayList<>(categories);
-        }
         this.gid = gid;
         this.isbn = isbn;
         this.publicationDate = publicationDate;
@@ -140,7 +147,6 @@ public class XmlAdaptedBook {
                     Rate.class.getSimpleName()));
         }
         final Rate rate = new Rate(this.rate);
-        return new Book(new HashSet<>(bookAuthors), title, new HashSet<>(bookCategories), description, rate);
 
         if (this.gid == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,

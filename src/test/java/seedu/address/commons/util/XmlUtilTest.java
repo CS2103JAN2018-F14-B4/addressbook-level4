@@ -42,7 +42,7 @@ public class XmlUtilTest {
             Collections.singletonList(new XmlAdaptedCategory("Fiction"));
     private static final String VALID_GID = "ry3GjwEACAAJ";
     private static final String VALID_ISBN = "9780525572664";
-    private static final String VALID_PUBLISHER = "";
+    private static final String VALID_PUBLISHER = " ";
     private static final String VALID_PUBLICATION_DATE = "2017-11-14";
 
     @Rule
