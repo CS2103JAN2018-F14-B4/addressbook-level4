@@ -13,6 +13,8 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.BookShelfChangedEvent;
 import seedu.address.model.book.Book;
+import seedu.address.model.book.UniqueBookCircularList;
+import seedu.address.model.book.UniqueBookList;
 import seedu.address.model.book.exceptions.BookNotFoundException;
 import seedu.address.model.book.exceptions.DuplicateBookException;
 
@@ -27,6 +29,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final BookShelf bookShelf;
     private final FilteredList<Book> filteredBooks;
     private final BookShelf searchResults;
+    private final UniqueBookCircularList recentBooks;
 
     /**
      * Initializes a ModelManager with the given bookShelf and userPrefs.
@@ -41,6 +44,7 @@ public class ModelManager extends ComponentManager implements Model {
         this.bookShelf = new BookShelf(bookShelf);
         this.filteredBooks = new FilteredList<>(this.bookShelf.getBookList());
         this.searchResults = new BookShelf();
+        this.recentBooks = new UniqueBookCircularList(50);
     }
 
     public ModelManager() {
@@ -126,6 +130,18 @@ public class ModelManager extends ComponentManager implements Model {
         searchResults.resetData(newResults);
     }
 
+    //=========== Recent books ===========================================================================
+
+    @Override
+    public ObservableList<Book> getRecentBooksList() {
+        return FXCollections.unmodifiableObservableList(recentBooks.asObservableList());
+    }
+
+    @Override
+    public void updateRecentBooks(Book newBook) {
+        recentBooks.add(newBook);
+    }
+
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object
@@ -142,7 +158,8 @@ public class ModelManager extends ComponentManager implements Model {
         ModelManager other = (ModelManager) obj;
         return bookShelf.equals(other.bookShelf)
                 && filteredBooks.equals(other.filteredBooks)
-                && searchResults.equals(other.searchResults);
+                && searchResults.equals(other.searchResults)
+                && recentBooks.equals(other.recentBooks);
     }
 
 }
