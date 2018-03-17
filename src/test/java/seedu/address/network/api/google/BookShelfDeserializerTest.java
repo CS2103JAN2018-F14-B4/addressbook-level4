@@ -62,7 +62,6 @@ public class BookShelfDeserializerTest {
         assertEquals(1, bookShelf.getBookList().size());
         assertEquals("The Book Without a Title", book1.getTitle().title);
         assertEquals("This is a valid description.", book1.getDescription().description);
-        assertEquals("-1", book1.getRate().rate);
     }
 
     @Test
@@ -72,7 +71,6 @@ public class BookShelfDeserializerTest {
         Book book1 = bookShelf.getBookList().get(0);
         assertEquals("The Book Without a Title", book1.getTitle().title);
         assertEquals("", book1.getDescription().description);
-        assertEquals("-1", book1.getRate().rate);
         Book book2 = bookShelf.getBookList().get(1);
         assertEquals("The Book Without a Title 2", book2.getTitle().title);
         assertEquals("", book2.getDescription().description);

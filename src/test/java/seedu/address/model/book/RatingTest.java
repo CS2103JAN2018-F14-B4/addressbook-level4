@@ -6,16 +6,16 @@ import org.junit.Test;
 
 import seedu.address.testutil.Assert;
 
-public class RateTest {
+public class RatingTest {
 
     @Test
     public void constructor_null_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> new Rate(null));
+        Assert.assertThrows(NullPointerException.class, () -> new Rating(null));
     }
 
     @Test
     public void hashCode_sameContent_returnsSameValue() {
-        assertEquals(new Rate("Desc 1").hashCode(), new Rate("Desc 1").hashCode());
-        assertEquals(new Rate("Desc x").hashCode(), new Rate("Desc x").hashCode());
+        assertEquals(new Rating("Desc 1").hashCode(), new Rating("Desc 1").hashCode());
+        assertEquals(new Rating("Desc x").hashCode(), new Rating("Desc x").hashCode());
     }
 }

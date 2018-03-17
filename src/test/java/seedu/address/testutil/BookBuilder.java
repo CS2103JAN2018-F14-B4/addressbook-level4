@@ -4,16 +4,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import seedu.address.model.book.Author;
-import seedu.address.model.book.Book;
-import seedu.address.model.book.Category;
-import seedu.address.model.book.Description;
-import seedu.address.model.book.Gid;
-import seedu.address.model.book.Isbn;
-import seedu.address.model.book.PublicationDate;
-import seedu.address.model.book.Publisher;
-import seedu.address.model.book.Rate;
-import seedu.address.model.book.Title;
+import seedu.address.model.book.*;
+import seedu.address.model.book.Rating;
 import seedu.address.model.util.BookDataUtil;
 
 /**
@@ -35,7 +27,7 @@ public class BookBuilder {
     private Title title;
     private Set<Category> categories;
     private Description description;
-    private Rate rate;
+    private Rating rating;
     private Gid gid;
     private Isbn isbn;
     private PublicationDate publicationDate;
@@ -46,7 +38,7 @@ public class BookBuilder {
         title = new Title(DEFAULT_TITLE);
         categories = Collections.singleton(new Category(DEFAULT_CATEGORY));
         description = new Description(DEFAULT_DESCRIPTION);
-        rate = new Rate(DEFAULT_RATE);
+        rating = new Rating(DEFAULT_RATE);
         gid = new Gid(DEFAULT_ID);
         isbn = new Isbn(DEFAULT_ISBN);
         publicationDate = new PublicationDate(DEFAULT_PUBLICATION_DATE);
@@ -61,7 +53,7 @@ public class BookBuilder {
         title = bookToCopy.getTitle();
         categories = new HashSet<>(bookToCopy.getCategories());
         description = bookToCopy.getDescription();
-        rate = bookToCopy.getRate();
+        rating = bookToCopy.getRating();
     }
 
     /**
@@ -97,10 +89,10 @@ public class BookBuilder {
     }
 
     /**
-     * Sets the {@code Rate} of the {@code Book} that we are building.
+     * Sets the {@code Rating} of the {@code Book} that we are building.
      */
     public BookBuilder withRate(String rate) {
-        this.rate = new Rate(rate);
+        this.rating = new Rating(rate);
         return this;
     }
 
@@ -140,7 +132,7 @@ public class BookBuilder {
      * Returns a new {@code Book} object.
      */
     public Book build() {
-        return new Book(gid, isbn, authors, title, categories, description, rate,
+        return new Book(gid, isbn, authors, title, categories, description, rating,
                 publisher, publicationDate);
     }
 

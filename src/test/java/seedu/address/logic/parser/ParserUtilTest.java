@@ -16,18 +16,15 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
-import seedu.address.model.book.Author;
-import seedu.address.model.book.Category;
-import seedu.address.model.book.Description;
-import seedu.address.model.book.Rate;
-import seedu.address.model.book.Title;
+import seedu.address.model.book.*;
+import seedu.address.model.book.Rating;
 import seedu.address.testutil.Assert;
 
 public class ParserUtilTest {
 
     private static final String VALID_TITLE = "Valid Title";
     private static final String VALID_DESCRIPTION = "Valid Description";
-    private static final String VALID_RATE = "Valid Rate";
+    private static final String VALID_RATE = "Valid Rating";
     private static final String VALID_AUTHOR_1 = "Author A";
     private static final String VALID_AUTHOR_2 = "Author B";
     private static final String VALID_CATEGORY_1 = "Category A";
@@ -125,17 +122,17 @@ public class ParserUtilTest {
 
     @Test
     public void parseRate_validValueWithoutWhitespace_returnsRate() throws Exception {
-        Rate expectedRate = new Rate(VALID_RATE);
-        assertEquals(expectedRate, ParserUtil.parseRate(VALID_RATE));
-        assertEquals(Optional.of(expectedRate), ParserUtil.parseRate(Optional.of(VALID_RATE)));
+        Rating expectedRating = new Rating(VALID_RATE);
+        assertEquals(expectedRating, ParserUtil.parseRate(VALID_RATE));
+        assertEquals(Optional.of(expectedRating), ParserUtil.parseRate(Optional.of(VALID_RATE)));
     }
 
     @Test
     public void parseRate_validValueWithWhitespace_returnsTrimmedRate() throws Exception {
         String rateWithWhitespace = WHITESPACE + VALID_RATE + WHITESPACE;
-        Rate expectedRate = new Rate(VALID_RATE);
-        assertEquals(expectedRate, ParserUtil.parseRate(rateWithWhitespace));
-        assertEquals(Optional.of(expectedRate), ParserUtil.parseRate(Optional.of(rateWithWhitespace)));
+        Rating expectedRating = new Rating(VALID_RATE);
+        assertEquals(expectedRating, ParserUtil.parseRate(rateWithWhitespace));
+        assertEquals(Optional.of(expectedRating), ParserUtil.parseRate(Optional.of(rateWithWhitespace)));
     }
 
     @Test

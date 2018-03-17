@@ -10,13 +10,8 @@ import java.util.stream.Collectors;
 import org.junit.Test;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.book.Description;
-import seedu.address.model.book.Gid;
-import seedu.address.model.book.Isbn;
-import seedu.address.model.book.PublicationDate;
-import seedu.address.model.book.Publisher;
-import seedu.address.model.book.Rate;
-import seedu.address.model.book.Title;
+import seedu.address.model.book.*;
+import seedu.address.model.book.Rating;
 import seedu.address.testutil.Assert;
 
 public class XmlAdaptedBookTest {
@@ -58,7 +53,7 @@ public class XmlAdaptedBookTest {
     public void toModelType_nullRate_throwsIllegalValueException() {
         XmlAdaptedBook book = new XmlAdaptedBook(VALID_GID, VALID_ISBN, VALID_TITLE, VALID_DESCRIPTION,
                 null, VALID_AUTHORS, VALID_CATEGORIES, VALID_PUBLISHER, VALID_PUBLICATION_DATE);
-        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Rate.class.getSimpleName());
+        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Rating.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, book::toModelType);
     }
 

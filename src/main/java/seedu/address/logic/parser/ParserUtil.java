@@ -13,7 +13,7 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.model.book.Author;
 import seedu.address.model.book.Category;
 import seedu.address.model.book.Description;
-import seedu.address.model.book.Rate;
+import seedu.address.model.book.Rating;
 import seedu.address.model.book.Title;
 
 /**
@@ -127,21 +127,21 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String rate} into a {@code Rate}.
+     * Parses a {@code String rate} into a {@code Rating}.
      * Leading and trailing whitespaces will be trimmed.
      */
-    public static Rate parseRate(String rate) {
+    public static Rating parseRate(String rate) {
         requireNonNull(rate);
         String trimmedRate = rate.trim();
-        return new Rate(trimmedRate);
+        return new Rating(trimmedRate);
     }
 
     /**
-     * Parses a {@code Optional<String> rate} into an {@code Optional<Rate>}
+     * Parses a {@code Optional<String> rate} into an {@code Optional<Rating>}
      * if {@code rate} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Rate> parseRate(Optional<String> rate) {
+    public static Optional<Rating> parseRate(Optional<String> rate) {
         requireNonNull(rate);
         return rate.isPresent() ? Optional.of(parseRate(rate.get())) : Optional.empty();
     }

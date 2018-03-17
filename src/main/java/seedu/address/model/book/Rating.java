@@ -6,36 +6,36 @@ import static java.util.Objects.requireNonNull;
  * Represents a book's rate.
  * Guarantees: immutable.
  */
-public class Rate {
+public class Rating {
 
-    public final String rate;
+    public final String rating;
 
     /**
      * Constructs a {@code Description}.
      *
-     * @param rate A book rate.
+     * @param rating A book rating.
      */
-    public Rate(String rate) {
-        requireNonNull(rate);
-        this.rate = rate;
+    public Rating(String rating) {
+        requireNonNull(rating);
+        this.rating = rating;
     }
 
 
     @Override
     public String toString() {
-        return rate;
+        return rating;
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof Rate // instanceof handles nulls
-                && this.rate.equals(((Rate) other).rate)); // state check
+                || (other instanceof Rating // instanceof handles nulls
+                && this.rating.equals(((Rating) other).rating)); // state check
     }
 
     @Override
     public int hashCode() {
-        return rate.hashCode();
+        return rating.hashCode();
     }
 
 }

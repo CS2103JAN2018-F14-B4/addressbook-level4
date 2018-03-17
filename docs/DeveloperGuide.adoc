@@ -825,7 +825,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |view book reviews |decide on suitability of book
 
-|`* *` |user |rate books |give recommendations to others
+|`* *` |user |rating books |give recommendations to others
 
 |`* *` |user |search the library catalogue |check for availability of the book
 

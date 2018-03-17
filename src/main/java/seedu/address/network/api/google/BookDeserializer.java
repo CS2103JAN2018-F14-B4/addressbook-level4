@@ -8,15 +8,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 
-import seedu.address.model.book.Book;
-import seedu.address.model.book.Category;
-import seedu.address.model.book.Description;
-import seedu.address.model.book.Gid;
-import seedu.address.model.book.Isbn;
-import seedu.address.model.book.PublicationDate;
-import seedu.address.model.book.Publisher;
-import seedu.address.model.book.Rate;
-import seedu.address.model.book.Title;
+import seedu.address.model.book.*;
 import seedu.address.model.book.exceptions.InvalidBookException;
 import seedu.address.model.util.BookDataUtil;
 
@@ -46,7 +38,7 @@ public class BookDeserializer extends StdDeserializer<Book> {
         return new Book(new Gid(root.id), isbn,
                 BookDataUtil.getAuthorSet(volumeInfo.authors), new Title(volumeInfo.title),
                 getCategorySet(volumeInfo.categories), getDescription(volumeInfo.description),
-                new Rate(volumeInfo.rate), new Publisher(volumeInfo.publisher),
+                new Publisher(volumeInfo.publisher),
                 new PublicationDate(volumeInfo.publishedDate));
     }
 
@@ -101,7 +93,6 @@ public class BookDeserializer extends StdDeserializer<Book> {
         private String publisher = "";
         private String publishedDate = "";
         private String description = "";
-        private String rate = "";
         private JsonIndustryIdentifiers[] industryIdentifiers = new JsonIndustryIdentifiers[0];
         private String[] categories = new String[0];
 
@@ -127,10 +118,6 @@ public class BookDeserializer extends StdDeserializer<Book> {
 
         public void setDescription(String description) {
             this.description = description;
-        }
-
-        public void setRate(String rate) {
-            this.rate = rate;
         }
 
         public void setCategories(String[] categories) {

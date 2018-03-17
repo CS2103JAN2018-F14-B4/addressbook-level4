@@ -15,7 +15,6 @@ import seedu.address.model.book.Gid;
 import seedu.address.model.book.Isbn;
 import seedu.address.model.book.PublicationDate;
 import seedu.address.model.book.Publisher;
-import seedu.address.model.book.Rate;
 import seedu.address.model.book.Title;
 import seedu.address.model.book.exceptions.DuplicateBookException;
 import seedu.address.model.util.BookDataUtil;
@@ -59,7 +58,6 @@ public class BookShelfDeserializer extends StdDeserializer<BookShelf> {
         Book book = new Book(gid, isbn,
                 BookDataUtil.getAuthorSet(volumeInfo.authors), new Title(volumeInfo.title),
                 BookDataUtil.getCategorySet(volumeInfo.categories), new Description(volumeInfo.description),
-                new Rate(volumeInfo.rate),
                 new Publisher(volumeInfo.publisher), new PublicationDate(volumeInfo.publishedDate));
 
         try {
@@ -119,7 +117,6 @@ public class BookShelfDeserializer extends StdDeserializer<BookShelf> {
         private String publisher = "";
         private String publishedDate = "";
         private String description = "";
-        private String rate = "";
         private JsonIndustryIdentifiers[] industryIdentifiers = new JsonIndustryIdentifiers[0];
         private String[] categories = new String[0];
 
@@ -145,10 +142,6 @@ public class BookShelfDeserializer extends StdDeserializer<BookShelf> {
 
         public void setDescription(String description) {
             this.description = description;
-        }
-
-        public void setRate(String rate) {
-            this.rate = rate;
         }
 
         public void setCategories(String[] categories) {
