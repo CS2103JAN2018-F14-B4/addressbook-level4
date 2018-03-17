@@ -24,7 +24,7 @@ public class ParserUtilTest {
 
     private static final String VALID_TITLE = "Valid Title";
     private static final String VALID_DESCRIPTION = "Valid Description";
-    private static final String VALID_RATE = "Valid Rating";
+    private static final int VALID_RATE = "Valid Rating";
     private static final String VALID_AUTHOR_1 = "Author A";
     private static final String VALID_AUTHOR_2 = "Author B";
     private static final String VALID_CATEGORY_1 = "Category A";
@@ -129,7 +129,7 @@ public class ParserUtilTest {
 
     @Test
     public void parseRate_validValueWithWhitespace_returnsTrimmedRate() throws Exception {
-        String rateWithWhitespace = WHITESPACE + VALID_RATE + WHITESPACE;
+        int rateWithWhitespace = WHITESPACE + VALID_RATE + WHITESPACE;
         Rating expectedRating = new Rating(VALID_RATE);
         assertEquals(expectedRating, ParserUtil.parseRate(rateWithWhitespace));
         assertEquals(Optional.of(expectedRating), ParserUtil.parseRate(Optional.of(rateWithWhitespace)));

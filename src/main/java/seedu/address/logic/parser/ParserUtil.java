@@ -130,9 +130,9 @@ public class ParserUtil {
      * Parses a {@code String rate} into a {@code Rating}.
      * Leading and trailing whitespaces will be trimmed.
      */
-    public static Rating parseRate(String rate) {
+    public static Rating parseRate(int rate) {
         requireNonNull(rate);
-        String trimmedRate = rate.trim();
+        int trimmedRate = rate.trim();
         return new Rating(trimmedRate);
     }
 
@@ -141,7 +141,7 @@ public class ParserUtil {
      * if {@code rate} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Rating> parseRate(Optional<String> rate) {
+    public static Optional<Rating> parseRate(Optional<Integer> rate) {
         requireNonNull(rate);
         return rate.isPresent() ? Optional.of(parseRate(rate.get())) : Optional.empty();
     }

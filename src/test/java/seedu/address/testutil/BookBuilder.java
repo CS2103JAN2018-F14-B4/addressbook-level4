@@ -17,7 +17,7 @@ public class BookBuilder {
     public static final String DEFAULT_TITLE = "Artemis";
     public static final String DEFAULT_CATEGORY = "Science Fiction";
     public static final String DEFAULT_DESCRIPTION = "This is a description for Artemis.";
-    public static final String DEFAULT_RATE = "-1";
+    public static final int DEFAULT_RATE = "-1";
     public static final String DEFAULT_ID = "ry3GjwEACAAJ";
     public static final String DEFAULT_ISBN = "9780525572664";
     public static final String DEFAULT_PUBLISHER = "Someone";
@@ -91,7 +91,7 @@ public class BookBuilder {
     /**
      * Sets the {@code Rating} of the {@code Book} that we are building.
      */
-    public BookBuilder withRate(String rate) {
+    public BookBuilder withRate(int rate) {
         this.rating = new Rating(rate);
         return this;
     }

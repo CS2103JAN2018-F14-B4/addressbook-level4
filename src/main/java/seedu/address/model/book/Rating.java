@@ -8,14 +8,14 @@ import static java.util.Objects.requireNonNull;
  */
 public class Rating {
 
-    public final String rating;
+    public final Integer rating;
 
     /**
      * Constructs a {@code Description}.
      *
      * @param rating A book rating.
      */
-    public Rating(String rating) {
+    public Rating(int rating) {
         requireNonNull(rating);
         this.rating = rating;
     }
@@ -23,7 +23,7 @@ public class Rating {
 
     @Override
     public String toString() {
-        return rating;
+        return rating.toString();
     }
 
     @Override

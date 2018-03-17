@@ -27,7 +27,7 @@ public class XmlAdaptedBook {
     @XmlElement(required = true)
     private String description;
     @XmlElement(required = true)
-    private String rating;
+    private int rating;
     @XmlElement(required = true)
     private String publisher;
     @XmlElement(required = true)
@@ -65,7 +65,7 @@ public class XmlAdaptedBook {
         this.publisher = publisher;
     }
 
-    public XmlAdaptedBook(String gid, String isbn, String title, String description, String rate,
+    public XmlAdaptedBook(String gid, String isbn, String title, String description, int rate,
                           List<XmlAdaptedAuthor> authors, List<XmlAdaptedCategory> categories,
                           String publisher, String publicationDate) {
         this.title = title;
