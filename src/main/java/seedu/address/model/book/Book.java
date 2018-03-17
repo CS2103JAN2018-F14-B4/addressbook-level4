@@ -36,7 +36,7 @@ public class Book {
         this.title = title;
         this.categories = new UniqueList<>(categories);
         this.description = description;
-        this.rating = new Rating("-1");
+        this.rating = new Rating(-1);
         this.publicationDate = publicationDate;
         this.publisher = publisher;
     }

@@ -4,8 +4,16 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import seedu.address.model.book.*;
+import seedu.address.model.book.Author;
+import seedu.address.model.book.Book;
+import seedu.address.model.book.Category;
+import seedu.address.model.book.Description;
+import seedu.address.model.book.Gid;
+import seedu.address.model.book.Isbn;
+import seedu.address.model.book.PublicationDate;
+import seedu.address.model.book.Publisher;
 import seedu.address.model.book.Rating;
+import seedu.address.model.book.Title;
 import seedu.address.model.util.BookDataUtil;
 
 /**
@@ -17,7 +25,7 @@ public class BookBuilder {
     public static final String DEFAULT_TITLE = "Artemis";
     public static final String DEFAULT_CATEGORY = "Science Fiction";
     public static final String DEFAULT_DESCRIPTION = "This is a description for Artemis.";
-    public static final int DEFAULT_RATE = "-1";
+    public static final int DEFAULT_RATE = -1;
     public static final String DEFAULT_ID = "ry3GjwEACAAJ";
     public static final String DEFAULT_ISBN = "9780525572664";
     public static final String DEFAULT_PUBLISHER = "Someone";

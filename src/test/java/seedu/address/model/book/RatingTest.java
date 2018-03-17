@@ -15,7 +15,7 @@ public class RatingTest {
 
     @Test
     public void hashCode_sameContent_returnsSameValue() {
-        assertEquals(new Rating("Desc 1").hashCode(), new Rating("Desc 1").hashCode());
-        assertEquals(new Rating("Desc x").hashCode(), new Rating("Desc x").hashCode());
+        assertEquals(new Rating(-1).hashCode(), new Rating(-1).hashCode());
+        assertEquals(new Rating(0).hashCode(), new Rating(0).hashCode());
     }
 }

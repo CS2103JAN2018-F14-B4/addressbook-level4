@@ -15,7 +15,7 @@ public class Rating {
      *
      * @param rating A book rating.
      */
-    public Rating(int rating) {
+    public Rating(Integer rating) {
         requireNonNull(rating);
         this.rating = rating;
     }

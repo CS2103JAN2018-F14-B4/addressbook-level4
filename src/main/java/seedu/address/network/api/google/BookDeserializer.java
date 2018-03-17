@@ -8,7 +8,14 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 
-import seedu.address.model.book.*;
+import seedu.address.model.book.Book;
+import seedu.address.model.book.Category;
+import seedu.address.model.book.Description;
+import seedu.address.model.book.Gid;
+import seedu.address.model.book.Isbn;
+import seedu.address.model.book.PublicationDate;
+import seedu.address.model.book.Publisher;
+import seedu.address.model.book.Title;
 import seedu.address.model.book.exceptions.InvalidBookException;
 import seedu.address.model.util.BookDataUtil;
 

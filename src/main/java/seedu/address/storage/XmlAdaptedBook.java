@@ -8,8 +8,16 @@ import java.util.Objects;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.book.*;
+import seedu.address.model.book.Author;
+import seedu.address.model.book.Book;
+import seedu.address.model.book.Category;
+import seedu.address.model.book.Description;
+import seedu.address.model.book.Gid;
+import seedu.address.model.book.Isbn;
+import seedu.address.model.book.PublicationDate;
+import seedu.address.model.book.Publisher;
 import seedu.address.model.book.Rating;
+import seedu.address.model.book.Title;
 
 /**
  * JAXB-friendly version of the Book.
@@ -27,7 +35,7 @@ public class XmlAdaptedBook {
     @XmlElement(required = true)
     private String description;
     @XmlElement(required = true)
-    private int rating;
+    private Integer rating;
     @XmlElement(required = true)
     private String publisher;
     @XmlElement(required = true)
@@ -52,7 +60,7 @@ public class XmlAdaptedBook {
                            String publisher, String publicationDate) {
         this.title = title;
         this.description = description;
-        this.rating = "-1";
+        this.rating = -1;
         if (authors != null) {
             this.authors = new ArrayList<>(authors);
         }
@@ -65,12 +73,12 @@ public class XmlAdaptedBook {
         this.publisher = publisher;
     }
 
-    public XmlAdaptedBook(String gid, String isbn, String title, String description, int rate,
+    public XmlAdaptedBook(String gid, String isbn, String title, String description, Integer rate,
                           List<XmlAdaptedAuthor> authors, List<XmlAdaptedCategory> categories,
                           String publisher, String publicationDate) {
         this.title = title;
         this.description = description;
-        this.rating = "-1";
+        this.rating = -1;
         if (authors != null) {
             this.authors = new ArrayList<>(authors);
         }

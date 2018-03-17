@@ -132,8 +132,7 @@ public class ParserUtil {
      */
     public static Rating parseRate(int rate) {
         requireNonNull(rate);
-        int trimmedRate = rate.trim();
-        return new Rating(trimmedRate);
+        return new Rating(rate);
     }
 
     /**
