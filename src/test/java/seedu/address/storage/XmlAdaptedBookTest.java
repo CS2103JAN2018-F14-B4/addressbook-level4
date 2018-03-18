@@ -55,7 +55,7 @@ public class XmlAdaptedBookTest {
     }
 
     @Test
-    public void toModelType_nullRate_throwsIllegalValueException() {
+    public void toModelType_nullRating_throwsIllegalValueException() {
         XmlAdaptedBook book = new XmlAdaptedBook(VALID_GID, VALID_ISBN, VALID_TITLE, VALID_DESCRIPTION,
                 null, VALID_AUTHORS, VALID_CATEGORIES, VALID_PUBLISHER, VALID_PUBLICATION_DATE);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Rating.class.getSimpleName());

@@ -825,7 +825,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |view book reviews |decide on suitability of book
 
-|`* *` |user |rating books |give recommendations to others
+|`* *` |user |rate books |give recommendations to others
 
 |`* *` |user |search the library catalogue |check for availability of the book
 
@@ -978,7 +978,7 @@ Use case ends.
 
 1. User obtains a list of books by listing (<<Use case: UC1 - View my reading list, *UC1*>>)
  or searching (<<Use case: UC2 - Search for books,*UC2*>>).
-2. User requests to give a rating to a specific book in the list.
+2. User requests to give a rate to a specific book in the list.
 3. Bibliotek shows a success message.
 +
 Use case ends.
@@ -986,10 +986,10 @@ Use case ends.
 *Extensions*
 
 [none]
-* 2a. The given rating is out of range.
+* 2a. The given rate is out of range.
 +
 [none]
-** 2a1. Bibliotek says that the rating is invalid and asks user to try again.
+** 2a1. Bibliotek says that the rate is invalid and asks user to try again.
 +
 Use case resumes at step 2
 

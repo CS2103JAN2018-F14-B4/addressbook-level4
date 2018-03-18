@@ -25,7 +25,7 @@ public class BookBuilder {
     public static final String DEFAULT_TITLE = "Artemis";
     public static final String DEFAULT_CATEGORY = "Science Fiction";
     public static final String DEFAULT_DESCRIPTION = "This is a description for Artemis.";
-    public static final int DEFAULT_RATE = -1;
+    public static final int DEFAULT_RATING = -1;
     public static final String DEFAULT_ID = "ry3GjwEACAAJ";
     public static final String DEFAULT_ISBN = "9780525572664";
     public static final String DEFAULT_PUBLISHER = "Someone";
@@ -46,7 +46,7 @@ public class BookBuilder {
         title = new Title(DEFAULT_TITLE);
         categories = Collections.singleton(new Category(DEFAULT_CATEGORY));
         description = new Description(DEFAULT_DESCRIPTION);
-        rating = new Rating(DEFAULT_RATE);
+        rating = new Rating(DEFAULT_RATING);
         gid = new Gid(DEFAULT_ID);
         isbn = new Isbn(DEFAULT_ISBN);
         publicationDate = new PublicationDate(DEFAULT_PUBLICATION_DATE);
@@ -99,8 +99,8 @@ public class BookBuilder {
     /**
      * Sets the {@code Rating} of the {@code Book} that we are building.
      */
-    public BookBuilder withRate(int rate) {
-        this.rating = new Rating(rate);
+    public BookBuilder withRating(int rating) {
+        this.rating = new Rating(rating);
         return this;
     }
 

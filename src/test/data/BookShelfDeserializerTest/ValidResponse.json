@@ -99,7 +99,6 @@
         "publisher": "ABC Publishing House",
         "publishedDate": "2018-05-10",
         "description": "This is a valid description.",
-        "rate": "-1",
         "industryIdentifiers": [
           {
             "type": "ISBN_10",

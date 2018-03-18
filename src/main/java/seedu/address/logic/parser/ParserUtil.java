@@ -130,19 +130,19 @@ public class ParserUtil {
      * Parses a {@code String rate} into a {@code Rating}.
      * Leading and trailing whitespaces will be trimmed.
      */
-    public static Rating parseRate(int rate) {
-        requireNonNull(rate);
-        return new Rating(rate);
+    public static Rating parseRating(int rating) {
+        requireNonNull(rating);
+        return new Rating(rating);
     }
 
     /**
      * Parses a {@code Optional<String> rate} into an {@code Optional<Rating>}
-     * if {@code rate} is present.
+     * if {@code rating} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Rating> parseRate(Optional<Integer> rate) {
-        requireNonNull(rate);
-        return rate.isPresent() ? Optional.of(parseRate(rate.get())) : Optional.empty();
+    public static Optional<Rating> parseRating(Optional<Integer> rating) {
+        requireNonNull(rating);
+        return rating.isPresent() ? Optional.of(parseRating(rating.get())) : Optional.empty();
     }
 
 }

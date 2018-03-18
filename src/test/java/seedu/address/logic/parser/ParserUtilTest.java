@@ -27,7 +27,7 @@ public class ParserUtilTest {
 
     private static final String VALID_TITLE = "Valid Title";
     private static final String VALID_DESCRIPTION = "Valid Description";
-    private static final int VALID_RATE = -1;
+    private static final int VALID_RATING = -1;
     private static final String VALID_AUTHOR_1 = "Author A";
     private static final String VALID_AUTHOR_2 = "Author B";
     private static final String VALID_CATEGORY_1 = "Category A";
@@ -113,21 +113,21 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parseRate_null_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseRate((Integer) null));
-        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseRate((Optional<Integer>) null));
+    public void parseRating_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseRating((Integer) null));
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseRating((Optional<Integer>) null));
     }
 
     @Test
-    public void parseRate_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parseRate(Optional.empty()).isPresent());
+    public void parseRating_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseRating(Optional.empty()).isPresent());
     }
 
     @Test
-    public void parseRate_validValueWithoutWhitespace_returnsRate() throws Exception {
-        Rating expectedRating = new Rating(VALID_RATE);
-        assertEquals(expectedRating, ParserUtil.parseRate(VALID_RATE));
-        assertEquals(Optional.of(expectedRating), ParserUtil.parseRate(Optional.of(VALID_RATE)));
+    public void parseRating_validValueWithoutWhitespace_returnsRating() throws Exception {
+        Rating expectedRating = new Rating(VALID_RATING);
+        assertEquals(expectedRating, ParserUtil.parseRating(VALID_RATING));
+        assertEquals(Optional.of(expectedRating), ParserUtil.parseRating(Optional.of(VALID_RATING)));
     }
 
     @Test
