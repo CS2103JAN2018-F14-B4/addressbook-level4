@@ -68,7 +68,8 @@ public class UserPrefs {
 
         return Objects.equals(windowSettings, o.windowSettings)
                 && Objects.equals(bookShelfFilePath, o.bookShelfFilePath)
-                && Objects.equals(bookShelfName, o.bookShelfName);
+                && Objects.equals(bookShelfName, o.bookShelfName)
+                && Objects.equals(appTheme, o.appTheme);
     }
 
     @Override
@@ -82,6 +83,7 @@ public class UserPrefs {
         sb.append("Window Settings : ").append(windowSettings.toString());
         sb.append("\nLocal data file location : ").append(bookShelfFilePath);
         sb.append("\nBookShelf name : ").append(bookShelfName);
+        sb.append("\nTheme : ").append(appTheme);
         return sb.toString();
     }
 
