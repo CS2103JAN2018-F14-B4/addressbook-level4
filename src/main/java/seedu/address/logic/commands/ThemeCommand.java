@@ -3,7 +3,6 @@ package seedu.address.logic.commands;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Theme;
 import seedu.address.commons.events.ui.ChangeThemeRequestEvent;
-import seedu.address.logic.commands.exceptions.CommandException;
 
 /**
  * Changes the application theme.
@@ -27,8 +26,15 @@ public class ThemeCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() throws CommandException {
+    public CommandResult execute() {
         EventsCenter.getInstance().post(new ChangeThemeRequestEvent(newTheme));
         return new CommandResult(String.format(MESSAGE_SUCCESS, newTheme.getThemeName()));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ThemeCommand // instanceof handles nulls
+                && this.newTheme.equals(((ThemeCommand) other).newTheme)); // state check
     }
 }

@@ -1,5 +1,7 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
 import seedu.address.commons.core.Theme;
 import seedu.address.commons.exceptions.InvalidThemeException;
 import seedu.address.logic.commands.ThemeCommand;
@@ -17,11 +19,16 @@ public class ThemeCommandParser implements Parser<ThemeCommand> {
      */
     @Override
     public ThemeCommand parse(String args) throws ParseException {
+        String themeName = args.trim();
+        if (themeName.length() == 0) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ThemeCommand.MESSAGE_USAGE));
+        }
+
         try {
-            Theme newTheme = Theme.getThemeByName(args.trim());
+            Theme newTheme = Theme.getThemeByName(themeName);
             return new ThemeCommand(newTheme);
         } catch (InvalidThemeException e) {
-            throw new ParseException(String.format(ThemeCommand.MESSAGE_INVALID_THEME, args.trim()));
+            throw new ParseException(String.format(ThemeCommand.MESSAGE_INVALID_THEME, themeName));
         }
     }
 }

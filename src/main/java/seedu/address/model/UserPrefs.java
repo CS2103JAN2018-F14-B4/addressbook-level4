@@ -2,8 +2,8 @@ package seedu.address.model;
 
 import java.util.Objects;
 
-import seedu.address.commons.core.WindowSettings;
 import seedu.address.commons.core.Theme;
+import seedu.address.commons.core.WindowSettings;
 
 /**
  * Represents User's preferences.
