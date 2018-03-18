@@ -131,6 +131,11 @@
     -fx-border-width: 1;
 }
 
+.list-cell:empty {
+    /* Empty cells will not have alternating colours */
+    -fx-background: #ECEFF1;
+}
+
 .list-cell .label {
     -fx-text-fill: #111;
 }
@@ -147,6 +152,12 @@
     -fx-text-fill: #111;
 }
 
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-background-insets: none;
+    -fx-padding: 0 0 0 0;
+}
+
 .scroll-pane > .viewport {
     -fx-background-color: transparent;
 }
@@ -159,11 +170,6 @@
      -fx-background-color: #ECEFF1;
      -fx-border-color: #d5dee2;
      -fx-border-top-width: 1px;
-}
-
-.status-bar {
-    -fx-background-color: #ECEFF1;
-    -fx-text-fill: black;
 }
 
 .result-display {
@@ -181,8 +187,15 @@
     -fx-line-spacing: -0.15em;
 }
 
+.status-bar {
+    -fx-background-color: #ECEFF1;
+    -fx-text-fill: black;
+    -fx-padding: 0.3em 0.6em 0.3em 0.6em;
+}
+
 .status-bar .label {
     -fx-font-family: "Segoe UI Light";
+    -fx-font-size: 14px;
     -fx-text-fill: #424242;
 }
 
@@ -216,13 +229,18 @@
 
 .menu-bar {
     -fx-background-color: #e0eaee;
+    -fx-padding: 0 0.5em 0 0.5em;
+}
+
+.menu-bar .menu {
+    -fx-padding: 0.2em 0.6em 0.2em 0.6em;
 }
 
 .menu-bar .label {
-    -fx-font-size: 14pt;
+    -fx-font-size: 12pt;
     -fx-font-family: "Segoe UI Light";
     -fx-text-fill: #424242;
-    -fx-opacity: 0.9;
+    -fx-opacity: 1;
 }
 
 .menu .left-container {
@@ -305,15 +323,18 @@
 
 .scroll-bar {
     -fx-background-color: #ECEFF1;
+    -fx-padding: 0 0 0 0;
 }
 
 .scroll-bar .thumb {
     -fx-background-color: #c9d2d6;
     -fx-background-insets: 4;
+    -fx-background-radius: 5px;
 }
 
 .scroll-bar .increment-button, .scroll-bar .decrement-button {
     -fx-background-color: transparent;
+    -fx-background-insets: 0 0 0 0;
     -fx-padding: 0 0 0 0;
 }
 
@@ -322,20 +343,15 @@
 }
 
 .scroll-bar:vertical .increment-arrow, .scroll-bar:vertical .decrement-arrow {
-    -fx-padding: 1 8 1 8;
+    -fx-padding: 0 8 0 8;
 }
 
 .scroll-bar:horizontal .increment-arrow, .scroll-bar:horizontal .decrement-arrow {
-    -fx-padding: 8 1 8 1;
+    -fx-padding: 8 0 8 0;
 }
 
 .error {
     -fx-text-fill: #d32f2f !important; /* The error class should always override the default text-fill style */
-}
-
-.list-cell:empty {
-    /* Empty cells will not have alternating colours */
-    -fx-background: #ECEFF1;
 }
 
 .tag-selector {
@@ -368,10 +384,6 @@
     -fx-font-family: "Segoe UI Light";
     -fx-font-size: 13pt;
     -fx-text-fill: #222;
-}
-
-#filterField, #bookListPanel, #bookWebpage {
-    -fx-effect: innershadow(gaussian, white, 10, 0, 0, 0);
 }
 
 #resultDisplay .content {

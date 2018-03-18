@@ -34,7 +34,7 @@
 
         <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder" styleClass="pane-with-border">
           <padding>
-            <Insets top="5" right="10" bottom="5" left="10" />
+            <Insets top="12" right="10" bottom="8" left="10" />
           </padding>
         </StackPane>
 
@@ -54,9 +54,6 @@
           </VBox>
 
           <StackPane fx:id="mainContentPlaceholder" prefWidth="340" >
-            <padding>
-              <Insets top="10" right="10" bottom="10" left="10" />
-            </padding>
           </StackPane>
         </SplitPane>
 
