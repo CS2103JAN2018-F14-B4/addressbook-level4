@@ -3,7 +3,7 @@ package seedu.address.model.book;
 import static java.util.Objects.requireNonNull;
 
 /**
- * Represents a book's rate.
+ * Represents a book's rating.
  * Guarantees: immutable.
  */
 public class Rating {
@@ -11,7 +11,7 @@ public class Rating {
     public final Integer rating;
 
     /**
-     * Constructs a {@code Description}.
+     * Constructs a {@code Rating}.
      *
      * @param rating A book rating.
      */

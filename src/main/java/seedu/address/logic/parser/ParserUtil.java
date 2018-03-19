@@ -127,7 +127,7 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String rate} into a {@code Rating}.
+     * Parses a {@code String rating} into a {@code Rating}.
      * Leading and trailing whitespaces will be trimmed.
      */
     public static Rating parseRating(int rating) {
@@ -136,7 +136,7 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> rate} into an {@code Optional<Rating>}
+     * Parses a {@code Optional<String> rating} into an {@code Optional<Rating>}
      * if {@code rating} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */

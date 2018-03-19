@@ -40,7 +40,6 @@ public class CommandTestUtil {
     public static final String VALID_ISBN_ARTEMIS = "234910247";
     public static final String VALID_ISBN_BABYLON = "907161513";
 
-
     public static final String TITLE_DESC_ARTEMIS = " " + PREFIX_TITLE + VALID_TITLE_ARTEMIS;
     public static final String TITLE_DESC_BABYLON = " " + PREFIX_TITLE + VALID_TITLE_BABYLON;
     public static final String AUTHOR_DESC_ARTEMIS = " " + PREFIX_AUTHOR + VALID_AUTHOR_ARTEMIS;
@@ -53,7 +52,6 @@ public class CommandTestUtil {
     public static final String RATING_DESC_BABYLON = " " + PREFIX_RATING + VALID_RATING_BABYLON;
     public static final String ISBN_DESC_ARTEMIS = " " + PREFIX_ISBN + VALID_ISBN_ARTEMIS;
     public static final String ISBN_DESC_BABYLON = " " + PREFIX_ISBN + VALID_ISBN_BABYLON;
-
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
