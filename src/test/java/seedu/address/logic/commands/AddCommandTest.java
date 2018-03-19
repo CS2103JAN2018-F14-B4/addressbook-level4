@@ -1,171 +1,148 @@
 package seedu.address.logic.commands;
 
-import static java.util.Objects.requireNonNull;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.CommandTestUtil.prepareUndoCommand;
+import static seedu.address.testutil.TypicalBooks.getTypicalBookShelf;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_BOOK;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_BOOK;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.function.Predicate;
-
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import javafx.collections.ObservableList;
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
-import seedu.address.logic.UndoRedoStack;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.AddressBook;
+import seedu.address.logic.UndoStack;
+import seedu.address.model.ActiveListType;
+import seedu.address.model.BookShelf;
 import seedu.address.model.Model;
-import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
 
+/**
+ * Contains integration tests (interaction with the Model and UndoCommand) and unit tests for
+ * {@code AddCommand}.
+ */
 public class AddCommandTest {
-
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
+    private Model model;
+
+    @Before
+    public void setUp() {
+        model = new ModelManager(new BookShelf(), new UserPrefs());
+        prepareSearchResultListInModel(model);
+    }
+
     @Test
-    public void constructor_nullPerson_throwsNullPointerException() {
+    public void constructor_nullBook_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
         new AddCommand(null);
     }
 
     @Test
-    public void execute_personAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
-        Person validPerson = new PersonBuilder().build();
+    public void execute_invalidActiveListType_failure() {
+        model.setActiveListType(ActiveListType.BOOK_SHELF);
+        AddCommand addCommand = prepareCommand(INDEX_FIRST_BOOK);
 
-        CommandResult commandResult = getAddCommandForPerson(validPerson, modelStub).execute();
-
-        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validPerson), commandResult.feedbackToUser);
-        assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
+        assertCommandFailure(addCommand, model, AddCommand.MESSAGE_WRONG_ACTIVE_LIST);
     }
 
     @Test
-    public void execute_duplicatePerson_throwsCommandException() throws Exception {
-        ModelStub modelStub = new ModelStubThrowingDuplicatePersonException();
-        Person validPerson = new PersonBuilder().build();
+    public void execute_validIndex_success() throws Exception {
+        AddCommand addCommand = prepareCommand(INDEX_FIRST_BOOK);
+        ModelManager expectedModel = new ModelManager();
+        prepareSearchResultListInModel(expectedModel);
 
-        thrown.expect(CommandException.class);
-        thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_PERSON);
-
-        getAddCommandForPerson(validPerson, modelStub).execute();
+        assertCommandSuccess(addCommand, model, AddCommand.MESSAGE_ADDING, expectedModel);
     }
 
     @Test
-    public void equals() {
-        Person alice = new PersonBuilder().withName("Alice").build();
-        Person bob = new PersonBuilder().withName("Bob").build();
-        AddCommand addAliceCommand = new AddCommand(alice);
-        AddCommand addBobCommand = new AddCommand(bob);
+    public void execute_invalidIndex_failure() {
+        AddCommand addCommand = prepareCommand(Index.fromOneBased(model.getSearchResultsList().size() + 1));
+
+        assertCommandFailure(addCommand, model, Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void executeUndo_validIndex_success() throws Exception {
+        UndoStack undoStack = new UndoStack();
+        UndoCommand undoCommand = prepareUndoCommand(model, undoStack);
+        AddCommand addCommand = prepareCommand(INDEX_FIRST_BOOK);
+        ModelManager expectedModel = new ModelManager(model.getBookShelf(), new UserPrefs());
+        prepareSearchResultListInModel(expectedModel);
+
+        // add -> first book added
+        addCommand.execute();
+        undoStack.push(addCommand);
+
+        // undo -> reverts bookshelf back to previous state
+        assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
+    }
+
+    @Test
+    public void executeUndo_invalidIndex_failure() throws Exception {
+        UndoStack undoStack = new UndoStack();
+        UndoCommand undoCommand = prepareUndoCommand(model, undoStack);
+        Index outOfBoundIndex = Index.fromOneBased(model.getSearchResultsList().size() + 1);
+        AddCommand addCommand = prepareCommand(outOfBoundIndex);
+
+        // execution failed -> addCommand not pushed into undoStack
+        assertCommandFailure(addCommand, model, Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
+
+        // no commands in undoStack -> undoCommand fail
+        assertCommandFailure(undoCommand, model, UndoCommand.MESSAGE_FAILURE);
+    }
+
+    @Test
+    public void equals() throws Exception {
+        AddCommand addFirstCommand = prepareCommand(INDEX_FIRST_BOOK);
+        AddCommand addSecondCommand = prepareCommand(INDEX_SECOND_BOOK);
 
         // same object -> returns true
-        assertTrue(addAliceCommand.equals(addAliceCommand));
+        assertTrue(addFirstCommand.equals(addFirstCommand));
 
         // same values -> returns true
-        AddCommand addAliceCommandCopy = new AddCommand(alice);
-        assertTrue(addAliceCommand.equals(addAliceCommandCopy));
+        AddCommand addFirstCommandCopy = prepareCommand(INDEX_FIRST_BOOK);
+        assertTrue(addFirstCommand.equals(addFirstCommandCopy));
+
+        // one command preprocessed when previously equal -> returns false
+        addFirstCommandCopy.preprocessUndoableCommand();
+        assertFalse(addFirstCommand.equals(addFirstCommandCopy));
 
         // different types -> returns false
-        assertFalse(addAliceCommand.equals(1));
+        assertFalse(addFirstCommand.equals(1));
 
         // null -> returns false
-        assertFalse(addAliceCommand.equals(null));
+        assertFalse(addFirstCommand.equals(null));
 
-        // different person -> returns false
-        assertFalse(addAliceCommand.equals(addBobCommand));
+        // different book -> returns false
+        assertFalse(addFirstCommand.equals(addSecondCommand));
     }
 
     /**
-     * Generates a new AddCommand with the details of the given person.
+     * Set up {@code model} with a non-empty search result list and
+     * switch active list to search results list.
      */
-    private AddCommand getAddCommandForPerson(Person person, Model model) {
-        AddCommand command = new AddCommand(person);
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
-        return command;
+    private void prepareSearchResultListInModel(Model model) {
+        model.setActiveListType(ActiveListType.SEARCH_RESULTS);
+        BookShelf bookShelf = getTypicalBookShelf();
+        model.updateSearchResults(bookShelf);
     }
 
     /**
-     * A default model stub that have all of the methods failing.
+     * Returns a {@code DeleteCommand} with the parameter {@code index}.
      */
-    private class ModelStub implements Model {
-        @Override
-        public void addPerson(Person person) throws DuplicatePersonException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void resetData(ReadOnlyAddressBook newData) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void deletePerson(Person target) throws PersonNotFoundException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void updatePerson(Person target, Person editedPerson)
-                throws DuplicatePersonException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public ObservableList<Person> getFilteredPersonList() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void updateFilteredPersonList(Predicate<Person> predicate) {
-            fail("This method should not be called.");
-        }
-    }
-
-    /**
-     * A Model stub that always throw a DuplicatePersonException when trying to add a person.
-     */
-    private class ModelStubThrowingDuplicatePersonException extends ModelStub {
-        @Override
-        public void addPerson(Person person) throws DuplicatePersonException {
-            throw new DuplicatePersonException();
-        }
-
-        @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
-        }
-    }
-
-    /**
-     * A Model stub that always accept the person being added.
-     */
-    private class ModelStubAcceptingPersonAdded extends ModelStub {
-        final ArrayList<Person> personsAdded = new ArrayList<>();
-
-        @Override
-        public void addPerson(Person person) throws DuplicatePersonException {
-            requireNonNull(person);
-            personsAdded.add(person);
-        }
-
-        @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
-        }
+    private AddCommand prepareCommand(Index index) {
+        AddCommand addCommand = new AddCommand(index);
+        addCommand.setData(model, new CommandHistory(), new UndoStack());
+        return addCommand;
     }
 
 }

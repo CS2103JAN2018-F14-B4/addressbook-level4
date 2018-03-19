@@ -2,47 +2,57 @@ package seedu.address.model;
 
 import java.util.Objects;
 
-import seedu.address.commons.core.GuiSettings;
+import seedu.address.commons.core.Theme;
+import seedu.address.commons.core.WindowSettings;
 
 /**
  * Represents User's preferences.
  */
 public class UserPrefs {
 
-    private GuiSettings guiSettings;
-    private String addressBookFilePath = "data/addressbook.xml";
-    private String addressBookName = "MyAddressBook";
+    private WindowSettings windowSettings;
+    private String bookShelfFilePath = "data/bookshelf.xml";
+    private String bookShelfName = "MyBookShelf";
+    private Theme appTheme = Theme.DEFAULT_THEME;
 
     public UserPrefs() {
-        this.setGuiSettings(500, 500, 0, 0);
+        windowSettings = new WindowSettings();
     }
 
-    public GuiSettings getGuiSettings() {
-        return guiSettings == null ? new GuiSettings() : guiSettings;
+    public WindowSettings getWindowSettings() {
+        return windowSettings == null ? new WindowSettings() : windowSettings;
     }
 
-    public void updateLastUsedGuiSetting(GuiSettings guiSettings) {
-        this.guiSettings = guiSettings;
+    public void updateLastUsedGuiSetting(WindowSettings windowSettings) {
+        this.windowSettings = windowSettings;
     }
 
     public void setGuiSettings(double width, double height, int x, int y) {
-        guiSettings = new GuiSettings(width, height, x, y);
+        windowSettings = new WindowSettings(width, height, x, y);
     }
 
-    public String getAddressBookFilePath() {
-        return addressBookFilePath;
+    public String getBookShelfFilePath() {
+        return bookShelfFilePath;
     }
 
-    public void setAddressBookFilePath(String addressBookFilePath) {
-        this.addressBookFilePath = addressBookFilePath;
+    public void setBookShelfFilePath(String bookShelfFilePath) {
+        this.bookShelfFilePath = bookShelfFilePath;
     }
 
-    public String getAddressBookName() {
-        return addressBookName;
+    public String getBookShelfName() {
+        return bookShelfName;
     }
 
-    public void setAddressBookName(String addressBookName) {
-        this.addressBookName = addressBookName;
+    public void setBookShelfName(String bookShelfName) {
+        this.bookShelfName = bookShelfName;
+    }
+
+    public Theme getAppTheme() {
+        return appTheme;
+    }
+
+    public void setAppTheme(Theme appTheme) {
+        this.appTheme = appTheme;
     }
 
     @Override
@@ -56,22 +66,24 @@ public class UserPrefs {
 
         UserPrefs o = (UserPrefs) other;
 
-        return Objects.equals(guiSettings, o.guiSettings)
-                && Objects.equals(addressBookFilePath, o.addressBookFilePath)
-                && Objects.equals(addressBookName, o.addressBookName);
+        return Objects.equals(windowSettings, o.windowSettings)
+                && Objects.equals(bookShelfFilePath, o.bookShelfFilePath)
+                && Objects.equals(bookShelfName, o.bookShelfName)
+                && Objects.equals(appTheme, o.appTheme);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(guiSettings, addressBookFilePath, addressBookName);
+        return Objects.hash(windowSettings, bookShelfFilePath, bookShelfName);
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Gui Settings : " + guiSettings.toString());
-        sb.append("\nLocal data file location : " + addressBookFilePath);
-        sb.append("\nAddressBook name : " + addressBookName);
+        sb.append("Window Settings : ").append(windowSettings.toString());
+        sb.append("\nLocal data file location : ").append(bookShelfFilePath);
+        sb.append("\nBookShelf name : ").append(bookShelfName);
+        sb.append("\nTheme : ").append(appTheme);
         return sb.toString();
     }
 

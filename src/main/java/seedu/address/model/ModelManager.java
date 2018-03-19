@@ -11,91 +11,119 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.model.AddressBookChangedEvent;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.commons.events.model.BookShelfChangedEvent;
+import seedu.address.model.book.Book;
+import seedu.address.model.book.exceptions.BookNotFoundException;
+import seedu.address.model.book.exceptions.DuplicateBookException;
 
 /**
- * Represents the in-memory model of the address book data.
+ * Represents the in-memory model of the book shelf data.
  * All changes to any model should be synchronized.
  */
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
-    private final AddressBook addressBook;
-    private final FilteredList<Person> filteredPersons;
+    private ActiveListType activeListType;
+    private final BookShelf bookShelf;
+    private final FilteredList<Book> filteredBooks;
+    private final BookShelf searchResults;
 
     /**
-     * Initializes a ModelManager with the given addressBook and userPrefs.
+     * Initializes a ModelManager with the given bookShelf and userPrefs.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyBookShelf bookShelf, UserPrefs userPrefs) {
         super();
-        requireAllNonNull(addressBook, userPrefs);
+        requireAllNonNull(bookShelf, userPrefs);
 
-        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
+        logger.fine("Initializing with book shelf: " + bookShelf + " and user prefs " + userPrefs);
 
-        this.addressBook = new AddressBook(addressBook);
-        filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        this.activeListType = ActiveListType.BOOK_SHELF;
+        this.bookShelf = new BookShelf(bookShelf);
+        this.filteredBooks = new FilteredList<>(this.bookShelf.getBookList());
+        this.searchResults = new BookShelf();
     }
 
     public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+        this(new BookShelf(), new UserPrefs());
     }
 
     @Override
-    public void resetData(ReadOnlyAddressBook newData) {
-        addressBook.resetData(newData);
-        indicateAddressBookChanged();
+    public ActiveListType getActiveListType() {
+        return activeListType;
     }
 
     @Override
-    public ReadOnlyAddressBook getAddressBook() {
-        return addressBook;
+    public void setActiveListType(ActiveListType type) {
+        this.activeListType = type;
+    }
+
+    @Override
+    public void resetData(ReadOnlyBookShelf newData) {
+        bookShelf.resetData(newData);
+        indicateBookShelfChanged();
+    }
+
+    @Override
+    public ReadOnlyBookShelf getBookShelf() {
+        return bookShelf;
     }
 
     /** Raises an event to indicate the model has changed */
-    private void indicateAddressBookChanged() {
-        raise(new AddressBookChangedEvent(addressBook));
+    private void indicateBookShelfChanged() {
+        raise(new BookShelfChangedEvent(bookShelf));
     }
 
     @Override
-    public synchronized void deletePerson(Person target) throws PersonNotFoundException {
-        addressBook.removePerson(target);
-        indicateAddressBookChanged();
+    public void deleteBook(Book target) throws BookNotFoundException {
+        bookShelf.removeBook(target);
+        indicateBookShelfChanged();
     }
 
     @Override
-    public synchronized void addPerson(Person person) throws DuplicatePersonException {
-        addressBook.addPerson(person);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        indicateAddressBookChanged();
+    public void addBook(Book book) throws DuplicateBookException {
+        bookShelf.addBook(book);
+        updateFilteredBookList(PREDICATE_SHOW_ALL_BOOKS);
+        indicateBookShelfChanged();
     }
 
     @Override
-    public void updatePerson(Person target, Person editedPerson)
-            throws DuplicatePersonException, PersonNotFoundException {
-        requireAllNonNull(target, editedPerson);
+    public void updateBook(Book target, Book editedBook) throws BookNotFoundException, DuplicateBookException {
+        requireAllNonNull(target, editedBook);
 
-        addressBook.updatePerson(target, editedPerson);
-        indicateAddressBookChanged();
+        bookShelf.updateBook(target, editedBook);
+        indicateBookShelfChanged();
     }
 
-    //=========== Filtered Person List Accessors =============================================================
+    //=========== Filtered Book List Accessors =============================================================
 
     /**
-     * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of
-     * {@code addressBook}
+     * Returns an unmodifiable view of the list of {@code Book} backed by the internal list of
+     * {@code bookShelf}
      */
     @Override
-    public ObservableList<Person> getFilteredPersonList() {
-        return FXCollections.unmodifiableObservableList(filteredPersons);
+    public ObservableList<Book> getFilteredBookList() {
+        return FXCollections.unmodifiableObservableList(filteredBooks);
     }
 
     @Override
-    public void updateFilteredPersonList(Predicate<Person> predicate) {
+    public void updateFilteredBookList(Predicate<Book> predicate) {
         requireNonNull(predicate);
-        filteredPersons.setPredicate(predicate);
+        filteredBooks.setPredicate(predicate);
+    }
+
+    //=========== Search Results ===========================================================================
+
+    /**
+     * Returns an unmodifable view of the list of {@code Book} backed by the internal list of {@code searchResults}.
+     * */
+    @Override
+    public ObservableList<Book> getSearchResultsList() {
+        return FXCollections.unmodifiableObservableList(searchResults.getBookList());
+    }
+
+    @Override
+    public void updateSearchResults(ReadOnlyBookShelf newResults) {
+        searchResults.resetData(newResults);
     }
 
     @Override
@@ -112,8 +140,9 @@ public class ModelManager extends ComponentManager implements Model {
 
         // state check
         ModelManager other = (ModelManager) obj;
-        return addressBook.equals(other.addressBook)
-                && filteredPersons.equals(other.filteredPersons);
+        return bookShelf.equals(other.bookShelf)
+                && filteredBooks.equals(other.filteredBooks)
+                && searchResults.equals(other.searchResults);
     }
 
 }

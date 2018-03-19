@@ -4,8 +4,10 @@ import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
@@ -13,10 +15,15 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
-import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.WindowSettings;
+import seedu.address.commons.events.ui.BookListSelectionChangedEvent;
+import seedu.address.commons.events.ui.ChangeThemeRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.SearchResultsSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.SwitchToBookListRequestEvent;
+import seedu.address.commons.events.ui.SwitchToSearchResultsRequestEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
 
@@ -34,13 +41,17 @@ public class MainWindow extends UiPart<Stage> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
-    private PersonListPanel personListPanel;
+    private BookDetailsPanel bookDetailsPanel;
+    private BookListPanel bookListPanel;
+    private SearchResultsPanel searchResultsPanel;
     private Config config;
     private UserPrefs prefs;
 
     @FXML
-    private StackPane browserPlaceholder;
+    private Scene scene;
+
+    @FXML
+    private StackPane mainContentPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -49,7 +60,7 @@ public class MainWindow extends UiPart<Stage> {
     private MenuItem helpMenuItem;
 
     @FXML
-    private StackPane personListPanelPlaceholder;
+    private StackPane bookListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -69,6 +80,7 @@ public class MainWindow extends UiPart<Stage> {
         // Configure the UI
         setTitle(config.getAppTitle());
         setWindowDefaultSize(prefs);
+        updateStylesheet(prefs);
 
         setAccelerators();
         registerAsAnEventHandler(this);
@@ -116,16 +128,19 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        bookDetailsPanel = new BookDetailsPanel();
+        mainContentPlaceholder.getChildren().add(bookDetailsPanel.getRoot());
 
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
-        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        bookListPanel = new BookListPanel(logic.getFilteredBookList());
+        searchResultsPanel = new SearchResultsPanel(logic.getSearchResultsList());
+        bookListPanelPlaceholder.getChildren().add(searchResultsPanel.getRoot());
+        bookListPanelPlaceholder.getChildren().add(bookListPanel.getRoot());
+        searchResultsPanel.getRoot().setVisible(false);
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getBookShelfFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
@@ -144,19 +159,24 @@ public class MainWindow extends UiPart<Stage> {
      * Sets the default size based on user preferences.
      */
     private void setWindowDefaultSize(UserPrefs prefs) {
-        primaryStage.setHeight(prefs.getGuiSettings().getWindowHeight());
-        primaryStage.setWidth(prefs.getGuiSettings().getWindowWidth());
-        if (prefs.getGuiSettings().getWindowCoordinates() != null) {
-            primaryStage.setX(prefs.getGuiSettings().getWindowCoordinates().getX());
-            primaryStage.setY(prefs.getGuiSettings().getWindowCoordinates().getY());
+        primaryStage.setHeight(prefs.getWindowSettings().getWindowHeight());
+        primaryStage.setWidth(prefs.getWindowSettings().getWindowWidth());
+        if (prefs.getWindowSettings().getWindowCoordinates() != null) {
+            primaryStage.setX(prefs.getWindowSettings().getWindowCoordinates().getX());
+            primaryStage.setY(prefs.getWindowSettings().getWindowCoordinates().getY());
         }
+    }
+
+    /** Updates the stylesheet used based on user preferences. */
+    private void updateStylesheet(UserPrefs prefs) {
+        scene.getStylesheets().setAll(prefs.getAppTheme().getCssFile());
     }
 
     /**
      * Returns the current size and the position of the main Window.
      */
-    GuiSettings getCurrentGuiSetting() {
-        return new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
+    WindowSettings getCurrentGuiSetting() {
+        return new WindowSettings(primaryStage.getWidth(), primaryStage.getHeight(),
                 (int) primaryStage.getX(), (int) primaryStage.getY());
     }
 
@@ -181,17 +201,50 @@ public class MainWindow extends UiPart<Stage> {
         raise(new ExitAppRequestEvent());
     }
 
-    public PersonListPanel getPersonListPanel() {
-        return this.personListPanel;
-    }
-
-    void releaseResources() {
-        browserPanel.freeResources();
+    @Subscribe
+    private void handleChangeThemeRequestEvent(ChangeThemeRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        prefs.setAppTheme(event.newTheme);
+        updateStylesheet(prefs);
     }
 
     @Subscribe
-    private void handleShowHelpEvent(ShowHelpRequestEvent event) {
+    private void handleShowHelpRequestEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
     }
+
+    @Subscribe
+    private void handleSwitchToBookListRequestEvent(SwitchToBookListRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        Platform.runLater(() -> {
+            bookListPanel.getRoot().setVisible(true);
+            searchResultsPanel.getRoot().setVisible(false);
+        });
+    }
+
+    @Subscribe
+    private void handleSwitchToSearchResultsRequestEvent(SwitchToSearchResultsRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        Platform.runLater(() -> {
+            searchResultsPanel.scrollToTop();
+            bookListPanel.getRoot().setVisible(false);
+            searchResultsPanel.getRoot().setVisible(true);
+        });
+    }
+
+    @Subscribe
+    private void handleSearchResultsSelectionChangedEvent(SearchResultsSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        bookListPanel.clearSelectionAndScrollToTop();
+        bookDetailsPanel.scrollToTop();
+    }
+
+    @Subscribe
+    private void handleBookListSelectionChangedEvent(BookListSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        searchResultsPanel.clearSelectionAndScrollToTop();
+        bookDetailsPanel.scrollToTop();
+    }
+
 }

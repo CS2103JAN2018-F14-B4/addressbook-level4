@@ -1,67 +1,67 @@
 package seedu.address.model.util;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Collections;
 
-import seedu.address.model.AddressBook;
-import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.tag.Tag;
+import seedu.address.commons.util.CollectionUtil;
+import seedu.address.model.BookShelf;
+import seedu.address.model.ReadOnlyBookShelf;
+import seedu.address.model.book.Author;
+import seedu.address.model.book.Book;
+import seedu.address.model.book.Category;
+import seedu.address.model.book.Description;
+import seedu.address.model.book.Gid;
+import seedu.address.model.book.Isbn;
+import seedu.address.model.book.PublicationDate;
+import seedu.address.model.book.Publisher;
+import seedu.address.model.book.Title;
+import seedu.address.model.book.exceptions.DuplicateBookException;
 
 /**
- * Contains utility methods for populating {@code AddressBook} with sample data.
+ * Contains utility methods for populating {@code BookShelf} with sample data.
  */
 public class SampleDataUtil {
-    public static Person[] getSamplePersons() {
-        return new Person[] {
-            new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
-                new Address("Blk 30 Geylang Street 29, #06-40"),
-                getTagSet("friends")),
-            new Person(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
-                new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"),
-                getTagSet("colleagues", "friends")),
-            new Person(new Name("Charlotte Oliveiro"), new Phone("93210283"), new Email("charlotte@example.com"),
-                new Address("Blk 11 Ang Mo Kio Street 74, #11-04"),
-                getTagSet("neighbours")),
-            new Person(new Name("David Li"), new Phone("91031282"), new Email("lidavid@example.com"),
-                new Address("Blk 436 Serangoon Gardens Street 26, #16-43"),
-                getTagSet("family")),
-            new Person(new Name("Irfan Ibrahim"), new Phone("92492021"), new Email("irfan@example.com"),
-                new Address("Blk 47 Tampines Street 20, #17-35"),
-                getTagSet("classmates")),
-            new Person(new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@example.com"),
-                new Address("Blk 45 Aljunied Street 85, #11-31"),
-                getTagSet("colleagues"))
+
+    public static Book[] getSampleBooks() {
+        return new Book[]{
+            new Book(new Gid("ry3GjwEACAAJ"), new Isbn("9780525572664"),
+                Collections.singleton(new Author("Andy Weir")), new Title("Artemis"),
+                CollectionUtil.toSet(new Category("Fiction"), new Category("Science Fiction")),
+                new Description("This is Artemis."), new Publisher(""), new PublicationDate("2017-11-14")),
+            new Book(new Gid("CIj1DAAAQBAJ"), new Isbn("9781405921909"),
+                Collections.singleton(new Author("Sylvain Neuvel")), new Title("Waking Gods"),
+                CollectionUtil.toSet(new Category("Fiction"), new Category("Science Fiction")),
+                new Description("This is Waking Gods."), new Publisher("Penguin UK"),
+                new PublicationDate("2017-04-06")),
+            new Book(new Gid("3jsYCwAAQBAJ"), new Isbn("9780316217637"),
+                Collections.singleton(new Author("James S. A. Corey")), new Title("Babylon's Ashes"),
+                CollectionUtil.toSet(new Category("Fiction"), new Category("Science Fiction"),
+                    new Category("Space Opera")),
+                new Description("This is Babylon's Ashes."), new Publisher("Orbit"),
+                new PublicationDate("2016-12-06")),
+            new Book(new Gid("2SoaDAAAQBAJ"), new Isbn("9780765388896"),
+                Collections.singleton(new Author("John Scalzi")), new Title("The Collapsing Empire"),
+                CollectionUtil.toSet(new Category("Fiction"), new Category("Science Fiction"),
+                    new Category("Space Opera")),
+                new Description("This is The Collapsing Empire."), new Publisher("Tor Books"),
+                new PublicationDate("2017-03-21")),
+            new Book(new Gid("3_bJKlAOecEC"), new Isbn("9780316095839"),
+                Collections.singleton(new Author("Iain M. Banks")), new Title("Consider Phlebas"),
+                CollectionUtil.toSet(new Category("Fiction"), new Category("Science Fiction"),
+                    new Category("Space Opera")),
+                new Description("This is Consider Phlebas."), new Publisher("Orbit"), new PublicationDate("2009-12-01"))
         };
     }
 
-    public static ReadOnlyAddressBook getSampleAddressBook() {
+    public static ReadOnlyBookShelf getSampleBookShelf() {
         try {
-            AddressBook sampleAb = new AddressBook();
-            for (Person samplePerson : getSamplePersons()) {
-                sampleAb.addPerson(samplePerson);
+            BookShelf sampleBookShelf = new BookShelf();
+            for (Book sampleBook : getSampleBooks()) {
+                sampleBookShelf.addBook(sampleBook);
             }
-            return sampleAb;
-        } catch (DuplicatePersonException e) {
-            throw new AssertionError("sample data cannot contain duplicate persons", e);
+            return sampleBookShelf;
+        } catch (DuplicateBookException e) {
+            throw new AssertionError("sample data cannot contain duplicate books", e);
         }
-    }
-
-    /**
-     * Returns a tag set containing the list of strings given.
-     */
-    public static Set<Tag> getTagSet(String... strings) {
-        HashSet<Tag> tags = new HashSet<>();
-        for (String s : strings) {
-            tags.add(new Tag(s));
-        }
-
-        return tags;
     }
 
 }

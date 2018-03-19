@@ -5,20 +5,34 @@
 
 .label {
     -fx-font-size: 11pt;
-    -fx-font-family: "Segoe UI Semibold";
-    -fx-text-fill: #555555;
+    -fx-font-family: "Segoe UI";
+    -fx-text-fill: #f2f2f2;
     -fx-opacity: 0.9;
 }
 
 .label-bright {
     -fx-font-size: 11pt;
-    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-family: "Segoe UI";
     -fx-text-fill: white;
     -fx-opacity: 1;
 }
 
+.label-muted {
+    -fx-font-size: 11pt;
+    -fx-font-family: "Segoe UI";
+    -fx-text-fill: #bbb;
+    -fx-opacity: 1;
+}
+
 .label-header {
-    -fx-font-size: 32pt;
+    -fx-font-size: 24pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: white;
+    -fx-opacity: 1;
+}
+
+.label-subheading {
+    -fx-font-size: 20pt;
     -fx-font-family: "Segoe UI Light";
     -fx-text-fill: white;
     -fx-opacity: 1;
@@ -104,7 +118,7 @@
 }
 
 .list-cell:filled:odd {
-    -fx-background-color: #515658;
+    -fx-background-color: #4c4e4f;
 }
 
 .list-cell:filled:selected {
@@ -132,6 +146,16 @@
     -fx-text-fill: #010504;
 }
 
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-background-insets: none;
+    -fx-padding: 0 0 0 0;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
 .anchor-pane {
      -fx-background-color: derive(#1d1d1d, 20%);
 }
@@ -142,15 +166,10 @@
      -fx-border-top-width: 1px;
 }
 
-.status-bar {
-    -fx-background-color: derive(#1d1d1d, 20%);
-    -fx-text-fill: black;
-}
-
 .result-display {
     -fx-background-color: transparent;
     -fx-font-family: "Segoe UI Light";
-    -fx-font-size: 13pt;
+    -fx-font-size: 12pt;
     -fx-text-fill: white;
 }
 
@@ -158,8 +177,19 @@
     -fx-text-fill: black !important;
 }
 
+.result-display .text {
+    -fx-line-spacing: -0.15em;
+}
+
+.status-bar {
+    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-text-fill: black;
+    -fx-padding: 0.3em 0.6em 0.3em 0.6em;
+}
+
 .status-bar .label {
     -fx-font-family: "Segoe UI Light";
+    -fx-font-size: 14px;
     -fx-text-fill: white;
 }
 
@@ -193,10 +223,15 @@
 
 .menu-bar {
     -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-padding: 0 0.5em 0 0.5em;
+}
+
+.menu-bar .menu {
+    -fx-padding: 0.2em 0.6em 0.2em 0.6em;
 }
 
 .menu-bar .label {
-    -fx-font-size: 14pt;
+    -fx-font-size: 12pt;
     -fx-font-family: "Segoe UI Light";
     -fx-text-fill: white;
     -fx-opacity: 0.9;
@@ -282,15 +317,18 @@
 
 .scroll-bar {
     -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-padding: 0 0 0 0;
 }
 
 .scroll-bar .thumb {
     -fx-background-color: derive(#1d1d1d, 50%);
-    -fx-background-insets: 3;
+    -fx-background-insets: 4;
+    -fx-background-radius: 5px;
 }
 
 .scroll-bar .increment-button, .scroll-bar .decrement-button {
     -fx-background-color: transparent;
+    -fx-background-insets: 0 0 0 0;
     -fx-padding: 0 0 0 0;
 }
 
@@ -299,11 +337,31 @@
 }
 
 .scroll-bar:vertical .increment-arrow, .scroll-bar:vertical .decrement-arrow {
-    -fx-padding: 1 8 1 8;
+    -fx-padding: 0 8 0 8;
 }
 
 .scroll-bar:horizontal .increment-arrow, .scroll-bar:horizontal .decrement-arrow {
-    -fx-padding: 8 1 8 1;
+    -fx-padding: 8 0 8 0;
+}
+
+.error {
+    -fx-text-fill: #d06651 !important; /* The error class should always override the default text-fill style */
+}
+
+.list-cell:empty {
+    /* Empty cells will not have alternating colours */
+    -fx-background: #383838;
+}
+
+.tag-selector {
+    -fx-border-width: 1;
+    -fx-border-color: white;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+}
+
+.tooltip-text {
+    -fx-text-fill: white;
 }
 
 #cardPane {
@@ -327,25 +385,89 @@
     -fx-text-fill: white;
 }
 
-#filterField, #personListPanel, #personWebpage {
-    -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
-}
-
 #resultDisplay .content {
     -fx-background-color: transparent, #383838, transparent, #383838;
     -fx-background-radius: 0;
 }
 
-#tags {
+#description {
+    -fx-font-size: 10pt;
+}
+
+.pills, .pills-authors, .pills-categories, .pills-authors-small, .pills-categories-small {
     -fx-hgap: 7;
     -fx-vgap: 3;
 }
 
-#tags .label {
+.pills .label {
     -fx-text-fill: white;
-    -fx-background-color: #3e7b91;
+    -fx-padding: 1 5 1 5;
+    -fx-border-radius: 7;
+    -fx-background-radius: 7;
+    -fx-font-size: 9pt;
+}
+
+.pills-authors .label {
+    -fx-text-fill: white;
     -fx-padding: 1 3 1 3;
-    -fx-border-radius: 2;
-    -fx-background-radius: 2;
-    -fx-font-size: 11;
+    -fx-background-color: #3e9168BB;
+    -fx-font-size: 10pt;
+}
+
+.pills-authors-small .label {
+    -fx-text-fill: white;
+    -fx-padding: 1 3 1 3;
+    -fx-background-color: #3e9168BB;
+    -fx-font-size: 9pt;
+}
+
+.pills-categories .label {
+    -fx-text-fill: white;
+    -fx-padding: 1 3 1 3;
+    -fx-background-color: #3e7b91BB;
+    -fx-font-size: 10pt;
+}
+
+.pills-categories-small .label {
+    -fx-text-fill: white;
+    -fx-padding: 1 3 1 3;
+    -fx-background-color: #3e7b91BB;
+    -fx-font-size: 9pt;
+}
+
+.status-unread.label {
+    -fx-background-color: #d50000;
+}
+
+.status-reading.label {
+    -fx-background-color: #FF6F00;
+}
+
+.status-read.label {
+    -fx-background-color: #2E7D32;
+}
+
+.priority-none.label {
+    -fx-background-color: #616161;
+}
+
+.priority-low.label {
+    -fx-background-color: #33691E;
+}
+
+.priority-medium.label {
+    -fx-background-color: #F57F17;
+}
+
+.priority-high.label {
+    -fx-background-color: #E65100;
+}
+
+.rating-unrated.label {
+    -fx-background-color: #616161;
+}
+
+.rating-rated.label {
+    -fx-background-color: #616161;
+    -fx-text-fill: #F9A825;
 }
