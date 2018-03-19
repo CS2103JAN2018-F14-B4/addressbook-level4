@@ -15,7 +15,7 @@
   <padding>
     <Insets bottom="10" left="5" right="10" top="10"/>
   </padding>
-  <ScrollPane fitToWidth="true" hbarPolicy="NEVER" styleClass="anchor-pane">
+  <ScrollPane fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER" styleClass="anchor-pane">
     <VBox id="bookDetailsPane" styleClass="content-pane">
       <Label fx:id="title" styleClass="label-header" text="\$title" wrapText="true" VBox.vgrow="SOMETIMES"/>
       <GridPane VBox.vgrow="SOMETIMES">
