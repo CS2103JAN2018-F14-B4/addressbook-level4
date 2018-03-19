@@ -16,6 +16,6 @@ public class ChangeThemeRequestEvent extends BaseEvent {
 
     @Override
     public String toString() {
-        return "new theme : " + newTheme.getThemeName();
+        return "change theme to : " + newTheme.getThemeName();
     }
 }

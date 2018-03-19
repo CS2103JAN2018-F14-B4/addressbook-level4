@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Theme;
 import seedu.address.commons.events.ui.ChangeThemeRequestEvent;
@@ -22,6 +24,7 @@ public class ThemeCommand extends Command {
     private final Theme newTheme;
 
     public ThemeCommand(Theme newTheme) {
+        requireNonNull(newTheme);
         this.newTheme = newTheme;
     }
 

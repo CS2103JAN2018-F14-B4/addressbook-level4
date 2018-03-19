@@ -1,5 +1,7 @@
 package guitests.guihandles;
 
+import guitests.guihandles.exceptions.StylesheetNotFoundException;
+
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -61,7 +63,7 @@ public class MainWindowHandle extends StageHandle {
 
     public String getActiveStylesheet() {
         if (scene.getStylesheets().size() == 0) {
-            return "";
+            throw new StylesheetNotFoundException();
         }
         return scene.getStylesheets().get(0);
     }
