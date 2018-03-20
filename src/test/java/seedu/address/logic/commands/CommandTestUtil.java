@@ -35,8 +35,8 @@ public class CommandTestUtil {
     public static final String VALID_CATEGORY_BABYLON = "Fiction";
     public static final String VALID_DESCRIPTION_ARTEMIS = "This is Artemis.";
     public static final String VALID_DESCRIPTION_BABYLON = "This is Babylon's Ashes.";
-    public static final String VALID_RATING_ARTEMIS = "This is Artemis.";
-    public static final String VALID_RATING_BABYLON = "This is Babylon's Ashes.";
+    public static final int VALID_RATING_ARTEMIS = 5;
+    public static final int VALID_RATING_BABYLON = 4;
     public static final String VALID_ISBN_ARTEMIS = "234910247";
     public static final String VALID_ISBN_BABYLON = "907161513";
 

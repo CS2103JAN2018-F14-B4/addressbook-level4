@@ -20,7 +20,6 @@ public class Rating {
         this.rating = rating;
     }
 
-
     @Override
     public String toString() {
         return rating.toString();
