@@ -821,17 +821,18 @@ some books.
 ** Add a `alias` command that allows users to change the current full commands to the aliases that users need.
 ** This allows users to reduce the amount of typing needed.
 
-[appendix]
-== User Stories
-
 [discrete]
 ==== Jianghao
 * **Get command auto-completion suggestions** (major)
 ** Add auto-completion suggestions for command.
-** This allows the user to reduce the amount of typing needed
+** This allows the user to reduce the amount of typing needed.
 * **View hints when typing command** (minor)
 ** Add hints to UI when typing commands.
-** Recall the syntax of the command.
+** This helps the user to recall the syntax of the command.
+
+[appendix]
+== User Stories
+
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
 
