@@ -833,7 +833,6 @@ some books.
 [appendix]
 == User Stories
 
-
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
 
 [width="70%",cols="<18%,<18%,29%,34%",options="header",]
