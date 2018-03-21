@@ -40,7 +40,6 @@ public class StorageManagerTest {
         return testFolder.getRoot().getPath() + fileName;
     }
 
-
     @Test
     public void prefsReadSave() throws Exception {
         /*
@@ -60,7 +59,7 @@ public class StorageManagerTest {
         /*
          * Note: This is an integration test that verifies the StorageManager is properly wired to the
          * {@link XmlBookShelfStorage} class.
-         * More extensive testing of UserPref saving/reading is done in {@link XmlBookShelfStorageTest} class.
+         * More extensive testing of BookShelf saving/reading is done in {@link XmlBookShelfStorageTest} class.
          */
         BookShelf original = getTypicalBookShelf();
         storageManager.saveBookShelf(original);
@@ -82,6 +81,24 @@ public class StorageManagerTest {
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
     }
 
+    @Test
+    public void recentBooksReadSave() throws Exception {
+        /*
+         * Note: This is an integration test that verifies the StorageManager is properly wired to the
+         * {@link XmlRecentBooksStorage} class.
+         * More extensive testing of recent books saving/reading is done in
+         * {@link XmlRecentBooksStorageTest} class.
+         */
+        BookShelf original = getTypicalBookShelf();
+        storageManager.saveRecentBooksList(original);
+        ReadOnlyBookShelf retrieved = storageManager.readRecentBooksList().get();
+        assertEquals(original, new BookShelf(retrieved));
+    }
+
+    @Test
+    public void getRecentBooksFilePath() {
+        assertNotNull(storageManager.getRecentBooksFilePath());
+    }
 
     /**
      * A Stub class to throw an exception when the save method is called
