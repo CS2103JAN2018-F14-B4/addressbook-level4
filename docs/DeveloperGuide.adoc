@@ -789,6 +789,47 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Value proposition*: manage books faster than a typical mouse/GUI driven app
 
+=== Feature Contribution
+
+[discrete]
+==== Qiu Siyu
+* **Search for books using Google Books API** (major)
+** Added the network component and a `search` command to allow the user to search for books on Google Books.
+** This allows the user to easily search for particular books, and add them without having to enter all the information manually (using the updated `add` command).
+* **Change application theme** (minor)
+** Added a `theme` command that allows the user to switch between the various themes included with Bibliotek.
+** This allows the user to change the design of Bibliotek according to their own preferences.
+
+[discrete]
+==== Qiu Siqi
+* **Search for books in the library or add to watchlist** (major)
+** Update network component to support NLB catalogue.
+** Add `library` and `watch` commands to perform search and add to watchlist respectively.
+** This allows the user to easily check or get updated on the availability of books.
+* **Get recently viewed books** (minor)
+** Add a `recent` command that allows user to view previous selections that he did not add into his book shelf.
+** This allows the user to reconsider his choices without having to perform the search again.
+
+[discrete]
+==== Shi Jin
+* **Mark a book as read, change the priority of a book and rate books** (major)
+** Add attributes rating, status, priority.
+** Add `edit` command that allows user to rate, set status and change priority of
+some books.
+** This allows the user to keep track of what to read and what have been read and give recommendations to others.
+* **Use aliases in place of full commands** (minor)
+** Add a `alias` command that allows users to change the current full commands to the aliases that users need.
+** This allows users to reduce the amount of typing needed.
+
+[discrete]
+==== Jianghao
+* **Get command auto-completion suggestions** (major)
+** Add auto-completion suggestions for command.
+** This allows the user to reduce the amount of typing needed.
+* **View hints when typing command** (minor)
+** Add hints to UI when typing commands.
+** This helps the user to recall the syntax of the command.
+
 [appendix]
 == User Stories
 
