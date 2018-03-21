@@ -78,7 +78,7 @@ public class UniqueList<T> implements Iterable<T> {
     /**
      * Adds an item to the list.
      *
-     * @throws DuplicateItemException if the item to add is a duplicate of an existing item in the list.
+     * @throws DuplicateItemException if the item to addToFront is a duplicate of an existing item in the list.
      */
     public void add(T toAdd) throws DuplicateDataException {
         requireNonNull(toAdd);

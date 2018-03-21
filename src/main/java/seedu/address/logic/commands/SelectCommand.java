@@ -42,18 +42,19 @@ public class SelectCommand extends Command {
                 throw new CommandException(Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
             }
 
+            model.updateRecentBooks(filteredBookList.get(targetIndex.getZeroBased()));
             EventsCenter.getInstance().post(new JumpToBookListIndexRequestEvent(targetIndex));
             break;
         }
         case SEARCH_RESULTS:
         {
-
             List<Book> searchResultsList = model.getSearchResultsList();
 
             if (targetIndex.getZeroBased() >= searchResultsList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
             }
 
+            model.updateRecentBooks(searchResultsList.get(targetIndex.getZeroBased()));
             EventsCenter.getInstance().post(new JumpToSearchResultsIndexRequestEvent(targetIndex));
             break;
         }

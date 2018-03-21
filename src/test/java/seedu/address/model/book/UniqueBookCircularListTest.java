@@ -7,8 +7,6 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.book.exceptions.BookNotFoundException;
-import seedu.address.model.book.exceptions.DuplicateBookException;
 import seedu.address.testutil.TypicalBooks;
 
 public class UniqueBookCircularListTest {
@@ -16,24 +14,24 @@ public class UniqueBookCircularListTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void addBook_null_failure() throws Exception {
+    public void addToFront_null_failure() throws Exception {
         UniqueBookCircularList uniqueBookCircularList = new UniqueBookCircularList(5);
         thrown.expect(NullPointerException.class);
-        uniqueBookCircularList.add(null);
+        uniqueBookCircularList.addToFront(null);
     }
 
     @Test
-    public void addBook_validBook_success() throws Exception {
+    public void addToFront_validBook_success() throws Exception {
         UniqueBookCircularList uniqueBookCircularList = new UniqueBookCircularList(5);
-        uniqueBookCircularList.add(TypicalBooks.ARTEMIS);
+        uniqueBookCircularList.addToFront(TypicalBooks.ARTEMIS);
         assertEquals(true, uniqueBookCircularList.asObservableList().contains(TypicalBooks.ARTEMIS));
     }
 
     @Test
-    public void addBook_repeatedBook_success() throws Exception {
+    public void addToFront_repeatedBook_success() throws Exception {
         UniqueBookCircularList uniqueBookCircularList = new UniqueBookCircularList(5);
-        uniqueBookCircularList.add(TypicalBooks.ARTEMIS);
-        uniqueBookCircularList.add(TypicalBooks.ARTEMIS);
+        uniqueBookCircularList.addToFront(TypicalBooks.ARTEMIS);
+        uniqueBookCircularList.addToFront(TypicalBooks.ARTEMIS);
 
         ObservableList<Book> list = uniqueBookCircularList.asObservableList();
         assertEquals(true, list.contains(TypicalBooks.ARTEMIS));
@@ -41,11 +39,21 @@ public class UniqueBookCircularListTest {
     }
 
     @Test
-    public void addBook_tooManyBooks_success() throws Exception {
+    public void addToFront_latestBookAtFront_success() throws Exception {
+        UniqueBookCircularList uniqueBookCircularList = new UniqueBookCircularList(5);
+        uniqueBookCircularList.addToFront(TypicalBooks.ARTEMIS);
+        uniqueBookCircularList.addToFront(TypicalBooks.BABYLON_ASHES);
+
+        ObservableList<Book> list = uniqueBookCircularList.asObservableList();
+        assertEquals(TypicalBooks.BABYLON_ASHES, list.get(0));
+    }
+
+    @Test
+    public void addToFront_tooManyBooks_success() throws Exception {
         UniqueBookCircularList uniqueBookCircularList = new UniqueBookCircularList(2);
-        uniqueBookCircularList.add(TypicalBooks.ARTEMIS);
-        uniqueBookCircularList.add(TypicalBooks.BABYLON_ASHES);
-        uniqueBookCircularList.add(TypicalBooks.COLLAPSING_EMPIRE);
+        uniqueBookCircularList.addToFront(TypicalBooks.ARTEMIS);
+        uniqueBookCircularList.addToFront(TypicalBooks.BABYLON_ASHES);
+        uniqueBookCircularList.addToFront(TypicalBooks.COLLAPSING_EMPIRE);
 
         ObservableList<Book> list = uniqueBookCircularList.asObservableList();
         assertEquals(2, list.size()); // max size 2
@@ -64,11 +72,11 @@ public class UniqueBookCircularListTest {
     @Test
     public void equals_sameContent_returnsTrue() throws Exception {
         UniqueBookCircularList uniqueBookCircularList = new UniqueBookCircularList(5);
-        uniqueBookCircularList.add(TypicalBooks.ARTEMIS);
-        uniqueBookCircularList.add(TypicalBooks.BABYLON_ASHES);
+        uniqueBookCircularList.addToFront(TypicalBooks.ARTEMIS);
+        uniqueBookCircularList.addToFront(TypicalBooks.BABYLON_ASHES);
         UniqueBookCircularList uniqueBookCircularList2 = new UniqueBookCircularList(5);
-        uniqueBookCircularList2.add(TypicalBooks.ARTEMIS);
-        uniqueBookCircularList2.add(TypicalBooks.BABYLON_ASHES);
+        uniqueBookCircularList2.addToFront(TypicalBooks.ARTEMIS);
+        uniqueBookCircularList2.addToFront(TypicalBooks.BABYLON_ASHES);
         assertEquals(true, uniqueBookCircularList.equals(uniqueBookCircularList2));
     }
 

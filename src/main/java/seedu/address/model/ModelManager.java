@@ -6,15 +6,18 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
+import com.google.common.eventbus.Subscribe;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.BookShelfChangedEvent;
+import seedu.address.commons.events.ui.BookListSelectionChangedEvent;
+import seedu.address.commons.events.ui.SearchResultsSelectionChangedEvent;
 import seedu.address.model.book.Book;
 import seedu.address.model.book.UniqueBookCircularList;
-import seedu.address.model.book.UniqueBookList;
 import seedu.address.model.book.exceptions.BookNotFoundException;
 import seedu.address.model.book.exceptions.DuplicateBookException;
 
@@ -139,7 +142,9 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void updateRecentBooks(Book newBook) {
-        recentBooks.add(newBook);
+        requireNonNull(newBook);
+        recentBooks.addToFront(newBook);
+        logger.info("Size: " + recentBooks.internalList.size());
     }
 
     @Override
@@ -162,4 +167,16 @@ public class ModelManager extends ComponentManager implements Model {
                 && recentBooks.equals(other.recentBooks);
     }
 
+
+    @Subscribe
+    private void handleSearchResultsSelectionChangedEvent(SearchResultsSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        updateRecentBooks(event.getNewSelection().book);
+    }
+
+    @Subscribe
+    private void handleBookListSelectionChangedEvent(BookListSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        updateRecentBooks(event.getNewSelection().book);
+    }
 }

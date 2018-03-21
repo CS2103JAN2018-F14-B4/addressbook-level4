@@ -11,6 +11,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.BookListSelectionChangedEvent;
+import seedu.address.commons.events.ui.RecentBooksSelectionChangedEvent;
 import seedu.address.commons.events.ui.SearchResultsSelectionChangedEvent;
 import seedu.address.model.book.Book;
 
@@ -45,7 +46,7 @@ public class BookDetailsPanel extends UiPart<Region> {
     }
 
     /** Update this panel to show details about the specified book. */
-    private void showBook(Book book) {
+    public void showBook(Book book) {
         Platform.runLater(() -> {
             title.setText(book.getTitle().toString());
             isbn.setText(book.getIsbn().toString());
@@ -64,16 +65,7 @@ public class BookDetailsPanel extends UiPart<Region> {
         });
     }
 
-    @Subscribe
-    private void handleBookListSelectionChangedEvent(BookListSelectionChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        showBook(event.getNewSelection().book);
+    public void clear() {
+        getRoot().setVisible(false);
     }
-
-    @Subscribe
-    private void handleSearchResultsSelectionChangedEvent(SearchResultsSelectionChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        showBook(event.getNewSelection().book);
-    }
-
 }

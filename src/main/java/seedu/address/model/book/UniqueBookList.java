@@ -19,7 +19,7 @@ public class UniqueBookList extends UniqueList<Book> {
     /**
      * Adds a book to the list.
      *
-     * @throws DuplicateBookException if the book to add is a duplicate of an existing book in the list.
+     * @throws DuplicateBookException if the book to addToFront is a duplicate of an existing book in the list.
      */
     public void add(Book toAdd) throws DuplicateBookException {
         requireNonNull(toAdd);

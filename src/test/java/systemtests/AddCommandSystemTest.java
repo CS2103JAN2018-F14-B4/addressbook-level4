@@ -31,9 +31,9 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
         Model model = getModel();
         ObservableList<Book> searchResultsList = model.getSearchResultsList();
 
-        /* ------------------------ Perform add operations on the search results list ----------------------------- */
+        /* ------------------------ Perform addToFront operations on the search results list ----------------------------- */
 
-        /* Case: add a book to a non-empty book shelf, command with leading spaces and trailing spaces -> added
+        /* Case: addToFront a book to a non-empty book shelf, command with leading spaces and trailing spaces -> added
          */
         Book firstBook = searchResultsList.get(0);
         String command = "   " + AddCommand.COMMAND_WORD + "  1";
@@ -44,7 +44,7 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
         String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);
 
-        /* Case: add to empty book shelf -> added */
+        /* Case: addToFront to empty book shelf -> added */
         deleteAllBooks();
 
         executeCommand(SearchCommand.COMMAND_WORD + " hello");
@@ -58,16 +58,16 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
 
         assertCommandSuccess(command, firstBook);
 
-        /* ------------------------ Perform add operation while a book card is selected --------------------------- */
+        /* ------------------------ Perform addToFront operation while a book card is selected --------------------------- */
 
-        /* Case: selects first card in the book list, add a book -> added, card selection remains unchanged */
+        /* Case: selects first card in the book list, addToFront a book -> added, card selection remains unchanged */
         selectSearchResult(Index.fromOneBased(1));
         command = AddCommand.COMMAND_WORD + " 2";
         assertCommandSuccess(command, searchResultsList.get(1));
 
-        /* ----------------------------------- Perform invalid add operations --------------------------------------- */
+        /* ----------------------------------- Perform invalid addToFront operations --------------------------------------- */
 
-        /* Case: add a duplicate book -> rejected */
+        /* Case: addToFront a duplicate book -> rejected */
         model = getModel();
         executeCommand(command);
         new GuiRobot().waitForEvent(() -> !getResultDisplay().getText().equals(AddCommand.MESSAGE_ADDING));
@@ -104,7 +104,7 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
         assertCommandFailure(AddCommand.COMMAND_WORD + " " + INDEX_FIRST_BOOK.getOneBased(),
                 AddCommand.MESSAGE_WRONG_ACTIVE_LIST);
 
-        /* Case: add from empty search result list -> rejected */
+        /* Case: addToFront from empty search result list -> rejected */
         executeCommand(SearchCommand.COMMAND_WORD + " !@#$%^&*()(*%$#@!#$%^&&*");
         new GuiRobot().waitForEvent(() -> !getResultDisplay().getText().equals(SearchCommand.MESSAGE_SEARCHING));
         model.updateSearchResults(new BookShelf());

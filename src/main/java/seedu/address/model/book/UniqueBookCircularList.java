@@ -2,20 +2,25 @@ package seedu.address.model.book;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Collections;
+import java.util.Iterator;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.commons.exceptions.DuplicateDataException;
 import seedu.address.commons.util.CollectionUtil;
+import seedu.address.model.UniqueList;
+import seedu.address.model.book.exceptions.DuplicateBookException;
 
 /**
- * Represents a unique collection of books, with maximum of a pre-set number of books.
- * When the limit is reached, the earliest added book is removed to add the new book.
- * Does not allow nulls.
+ * A list of items that enforces no nulls and uniqueness between its elements,
+ * with maximum of a pre-set number of elements.
+ * When the limit is reached, the earliest added element is removed to addToFront the new element.
  *
  * Supports a minimal set of operations.
  */
-public class UniqueBookCircularList {
+public class UniqueBookCircularList extends UniqueList<Book> {
 
-    private final ObservableList<Book> internalList = FXCollections.observableArrayList();
     private final int size;
 
     /**
@@ -26,33 +31,28 @@ public class UniqueBookCircularList {
     }
 
     /**
-     * Adds a book to the list if the book is not already in the list.
+     * Adds a book to the front of the list.
+     * Ignores the book if it exists in the list.
      * Removes the earliest added book if the list is full before adding the new book.
      */
-    public void add(Book toAdd) {
+    public void addToFront(Book toAdd) {
         requireNonNull(toAdd);
-        if (internalList.contains(toAdd)) {
+        if (contains(toAdd)) {
             return;
         }
         if (internalList.size() >= size) {
-            internalList.remove(0);
+            internalList.remove(size - 1);
         }
-        internalList.add(toAdd);
-    }
+        internalList.add(0, toAdd);
 
-    /**
-     * Returns the backing list as an unmodifiable {@code ObservableList}.
-     */
-    public ObservableList<Book> asObservableList() {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        return FXCollections.unmodifiableObservableList(internalList);
+        assert internalList.size() <= size;
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof UniqueBookCircularList // instanceof handles nulls
-                && this.internalList.equals(((UniqueBookCircularList) other).internalList));
+                && this.internalList.equals(((UniqueBookCircularList) other).internalList))
+                && this.size == ((UniqueBookCircularList) other).size;
     }
-
 }

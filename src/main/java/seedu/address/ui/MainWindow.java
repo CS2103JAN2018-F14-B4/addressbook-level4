@@ -18,9 +18,11 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.BookListSelectionChangedEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.RecentBooksSelectionChangedEvent;
 import seedu.address.commons.events.ui.SearchResultsSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.events.ui.SwitchToBookListRequestEvent;
+import seedu.address.commons.events.ui.SwitchToRecentBooksRequestEvent;
 import seedu.address.commons.events.ui.SwitchToSearchResultsRequestEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
@@ -42,6 +44,7 @@ public class MainWindow extends UiPart<Stage> {
     private BookDetailsPanel bookDetailsPanel;
     private BookListPanel bookListPanel;
     private SearchResultsPanel searchResultsPanel;
+    private RecentBooksPanel recentBooksPanel;
     private Config config;
     private UserPrefs prefs;
 
@@ -106,7 +109,7 @@ public class MainWindow extends UiPart<Stage> {
          * not work when the focus is in them because the key event is consumed by
          * the TextInputControl(s).
          *
-         * For now, we add following event filter to capture such key events and open
+         * For now, we addToFront following event filter to capture such key events and open
          * help window purposely so to support accelerators even when focus is
          * in CommandBox or ResultDisplay.
          */
@@ -127,9 +130,12 @@ public class MainWindow extends UiPart<Stage> {
 
         bookListPanel = new BookListPanel(logic.getFilteredBookList());
         searchResultsPanel = new SearchResultsPanel(logic.getSearchResultsList());
+        recentBooksPanel = new RecentBooksPanel(logic.getRecentBooksList());
         bookListPanelPlaceholder.getChildren().add(searchResultsPanel.getRoot());
         bookListPanelPlaceholder.getChildren().add(bookListPanel.getRoot());
+        bookListPanelPlaceholder.getChildren().add(recentBooksPanel.getRoot());
         searchResultsPanel.getRoot().setVisible(false);
+        recentBooksPanel.getRoot().setVisible(false);
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -200,8 +206,11 @@ public class MainWindow extends UiPart<Stage> {
     private void handleSwitchToBookListRequestEvent(SwitchToBookListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Platform.runLater(() -> {
+            bookDetailsPanel.clear();
+            bookListPanel.clearSelectionAndScrollToTop();
             bookListPanel.getRoot().setVisible(true);
             searchResultsPanel.getRoot().setVisible(false);
+            recentBooksPanel.getRoot().setVisible(false);
         });
     }
 
@@ -209,22 +218,42 @@ public class MainWindow extends UiPart<Stage> {
     private void handleSwitchToSearchResultsRequestEvent(SwitchToSearchResultsRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Platform.runLater(() -> {
-            searchResultsPanel.scrollToTop();
+            bookDetailsPanel.clear();
+            searchResultsPanel.clearSelectionAndScrollToTop();
             bookListPanel.getRoot().setVisible(false);
             searchResultsPanel.getRoot().setVisible(true);
+            recentBooksPanel.getRoot().setVisible(false);
+        });
+    }
+
+    @Subscribe
+    private void handleSwitchToRecentBooksRequestEvevnt(SwitchToRecentBooksRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        Platform.runLater(() -> {
+            bookDetailsPanel.clear();
+            recentBooksPanel.clearSelectionAndScrollToTop();
+            bookListPanel.getRoot().setVisible(false);
+            searchResultsPanel.getRoot().setVisible(false);
+            recentBooksPanel.getRoot().setVisible(true);
         });
     }
 
     @Subscribe
     private void handleSearchResultsSelectionChangedEvent(SearchResultsSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        bookListPanel.clearSelectionAndScrollToTop();
+        bookDetailsPanel.showBook(event.getNewSelection().book);
     }
 
     @Subscribe
     private void handleBookListSelectionChangedEvent(BookListSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        searchResultsPanel.clearSelectionAndScrollToTop();
+        bookDetailsPanel.showBook(event.getNewSelection().book);
+    }
+
+    @Subscribe
+    private void handleRecentBooksSelectionChangedEvent(RecentBooksSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        bookDetailsPanel.showBook(event.getNewSelection().book);
     }
 
 }
