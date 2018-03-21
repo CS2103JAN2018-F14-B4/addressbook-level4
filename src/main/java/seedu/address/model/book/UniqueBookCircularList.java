@@ -15,6 +15,10 @@ public class UniqueBookCircularList extends UniqueList<Book> {
 
     private final int size;
 
+    public UniqueBookCircularList() {
+        this.size = 50;
+    }
+
     /**
      * Constructs a list where the maximum number of books in the list is {@code size}.
      */

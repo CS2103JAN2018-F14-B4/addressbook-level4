@@ -22,7 +22,7 @@ public class UniqueBookCircularListTest {
 
     @Test
     public void addToFront_validBook_success() throws Exception {
-        UniqueBookCircularList uniqueBookCircularList = new UniqueBookCircularList(5);
+        UniqueBookCircularList uniqueBookCircularList = new UniqueBookCircularList();
         uniqueBookCircularList.addToFront(TypicalBooks.ARTEMIS);
         assertEquals(true, uniqueBookCircularList.asObservableList().contains(TypicalBooks.ARTEMIS));
     }

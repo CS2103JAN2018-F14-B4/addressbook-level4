@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -35,19 +36,30 @@ public class ModelManager extends ComponentManager implements Model {
     private final UniqueBookCircularList recentBooks;
 
     /**
-     * Initializes a ModelManager with the given bookShelf and userPrefs.
+     * Initializes a ModelManager with the given bookShelf, userPrefs and recentBooksList.
      */
-    public ModelManager(ReadOnlyBookShelf bookShelf, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyBookShelf bookShelf, UserPrefs userPrefs,
+                        ReadOnlyBookShelf recentBooksList) {
         super();
-        requireAllNonNull(bookShelf, userPrefs);
+        requireAllNonNull(bookShelf, userPrefs, recentBooksList);
 
-        logger.fine("Initializing with book shelf: " + bookShelf + " and user prefs " + userPrefs);
+        logger.fine("Initializing with book shelf: " + bookShelf + " and user prefs " + userPrefs
+                + " and recent books: " + recentBooksList);
 
         this.activeListType = ActiveListType.BOOK_SHELF;
         this.bookShelf = new BookShelf(bookShelf);
         this.filteredBooks = new FilteredList<>(this.bookShelf.getBookList());
         this.searchResults = new BookShelf();
-        this.recentBooks = new UniqueBookCircularList(50);
+
+        this.recentBooks = new UniqueBookCircularList();
+        List<Book> list = recentBooksList.getBookList();
+        for (int index = list.size() - 1; index >= 0; index--) {
+            this.recentBooks.addToFront(list.get(index));
+        }
+    }
+
+    public ModelManager(ReadOnlyBookShelf bookShelf, UserPrefs userPrefs) {
+        this(bookShelf, userPrefs, new BookShelf());
     }
 
     public ModelManager() {
@@ -138,6 +150,16 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public ObservableList<Book> getRecentBooksList() {
         return FXCollections.unmodifiableObservableList(recentBooks.asObservableList());
+    }
+
+    public ReadOnlyBookShelf getRecentBooksListAsBookShelf() {
+        BookShelf bookShelf = new BookShelf();
+        try {
+            bookShelf.setBooks(getRecentBooksList());
+        } catch (DuplicateBookException e) {
+            logger.warning("Should never throw DuplicateBookException");
+        }
+        return bookShelf;
     }
 
     @Override
