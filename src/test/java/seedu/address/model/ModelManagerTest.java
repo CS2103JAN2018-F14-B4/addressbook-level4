@@ -68,7 +68,7 @@ public class ModelManagerTest {
 
         // different recentBooks -> returns false
         modelManagerCopy.updateRecentBooks(BABYLON_ASHES);
-        //assertFalse(modelManager.equals(modelManagerCopy));
+        assertFalse(modelManager.equals(modelManagerCopy));
 
         // resets modelManager to initial state for upcoming tests
         modelManager.updateFilteredBookList(PREDICATE_SHOW_ALL_BOOKS);

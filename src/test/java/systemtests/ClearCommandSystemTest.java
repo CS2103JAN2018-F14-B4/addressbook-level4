@@ -7,6 +7,7 @@ import org.junit.Test;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.model.BookShelf;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 
@@ -14,7 +15,7 @@ public class ClearCommandSystemTest extends BibliotekSystemTest {
 
     @Test
     public void clear() {
-        final Model defaultModel = getModel();
+        Model model = getModel();
 
         /* Case: clear non-empty book shelf, command with leading spaces and trailing alphanumeric characters and
          * spaces -> cleared
@@ -25,17 +26,19 @@ public class ClearCommandSystemTest extends BibliotekSystemTest {
         /* Case: undo clearing book shelf -> original book shelf restored */
         String command = UndoCommand.COMMAND_WORD;
         String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
-        assertCommandSuccess(command,  expectedResultMessage, defaultModel);
+        assertCommandSuccess(command,  expectedResultMessage, model);
         assertSelectedBookListCardUnchanged();
 
         /* Case: selects first card in book list and clears book shelf -> cleared and no card selected */
         executeCommand(UndoCommand.COMMAND_WORD); // restores the original book shelf
         selectBook(Index.fromOneBased(1));
-        assertCommandSuccess(ClearCommand.COMMAND_WORD);
+        model = getModel();
+        model.resetData(new BookShelf());
+        assertCommandSuccess(ClearCommand.COMMAND_WORD, ClearCommand.MESSAGE_SUCCESS, model);
         assertSelectedBookListCardDeselected();
 
         /* Case: clear empty book shelf -> cleared */
-        assertCommandSuccess(ClearCommand.COMMAND_WORD);
+        assertCommandSuccess(ClearCommand.COMMAND_WORD, ClearCommand.MESSAGE_SUCCESS, model);
         assertSelectedBookListCardUnchanged();
 
         /* Case: mixed case command word -> rejected */

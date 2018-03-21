@@ -7,7 +7,7 @@ import seedu.address.model.UniqueList;
 /**
  * A list of items that enforces no nulls and uniqueness between its elements,
  * with maximum of a pre-set number of elements.
- * When the limit is reached, the earliest added element is removed to addToFront the new element.
+ * When the limit is reached, the earliest added element is removed to add the new element.
  *
  * Supports a minimal set of operations.
  */

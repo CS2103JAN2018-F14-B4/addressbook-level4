@@ -9,6 +9,7 @@ public class MainWindowHandle extends StageHandle {
 
     private final BookListPanelHandle bookListPanel;
     private final SearchResultsPanelHandle searchResultsPanel;
+    private final RecentBooksPanelHandle recentBooksPanel;
     private final ResultDisplayHandle resultDisplay;
     private final CommandBoxHandle commandBox;
     private final StatusBarFooterHandle statusBarFooter;
@@ -21,6 +22,7 @@ public class MainWindowHandle extends StageHandle {
         bookListPanel = new BookListPanelHandle(getChildNode(BookListPanelHandle.BOOK_LIST_VIEW_ID));
         searchResultsPanel =
                 new SearchResultsPanelHandle(getChildNode(SearchResultsPanelHandle.SEARCH_RESULTS_LIST_VIEW_ID));
+        recentBooksPanel = new RecentBooksPanelHandle(getChildNode(RecentBooksPanelHandle.RECENT_BOOKS_LIST_VIEW_ID));
         resultDisplay = new ResultDisplayHandle(getChildNode(ResultDisplayHandle.RESULT_DISPLAY_ID));
         commandBox = new CommandBoxHandle(getChildNode(CommandBoxHandle.COMMAND_INPUT_FIELD_ID));
         statusBarFooter = new StatusBarFooterHandle(getChildNode(StatusBarFooterHandle.STATUS_BAR_PLACEHOLDER));
@@ -34,6 +36,10 @@ public class MainWindowHandle extends StageHandle {
 
     public SearchResultsPanelHandle getSearchResultsPanel() {
         return searchResultsPanel;
+    }
+
+    public RecentBooksPanelHandle getRecentBooksPanel() {
+        return recentBooksPanel;
     }
 
     public ResultDisplayHandle getResultDisplay() {

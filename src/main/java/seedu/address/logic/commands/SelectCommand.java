@@ -6,6 +6,7 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.JumpToBookListIndexRequestEvent;
+import seedu.address.commons.events.ui.JumpToRecentBooksIndexRequestEvent;
 import seedu.address.commons.events.ui.JumpToSearchResultsIndexRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.book.Book;
@@ -56,6 +57,17 @@ public class SelectCommand extends Command {
 
             model.updateRecentBooks(searchResultsList.get(targetIndex.getZeroBased()));
             EventsCenter.getInstance().post(new JumpToSearchResultsIndexRequestEvent(targetIndex));
+            break;
+        }
+        case RECENT_BOOKS:
+        {
+            List<Book> recentBooksList = model.getRecentBooksList();
+
+            if (targetIndex.getZeroBased() >= recentBooksList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
+            }
+
+            EventsCenter.getInstance().post(new JumpToRecentBooksIndexRequestEvent(targetIndex));
             break;
         }
         default:

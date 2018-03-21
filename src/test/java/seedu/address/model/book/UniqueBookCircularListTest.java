@@ -70,7 +70,15 @@ public class UniqueBookCircularListTest {
     }
 
     @Test
-    public void equals_sameContent_returnsTrue() throws Exception {
+    public void equals_sameObject_returnsTrue() throws Exception {
+        UniqueBookCircularList uniqueBookCircularList = new UniqueBookCircularList(5);
+        uniqueBookCircularList.addToFront(TypicalBooks.ARTEMIS);
+        uniqueBookCircularList.addToFront(TypicalBooks.BABYLON_ASHES);
+        assertEquals(true, uniqueBookCircularList.equals(uniqueBookCircularList));
+    }
+
+    @Test
+    public void equals_sameContentSameOrder_returnsTrue() throws Exception {
         UniqueBookCircularList uniqueBookCircularList = new UniqueBookCircularList(5);
         uniqueBookCircularList.addToFront(TypicalBooks.ARTEMIS);
         uniqueBookCircularList.addToFront(TypicalBooks.BABYLON_ASHES);
@@ -78,6 +86,17 @@ public class UniqueBookCircularListTest {
         uniqueBookCircularList2.addToFront(TypicalBooks.ARTEMIS);
         uniqueBookCircularList2.addToFront(TypicalBooks.BABYLON_ASHES);
         assertEquals(true, uniqueBookCircularList.equals(uniqueBookCircularList2));
+    }
+
+    @Test
+    public void equals_sameContentDifferentOrder_returnsFalse() throws Exception {
+        UniqueBookCircularList uniqueBookCircularList = new UniqueBookCircularList(5);
+        uniqueBookCircularList.addToFront(TypicalBooks.ARTEMIS);
+        uniqueBookCircularList.addToFront(TypicalBooks.BABYLON_ASHES);
+        UniqueBookCircularList uniqueBookCircularList2 = new UniqueBookCircularList(5);
+        uniqueBookCircularList2.addToFront(TypicalBooks.BABYLON_ASHES);
+        uniqueBookCircularList2.addToFront(TypicalBooks.ARTEMIS);
+        assertEquals(false, uniqueBookCircularList.equals(uniqueBookCircularList2));
     }
 
 }

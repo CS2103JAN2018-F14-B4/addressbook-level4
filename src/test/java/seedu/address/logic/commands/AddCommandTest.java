@@ -78,7 +78,7 @@ public class AddCommandTest {
         ModelManager expectedModel = new ModelManager(model.getBookShelf(), new UserPrefs());
         prepareSearchResultListInModel(expectedModel);
 
-        // addToFront -> first book added
+        // add -> first book added
         addCommand.execute();
         undoStack.push(addCommand);
 
