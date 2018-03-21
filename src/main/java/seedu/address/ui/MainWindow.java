@@ -238,22 +238,4 @@ public class MainWindow extends UiPart<Stage> {
         });
     }
 
-    @Subscribe
-    private void handleSearchResultsSelectionChangedEvent(SearchResultsSelectionChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        bookDetailsPanel.showBook(event.getNewSelection().book);
-    }
-
-    @Subscribe
-    private void handleBookListSelectionChangedEvent(BookListSelectionChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        bookDetailsPanel.showBook(event.getNewSelection().book);
-    }
-
-    @Subscribe
-    private void handleRecentBooksSelectionChangedEvent(RecentBooksSelectionChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        bookDetailsPanel.showBook(event.getNewSelection().book);
-    }
-
 }

@@ -5,6 +5,9 @@ import static java.util.Objects.requireNonNull;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.SwitchToRecentBooksRequestEvent;
 
+/**
+ * Lists all recently selected books to the user.
+ */
 public class RecentCommand extends Command {
 
     public static final String COMMAND_WORD = "recent";

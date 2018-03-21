@@ -31,7 +31,7 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
         Model model = getModel();
         ObservableList<Book> searchResultsList = model.getSearchResultsList();
 
-        /* ------------------------ Perform addToFront operations on the search results list ----------------------------- */
+        /* --------------------- Perform addToFront operations on the search results list -------------------------- */
 
         /* Case: addToFront a book to a non-empty book shelf, command with leading spaces and trailing spaces -> added
          */
@@ -58,14 +58,14 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
 
         assertCommandSuccess(command, firstBook);
 
-        /* ------------------------ Perform addToFront operation while a book card is selected --------------------------- */
+        /* --------------------- Perform addToFront operation while a book card is selected ------------------------ */
 
         /* Case: selects first card in the book list, addToFront a book -> added, card selection remains unchanged */
         selectSearchResult(Index.fromOneBased(1));
         command = AddCommand.COMMAND_WORD + " 2";
         assertCommandSuccess(command, searchResultsList.get(1));
 
-        /* ----------------------------------- Perform invalid addToFront operations --------------------------------------- */
+        /* ------------------------------- Perform invalid addToFront operations ----------------------------------- */
 
         /* Case: addToFront a duplicate book -> rejected */
         model = getModel();

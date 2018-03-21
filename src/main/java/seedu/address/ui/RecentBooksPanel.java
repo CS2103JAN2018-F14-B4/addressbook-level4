@@ -19,6 +19,9 @@ import seedu.address.commons.events.ui.JumpToRecentBooksIndexRequestEvent;
 import seedu.address.commons.events.ui.RecentBooksSelectionChangedEvent;
 import seedu.address.model.book.Book;
 
+/**
+ * Panel containing the list of recently selected books.
+ */
 public class RecentBooksPanel extends UiPart<Region> {
     private static final String FXML = "RecentBooksPanel.fxml";
     private static final String INFO_TEXT = "Showing %s recently selected books.";
