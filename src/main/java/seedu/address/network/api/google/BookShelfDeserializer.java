@@ -45,7 +45,7 @@ public class BookShelfDeserializer extends StdDeserializer<BookShelf> {
         return bookShelf;
     }
 
-    /** Converts a JsonVolume into a Book, and addToFront it into the book shelf. */
+    /** Converts a JsonVolume into a Book, and add it into the book shelf. */
     private void convertAndAddBook(BookShelf bookShelf, JsonVolume volume, Gid gid) {
         JsonVolumeInfo volumeInfo = volume.volumeInfo;
         Isbn isbn = getIsbnFromIndustryIdentifiers(volumeInfo.industryIdentifiers);

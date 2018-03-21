@@ -123,7 +123,7 @@ public class CommandBox extends UiPart<Region> {
      */
     private void initHistory() {
         historySnapshot = logic.getHistorySnapshot();
-        // addToFront an empty string to represent the most-recent end of historySnapshot, to be shown to
+        // add an empty string to represent the most-recent end of historySnapshot, to be shown to
         // the user if she tries to navigate past the most-recent end of the historySnapshot.
         historySnapshot.add("");
     }
