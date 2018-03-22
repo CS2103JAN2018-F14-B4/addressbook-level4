@@ -7,25 +7,26 @@ import org.junit.Test;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.model.BookShelf;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
 
 public class ClearCommandSystemTest extends BibliotekSystemTest {
 
     @Test
     public void clear() {
-        final Model defaultModel = getModel();
+        Model model = getModel();
 
         /* Case: clear non-empty book shelf, command with leading spaces and trailing alphanumeric characters and
-         * spaces -> cleared
-         */
+         * spaces -> cleared */
         assertCommandSuccess("   " + ClearCommand.COMMAND_WORD + " ab12   ");
         assertSelectedBookListCardUnchanged();
 
         /* Case: undo clearing book shelf -> original book shelf restored */
         String command = UndoCommand.COMMAND_WORD;
         String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
-        assertCommandSuccess(command,  expectedResultMessage, defaultModel);
+        assertCommandSuccess(command,  expectedResultMessage, model);
         assertSelectedBookListCardUnchanged();
 
         /* Case: selects first card in book list and clears book shelf -> cleared and no card selected */
@@ -51,7 +52,8 @@ public class ClearCommandSystemTest extends BibliotekSystemTest {
      * @see BibliotekSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandSuccess(String command) {
-        assertCommandSuccess(command, ClearCommand.MESSAGE_SUCCESS, new ModelManager());
+        assertCommandSuccess(command, ClearCommand.MESSAGE_SUCCESS,
+                new ModelManager(new BookShelf(), new UserPrefs(), getModel().getRecentBooksListAsBookShelf()));
     }
 
     /**
@@ -66,22 +68,4 @@ public class ClearCommandSystemTest extends BibliotekSystemTest {
         assertStatusBarUnchangedExceptSyncStatus();
     }
 
-    /**
-     * Executes {@code command} and verifies that the command box displays {@code command}, the result display
-     * box displays {@code expectedResultMessage} and the model related components equal to the current model.
-     * These verifications are done by
-     * {@code BibliotekSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * Also verifies that the browser url, selected card and status bar remain unchanged, and the command box has the
-     * error style.
-     * @see BibliotekSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-     */
-    private void assertCommandFailure(String command, String expectedResultMessage) {
-        Model expectedModel = getModel();
-
-        executeCommand(command);
-        assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
-        assertSelectedBookListCardUnchanged();
-        assertCommandBoxShowsErrorStyle();
-        assertStatusBarUnchanged();
-    }
 }
