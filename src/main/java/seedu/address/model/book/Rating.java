@@ -8,7 +8,7 @@ import static java.util.Objects.requireNonNull;
  */
 public class Rating {
 
-    public final Integer rating;
+    public final Integer value;
 
     /**
      * Constructs a {@code Rating}.
@@ -17,24 +17,24 @@ public class Rating {
      */
     public Rating(Integer rating) {
         requireNonNull(rating);
-        this.rating = rating;
+        this.value = rating;
     }
 
     @Override
     public String toString() {
-        return rating.toString();
+        return value.toString();
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Rating // instanceof handles nulls
-                && this.rating.equals(((Rating) other).rating)); // state check
+                && this.value.equals(((Rating) other).value)); // state check
     }
 
     @Override
     public int hashCode() {
-        return rating.hashCode();
+        return value.hashCode();
     }
 
 }

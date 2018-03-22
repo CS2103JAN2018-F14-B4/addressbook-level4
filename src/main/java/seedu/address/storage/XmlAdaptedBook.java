@@ -102,7 +102,7 @@ public class XmlAdaptedBook {
         isbn = source.getIsbn().isbn;
         title = source.getTitle().title;
         description = source.getDescription().description;
-        rating = source.getRating().rating;
+        rating = source.getRating().value;
         authors = new ArrayList<>();
         for (Author author : source.getAuthors()) {
             authors.add(new XmlAdaptedAuthor(author));

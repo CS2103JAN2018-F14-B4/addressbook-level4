@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_RATING;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_BOOK;
 
 import org.junit.Rule;
@@ -16,8 +17,10 @@ import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.RateCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.book.Rating;
 
 public class BookShelfParserTest {
     @Rule
@@ -37,6 +40,12 @@ public class BookShelfParserTest {
         assertEquals(new DeleteCommand(INDEX_FIRST_BOOK), command);
     }
 
+    public void parseCommand_remark() throws Exception {
+        final Rating rating = new Rating(-1);
+        RateCommand command = (RateCommand) parser.parseCommand(RateCommand.COMMAND_WORD + ""
+        + INDEX_FIRST_BOOK.getOneBased() + " " + PREFIX_RATING + rating.value);
+        assertEquals(new RateCommand(INDEX_FIRST_BOOK, rating), command);
+    }
     @Test
     public void parseCommand_exit() throws Exception {
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD) instanceof ExitCommand);
