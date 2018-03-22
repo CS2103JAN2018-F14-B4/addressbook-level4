@@ -86,7 +86,7 @@ public class RateCommand extends UndoableCommand {
      * {@code bookToEdit}.
      */
     private String generateSuccessMessage(Book bookToEdit) {
-        String message = !(rating.value == -1) ? MESSAGE_ADD_RATING_SUCCESS : MESSAGE_DELETE_RATING_SUCCESS;
+        String message = (rating.value != -1) ? MESSAGE_ADD_RATING_SUCCESS : MESSAGE_DELETE_RATING_SUCCESS;
         return String.format(message, bookToEdit);
     }
 
