@@ -28,13 +28,13 @@ public class UniqueBookCircularList extends UniqueList<Book> {
 
     /**
      * Adds a book to the front of the list.
-     * Ignores the book if it exists in the list.
+     * Moves the book to the front of the list if it exists in the list.
      * Removes the earliest added book if the list is full before adding the new book.
      */
     public void addToFront(Book toAdd) {
         requireNonNull(toAdd);
         if (contains(toAdd)) {
-            return;
+            internalList.remove(toAdd);
         }
         if (internalList.size() >= size) {
             internalList.remove(size - 1);

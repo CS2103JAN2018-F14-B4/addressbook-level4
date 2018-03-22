@@ -49,6 +49,19 @@ public class UniqueBookCircularListTest {
     }
 
     @Test
+    public void addToFront_repeatedBookBroughtToFront_success() throws Exception {
+        UniqueBookCircularList uniqueBookCircularList = new UniqueBookCircularList(5);
+        uniqueBookCircularList.addToFront(TypicalBooks.ARTEMIS);
+        uniqueBookCircularList.addToFront(TypicalBooks.BABYLON_ASHES);
+        uniqueBookCircularList.addToFront(TypicalBooks.ARTEMIS);
+
+        ObservableList<Book> list = uniqueBookCircularList.asObservableList();
+        assertEquals(2, list.size());
+        assertEquals(TypicalBooks.ARTEMIS, list.get(0));
+        assertEquals(TypicalBooks.BABYLON_ASHES, list.get(1));
+    }
+
+    @Test
     public void addToFront_tooManyBooks_success() throws Exception {
         UniqueBookCircularList uniqueBookCircularList = new UniqueBookCircularList(2);
         uniqueBookCircularList.addToFront(TypicalBooks.ARTEMIS);
