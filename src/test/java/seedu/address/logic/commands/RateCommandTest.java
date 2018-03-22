@@ -1,13 +1,10 @@
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_RATING_ARTEMIS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_RATING_BABYLON;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.prepareUndoCommand;
 import static seedu.address.logic.commands.CommandTestUtil.showBookAtIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_BOOK;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_BOOK;
@@ -19,13 +16,10 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoStack;
-import seedu.address.model.BookShelf;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.book.Book;
 import seedu.address.model.book.Rating;
-import seedu.address.testutil.BookBuilder;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for RateCommand.
@@ -35,55 +29,6 @@ public class RateCommandTest {
     public static final int Rating_STUB = -1;
 
     private Model model = new ModelManager(getTypicalBookShelf(), new UserPrefs());
-
-    @Test
-    public void execute_addRatingUnfilteredList_success() throws Exception {
-        Book firstBook = model.getFilteredBookList().get(INDEX_FIRST_BOOK.getZeroBased());
-        Book editedBook = new BookBuilder(firstBook).withRating(Rating_STUB).build();
-
-        RateCommand RateCommand = prepareCommand(INDEX_FIRST_BOOK, editedBook.getRating().value);
-
-        String expectedMessage = String.format(RateCommand.MESSAGE_ADD_RATING_SUCCESS, editedBook);
-
-        Model expectedModel = new ModelManager(new BookShelf(model.getBookShelf()), new UserPrefs());
-        expectedModel.updateBook(firstBook, editedBook);
-
-        assertCommandSuccess(RateCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void execute_deleteRatingUnfilteredList_success() throws Exception {
-        Book firstBook = model.getFilteredBookList().get(INDEX_FIRST_BOOK.getZeroBased());
-        Book editedBook = new BookBuilder(firstBook).withRating(-1).build();
-
-        RateCommand RateCommand = prepareCommand(INDEX_FIRST_BOOK,
-                Integer.parseInt(editedBook.getRating().toString()));
-
-        String expectedMessage = String.format(RateCommand.MESSAGE_DELETE_RATING_SUCCESS, editedBook);
-
-        Model expectedModel = new ModelManager(new BookShelf(model.getBookShelf()), new UserPrefs());
-        expectedModel.updateBook(firstBook, editedBook);
-
-        assertCommandSuccess(RateCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void execute_filteredList_success() throws Exception {
-        showBookAtIndex(model, INDEX_FIRST_BOOK);
-
-        Book firstBook = model.getFilteredBookList().get(INDEX_FIRST_BOOK.getZeroBased());
-        Book editedBook = new BookBuilder(model.getFilteredBookList().get(INDEX_FIRST_BOOK.getZeroBased()))
-                .withRating(Rating_STUB).build();
-
-        RateCommand RateCommand = prepareCommand(INDEX_FIRST_BOOK, editedBook.getRating().value);
-
-        String expectedMessage = String.format(RateCommand.MESSAGE_ADD_RATING_SUCCESS, editedBook);
-
-        Model expectedModel = new ModelManager(new BookShelf(model.getBookShelf()), new UserPrefs());
-        expectedModel.updateBook(firstBook, editedBook);
-
-        assertCommandSuccess(RateCommand, model, expectedMessage, expectedModel);
-    }
 
     @Test
     public void execute_invalidBookIndexUnfilteredList_failure() throws Exception {

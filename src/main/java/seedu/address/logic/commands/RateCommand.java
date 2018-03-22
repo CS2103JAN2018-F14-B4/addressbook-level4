@@ -11,8 +11,8 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.book.Book;
 import seedu.address.model.book.Rating;
-import seedu.address.model.book.exceptions.DuplicateBookException;
 import seedu.address.model.book.exceptions.BookNotFoundException;
+import seedu.address.model.book.exceptions.DuplicateBookException;
 
 /**
  * Changes the rating of an existing Book in the address book.
@@ -27,7 +27,7 @@ public class RateCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer) "
             + PREFIX_RATING + "[RATING]\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_RATING + "5";
+            + PREFIX_RATING + "-1";
 
     public static final String MESSAGE_ADD_RATING_SUCCESS = "Added rating to Book: %1$s";
     public static final String MESSAGE_DELETE_RATING_SUCCESS = "Removed rating from Book: %1$s";
@@ -35,7 +35,7 @@ public class RateCommand extends UndoableCommand {
     private final Index index;
     private final Rating rating;
 
-    private Book BookToEdit;
+    private Book bookToEdit;
     private Book editedBook;
 
     /**
@@ -52,11 +52,11 @@ public class RateCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        requireNonNull(BookToEdit);
+        requireNonNull(bookToEdit);
         requireNonNull(editedBook);
 
         try {
-            model.updateBook(BookToEdit, editedBook);
+            model.updateBook(bookToEdit, editedBook);
         } catch (DuplicateBookException dpe) {
             throw new AssertionError("Changing target Book's rating should not result in a duplicate");
         } catch (BookNotFoundException pnfe) {
@@ -75,19 +75,19 @@ public class RateCommand extends UndoableCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
         }
 
-        BookToEdit = lastShownList.get(index.getZeroBased());
-        editedBook = new Book(BookToEdit.getGid(), BookToEdit.getIsbn(), BookToEdit.getAuthors(),
-                BookToEdit.getTitle(),BookToEdit.getCategories(), BookToEdit.getDescription(), rating,
-                BookToEdit.getPublisher(), BookToEdit.getPublicationDate());
+        bookToEdit = lastShownList.get(index.getZeroBased());
+        editedBook = new Book(bookToEdit.getGid(), bookToEdit.getIsbn(), bookToEdit.getAuthors(),
+                bookToEdit.getTitle(), bookToEdit.getCategories(), bookToEdit.getDescription(), rating,
+                bookToEdit.getPublisher(), bookToEdit.getPublicationDate());
     }
 
     /**
      * Generates a command execution success message based on whether the rating is added to or removed from
-     * {@code BookToEdit}.
+     * {@code bookToEdit}.
      */
-    private String generateSuccessMessage(Book BookToEdit) {
+    private String generateSuccessMessage(Book bookToEdit) {
         String message = !(rating.value == -1) ? MESSAGE_ADD_RATING_SUCCESS : MESSAGE_DELETE_RATING_SUCCESS;
-        return String.format(message, BookToEdit);
+        return String.format(message, bookToEdit);
     }
 
     @Override

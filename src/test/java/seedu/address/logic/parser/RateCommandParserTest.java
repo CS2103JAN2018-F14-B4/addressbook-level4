@@ -14,7 +14,7 @@ import seedu.address.model.book.Rating;
 
 public class RateCommandParserTest {
     private RateCommandParser parser = new RateCommandParser();
-    private final int nonEmptyRating = -1;
+    private final int nonEmptyRating = 5;
 
     @Test
     public void parse_indexSpecified_success() throws Exception {
@@ -25,7 +25,7 @@ public class RateCommandParserTest {
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // no RATING
-        userInput = targetIndex.getOneBased() + " " + PREFIX_RATING.toString();
+        userInput = targetIndex.getOneBased() + " " + PREFIX_RATING.toString() + -1;
         expectedCommand = new RateCommand(INDEX_FIRST_BOOK, new Rating(-1));
         assertParseSuccess(parser, userInput, expectedCommand);
     }

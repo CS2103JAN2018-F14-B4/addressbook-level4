@@ -30,7 +30,7 @@ public class RateCommandParser implements Parser<RateCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RateCommand.MESSAGE_USAGE));
         }
 
-        Integer rating = Integer.valueOf(argMultimap.getValue(PREFIX_RATING).orElse(""));
+        int rating = Integer.valueOf(argMultimap.getValue(PREFIX_RATING).orElse(""));
 
         return new RateCommand(index, new Rating(rating));
     }

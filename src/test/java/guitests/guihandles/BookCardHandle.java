@@ -53,7 +53,9 @@ public class BookCardHandle extends NodeHandle<Node> {
         return titleLabel.getText();
     }
 
-    public String getRating() { return ratingLable1.getText(); }
+    public String getRating() {
+        return ratingLable1.getText();
+    }
 
     public List<String> getAuthors() {
         return authorsLabel
