@@ -426,7 +426,7 @@ order when converting from other data structures such as `BookShelf`.
 ** Pros: Users can look up books selected in the last session.
 ** Cons: Extra file dependency and data clutter if unused.
 * **Alternative 2:** Don't store recently selected books.
-** Pros: Eliminate the need to modify Storage component.
+** Pros: Eliminate the need to modify `Storage` component.
 ** Cons: Recently selected books list is limited to selections in the current session.
 
 ===== Aspect: Type of selected books that are shown
@@ -445,7 +445,7 @@ by only showing these books.
 * **Alternative 1 (current choice):** Make a new type of book list `UniqueBookCircularList`.
 ** Pros: Can make the size limit and add mechanism as a property of the new list.
 ** Cons: Have to deal with multiple data structures to hold data for different purposes.
-* **Alternative 2:** Use BookShelf.
+* **Alternative 2:** Use `BookShelf`.
 ** Pros: Re-use of existing data structure.
 ** Cons: BookShelf supports functionalities that are not needed to store recently selected books.
 
