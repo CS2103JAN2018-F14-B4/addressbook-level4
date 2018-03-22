@@ -40,10 +40,10 @@ public class BookShelfParserTest {
         assertEquals(new DeleteCommand(INDEX_FIRST_BOOK), command);
     }
     @Test
-    public void parseCommand_remark() throws Exception {
+    public void parseCommand_rate() throws Exception {
         final Rating rating = new Rating(-1);
-        RateCommand command = (RateCommand) parser.parseCommand(RateCommand.COMMAND_WORD + ""
-            + INDEX_FIRST_BOOK.getOneBased() + " " + PREFIX_RATING + rating.value);
+        RateCommand command = (RateCommand) parser.parseCommand(RateCommand.COMMAND_WORD + " "
+                + INDEX_FIRST_BOOK.getOneBased() + " " + PREFIX_RATING + rating.value);
         assertEquals(new RateCommand(INDEX_FIRST_BOOK, rating), command);
     }
     @Test
