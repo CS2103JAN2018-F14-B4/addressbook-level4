@@ -50,7 +50,7 @@ public class ModelHelper {
      */
     public static void setRecentBooks(Model model, List<Book> results) {
         for (int index = results.size() - 1; index >= 0; index--) {
-            model.updateRecentBooks(results.get(index));
+            model.addRecentBook(results.get(index));
         }
     }
 

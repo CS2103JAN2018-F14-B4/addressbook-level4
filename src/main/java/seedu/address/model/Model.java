@@ -63,9 +63,6 @@ public interface Model {
     /** Returns the recently selected books as a ReadOnlyBookShelf*/
     ReadOnlyBookShelf getRecentBooksListAsBookShelf();
 
-    /**
-     * Updates the recently selected books list.
-     * @param newBook newly selected book.
-     */
-    void updateRecentBooks(Book newBook);
+    /** Add a recently selected book. */
+    void addRecentBook(Book newBook);
 }

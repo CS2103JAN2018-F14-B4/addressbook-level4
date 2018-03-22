@@ -84,8 +84,8 @@ public class SelectCommandTest {
     public void execute_validIndexRecentBooksList_success() throws Exception {
         model = new ModelManager();
         model.setActiveListType(ActiveListType.RECENT_BOOKS);
-        model.updateRecentBooks(TypicalBooks.ARTEMIS);
-        model.updateRecentBooks(TypicalBooks.BABYLON_ASHES);
+        model.addRecentBook(TypicalBooks.ARTEMIS);
+        model.addRecentBook(TypicalBooks.BABYLON_ASHES);
         assertExecutionSuccess(INDEX_FIRST_BOOK);
         assertExecutionSuccess(INDEX_SECOND_BOOK);
     }
@@ -115,7 +115,7 @@ public class SelectCommandTest {
     public void execute_invalidIndexRecentBooksList_failure() throws Exception {
         model = new ModelManager();
         model.setActiveListType(ActiveListType.RECENT_BOOKS);
-        model.updateRecentBooks(TypicalBooks.ARTEMIS);
+        model.addRecentBook(TypicalBooks.ARTEMIS);
         assertExecutionFailure(INDEX_SECOND_BOOK, Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
     }
 

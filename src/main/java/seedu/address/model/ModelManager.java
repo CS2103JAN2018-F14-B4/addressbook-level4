@@ -163,7 +163,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void updateRecentBooks(Book newBook) {
+    public void addRecentBook(Book newBook) {
         requireNonNull(newBook);
         recentBooks.addToFront(newBook);
     }
@@ -192,12 +192,12 @@ public class ModelManager extends ComponentManager implements Model {
     @Subscribe
     private void handleSearchResultsSelectionChangedEvent(SearchResultsSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        updateRecentBooks(event.getNewSelection().book);
+        addRecentBook(event.getNewSelection().book);
     }
 
     @Subscribe
     private void handleBookListSelectionChangedEvent(BookListSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        updateRecentBooks(event.getNewSelection().book);
+        addRecentBook(event.getNewSelection().book);
     }
 }

@@ -48,8 +48,12 @@ public class BookDetailsPanel extends UiPart<Region> {
         getRoot().setVisible(false);
     }
 
+    private void scrollToTop() {
+        scrollPane.setVvalue(0);
+    }
+
     /** Update this panel to show details about the specified book. */
-    public void showBook(Book book) {
+    private void showBook(Book book) {
         Platform.runLater(() -> {
             title.setText(book.getTitle().toString());
             isbn.setText(book.getIsbn().toString());
@@ -64,22 +68,23 @@ public class BookDetailsPanel extends UiPart<Region> {
             book.getCategories().forEach(category -> categories.getChildren()
                     .add(new Label(category.toString())));
 
+            scrollToTop();
             getRoot().setVisible(true);
         });
     }
 
-    public void clear() {
+    protected void clear() {
         getRoot().setVisible(false);
     }
 
     @Subscribe
-    private void handleSearchResultsSelectionChangedEvent(SearchResultsSelectionChangedEvent event) {
+    private void handleBookListSelectionChangedEvent(BookListSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         showBook(event.getNewSelection().book);
     }
 
     @Subscribe
-    private void handleBookListSelectionChangedEvent(BookListSelectionChangedEvent event) {
+    private void handleSearchResultsSelectionChangedEvent(SearchResultsSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         showBook(event.getNewSelection().book);
     }

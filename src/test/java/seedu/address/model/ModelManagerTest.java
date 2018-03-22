@@ -47,8 +47,8 @@ public class ModelManagerTest {
         assertTrue(modelManager.equals(modelManagerCopy));
 
         // same values -> returns true
-        modelManager.updateRecentBooks(ARTEMIS);
-        modelManagerCopy.updateRecentBooks(ARTEMIS);
+        modelManager.addRecentBook(ARTEMIS);
+        modelManagerCopy.addRecentBook(ARTEMIS);
         assertTrue(modelManager.equals(modelManagerCopy));
 
         // same object -> returns true
@@ -67,7 +67,7 @@ public class ModelManagerTest {
         assertFalse(modelManager.equals(new ModelManager(bookShelf, userPrefs)));
 
         // different recentBooks -> returns false
-        modelManagerCopy.updateRecentBooks(BABYLON_ASHES);
+        modelManagerCopy.addRecentBook(BABYLON_ASHES);
         assertFalse(modelManager.equals(modelManagerCopy));
 
         // resets modelManager to initial state for upcoming tests

@@ -11,7 +11,7 @@ import seedu.address.commons.events.ui.SwitchToRecentBooksRequestEvent;
 public class RecentCommand extends Command {
 
     public static final String COMMAND_WORD = "recent";
-    public static final String MESSAGE_SUCCESS = "Recently selected books have been listed";
+    public static final String MESSAGE_SUCCESS = "Listed all recently selected books.";
 
     @Override
     public CommandResult execute() {

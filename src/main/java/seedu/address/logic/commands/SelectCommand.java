@@ -43,7 +43,7 @@ public class SelectCommand extends Command {
                 throw new CommandException(Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
             }
 
-            model.updateRecentBooks(filteredBookList.get(targetIndex.getZeroBased()));
+            model.addRecentBook(filteredBookList.get(targetIndex.getZeroBased()));
             EventsCenter.getInstance().post(new JumpToBookListIndexRequestEvent(targetIndex));
             break;
         }
@@ -55,7 +55,7 @@ public class SelectCommand extends Command {
                 throw new CommandException(Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
             }
 
-            model.updateRecentBooks(searchResultsList.get(targetIndex.getZeroBased()));
+            model.addRecentBook(searchResultsList.get(targetIndex.getZeroBased()));
             EventsCenter.getInstance().post(new JumpToSearchResultsIndexRequestEvent(targetIndex));
             break;
         }

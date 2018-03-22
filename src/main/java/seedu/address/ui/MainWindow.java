@@ -242,7 +242,7 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     @Subscribe
-    private void handleSwitchToRecentBooksRequestEvevnt(SwitchToRecentBooksRequestEvent event) {
+    private void handleSwitchToRecentBooksRequestEvent(SwitchToRecentBooksRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Platform.runLater(() -> {
             bookDetailsPanel.clear();

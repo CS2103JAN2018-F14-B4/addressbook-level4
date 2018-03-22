@@ -112,7 +112,7 @@ public class SelectCommandSystemTest extends BibliotekSystemTest {
         String expectedResultMessage = String.format(
                 MESSAGE_SELECT_BOOK_SUCCESS, expectedSelectedCardIndex.getOneBased());
         int preExecutionSelectedCardIndex = getBookListPanel().getSelectedCardIndex();
-        expectedModel.updateRecentBooks(expectedModel.getFilteredBookList().get(
+        expectedModel.addRecentBook(expectedModel.getFilteredBookList().get(
                 expectedSelectedCardIndex.getZeroBased()));
 
         executeCommand(command);
@@ -148,7 +148,7 @@ public class SelectCommandSystemTest extends BibliotekSystemTest {
         String expectedResultMessage = String.format(
                 MESSAGE_SELECT_BOOK_SUCCESS, expectedSelectedCardIndex.getOneBased());
         int preExecutionSelectedCardIndex = getSearchResultsPanel().getSelectedCardIndex();
-        expectedModel.updateRecentBooks(expectedModel.getSearchResultsList().get(
+        expectedModel.addRecentBook(expectedModel.getSearchResultsList().get(
                 expectedSelectedCardIndex.getZeroBased()));
 
         executeCommand(command);

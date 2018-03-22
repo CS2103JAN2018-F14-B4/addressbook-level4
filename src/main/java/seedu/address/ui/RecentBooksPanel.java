@@ -25,7 +25,7 @@ import seedu.address.model.book.Book;
 public class RecentBooksPanel extends UiPart<Region> {
     private static final String FXML = "RecentBooksPanel.fxml";
     private static final String INFO_TEXT = "Showing %s recently selected books.";
-    private final Logger logger = LogsCenter.getLogger(SearchResultsPanel.class);
+    private final Logger logger = LogsCenter.getLogger(RecentBooksPanel.class);
 
     @FXML
     private Label infoLabel;
