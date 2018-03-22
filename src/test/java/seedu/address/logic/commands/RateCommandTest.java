@@ -6,9 +6,9 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_RATING_ARTEMIS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_RATING_BABYLON;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.showBookAtIndex;
+import static seedu.address.testutil.TypicalBooks.getTypicalBookShelf;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_BOOK;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_BOOK;
-import static seedu.address.testutil.TypicalBooks.getTypicalBookShelf;
 
 import org.junit.Test;
 
@@ -26,16 +26,16 @@ import seedu.address.model.book.Rating;
  */
 public class RateCommandTest {
 
-    public static final int Rating_STUB = -1;
+    public static final int RATING_STUB = -1;
 
     private Model model = new ModelManager(getTypicalBookShelf(), new UserPrefs());
 
     @Test
     public void execute_invalidBookIndexUnfilteredList_failure() throws Exception {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredBookList().size() + 1);
-        RateCommand RateCommand = prepareCommand(outOfBoundIndex, VALID_RATING_BABYLON);
+        RateCommand rateCommand = prepareCommand(outOfBoundIndex, VALID_RATING_BABYLON);
 
-        assertCommandFailure(RateCommand, model, Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
+        assertCommandFailure(rateCommand, model, Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
     }
 
     /**
@@ -49,9 +49,9 @@ public class RateCommandTest {
         // ensures that outOfBoundIndex is still in bounds of address book list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getBookShelf().getBookList().size());
 
-        RateCommand RateCommand = prepareCommand(outOfBoundIndex, VALID_RATING_BABYLON);
+        RateCommand rateCommand = prepareCommand(outOfBoundIndex, VALID_RATING_BABYLON);
 
-        assertCommandFailure(RateCommand, model, Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
+        assertCommandFailure(rateCommand, model, Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
     }
 
     @Test
@@ -81,9 +81,9 @@ public class RateCommandTest {
     /**
      * Returns an {@code RateCommand} with parameters {@code index} and {@code Rating}.
      */
-    private RateCommand prepareCommand(Index index, int Rating) {
-        RateCommand RateCommand = new RateCommand(index, new Rating(Rating));
-        RateCommand.setData(model, new CommandHistory(), new UndoStack());
-        return RateCommand;
+    private RateCommand prepareCommand(Index index, int rating) {
+        RateCommand rateCommand = new RateCommand(index, new Rating(rating));
+        rateCommand.setData(model, new CommandHistory(), new UndoStack());
+        return rateCommand;
     }
 }

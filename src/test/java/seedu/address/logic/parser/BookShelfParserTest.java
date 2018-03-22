@@ -39,11 +39,11 @@ public class BookShelfParserTest {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(DeleteCommand.COMMAND_WORD + " 1");
         assertEquals(new DeleteCommand(INDEX_FIRST_BOOK), command);
     }
-
+    @Test
     public void parseCommand_remark() throws Exception {
         final Rating rating = new Rating(-1);
         RateCommand command = (RateCommand) parser.parseCommand(RateCommand.COMMAND_WORD + ""
-        + INDEX_FIRST_BOOK.getOneBased() + " " + PREFIX_RATING + rating.value);
+            + INDEX_FIRST_BOOK.getOneBased() + " " + PREFIX_RATING + rating.value);
         assertEquals(new RateCommand(INDEX_FIRST_BOOK, rating), command);
     }
     @Test
