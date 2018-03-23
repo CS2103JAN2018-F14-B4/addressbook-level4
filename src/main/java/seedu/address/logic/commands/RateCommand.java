@@ -1,9 +1,7 @@
 package seedu.address.logic.commands;
 
-import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_RATING;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_BOOKS;
 
 import java.util.List;
 
@@ -46,7 +44,7 @@ public class RateCommand extends UndoableCommand {
      * @param rating of the book to be updated to
      */
     public RateCommand(Index index, Rating rating) {
-        requireAllNonNull(index,rating);
+        requireAllNonNull(index, rating);
 
         this.index = index;
         this.rating = rating;
