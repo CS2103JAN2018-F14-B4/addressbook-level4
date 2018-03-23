@@ -36,6 +36,7 @@
           <Label styleClass="label-muted" text="Categories" GridPane.rowIndex="2"/>
           <Label styleClass="label-muted" text="Publisher" GridPane.rowIndex="3"/>
           <Label styleClass="label-muted" text="Publication Date" GridPane.rowIndex="4"/>
+          <Label styleClass="label-muted" text="Rating" GridPane.rowIndex="5"/>
           <Label fx:id="isbn" text="\$isbn" GridPane.columnIndex="1"/>
           <FlowPane fx:id="authors" alignment="CENTER_LEFT" hgap="7.0" nodeOrientation="LEFT_TO_RIGHT"
                     styleClass="pills-authors" vgap="5.0" GridPane.columnIndex="1" GridPane.rowIndex="1"
@@ -47,6 +48,7 @@
           </FlowPane>
           <Label fx:id="publisher" text="\$publisher" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
           <Label fx:id="publicationDate" text="\$publicationDate" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+          <Label fx:id="rating" text="\$rating" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
         </children>
         <VBox.margin>
           <Insets top="12.0"/>
