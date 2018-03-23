@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_RATING;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_BOOKS;
 
@@ -25,7 +26,7 @@ public class RateCommand extends UndoableCommand {
             + "by the index number used in the last book listing. "
             + "Existing rating will be overwritten by the input.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + PREFIX_RATING + "[RATING]\n"
+            + PREFIX_RATING + "RATING\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_RATING + "-1";
 
@@ -43,8 +44,7 @@ public class RateCommand extends UndoableCommand {
      * @param rating of the book to be updated to
      */
     public RateCommand(Index index, Rating rating) {
-        requireNonNull(index);
-        requireNonNull(rating);
+        requireAllNonNull(index,rating);
 
         this.index = index;
         this.rating = rating;
@@ -52,8 +52,7 @@ public class RateCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        requireNonNull(bookToEdit);
-        requireNonNull(editedBook);
+        requireAllNonNull(bookToEdit, editedBook);
 
         try {
             model.updateBook(bookToEdit, editedBook);
@@ -63,7 +62,6 @@ public class RateCommand extends UndoableCommand {
             throw new AssertionError("The target Book cannot be missing");
         }
         model.updateFilteredBookList(PREDICATE_SHOW_ALL_BOOKS);
-
         return new CommandResult(generateSuccessMessage(editedBook));
     }
 

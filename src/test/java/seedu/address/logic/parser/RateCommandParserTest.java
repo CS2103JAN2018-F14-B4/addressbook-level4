@@ -14,19 +14,20 @@ import seedu.address.model.book.Rating;
 
 public class RateCommandParserTest {
     private RateCommandParser parser = new RateCommandParser();
-    private final int nonEmptyRating = 5;
+    private final int NON_EMPTY_RATING = 5;
+    private final int EMPTY_RATING = -1;
 
     @Test
     public void parse_indexSpecified_success() throws Exception {
-        // have RATING
+        // add rating
         Index targetIndex = INDEX_FIRST_BOOK;
-        String userInput = targetIndex.getOneBased() + " " + PREFIX_RATING.toString() + nonEmptyRating;
-        RateCommand expectedCommand = new RateCommand(INDEX_FIRST_BOOK, new Rating(nonEmptyRating));
+        String userInput = targetIndex.getOneBased() + " " + PREFIX_RATING + NON_EMPTY_RATING;
+        RateCommand expectedCommand = new RateCommand(INDEX_FIRST_BOOK, new Rating(NON_EMPTY_RATING));
         assertParseSuccess(parser, userInput, expectedCommand);
 
-        // no RATING
-        userInput = targetIndex.getOneBased() + " " + PREFIX_RATING.toString() + -1;
-        expectedCommand = new RateCommand(INDEX_FIRST_BOOK, new Rating(-1));
+        // delete rating
+        userInput = targetIndex.getOneBased() + " " + PREFIX_RATING + EMPTY_RATING;
+        expectedCommand = new RateCommand(INDEX_FIRST_BOOK, new Rating(EMPTY_RATING));
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 
@@ -38,6 +39,6 @@ public class RateCommandParserTest {
         assertParseFailure(parser, RateCommand.COMMAND_WORD, expectedMessage);
 
         // no index
-        assertParseFailure(parser, RateCommand.COMMAND_WORD + " " + nonEmptyRating, expectedMessage);
+        assertParseFailure(parser, RateCommand.COMMAND_WORD + " " + NON_EMPTY_RATING, expectedMessage);
     }
 }

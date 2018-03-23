@@ -366,7 +366,7 @@ When `rate` command is entered, eventually `SwitchToRateBooksRequestEvent` is po
 
 The user performs `select 1` to view information on the 1st book in the book shelf. User can see the default rating is -1.
 
-The user performs `rate 1 r/ 1` to rate 1st with 1 point. 
+The user performs `rate 1 r/ 1` to rate 1st with 1 point.
 
 ==== Design considerations
 
