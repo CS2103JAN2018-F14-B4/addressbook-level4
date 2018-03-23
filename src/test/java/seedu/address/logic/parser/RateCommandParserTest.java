@@ -14,8 +14,8 @@ import seedu.address.model.book.Rating;
 
 public class RateCommandParserTest {
     private RateCommandParser parser = new RateCommandParser();
-    private final static int NON_EMPTY_RATING = 5;
-    private final static int EMPTY_RATING = -1;
+    private static final int NON_EMPTY_RATING = 5;
+    private static final int EMPTY_RATING = -1;
 
     @Test
     public void parse_indexSpecified_success() throws Exception {
