@@ -21,6 +21,7 @@ import guitests.guihandles.BookListPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
+import guitests.guihandles.RecentBooksPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.SearchResultsPanelHandle;
 import guitests.guihandles.StatusBarFooterHandle;
@@ -102,6 +103,10 @@ public abstract class BibliotekSystemTest {
         return mainWindowHandle.getSearchResultsPanel();
     }
 
+    public RecentBooksPanelHandle getRecentBooksPanel() {
+        return mainWindowHandle.getRecentBooksPanel();
+    }
+
     public MainMenuHandle getMainMenu() {
         return mainWindowHandle.getMainMenu();
     }
@@ -116,6 +121,13 @@ public abstract class BibliotekSystemTest {
 
     public ResultDisplayHandle getResultDisplay() {
         return mainWindowHandle.getResultDisplay();
+    }
+
+    /**
+     * Returns a defensive copy of the current model.
+     */
+    protected Model getModel() {
+        return testApp.getModel();
     }
 
     /**
@@ -156,11 +168,40 @@ public abstract class BibliotekSystemTest {
     }
 
     /**
+     * Selects the book at {@code index} of the recently selected books list.
+     */
+    protected void selectRecentBooks(Index index) {
+        executeCommand(SelectCommand.COMMAND_WORD + " " + index.getOneBased());
+        assertEquals(index.getZeroBased(), getRecentBooksPanel().getSelectedCardIndex());
+    }
+
+    /**
      * Deletes all books in the book shelf.
      */
     protected void deleteAllBooks() {
         executeCommand(ClearCommand.COMMAND_WORD);
         assertEquals(0, getModel().getBookShelf().getBookList().size());
+    }
+
+    /**
+     * Executes {@code command} and asserts that the,<br>
+     * 1. Command box displays {@code command}.<br>
+     * 2. Command box has the error style class.<br>
+     * 3. Result display box displays {@code expectedResultMessage}.<br>
+     * 4. {@code Model}, {@code Storage}, {@code BookListPanel}, and {@code SearchResultsPanel} remain unchanged.<br>
+     * 5. Browser url, selected card and status bar remain unchanged.<br>
+     * Verifications 1, 3 and 4 are performed by {@code assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see #assertApplicationDisplaysExpected(String, String, Model)
+     */
+    protected void assertCommandFailure(String command, String expectedResultMessage) {
+        Model expectedModel = getModel();
+
+        executeCommand(command);
+        assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
+        assertSelectedBookListCardUnchanged();
+        assertSelectedSearchResultsCardUnchanged();
+        assertCommandBoxShowsErrorStyle();
+        assertStatusBarUnchanged();
     }
 
     /**
@@ -176,6 +217,7 @@ public abstract class BibliotekSystemTest {
         assertEquals(expectedModel.getBookShelf(), testApp.readStorageBookShelf());
         assertListMatching(getBookListPanel(), expectedModel.getFilteredBookList());
         assertListMatching(getSearchResultsPanel(), expectedModel.getSearchResultsList());
+        assertListMatching(getRecentBooksPanel(), expectedModel.getRecentBooksList());
     }
 
     /**
@@ -188,6 +230,7 @@ public abstract class BibliotekSystemTest {
         statusBarFooterHandle.rememberSyncStatus();
         getBookListPanel().rememberSelectedBookCard();
         getSearchResultsPanel().rememberSelectedBookCard();
+        getRecentBooksPanel().rememberSelectedBookCard();
         getBookDetailsPanel().rememberIsbn();
     }
 
@@ -224,6 +267,17 @@ public abstract class BibliotekSystemTest {
     }
 
     /**
+     * Asserts that the book details panel displays the details of the book in the recent books panel at
+     * {@code expectedSelectedCardIndex}, and only the card at {@code expectedSelectedCardIndex} is selected.
+     * @see RecentBooksPanelHandle#isSelectedBookCardChanged()
+     */
+    protected void assertSelectedRecentBooksCardChanged(Index expectedSelectedCardIndex) {
+        Book selectedBook = getModel().getRecentBooksList().get(expectedSelectedCardIndex.getZeroBased());
+        assertDetailsPanelDisplaysBook(selectedBook, getBookDetailsPanel());
+        assertEquals(expectedSelectedCardIndex.getZeroBased(), getRecentBooksPanel().getSelectedCardIndex());
+    }
+
+    /**
      * Asserts that the selected card in the book list panel remain unchanged and the book details panel
      * remains displaying the details of the previously selected book.
      * @see BookDetailsPanelHandle#isIsbnChanged()
@@ -243,6 +297,17 @@ public abstract class BibliotekSystemTest {
     protected void assertSelectedSearchResultsCardUnchanged() {
         assertFalse(getBookDetailsPanel().isIsbnChanged());
         assertFalse(getSearchResultsPanel().isSelectedBookCardChanged());
+    }
+
+    /**
+     * Asserts that the selected card in the recent books panel remain unchanged and the book details panel
+     * remains displaying the details of the previously selected book.
+     * @see BookDetailsPanelHandle#isIsbnChanged()
+     * @see RecentBooksPanelHandle#isSelectedBookCardChanged()
+     */
+    protected void assertSelectedRecentBooksCardUnchanged() {
+        assertFalse(getBookDetailsPanel().isIsbnChanged());
+        assertFalse(getRecentBooksPanel().isSelectedBookCardChanged());
     }
 
     /**
@@ -296,10 +361,4 @@ public abstract class BibliotekSystemTest {
         }
     }
 
-    /**
-     * Returns a defensive copy of the current model.
-     */
-    protected Model getModel() {
-        return testApp.getModel();
-    }
 }
