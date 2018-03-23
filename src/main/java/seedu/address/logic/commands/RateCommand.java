@@ -58,7 +58,7 @@ public class RateCommand extends UndoableCommand {
         if (model.getActiveListType() != ActiveListType.BOOK_SHELF) {
             throw new CommandException(MESSAGE_WRONG_ACTIVE_LIST);
         }
-        
+
         try {
             model.updateBook(bookToEdit, editedBook);
         } catch (DuplicateBookException dpe) {
