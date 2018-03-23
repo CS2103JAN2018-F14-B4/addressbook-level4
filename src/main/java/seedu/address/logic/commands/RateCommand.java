@@ -61,7 +61,6 @@ public class RateCommand extends UndoableCommand {
         } catch (BookNotFoundException pnfe) {
             throw new AssertionError("The target Book cannot be missing");
         }
-        model.updateFilteredBookList(PREDICATE_SHOW_ALL_BOOKS);
         return new CommandResult(generateSuccessMessage(editedBook));
     }
 
