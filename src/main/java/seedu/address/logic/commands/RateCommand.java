@@ -10,6 +10,7 @@ import java.util.List;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.ActiveListType;
 import seedu.address.model.book.Book;
 import seedu.address.model.book.Rating;
 import seedu.address.model.book.exceptions.BookNotFoundException;
@@ -32,6 +33,7 @@ public class RateCommand extends UndoableCommand {
 
     public static final String MESSAGE_ADD_RATING_SUCCESS = "Added rating to Book: %1$s";
     public static final String MESSAGE_DELETE_RATING_SUCCESS = "Removed rating from Book: %1$s";
+    public static final String MESSAGE_WRONG_ACTIVE_LIST = "Cannot be rated.";
 
     private final Index index;
     private final Rating rating;
@@ -53,7 +55,10 @@ public class RateCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         requireAllNonNull(bookToEdit, editedBook);
-
+        if (model.getActiveListType() != ActiveListType.BOOK_SHELF) {
+            throw new CommandException(MESSAGE_WRONG_ACTIVE_LIST);
+        }
+        
         try {
             model.updateBook(bookToEdit, editedBook);
         } catch (DuplicateBookException dpe) {
