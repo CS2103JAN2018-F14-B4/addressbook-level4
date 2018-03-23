@@ -43,18 +43,18 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private void handleKeyPress(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
-            case UP:
+        case UP:
                 // As up and down buttons will alter the position of the caret,
                 // consuming it causes the caret's position to remain unchanged
-                keyEvent.consume();
+            keyEvent.consume();
 
-                navigateToPreviousInput();
-                break;
+            navigateToPreviousInput();
+            break;
             case DOWN:
-                keyEvent.consume();
-                navigateToNextInput();
-                break;
-            default:
+            keyEvent.consume();
+            navigateToNextInput();
+            break;
+        default:
                 // let JavaFx handle the keypress
         }
     }
