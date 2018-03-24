@@ -10,7 +10,7 @@ plugins {
     id 'jacoco'
     id 'checkstyle'
     id "com.github.kt3k.coveralls" version "2.4.0"
-    id "com.github.johnrengelman.shadow" version '1.2.3'
+    id "com.github.johnrengelman.shadow" version '2.0.2'
     id 'org.asciidoctor.convert' version '1.5.6'
     id 'application'
 }
@@ -38,7 +38,7 @@ jacocoTestReport {
     reports {
         xml.enabled false
         csv.enabled false
-        html.destination "${buildDir}/jacocoHtml"
+        html.destination file("${buildDir}/jacocoHtml")
     }
 }
 
@@ -69,7 +69,7 @@ shadowJar {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.12'
+    gradleVersion = '4.6'
 }
 
 task coverage(type: JacocoReport) {
@@ -152,14 +152,16 @@ test {
     }
 }
 
-task headless << {
-    println "Setting headless mode properties."
-    test {
-        systemProperty 'java.awt.robot', 'true'
-        systemProperty 'testfx.robot', 'glass'
-        systemProperty 'testfx.headless', 'true'
-        systemProperty 'prism.order', 'sw'
-        systemProperty 'prism.text', 't2k'
+task headless {
+    doLast {
+        println "Setting headless mode properties."
+        test {
+            systemProperty 'java.awt.robot', 'true'
+            systemProperty 'testfx.robot', 'glass'
+            systemProperty 'testfx.headless', 'true'
+            systemProperty 'prism.order', 'sw'
+            systemProperty 'prism.text', 't2k'
+        }
     }
 }
 
@@ -200,11 +202,6 @@ task deployOfflineDocs(type: Copy) {
         include 'images/*'
         include 'UserGuide.html'
     }
-}
-
-task copyDummySearchPage(type: Copy) {
-    from 'docs/DummySearchPage.html'
-    into "${buildDir}/docs/html5"
 }
 
 deployOfflineDocs.dependsOn asciidoctor
