@@ -3,8 +3,7 @@ matrix:
   include:
     - jdk: oraclejdk8
 
-install:
-  - true
+install: true
 
 script: >-
     ./config/travis/run-checks.sh &&
