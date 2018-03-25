@@ -111,6 +111,7 @@ allTests.dependsOn guiTests
 allTests.dependsOn nonGuiTests
 
 test {
+    test.maxParallelForks = Runtime.runtime.availableProcessors()
     systemProperty 'testfx.setup.timeout', '60000'
 
     /*
