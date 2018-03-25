@@ -207,4 +207,18 @@ task deployOfflineDocs(type: Copy) {
 deployOfflineDocs.dependsOn asciidoctor
 processResources.dependsOn deployOfflineDocs
 
+task download {
+    description "Pre-downloads most dependencies"
+    doLast {
+        configurations.getAsMap().each { name, config ->
+            println "Retrieving dependencies for $name"
+            try {
+                config.files
+            } catch (e) {
+                // skip
+            }
+        }
+    }
+}
+
 defaultTasks 'clean', 'headless', 'allTests', 'coverage', 'asciidoctor'
