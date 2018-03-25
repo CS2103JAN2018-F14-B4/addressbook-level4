@@ -60,7 +60,7 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Override
-    public ObservableList<Book> getFilteredBookList() {
+    public ObservableList<Book> getDisplayBookList() {
         return model.getDisplayBookList();
     }
 

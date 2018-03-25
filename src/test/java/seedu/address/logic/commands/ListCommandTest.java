@@ -34,12 +34,14 @@ public class ListCommandTest {
 
     @Test
     public void execute_listIsNotFiltered_showsSameList() {
-        assertCommandSuccess(listCommand, model, ListCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(listCommand, model,
+                String.format(ListCommand.MESSAGE_SUCCESS, expectedModel.getDisplayBookList().size()), expectedModel);
     }
 
     @Test
     public void execute_listIsFiltered_showsEverything() {
         showBookAtIndex(model, INDEX_FIRST_BOOK);
-        assertCommandSuccess(listCommand, model, ListCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(listCommand, model,
+                String.format(ListCommand.MESSAGE_SUCCESS, expectedModel.getDisplayBookList().size()), expectedModel);
     }
 }
