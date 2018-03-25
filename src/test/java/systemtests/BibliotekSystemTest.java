@@ -148,7 +148,7 @@ public abstract class BibliotekSystemTest {
      */
     protected void showAllBooks() {
         executeCommand(ListCommand.COMMAND_WORD);
-        assertEquals(getModel().getBookShelf().getBookList().size(), getModel().getFilteredBookList().size());
+        assertEquals(getModel().getBookShelf().getBookList().size(), getModel().getDisplayBookList().size());
     }
 
     /**
@@ -215,7 +215,7 @@ public abstract class BibliotekSystemTest {
         assertEquals(expectedResultMessage, getResultDisplay().getText());
         assertEquals(expectedModel, getModel());
         assertEquals(expectedModel.getBookShelf(), testApp.readStorageBookShelf());
-        assertListMatching(getBookListPanel(), expectedModel.getFilteredBookList());
+        assertListMatching(getBookListPanel(), expectedModel.getDisplayBookList());
         assertListMatching(getSearchResultsPanel(), expectedModel.getSearchResultsList());
         assertListMatching(getRecentBooksPanel(), expectedModel.getRecentBooksList());
     }
@@ -250,7 +250,7 @@ public abstract class BibliotekSystemTest {
      * @see BookListPanelHandle#isSelectedBookCardChanged()
      */
     protected void assertSelectedBookListCardChanged(Index expectedSelectedCardIndex) {
-        Book selectedBook = getModel().getFilteredBookList().get(expectedSelectedCardIndex.getZeroBased());
+        Book selectedBook = getModel().getDisplayBookList().get(expectedSelectedCardIndex.getZeroBased());
         assertDetailsPanelDisplaysBook(selectedBook, getBookDetailsPanel());
         assertEquals(expectedSelectedCardIndex.getZeroBased(), getBookListPanel().getSelectedCardIndex());
     }
@@ -352,7 +352,7 @@ public abstract class BibliotekSystemTest {
         try {
             assertEquals("", getCommandBox().getInput());
             assertEquals("", getResultDisplay().getText());
-            assertListMatching(getBookListPanel(), getModel().getFilteredBookList());
+            assertListMatching(getBookListPanel(), getModel().getDisplayBookList());
             assertFalse(getBookDetailsPanel().isVisible());
             assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
             assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());

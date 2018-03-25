@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
@@ -12,6 +13,7 @@ import com.google.common.eventbus.Subscribe;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.BookShelfChangedEvent;
@@ -32,6 +34,7 @@ public class ModelManager extends ComponentManager implements Model {
     private ActiveListType activeListType;
     private final BookShelf bookShelf;
     private final FilteredList<Book> filteredBooks;
+    private final SortedList<Book> sortedBookList;
     private final BookShelf searchResults;
     private final UniqueBookCircularList recentBooks;
 
@@ -49,6 +52,8 @@ public class ModelManager extends ComponentManager implements Model {
         this.activeListType = ActiveListType.BOOK_SHELF;
         this.bookShelf = new BookShelf(bookShelf);
         this.filteredBooks = new FilteredList<>(this.bookShelf.getBookList());
+        this.sortedBookList = new SortedList<>(this.filteredBooks);
+        updateBookListSorter(DEFAULT_BOOK_COMPARATOR);
         this.searchResults = new BookShelf();
 
         this.recentBooks = new UniqueBookCircularList();
@@ -101,7 +106,8 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void addBook(Book book) throws DuplicateBookException {
         bookShelf.addBook(book);
-        updateFilteredBookList(PREDICATE_SHOW_ALL_BOOKS);
+        updateBookListFilter(PREDICATE_SHOW_ALL_BOOKS);
+        updateBookListSorter(DEFAULT_BOOK_COMPARATOR);
         indicateBookShelfChanged();
     }
 
@@ -113,21 +119,27 @@ public class ModelManager extends ComponentManager implements Model {
         indicateBookShelfChanged();
     }
 
-    //=========== Filtered Book List Accessors =============================================================
+    //=========== Display Book List Accessors ==============================================================
 
     /**
      * Returns an unmodifiable view of the list of {@code Book} backed by the internal list of
-     * {@code bookShelf}
+     * {@code bookShelf}.
      */
     @Override
-    public ObservableList<Book> getFilteredBookList() {
-        return FXCollections.unmodifiableObservableList(filteredBooks);
+    public ObservableList<Book> getDisplayBookList() {
+        return FXCollections.unmodifiableObservableList(sortedBookList);
     }
 
     @Override
-    public void updateFilteredBookList(Predicate<Book> predicate) {
+    public void updateBookListFilter(Predicate<Book> predicate) {
         requireNonNull(predicate);
         filteredBooks.setPredicate(predicate);
+    }
+
+    @Override
+    public void updateBookListSorter(Comparator<Book> comparator) {
+        requireNonNull(comparator);
+        sortedBookList.setComparator(comparator);
     }
 
     //=========== Search Results ===========================================================================

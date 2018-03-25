@@ -17,7 +17,7 @@ public class ListCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        model.updateFilteredBookList(PREDICATE_SHOW_ALL_BOOKS);
+        model.updateBookListFilter(PREDICATE_SHOW_ALL_BOOKS);
         EventsCenter.getInstance().post(new SwitchToBookListRequestEvent());
         return new CommandResult(MESSAGE_SUCCESS);
     }

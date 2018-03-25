@@ -57,7 +57,7 @@ public class SelectCommandSystemTest extends BibliotekSystemTest {
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
 
         /* Case: invalid index (size + 1) -> rejected */
-        int invalidIndex = getModel().getFilteredBookList().size() + 1;
+        int invalidIndex = getModel().getDisplayBookList().size() + 1;
         assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex, MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
 
         /* Case: invalid arguments (alphabets) -> rejected */
@@ -112,7 +112,7 @@ public class SelectCommandSystemTest extends BibliotekSystemTest {
         String expectedResultMessage = String.format(
                 MESSAGE_SELECT_BOOK_SUCCESS, expectedSelectedCardIndex.getOneBased());
         int preExecutionSelectedCardIndex = getBookListPanel().getSelectedCardIndex();
-        expectedModel.addRecentBook(expectedModel.getFilteredBookList().get(
+        expectedModel.addRecentBook(expectedModel.getDisplayBookList().get(
                 expectedSelectedCardIndex.getZeroBased()));
 
         executeCommand(command);
