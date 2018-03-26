@@ -1071,17 +1071,19 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |view hints when typing commands |recall the syntax of the command
 
+|`* *` |user |get command auto-completion suggestions |reduce the amount of typing needed
+
+|`* *` |user |change the theme of the App |choose a theme I prefer
+
 |`* *` |user |add and open eBook files |easily open and read my eBooks
 
-|`* *` |user |obtain recommendations |get exposure to more books
+|`*` |user |obtain recommendations |get exposure to more books
 
 |`*` |user |add book reviews |share with others my thoughts
 
 |`*` |user |open eBooks in the App |easily read my eBooks
 
 |`*` |user |import list of books from online services |easily populate my collection of books
-
-|`*` |user |change the theme of the App |choose a theme I prefer
 
 |`*` |user |change the font size of the App |make the text easier on my eyes
 
