@@ -31,6 +31,7 @@ public enum Priority {
 
     /**
      * Returns the {@code Priority} with a name or alias that matches the specified {@code searchTerm}.
+     * Returns {@code null} if no match was found.
      */
     public static Priority findPriority(String searchTerm) {
         for (Priority priority : values()) {

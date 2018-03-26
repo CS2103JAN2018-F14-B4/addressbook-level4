@@ -39,19 +39,11 @@ public class ListCommandParser implements Parser<ListCommand> {
         argMultimap.getValue(PREFIX_CATEGORY).ifPresent(filterDescriptor::addCategoryFilter);
 
         if (argMultimap.getValue(PREFIX_STATUS).isPresent()) {
-            Status status = Status.findStatus(argMultimap.getValue(PREFIX_STATUS).get());
-            if (status == null) {
-                throw new ParseException(ListCommand.MESSAGE_INVALID_STATUS);
-            }
-            filterDescriptor.addStatusFilter(status);
+            filterDescriptor.addStatusFilter(parseStatus(argMultimap.getValue(PREFIX_STATUS).get()));
         }
 
         if (argMultimap.getValue(PREFIX_PRIORITY).isPresent()) {
-            Priority priority = Priority.findPriority(argMultimap.getValue(PREFIX_PRIORITY).get());
-            if (priority == null) {
-                throw new ParseException(ListCommand.MESSAGE_INVALID_PRIORITY);
-            }
-            filterDescriptor.addPriorityFilter(priority);
+            filterDescriptor.addPriorityFilter(parsePriority(argMultimap.getValue(PREFIX_PRIORITY).get()));
         }
 
         if (argMultimap.getValue(PREFIX_RATING).isPresent()) {
@@ -69,6 +61,32 @@ public class ListCommandParser implements Parser<ListCommand> {
         }
 
         return new ListCommand(filterDescriptor, comparator);
+    }
+
+    /**
+     * Parses the given {@code statusString} and returns a {@code Status}.
+     *
+     * @throws ParseException if the string does not represent a valid status.
+     */
+    protected static Status parseStatus(String statusString) throws ParseException {
+        Status status = Status.findStatus(statusString);
+        if (status == null) {
+            throw new ParseException(ListCommand.MESSAGE_INVALID_STATUS);
+        }
+        return status;
+    }
+
+    /**
+     * Parses the given {@code priorityString} and returns a {@code Priority}.
+     *
+     * @throws ParseException if the string does not represent a valid priority.
+     */
+    protected static Priority parsePriority(String priorityString) throws ParseException {
+        Priority priority = Priority.findPriority(priorityString);
+        if (priority == null) {
+            throw new ParseException(ListCommand.MESSAGE_INVALID_PRIORITY);
+        }
+        return priority;
     }
 
     /**

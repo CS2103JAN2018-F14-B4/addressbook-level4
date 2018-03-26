@@ -29,10 +29,10 @@ public class FilterDescriptorTest {
                 .withAuthorFilter("A1").withStatusFilter(Status.UNREAD).build();
         assertTrue(descriptorA.equals(descriptorWithSameFilters));
 
-        // same filters in different sequence -> returns false
+        // same filters in different sequence -> returns true
         descriptorWithSameFilters = new FilterDescriptorBuilder()
                 .withStatusFilter(Status.UNREAD).withAuthorFilter("a1").build();
-        assertFalse(descriptorA.equals(descriptorWithSameFilters));
+        assertTrue(descriptorA.equals(descriptorWithSameFilters));
 
         // same object -> returns true
         assertTrue(descriptorA.equals(descriptorA));
@@ -46,9 +46,9 @@ public class FilterDescriptorTest {
         // different filters -> returns false
         assertFalse(descriptorA.equals(descriptorB));
 
-        // different copies of the same filter -> returns false
+        // different copies of the same filter -> returns true
         FilterDescriptor editedDescriptor = new FilterDescriptorBuilder()
                 .withAuthorFilter("a1").withAuthorFilter("a1").withStatusFilter(Status.UNREAD).build();
-        assertFalse(descriptorA.equals(editedDescriptor));
+        assertTrue(descriptorA.equals(editedDescriptor));
     }
 }

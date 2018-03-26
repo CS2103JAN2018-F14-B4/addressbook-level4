@@ -10,8 +10,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
 
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Predicate;
 
 import seedu.address.commons.core.EventsCenter;
@@ -38,7 +40,7 @@ public class ListCommand extends Command {
             + "[" + PREFIX_PRIORITY + "PRIORITY]"
             + "[" + PREFIX_RATING + "RATING]"
             + "[" + PREFIX_SORT_BY + "SORT_BY]\n"
-            + "Example: " + COMMAND_WORD
+            + "Example: " + COMMAND_WORD + " "
             + PREFIX_STATUS + " reading "
             + PREFIX_SORT_BY + "priority";
 
@@ -89,54 +91,54 @@ public class ListCommand extends Command {
      */
     public static class FilterDescriptor {
         private final List<Predicate<Book>> filters;
-        private String filterCode; // used internally for equality testing
+        private Set<String> filterCodes; // used internally for equality testing
 
         public FilterDescriptor() {
             filters = new LinkedList<>();
-            filterCode = "";
+            filterCodes = new HashSet<>();
         }
 
         public FilterDescriptor(FilterDescriptor descriptor) {
             filters = new LinkedList<>(descriptor.filters);
-            filterCode = descriptor.filterCode;
+            filterCodes = new HashSet<>(descriptor.filterCodes);
         }
 
         /** Adds a filter that selects books with titles containing the given {@code title}. */
         public void addTitleFilter(String title) {
             filters.add(book -> book.getTitle().title.toLowerCase().contains(title.toLowerCase()));
-            filterCode += "t[" + title.toLowerCase() + "]";
+            filterCodes.add("t[" + title.toLowerCase() + "]");
         }
 
         /** Adds a filter that selects books with authors containing the given {@code author}. */
         public void addAuthorFilter(String author) {
             filters.add(book -> book.getAuthors().stream()
                     .anyMatch(bookAuthor -> bookAuthor.fullName.toLowerCase().contains(author.toLowerCase())));
-            filterCode += "a[" + author.toLowerCase() + "]";
+            filterCodes.add("a[" + author.toLowerCase() + "]");
         }
 
         /** Adds a filter that selects books with categories containing the given {@code category}. */
         public void addCategoryFilter(String category) {
             filters.add(book -> book.getCategories().stream()
                     .anyMatch(bookCategory -> bookCategory.category.toLowerCase().contains(category.toLowerCase())));
-            filterCode += "c[" + category.toLowerCase() + "]";
+            filterCodes.add("c[" + category.toLowerCase() + "]");
         }
 
         /** Adds a filter that selects books with status matching the given {@code status}. */
         public void addStatusFilter(Status status) {
             filters.add(book -> status.equals(book.getStatus()));
-            filterCode += "s[" + status + "]";
+            filterCodes.add("s[" + status + "]");
         }
 
         /** Adds a filter that selects books with priority matching the given {@code priority}. */
         public void addPriorityFilter(Priority priority) {
             filters.add(book -> priority.equals(book.getPriority()));
-            filterCode += "p[" + priority + "]";
+            filterCodes.add("p[" + priority + "]");
         }
 
         /** Adds a filter that selects books with ratings matching the given {@code rating}. */
         public void addRatingFilter(Rating rating) {
             filters.add(book -> rating.equals(book.getRating()));
-            filterCode += "r[" + rating + "]";
+            filterCodes.add("r[" + rating + "]");
         }
 
         protected Predicate<Book> buildCombinedFilter() {
@@ -148,7 +150,7 @@ public class ListCommand extends Command {
         public boolean equals(Object other) {
             return other == this // short circuit if same object
                     || (other instanceof FilterDescriptor // instanceof handles nulls
-                    && this.filterCode.equals(((FilterDescriptor) other).filterCode)); // state check
+                    && this.filterCodes.equals(((FilterDescriptor) other).filterCodes)); // state check
         }
     }
 }

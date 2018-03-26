@@ -30,6 +30,7 @@ public enum Status {
 
     /**
      * Returns the {@code Status} with a name or alias that matches the specified {@code searchTerm}.
+     * Returns {@code null} if no match was found.
      */
     public static Status findStatus(String searchTerm) {
         for (Status status : values()) {
