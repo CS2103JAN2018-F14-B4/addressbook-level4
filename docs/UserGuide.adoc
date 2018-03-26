@@ -169,7 +169,7 @@ Format: `list [t/TITLE] [a/AUTHOR] [c/CATEGORY] [p/PRIORITY] [s/STATUS]`
 
 If you want to view all books in your book shelf, enter `list`
 
-image::ListCommand.png[width=="700"]
+image::ListCommand.png[width="700"]
 
 Bibliotek shows `Listed all books` to indicate that your `list` is successful.
 The left panel will show all the books in your book shelf.
