@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import guitests.GuiRobot;
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RecentCommand;
 import seedu.address.logic.commands.SearchCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -45,6 +46,19 @@ public class SelectCommandSystemTest extends BibliotekSystemTest {
 
         /* Case: select the current selected card -> selected */
         assertBookListSelectSuccess(command, middleIndex);
+
+        /* ------------------------ Perform select operations on the shown filtered list ---------------------------- */
+
+        executeCommand(ListCommand.COMMAND_WORD + " s/unread");
+
+        /* Case: select the first card in the displayed book list -> selected */
+        command = SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_BOOK.getOneBased();
+        assertBookListSelectSuccess(command, INDEX_FIRST_BOOK);
+
+        /* Case: select the last card in the displayed book list -> selected */
+        bookCount = Index.fromOneBased(getModel().getDisplayBookList().size());
+        command = SelectCommand.COMMAND_WORD + " " + bookCount.getOneBased();
+        assertBookListSelectSuccess(command, bookCount);
 
         /* ----------------------------------- Perform invalid select operations ------------------------------------ */
 

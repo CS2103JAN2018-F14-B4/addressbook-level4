@@ -235,12 +235,17 @@ public abstract class BibliotekSystemTest {
     }
 
     /**
-     * Asserts that the previously selected book list card is now deselected and the book details panel
-     * remains displaying the details of the previously selected book.
+     * Asserts that the book details panel remains displaying the details of the previously selected book.
      * @see BookDetailsPanelHandle#isIsbnChanged()
      */
-    protected void assertSelectedBookListCardDeselected() {
+    protected void assertBookDetailsPanelUnchanged() {
         assertFalse(getBookDetailsPanel().isIsbnChanged());
+    }
+
+    /**
+     * Asserts that the previously selected book list card is now deselected.
+     */
+    protected void assertSelectedBookListCardDeselected() {
         assertFalse(getBookListPanel().isAnyCardSelected());
     }
 
@@ -256,6 +261,13 @@ public abstract class BibliotekSystemTest {
     }
 
     /**
+     * Asserts that the previously selected search results card is now deselected.
+     */
+    protected void assertSelectedSearchResultsCardDeselected() {
+        assertFalse(getSearchResultsPanel().isAnyCardSelected());
+    }
+
+    /**
      * Asserts that the book details panel displays the details of the book in the search results panel at
      * {@code expectedSelectedCardIndex}, and only the card at {@code expectedSelectedCardIndex} is selected.
      * @see SearchResultsPanelHandle#isSelectedBookCardChanged()
@@ -264,6 +276,13 @@ public abstract class BibliotekSystemTest {
         Book selectedBook = getModel().getSearchResultsList().get(expectedSelectedCardIndex.getZeroBased());
         assertDetailsPanelDisplaysBook(selectedBook, getBookDetailsPanel());
         assertEquals(expectedSelectedCardIndex.getZeroBased(), getSearchResultsPanel().getSelectedCardIndex());
+    }
+
+    /**
+     * Asserts that the previously selected recent books card is now deselected.
+     */
+    protected void assertSelectedRecentBooksCardDeselected() {
+        assertFalse(getRecentBooksPanel().isAnyCardSelected());
     }
 
     /**
