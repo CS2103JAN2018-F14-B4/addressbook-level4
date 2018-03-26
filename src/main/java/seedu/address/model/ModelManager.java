@@ -33,8 +33,9 @@ public class ModelManager extends ComponentManager implements Model {
 
     private ActiveListType activeListType;
     private final BookShelf bookShelf;
-    private final FilteredList<Book> filteredBooks;
+    private final FilteredList<Book> filteredBookList;
     private final SortedList<Book> sortedBookList;
+    private final ObservableList<Book> displayBookList;
     private final BookShelf searchResults;
     private final UniqueBookCircularList recentBooks;
 
@@ -51,9 +52,9 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.activeListType = ActiveListType.BOOK_SHELF;
         this.bookShelf = new BookShelf(bookShelf);
-        this.filteredBooks = new FilteredList<>(this.bookShelf.getBookList());
-        this.sortedBookList = new SortedList<>(this.filteredBooks);
-        updateBookListSorter(DEFAULT_BOOK_COMPARATOR);
+        this.filteredBookList = new FilteredList<>(this.bookShelf.getBookList(), PREDICATE_SHOW_ALL_BOOKS);
+        this.sortedBookList = new SortedList<>(this.filteredBookList, DEFAULT_BOOK_COMPARATOR);
+        this.displayBookList = sortedBookList;
         this.searchResults = new BookShelf();
 
         this.recentBooks = new UniqueBookCircularList();
@@ -127,17 +128,17 @@ public class ModelManager extends ComponentManager implements Model {
      */
     @Override
     public ObservableList<Book> getDisplayBookList() {
-        return FXCollections.unmodifiableObservableList(sortedBookList);
+        return FXCollections.unmodifiableObservableList(displayBookList);
     }
 
     @Override
-    public void updateBookListFilter(Predicate<Book> predicate) {
+    public void updateBookListFilter(Predicate<? super Book> predicate) {
         requireNonNull(predicate);
-        filteredBooks.setPredicate(predicate);
+        filteredBookList.setPredicate(predicate);
     }
 
     @Override
-    public void updateBookListSorter(Comparator<Book> comparator) {
+    public void updateBookListSorter(Comparator<? super Book> comparator) {
         requireNonNull(comparator);
         sortedBookList.setComparator(comparator);
     }
@@ -195,7 +196,7 @@ public class ModelManager extends ComponentManager implements Model {
         // state check
         ModelManager other = (ModelManager) obj;
         return bookShelf.equals(other.bookShelf)
-                && filteredBooks.equals(other.filteredBooks)
+                && displayBookList.equals(other.displayBookList)
                 && searchResults.equals(other.searchResults)
                 && recentBooks.equals(other.recentBooks);
     }

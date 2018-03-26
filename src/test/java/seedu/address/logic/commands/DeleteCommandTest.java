@@ -71,7 +71,7 @@ public class DeleteCommandTest {
     public void execute_invalidBook_throwsAssertionError() throws Exception {
         DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_BOOK);
         deleteCommand.preprocessUndoableCommand();
-        model.deleteBook(TypicalBooks.ARTEMIS);
+        model.deleteBook(TypicalBooks.BABYLON_ASHES);
         thrown.expect(AssertionError.class);
         deleteCommand.executeUndoableCommand();
     }

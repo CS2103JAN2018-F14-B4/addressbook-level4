@@ -9,9 +9,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
 
 import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import seedu.address.logic.commands.ListCommand;
@@ -36,17 +33,17 @@ public class ListCommandParser implements Parser<ListCommand> {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_TITLE, PREFIX_AUTHOR,
                 PREFIX_CATEGORY, PREFIX_STATUS, PREFIX_PRIORITY, PREFIX_RATING, PREFIX_SORT_BY);
 
-        BookListFilterBuilder filterBuilder = new BookListFilterBuilder();
-        argMultimap.getValue(PREFIX_TITLE).ifPresent(filterBuilder::addTitleFilter);
-        argMultimap.getValue(PREFIX_AUTHOR).ifPresent(filterBuilder::addAuthorFilter);
-        argMultimap.getValue(PREFIX_CATEGORY).ifPresent(filterBuilder::addCategoryFilter);
+        ListCommand.FilterDescriptor filterDescriptor = new ListCommand.FilterDescriptor();
+        argMultimap.getValue(PREFIX_TITLE).ifPresent(filterDescriptor::addTitleFilter);
+        argMultimap.getValue(PREFIX_AUTHOR).ifPresent(filterDescriptor::addAuthorFilter);
+        argMultimap.getValue(PREFIX_CATEGORY).ifPresent(filterDescriptor::addCategoryFilter);
 
         if (argMultimap.getValue(PREFIX_STATUS).isPresent()) {
             Status status = Status.findStatus(argMultimap.getValue(PREFIX_STATUS).get());
             if (status == null) {
                 throw new ParseException(ListCommand.MESSAGE_INVALID_STATUS);
             }
-            filterBuilder.addStatusFilter(status);
+            filterDescriptor.addStatusFilter(status);
         }
 
         if (argMultimap.getValue(PREFIX_PRIORITY).isPresent()) {
@@ -54,12 +51,12 @@ public class ListCommandParser implements Parser<ListCommand> {
             if (priority == null) {
                 throw new ParseException(ListCommand.MESSAGE_INVALID_PRIORITY);
             }
-            filterBuilder.addPriorityFilter(priority);
+            filterDescriptor.addPriorityFilter(priority);
         }
 
         if (argMultimap.getValue(PREFIX_RATING).isPresent()) {
             Rating rating = parseRating(argMultimap.getValue(PREFIX_RATING).get());
-            filterBuilder.addRatingFilter(rating);
+            filterDescriptor.addRatingFilter(rating);
         }
 
         Comparator<Book> comparator = Model.DEFAULT_BOOK_COMPARATOR;
@@ -71,7 +68,7 @@ public class ListCommandParser implements Parser<ListCommand> {
             comparator = sortMode.comparator;
         }
 
-        return new ListCommand(filterBuilder.buildCombinedFilter(), comparator);
+        return new ListCommand(filterDescriptor, comparator);
     }
 
     /**
@@ -79,7 +76,7 @@ public class ListCommandParser implements Parser<ListCommand> {
      *
      * @throws ParseException if the string does not represent a valid rating.
      */
-    private static Rating parseRating(String ratingString) throws ParseException {
+    protected static Rating parseRating(String ratingString) throws ParseException {
         try {
             return new Rating(Integer.parseInt(ratingString));
         } catch (IllegalArgumentException e) {
@@ -88,47 +85,9 @@ public class ListCommandParser implements Parser<ListCommand> {
     }
 
     /**
-     * Builds the filter that is used to filter the display book list.
-     */
-    private static class BookListFilterBuilder {
-        private final List<Predicate<Book>> filters = new LinkedList<>();
-
-        private void addTitleFilter(String title) {
-            filters.add(book -> title.equalsIgnoreCase(book.getTitle().title));
-        }
-
-        private void addAuthorFilter(String author) {
-            filters.add(book -> book.getAuthors().stream()
-                    .anyMatch(bookAuthor -> author.equalsIgnoreCase(bookAuthor.fullName)));
-        }
-
-        private void addCategoryFilter(String category) {
-            filters.add(book -> book.getCategories().stream()
-                    .anyMatch(bookCategory -> category.equalsIgnoreCase(bookCategory.category)));
-        }
-
-        private void addStatusFilter(Status status) {
-            filters.add(book -> status.equals(book.getStatus()));
-        }
-
-        private void addPriorityFilter(Priority priority) {
-            filters.add(book -> priority.equals(book.getPriority()));
-        }
-
-        private void addRatingFilter(Rating rating) {
-            filters.add(book -> rating.equals(book.getRating()));
-        }
-
-        private Predicate<Book> buildCombinedFilter() {
-            List<Predicate<Book>> partialFilters = new LinkedList<>(filters);
-            return book -> partialFilters.stream().allMatch(filter -> filter.test(book));
-        }
-    }
-
-    /**
      * Represents a sorting mode, which specifies the comparator used to sort the display book list.
      */
-    private enum SortMode {
+    public enum SortMode {
         TITLE(Comparator.comparing(Book::getTitle), "t", "titlea", "ta"),
         TITLED((book1, book2) -> book2.getTitle().compareTo(book1.getTitle()), "td"),
         STATUS(Comparator.comparing(Book::getStatus), "s", "statusa", "sa"),
@@ -144,6 +103,10 @@ public class ListCommandParser implements Parser<ListCommand> {
         SortMode(Comparator<Book> comparator, String... aliases) {
             this.comparator = comparator;
             this.aliases = aliases;
+        }
+
+        public Comparator<Book> getComparator() {
+            return comparator;
         }
 
         /**

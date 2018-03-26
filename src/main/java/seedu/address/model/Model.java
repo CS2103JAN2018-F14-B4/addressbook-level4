@@ -59,16 +59,16 @@ public interface Model {
     ObservableList<Book> getDisplayBookList();
 
     /**
-     * Updates the comparator of the sorted book list to sort by the given {@code comparator}.
-     * @throws NullPointerException if {@code comparator} is null.
-     */
-    void updateBookListSorter(Comparator<Book> comparator);
-
-    /**
      * Updates the filter of the filtered book list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
-    void updateBookListFilter(Predicate<Book> predicate);
+    void updateBookListFilter(Predicate<? super Book> predicate);
+
+    /**
+     * Updates the comparator of the sorted book list to sort by the given {@code comparator}.
+     * @throws NullPointerException if {@code comparator} is null.
+     */
+    void updateBookListSorter(Comparator<? super Book> comparator);
 
     /** Returns an unmodifiable view of the search results. */
     ObservableList<Book> getSearchResultsList();
