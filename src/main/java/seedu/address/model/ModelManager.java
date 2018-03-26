@@ -132,6 +132,16 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public Predicate<? super Book> getBookListFilter() {
+        return filteredBookList.getPredicate();
+    }
+
+    @Override
+    public Comparator<? super Book> getBookListSorter() {
+        return sortedBookList.getComparator();
+    }
+
+    @Override
     public void updateBookListFilter(Predicate<? super Book> predicate) {
         requireNonNull(predicate);
         filteredBookList.setPredicate(predicate);

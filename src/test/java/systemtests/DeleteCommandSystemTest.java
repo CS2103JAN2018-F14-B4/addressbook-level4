@@ -90,7 +90,7 @@ public class DeleteCommandSystemTest extends BibliotekSystemTest {
     }
 
     /**
-     * Removes the {@code Book} at the specified {@code index} in {@code model}'s book shelf.
+     * Removes the {@code Book} at the specified {@code index} in {@code model}'s display book list.
      * @return the removed book.
      */
     private Book removeBook(Model model, Index index) {

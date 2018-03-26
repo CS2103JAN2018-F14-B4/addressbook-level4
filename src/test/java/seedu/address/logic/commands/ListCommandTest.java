@@ -68,14 +68,14 @@ public class ListCommandTest {
         FilterDescriptor descriptor = new FilterDescriptorBuilder().withTitleFilter(ARTEMIS.getTitle().title)
                 .withAuthorFilter("andy weir").withCategoryFilter("fiction").withStatusFilter(Status.READ)
                 .withPriorityFilter(Priority.LOW).withRatingFilter(new Rating(5)).build();
-        assertExecutionSuccess(descriptor, SortMode.TITLE.getComparator(), 1);
+        assertExecutionSuccess(descriptor, SortMode.STATUSD.getComparator(), 1);
         assertEquals(ARTEMIS, model.getDisplayBookList().get(0));
 
         // matches 0 books
         descriptor = new FilterDescriptorBuilder().withTitleFilter(ARTEMIS.getTitle().title)
                 .withAuthorFilter("andy weir").withCategoryFilter("fiction").withStatusFilter(Status.UNREAD)
                 .withPriorityFilter(Priority.HIGH).withRatingFilter(new Rating(-1)).build();
-        assertExecutionSuccess(descriptor, SortMode.TITLE.getComparator(), 0);
+        assertExecutionSuccess(descriptor, SortMode.PRIORITYD.getComparator(), 0);
     }
 
     @Test
