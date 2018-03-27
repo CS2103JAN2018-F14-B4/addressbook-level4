@@ -1,6 +1,7 @@
 package seedu.address.ui.testutil;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,17 +38,14 @@ public class GuiTestAssert {
      * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
      */
     public static void assertCardEquals(BookCardHandle expectedCard, BookCardHandle actualCard) {
-        assertEquals(expectedCard.getId(), actualCard.getId());
-        assertEquals(expectedCard.getAuthors(), actualCard.getAuthors());
-        assertEquals(expectedCard.getCategories(), actualCard.getCategories());
-        assertEquals(expectedCard.getTitle(), actualCard.getTitle());
+        assertTrue(actualCard.equals(expectedCard));
     }
 
     /**
      * Asserts that {@code actualCard} displays the details of {@code expectedBook}.
      */
     public static void assertCardDisplaysBook(Book expectedBook, BookCardHandle actualCard) {
-        assertEquals(expectedBook.getTitle().title, actualCard.getTitle());
+        assertTrue(actualCard.equals(expectedBook));
     }
 
     /**
