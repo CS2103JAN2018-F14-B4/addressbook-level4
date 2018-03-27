@@ -2,10 +2,10 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_RATING_ARTEMIS;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_RATING_BABYLON;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PRIORITY_ARTEMIS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PRIORITY_BABYLON;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_RATING_ARTEMIS;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_RATING_BABYLON;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_ARTEMIS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_BABYLON;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;

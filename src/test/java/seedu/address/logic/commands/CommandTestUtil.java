@@ -38,9 +38,9 @@ public class CommandTestUtil {
     public static final int VALID_RATING_ARTEMIS = 5;
     public static final int VALID_RATING_BABYLON = 4;
     public static final String VALID_PRIORITY_ARTEMIS = "LOW";
-    public static final String VALID_PRIORITY_BABYLON ="LOW";
-    public static final String VALID_STATUS_ARTEMIS ="UNREAD";
-    public static final String VALID_STATUS_BABYLON ="UNREAD";
+    public static final String VALID_PRIORITY_BABYLON = "LOW";
+    public static final String VALID_STATUS_ARTEMIS = "UNREAD";
+    public static final String VALID_STATUS_BABYLON = "UNREAD";
     public static final String VALID_ISBN_ARTEMIS = "234910247";
     public static final String VALID_ISBN_BABYLON = "907161513";
 

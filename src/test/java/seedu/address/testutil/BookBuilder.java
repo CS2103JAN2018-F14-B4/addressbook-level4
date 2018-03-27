@@ -123,7 +123,7 @@ public class BookBuilder {
     }
 
     /**
-     * Sets the {@code Status) of the {@code Book} that we are building.
+     * Sets the {@code Status} of the {@code Book} that we are building.
      */
     public BookBuilder withStatus(String status) {
         this.status = new Status(status);
