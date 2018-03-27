@@ -64,7 +64,7 @@ public class SearchResultsPanelHandle extends NodeHandle<ListView<Book>> {
     /**
      * Navigates the listview to display and select the book.
      */
-    public void navigateToCard(seedu.address.model.book.Book book) {
+    public void navigateToCard(Book book) {
         if (!getRootNode().getItems().contains(book)) {
             throw new IllegalArgumentException("Book does not exist.");
         }

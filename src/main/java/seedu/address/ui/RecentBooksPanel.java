@@ -30,7 +30,7 @@ public class RecentBooksPanel extends UiPart<Region> {
     @FXML
     private ListView<Book> recentBooksListView;
 
-    public RecentBooksPanel(ObservableList<seedu.address.model.book.Book> searchResults) {
+    public RecentBooksPanel(ObservableList<Book> searchResults) {
         super(FXML);
         setConnections(searchResults);
         registerAsAnEventHandler(this);

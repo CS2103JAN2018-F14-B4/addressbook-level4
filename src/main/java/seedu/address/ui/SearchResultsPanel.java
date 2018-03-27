@@ -30,7 +30,7 @@ public class SearchResultsPanel extends UiPart<Region> {
     @FXML
     private ListView<Book> searchResultsListView;
 
-    public SearchResultsPanel(ObservableList<seedu.address.model.book.Book> searchResults) {
+    public SearchResultsPanel(ObservableList<Book> searchResults) {
         super(FXML);
         setConnections(searchResults);
         registerAsAnEventHandler(this);
