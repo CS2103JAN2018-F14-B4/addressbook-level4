@@ -12,5 +12,7 @@ public class CliSyntax {
     public static final Prefix PREFIX_ISBN = new Prefix("i/");
     public static final Prefix PREFIX_TITLE = new Prefix("t/");
     public static final Prefix PREFIX_RATING = new Prefix("r/");
+    public static final Prefix PREFIX_PRIORITY = new Prefix("p/");
+    public static final Prefix PREFIX_STATUS = new Prefix("s/");
 
 }
