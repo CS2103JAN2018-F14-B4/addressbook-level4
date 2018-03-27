@@ -20,6 +20,8 @@ import seedu.address.model.book.Author;
 import seedu.address.model.book.Category;
 import seedu.address.model.book.Description;
 import seedu.address.model.book.Rating;
+import seedu.address.model.book.Priority;
+import seedu.address.model.book.Status;
 import seedu.address.model.book.Title;
 import seedu.address.testutil.Assert;
 
@@ -28,6 +30,8 @@ public class ParserUtilTest {
     private static final String VALID_TITLE = "Valid Title";
     private static final String VALID_DESCRIPTION = "Valid Description";
     private static final int VALID_RATING = -1;
+    private static final String VALID_PRIORITY = "LOW";
+    private static final String VALID_STATUS = "UNREAD";
     private static final String VALID_AUTHOR_1 = "Author A";
     private static final String VALID_AUTHOR_2 = "Author B";
     private static final String VALID_CATEGORY_1 = "Category A";
@@ -110,6 +114,58 @@ public class ParserUtilTest {
         Description expectedDescription = new Description(VALID_DESCRIPTION);
         assertEquals(expectedDescription, ParserUtil.parseDescription(descWithWhitespace));
         assertEquals(Optional.of(expectedDescription), ParserUtil.parseDescription(Optional.of(descWithWhitespace)));
+    }
+
+    @Test
+    public void parsePriority_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parsePriority((String) null));
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parsePriority((Optional<String>) null));
+    }
+
+    @Test
+    public void parsePriority_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parsePriority(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parsePriority_validValueWithoutWhitespace_returnsPriority() throws Exception {
+        Priority expectedPriority = new Priority(VALID_PRIORITY);
+        assertEquals(expectedPriority, ParserUtil.parsePriority(VALID_PRIORITY));
+        assertEquals(Optional.of(expectedPriority), ParserUtil.parsePriority(Optional.of(VALID_PRIORITY)));
+    }
+
+    @Test
+    public void parsePriority_validValueWithWhitespace_returnsTrimmedPriority() throws Exception {
+        String descWithWhitespace = WHITESPACE + VALID_PRIORITY + WHITESPACE;
+        Priority expectedPriority = new Priority(VALID_PRIORITY);
+        assertEquals(expectedPriority, ParserUtil.parsePriority(descWithWhitespace));
+        assertEquals(Optional.of(expectedPriority), ParserUtil.parsePriority(Optional.of(descWithWhitespace)));
+    }
+
+    @Test
+    public void parseStatus_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseStatus((String) null));
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseStatus((Optional<String>) null));
+    }
+
+    @Test
+    public void parseStatus_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseStatus(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseStatus_validValueWithoutWhitespace_returnsStatus() throws Exception {
+        Status expectedStatus = new Status(VALID_STATUS);
+        assertEquals(expectedStatus, ParserUtil.parseStatus(VALID_STATUS));
+        assertEquals(Optional.of(expectedStatus), ParserUtil.parseStatus(Optional.of(VALID_STATUS)));
+    }
+
+    @Test
+    public void parseStatus_validValueWithWhitespace_returnsTrimmedStatus() throws Exception {
+        String descWithWhitespace = WHITESPACE + VALID_STATUS + WHITESPACE;
+        Status expectedStatus = new Status(VALID_STATUS);
+        assertEquals(expectedStatus, ParserUtil.parseStatus(descWithWhitespace));
+        assertEquals(Optional.of(expectedStatus), ParserUtil.parseStatus(Optional.of(descWithWhitespace)));
     }
 
     @Test

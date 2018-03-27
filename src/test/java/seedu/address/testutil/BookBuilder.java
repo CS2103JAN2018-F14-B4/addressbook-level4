@@ -12,7 +12,9 @@ import seedu.address.model.book.Gid;
 import seedu.address.model.book.Isbn;
 import seedu.address.model.book.PublicationDate;
 import seedu.address.model.book.Publisher;
+import seedu.address.model.book.Priority;
 import seedu.address.model.book.Rating;
+import seedu.address.model.book.Status;
 import seedu.address.model.book.Title;
 import seedu.address.model.util.BookDataUtil;
 
@@ -26,6 +28,8 @@ public class BookBuilder {
     public static final String DEFAULT_CATEGORY = "Science Fiction";
     public static final String DEFAULT_DESCRIPTION = "This is a description for Artemis.";
     public static final int DEFAULT_RATING = -1;
+    public static final String DEFAULT_PRIORITY = "LOW";
+    public static final String DEFAULT_STATUS = "UNREAD";
     public static final String DEFAULT_ID = "ry3GjwEACAAJ";
     public static final String DEFAULT_ISBN = "9780525572664";
     public static final String DEFAULT_PUBLISHER = "Someone";
@@ -36,6 +40,8 @@ public class BookBuilder {
     private Set<Category> categories;
     private Description description;
     private Rating rating;
+    private Priority priority;
+    private Status status;
     private Gid gid;
     private Isbn isbn;
     private PublicationDate publicationDate;
@@ -47,6 +53,8 @@ public class BookBuilder {
         categories = Collections.singleton(new Category(DEFAULT_CATEGORY));
         description = new Description(DEFAULT_DESCRIPTION);
         rating = new Rating(DEFAULT_RATING);
+        priority = new Priority(DEFAULT_PRIORITY);
+        status = new Status(DEFAULT_STATUS);
         gid = new Gid(DEFAULT_ID);
         isbn = new Isbn(DEFAULT_ISBN);
         publicationDate = new PublicationDate(DEFAULT_PUBLICATION_DATE);
@@ -62,6 +70,8 @@ public class BookBuilder {
         categories = new HashSet<>(bookToCopy.getCategories());
         description = bookToCopy.getDescription();
         rating = bookToCopy.getRating();
+        priority = bookToCopy.getPriority();
+        status = bookToCopy.getStatus();
     }
 
     /**
@@ -105,6 +115,22 @@ public class BookBuilder {
     }
 
     /**
+     * Sets the {@code Priority} of the {@code Book} that we are building.
+     */
+    public BookBuilder withPriority(String priority) {
+        this.priority = new Priority(priority);
+        return this;
+    }
+
+    /**
+     * Sets the {@code Status) of the {@code Book} that we are building.
+     */
+    public BookBuilder withStatus(String status) {
+        this.status = new Status(status);
+        return this;
+    }
+
+    /**
      * Sets the {@code Gid} of the {@code Book} that we are building.
      */
     public BookBuilder withGid(String gid) {
@@ -141,7 +167,7 @@ public class BookBuilder {
      */
     public Book build() {
         return new Book(gid, isbn, authors, title, categories, description, rating,
-                publisher, publicationDate);
+                priority, status, publisher, publicationDate);
     }
 
 }
