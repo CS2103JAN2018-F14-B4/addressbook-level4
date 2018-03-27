@@ -16,10 +16,10 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
-import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.book.Priority;
@@ -49,8 +49,8 @@ public class BookShelfParserTest {
         final Priority priority = new Priority("LOW");
         final Status status = new Status("UNREAD");
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_BOOK.getOneBased() + " " + PREFIX_RATING + rating.value + " " + PREFIX_PRIORITY +
-        priority.priority + " " + PREFIX_STATUS + status.status);
+                + INDEX_FIRST_BOOK.getOneBased() + " " + PREFIX_RATING + rating.value + " " + PREFIX_PRIORITY
+                + priority.priority + " " + PREFIX_STATUS + status.status);
         assertEquals(new EditCommand(INDEX_FIRST_BOOK, rating, priority, status), command);
     }
     @Test

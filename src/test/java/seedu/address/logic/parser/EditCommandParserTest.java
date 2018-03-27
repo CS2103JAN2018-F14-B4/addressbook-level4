@@ -48,7 +48,7 @@ public class EditCommandParserTest {
         assertParseFailure(parser, EditCommand.COMMAND_WORD, expectedMessage);
 
         // no index
-        assertParseFailure(parser, EditCommand.COMMAND_WORD + " " + NON_EMPTY_RATING + " " +
-                NON_EMPTY_PRIORITY + " " + NON_EMPTY_STATUS, expectedMessage);
+        assertParseFailure(parser, EditCommand.COMMAND_WORD + " " + NON_EMPTY_RATING + " "
+                + NON_EMPTY_PRIORITY + " " + NON_EMPTY_STATUS, expectedMessage);
     }
 }
