@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
+import seedu.address.model.book.Book;
 
 /**
  * Provides a handle to a person card in the person list panel.
@@ -62,5 +63,9 @@ public class BookCardHandle extends NodeHandle<Node> {
                 .stream()
                 .map(Label::getText)
                 .collect(Collectors.toList());
+    }
+
+    public boolean equals(Book book) {
+        return getTitle().equals(book.getTitle().title);
     }
 }
