@@ -1,7 +1,6 @@
 package seedu.address.testutil;
 
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Set;
 
 import seedu.address.model.book.Author;
@@ -39,6 +38,8 @@ public class BookBuilder {
     private Title title;
     private Set<Category> categories;
     private Description description;
+    private Status status;
+    private Priority priority;
     private Rating rating;
     private Priority priority;
     private Status status;
@@ -103,6 +104,22 @@ public class BookBuilder {
      */
     public BookBuilder withDescription(String description) {
         this.description = new Description(description);
+        return this;
+    }
+
+    /**
+     * Sets the {@code Status} of the {@code Book} that we are building.
+     */
+    public BookBuilder withStatus(Status status) {
+        this.status = status;
+        return this;
+    }
+
+    /**
+     * Sets the {@code Priority} of the {@code Book} that we are building.
+     */
+    public BookBuilder withPriority(Priority priority) {
+        this.priority = priority;
         return this;
     }
 

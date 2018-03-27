@@ -37,6 +37,10 @@ public class XmlAdaptedBook {
     @XmlElement(required = true)
     private String description;
     @XmlElement(required = true)
+    private Status status;
+    @XmlElement(required = true)
+    private Priority priority;
+    @XmlElement(required = true)
     private Integer rating;
     @XmlElement(required = true)
     private String status;
@@ -123,6 +127,9 @@ public class XmlAdaptedBook {
         for (Category category : source.getCategories()) {
             categories.add(new XmlAdaptedCategory(category));
         }
+        status = source.getStatus();
+        priority = source.getPriority();
+        rating = source.getRating().rating;
         publisher = source.getPublisher().publisher;
         publicationDate = source.getPublicationDate().date;
     }
@@ -153,6 +160,16 @@ public class XmlAdaptedBook {
                     Description.class.getSimpleName()));
         }
         final Description description = new Description(this.description);
+
+        if (this.status == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Status.class.getSimpleName()));
+        }
+
+        if (this.priority == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Priority.class.getSimpleName()));
+        }
 
         if (this.rating == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
@@ -218,6 +235,9 @@ public class XmlAdaptedBook {
                 && Objects.equals(priority, otherBook.priority)
                 && authors.equals(otherBook.authors)
                 && categories.equals(otherBook.categories)
+                && Objects.equals(status, otherBook.status)
+                && Objects.equals(priority, otherBook.priority)
+                && Objects.equals(rating, otherBook.rating)
                 && Objects.equals(gid, otherBook.gid)
                 && Objects.equals(isbn, otherBook.isbn)
                 && Objects.equals(publisher, otherBook.publisher)

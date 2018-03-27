@@ -18,6 +18,8 @@ public class Book {
     private final Title title;
     private final UniqueList<Category> categories;
     private final Description description;
+    private final Status status;
+    private final Priority priority;
     private final Rating rating;
     private final Priority priority;
     private final Status status;
@@ -27,6 +29,7 @@ public class Book {
     private final Publisher publisher;
 
     /**
+     * Creates a {@code Book} with the default status, priority, and rating.
      * Every field must be present and not null.
      */
     public Book(Gid gid, Isbn isbn, Set<Author> authors, Title title, Set<Category> categories,
@@ -45,6 +48,10 @@ public class Book {
         this.publisher = publisher;
     }
 
+    /**
+     * Creates a {@code Book}.
+     * Every field must be present and not null.
+     */
     public Book(Gid gid, Isbn isbn, Set<Author> authors, Title title, Set<Category> categories,
                 Description description, Rating rating, Priority priority, Status status, Publisher publisher,
                 PublicationDate publicationDate) {
@@ -84,6 +91,14 @@ public class Book {
 
     public Description getDescription() {
         return description;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public Priority getPriority() {
+        return priority;
     }
 
     public Rating getRating() {
@@ -136,8 +151,7 @@ public class Book {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(getTitle())
-                .append(" - Authors: ");
+        builder.append(getTitle()).append(" - Authors: ");
         getAuthors().forEach(author -> builder.append("[").append(author).append("]"));
         return builder.toString();
     }

@@ -8,6 +8,9 @@
         <status>UNREAD</status>
         <authors>Andy Weir</authors>
         <categories>Fiction</categories>
+        <status>READ</status>
+        <priority>LOW</priority>
+        <rating>5</rating>
         <gid>ry3GjwEACAAJ</gid>
         <isbn>9780525572664</isbn>
         <publisher></publisher>
@@ -21,6 +24,9 @@
         <status>UNREAD</status>
         <authors>James S. A. Corey</authors>
         <categories>Fiction</categories>
+        <status>READING</status>
+        <priority>HIGH</priority>
+        <rating>4</rating>
         <gid>3jsYCwAAQBAJ</gid>
         <isbn>9780316217637</isbn>
         <publisher>Orbit</publisher>
@@ -34,10 +40,27 @@
         <status>UNREAD</status>
         <authors>John Scalzi</authors>
         <categories>Fiction</categories>
+        <status>READING</status>
+        <priority>LOW</priority>
+        <rating>-1</rating>
         <gid>2SoaDAAAQBAJ</gid>
         <isbn>9780765388896</isbn>
         <publisher>Tor Books</publisher>
         <publicationDate>2017-03-21</publicationDate>
+    </books>
+    <books>
+        <title>Consider Phlebas</title>
+        <description>This is Consider Phlebas.</description>
+        <authors>Iain M. Banks</authors>
+        <categories>Fiction</categories>
+        <categories>Science Fiction</categories>
+        <status>UNREAD</status>
+        <priority>NONE</priority>
+        <rating>-1</rating>
+        <gid>3_bJKlAOecEC</gid>
+        <isbn>9780316095839</isbn>
+        <publisher>Orbit</publisher>
+        <publicationDate>2009-12-01</publicationDate>
     </books>
     <books>
         <title>Waking Gods</title>
@@ -48,6 +71,9 @@
         <authors>Sylvain Neuvel</authors>
         <categories>Fiction</categories>
         <categories>Science Fiction</categories>
+        <status>UNREAD</status>
+        <priority>NONE</priority>
+        <rating>-1</rating>
         <gid>CIj1DAAAQBAJ</gid>
         <isbn>9781405921909</isbn>
         <publisher>Penguin UK</publisher>

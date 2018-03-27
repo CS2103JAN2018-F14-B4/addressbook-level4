@@ -6,6 +6,8 @@ import java.util.List;
 
 import seedu.address.model.BookShelf;
 import seedu.address.model.book.Book;
+import seedu.address.model.book.Priority;
+import seedu.address.model.book.Status;
 import seedu.address.model.book.exceptions.DuplicateBookException;
 
 /**
@@ -45,12 +47,10 @@ public class TypicalBooks {
      */
     public static BookShelf getTypicalBookShelf() {
         BookShelf bookShelf = new BookShelf();
-        for (Book book : getTypicalBooks()) {
-            try {
-                bookShelf.addBook(book);
-            } catch (DuplicateBookException e) {
-                throw new AssertionError("not possible");
-            }
+        try {
+            bookShelf.setBooks(getTypicalBooks());
+        } catch (DuplicateBookException e) {
+            throw new AssertionError("Unexpected DuplicateBookException.");
         }
         return bookShelf;
     }
