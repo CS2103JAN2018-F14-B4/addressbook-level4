@@ -15,7 +15,6 @@ import seedu.address.model.book.Gid;
 import seedu.address.model.book.Isbn;
 import seedu.address.model.book.PublicationDate;
 import seedu.address.model.book.Publisher;
-import seedu.address.model.book.Rating;
 import seedu.address.model.book.Title;
 import seedu.address.testutil.Assert;
 
