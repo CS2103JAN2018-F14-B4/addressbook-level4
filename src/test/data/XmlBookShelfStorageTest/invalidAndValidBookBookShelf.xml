@@ -4,7 +4,9 @@
     <books>
         <title>Artemis</title>
         <description>This is Artemis.</description>
-        <rating>Rate</rating>
+        <rating>-1</rating>
+        <priority>LOW</priority>
+        <status>UNREAD</status>
         <authors>Andy Weir</authors>
         <categories>Fiction</categories>
         <gid>ry3GjwEACAAJ</gid>
