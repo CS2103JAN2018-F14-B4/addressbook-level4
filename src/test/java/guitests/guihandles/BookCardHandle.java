@@ -13,11 +13,13 @@ import javafx.scene.layout.Region;
 public class BookCardHandle extends NodeHandle<Node> {
     private static final String ID_FIELD_ID = "#id";
     private static final String TITLE_FIELD_ID = "#title";
+    private static final String RATING_FIELD_ID = "#rating";
     private static final String AUTHORS_FIELD_ID = "#authors";
     private static final String CATEGORIES_FIELD_ID = "#categories";
 
     private final Label idLabel;
     private final Label titleLabel;
+    private final Label ratingLable1;
     private final List<Label> authorsLabel;
     private final List<Label> categoriesLabel;
 
@@ -26,6 +28,7 @@ public class BookCardHandle extends NodeHandle<Node> {
 
         this.idLabel = getChildNode(ID_FIELD_ID);
         this.titleLabel = getChildNode(TITLE_FIELD_ID);
+        this.ratingLable1 = getChildNode(RATING_FIELD_ID);
 
         Region authorsContainer = getChildNode(AUTHORS_FIELD_ID);
         this.authorsLabel = authorsContainer
@@ -48,6 +51,10 @@ public class BookCardHandle extends NodeHandle<Node> {
 
     public String getTitle() {
         return titleLabel.getText();
+    }
+
+    public String getRating() {
+        return ratingLable1.getText();
     }
 
     public List<String> getAuthors() {

@@ -21,23 +21,16 @@ public class Rating implements Comparable<Rating> {
     private static final String STYLE_CLASS_UNRATED = "rating-unrated";
     private static final String STYLE_CLASS_RATED = "rating-rated";
 
-    public final int rating;
-
-    /**
-     * Contructs a {@code Rating} with the default rating.
-     */
-    public Rating() {
-        this.rating = DEFAULT_RATING;
-    }
+    public final Integer value;
 
     /**
      * Constructs a {@code Rating}.
      *
      * @param rating A book rating.
      */
-    public Rating(int rating) {
-        checkArgument(isValidRating(rating), MESSAGE_RATING_CONSTRAINTS);
-        this.rating = rating;
+    public Rating(Integer rating) {
+        requireNonNull(rating);
+        this.value = rating;
     }
 
     /**
@@ -72,19 +65,22 @@ public class Rating implements Comparable<Rating> {
 
     @Override
     public String toString() {
-        return Integer.toString(rating);
+
+        return value.toString();
+
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Rating // instanceof handles nulls
-                && this.rating == ((Rating) other).rating); // state check
+                && this.value.equals(((Rating) other).value)); // state check
+
     }
 
     @Override
     public int hashCode() {
-        return Integer.hashCode(rating);
+        return value.hashCode();
     }
 
 }

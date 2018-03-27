@@ -14,7 +14,6 @@ import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
-
 /**
  * The UI component that is responsible for receiving user command inputs.
  */
@@ -56,7 +55,7 @@ public class CommandBox extends UiPart<Region> {
             navigateToNextInput();
             break;
         default:
-            // let JavaFx handle the keypress
+                // let JavaFx handle the keypress
         }
     }
 

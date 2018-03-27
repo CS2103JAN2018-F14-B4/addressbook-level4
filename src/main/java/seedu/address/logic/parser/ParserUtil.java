@@ -13,8 +13,12 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.model.book.Author;
 import seedu.address.model.book.Category;
 import seedu.address.model.book.Description;
+import seedu.address.model.book.Priority;
 import seedu.address.model.book.Rating;
+import seedu.address.model.book.Status;
 import seedu.address.model.book.Title;
+
+
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -143,6 +147,46 @@ public class ParserUtil {
     public static Optional<Rating> parseRating(Optional<Integer> rating) {
         requireNonNull(rating);
         return rating.isPresent() ? Optional.of(parseRating(rating.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String priority} into a {@code Priority}.
+     * Leading and trailing whitespaces will be trimmed.
+     */
+    public static Priority parsePriority(String priority) {
+        requireNonNull(priority);
+        String trimmedPriority = priority.trim();
+        return new Priority(trimmedPriority);
+    }
+
+    /**
+     * Parses a {@code Optional<String> priority} into an {@code Optional<Priority>}
+     * if {@code priority} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Priority> parsePriority(Optional<String> priority) {
+        requireNonNull(priority);
+        return priority.isPresent() ? Optional.of(parsePriority(priority.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String status} into a {@code Description}.
+     * Leading and trailing whitespaces will be trimmed.
+     */
+    public static Status parseStatus(String status) {
+        requireNonNull(status);
+        String trimmedStatus = status.trim();
+        return new Status(trimmedStatus);
+    }
+
+    /**
+     * Parses a {@code Optional<String> status} into an {@code Optional<Status>}
+     * if {@code status} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Status> parseStatus(Optional<String> status) {
+        requireNonNull(status);
+        return status.isPresent() ? Optional.of(parseStatus(status.get())) : Optional.empty();
     }
 
 }

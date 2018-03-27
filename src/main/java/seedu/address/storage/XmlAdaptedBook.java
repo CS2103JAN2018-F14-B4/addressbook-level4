@@ -43,6 +43,10 @@ public class XmlAdaptedBook {
     @XmlElement(required = true)
     private Integer rating;
     @XmlElement(required = true)
+    private String status;
+    @XmlElement(required = true)
+    private String priority;
+    @XmlElement(required = true)
     private String publisher;
     @XmlElement(required = true)
     private String publicationDate;
@@ -62,21 +66,40 @@ public class XmlAdaptedBook {
      * Constructs an {@code XmlAdaptedBook} with the given book details.
      */
     public XmlAdaptedBook(String gid, String isbn, String title, String description,
-                          List<XmlAdaptedAuthor> authors, List<XmlAdaptedCategory> categories,
-                          Status status, Priority priority, Integer rating,
-                          String publisher, String publicationDate) {
+                           List<XmlAdaptedAuthor> authors, List<XmlAdaptedCategory> categories,
+                           String publisher, String publicationDate) {
         this.title = title;
         this.description = description;
         this.rating = -1;
+        this.priority = "LOW";
+        this.status = "UNREAD";
         if (authors != null) {
             this.authors = new ArrayList<>(authors);
         }
         if (categories != null) {
             this.categories = new ArrayList<>(categories);
         }
+        this.gid = gid;
+        this.isbn = isbn;
+        this.publicationDate = publicationDate;
+        this.publisher = publisher;
+    }
+
+    public XmlAdaptedBook(String gid, String isbn, String title, String description, Integer rating,
+                          String priority, String status, List<XmlAdaptedAuthor> authors,
+                          List<XmlAdaptedCategory> categories,
+                          String publisher, String publicationDate) {
+        this.title = title;
+        this.description = description;
+        if (authors != null) {
+            this.authors = new ArrayList<>(authors);
+        }
+        if (categories != null) {
+            this.categories = new ArrayList<>(categories);
+        }
+        this.rating = rating;
         this.status = status;
         this.priority = priority;
-        this.rating = rating;
         this.gid = gid;
         this.isbn = isbn;
         this.publicationDate = publicationDate;
@@ -93,6 +116,9 @@ public class XmlAdaptedBook {
         isbn = source.getIsbn().isbn;
         title = source.getTitle().title;
         description = source.getDescription().description;
+        rating = source.getRating().value;
+        priority = source.getPriority().priority;
+        status = source.getStatus().status;
         authors = new ArrayList<>();
         for (Author author : source.getAuthors()) {
             authors.add(new XmlAdaptedAuthor(author));
@@ -151,6 +177,18 @@ public class XmlAdaptedBook {
         }
         final Rating rating = new Rating(this.rating);
 
+        if (this.priority == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Priority.class.getSimpleName()));
+        }
+        final Priority priority = new Priority(this.priority);
+
+        if (this.status == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Status.class.getSimpleName()));
+        }
+        final Status status = new Status(this.status);
+
         if (this.gid == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     Gid.class.getSimpleName()));
@@ -175,8 +213,8 @@ public class XmlAdaptedBook {
         }
         final PublicationDate publicationDate = new PublicationDate(this.publicationDate);
 
-        return new Book(gid, isbn, new HashSet<>(bookAuthors), title, new HashSet<>(bookCategories),
-                description, status, priority, rating, publisher, publicationDate);
+        return new Book(gid, isbn, new HashSet<>(bookAuthors), title,
+                new HashSet<>(bookCategories), description, rating, priority, status, publisher, publicationDate);
     }
 
     @Override
@@ -192,6 +230,9 @@ public class XmlAdaptedBook {
         XmlAdaptedBook otherBook = (XmlAdaptedBook) other;
         return Objects.equals(title, otherBook.title)
                 && Objects.equals(description, otherBook.description)
+                && Objects.equals(rating, otherBook.rating)
+                && Objects.equals(status, otherBook.status)
+                && Objects.equals(priority, otherBook.priority)
                 && authors.equals(otherBook.authors)
                 && categories.equals(otherBook.categories)
                 && Objects.equals(status, otherBook.status)

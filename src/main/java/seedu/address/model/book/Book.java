@@ -21,6 +21,8 @@ public class Book {
     private final Status status;
     private final Priority priority;
     private final Rating rating;
+    private final Priority priority;
+    private final Status status;
     private final Gid gid;
     private final Isbn isbn;
     private final PublicationDate publicationDate;
@@ -32,8 +34,18 @@ public class Book {
      */
     public Book(Gid gid, Isbn isbn, Set<Author> authors, Title title, Set<Category> categories,
                 Description description, Publisher publisher, PublicationDate publicationDate) {
-        this(gid, isbn, authors, title, categories, description, Status.DEFAULT_STATUS,
-                Priority.DEFAULT_PRIORITY, new Rating(), publisher, publicationDate);
+        requireAllNonNull(gid, isbn, authors, title, categories, description, publisher, publicationDate);
+        this.gid = gid;
+        this.isbn = isbn;
+        this.authors = new UniqueList<>(authors);
+        this.title = title;
+        this.categories = new UniqueList<>(categories);
+        this.description = description;
+        this.rating = new Rating(-1);
+        this.priority = new Priority("LOW");
+        this.status = new Status("UNREAD");
+        this.publicationDate = publicationDate;
+        this.publisher = publisher;
     }
 
     /**
@@ -41,18 +53,17 @@ public class Book {
      * Every field must be present and not null.
      */
     public Book(Gid gid, Isbn isbn, Set<Author> authors, Title title, Set<Category> categories,
-                Description description, Status status, Priority priority, Rating rating,
-                Publisher publisher, PublicationDate publicationDate) {
-        requireAllNonNull(gid, isbn, authors, title, categories, description,
-                status, priority, rating, publisher, publicationDate);
+                Description description, Rating rating, Priority priority, Status status, Publisher publisher,
+                PublicationDate publicationDate) {
+        requireAllNonNull(gid, isbn, authors, rating, title, categories, description, publisher, publicationDate);
         this.gid = gid;
         this.isbn = isbn;
         this.authors = new UniqueList<>(authors);
         this.title = title;
         this.categories = new UniqueList<>(categories);
         this.description = description;
-        this.status = status;
         this.priority = priority;
+        this.status = status;
         this.rating = rating;
         this.publicationDate = publicationDate;
         this.publisher = publisher;
@@ -92,6 +103,14 @@ public class Book {
 
     public Rating getRating() {
         return rating;
+    }
+
+    public Priority getPriority() {
+        return priority;
+    }
+
+    public Status getStatus() {
+        return status;
     }
 
     public Gid getGid() {

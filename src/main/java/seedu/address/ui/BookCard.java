@@ -29,6 +29,8 @@ public class BookCard extends UiPart<Region> {
     @FXML
     private Label id;
     @FXML
+    private Label rating;
+    @FXML
     private FlowPane authors;
     @FXML
     private FlowPane categories;
@@ -44,6 +46,7 @@ public class BookCard extends UiPart<Region> {
         this.book = book;
         id.setText(displayedIndex + ". ");
         title.setText(book.getTitle().title);
+        rating.setText(String.valueOf(book.getRating().value));
         book.getAuthors().forEach(author -> authors.getChildren()
                 .add(new Label(author.fullName)));
         book.getCategories().forEach(category -> categories.getChildren()
