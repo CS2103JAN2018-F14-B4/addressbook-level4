@@ -46,7 +46,8 @@ public class Book {
     }
 
     public Book(Gid gid, Isbn isbn, Set<Author> authors, Title title, Set<Category> categories,
-                Description description, Rating rating, Priority priority, Status status, Publisher publisher, PublicationDate publicationDate) {
+                Description description, Rating rating, Priority priority, Status status, Publisher publisher,
+                PublicationDate publicationDate) {
         requireAllNonNull(gid, isbn, authors, rating, title, categories, description, publisher, publicationDate);
         this.gid = gid;
         this.isbn = isbn;
