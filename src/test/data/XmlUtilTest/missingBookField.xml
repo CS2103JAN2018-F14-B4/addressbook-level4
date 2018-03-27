@@ -3,6 +3,8 @@
 <book>
     <description>This is Artemis.</description>
     <rating>-1</rating>
+    <priority>LOW</priority>
+    <status>UNREAD</status>
     <authors>Andy Weir</authors>
     <categories>Fiction</categories>
 </book>
