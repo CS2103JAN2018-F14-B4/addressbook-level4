@@ -45,8 +45,6 @@ public class BookDetailsPanel extends UiPart<Region> {
     @FXML
     private Label priority;
     @FXML
-    private Label rating;
-    @FXML
     private Label description;
     @FXML
     private ScrollPane scrollPane;
