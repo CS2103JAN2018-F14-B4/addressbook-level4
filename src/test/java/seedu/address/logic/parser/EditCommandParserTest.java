@@ -1,7 +1,9 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_RATING;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_BOOK;
@@ -24,13 +26,16 @@ public class EditCommandParserTest {
     public void parse_indexSpecified_success() throws Exception {
         // add rating
         Index targetIndex = INDEX_FIRST_BOOK;
-        String userInput = targetIndex.getOneBased() + " " + PREFIX_RATING + NON_EMPTY_RATING;
+        String userInput = targetIndex.getOneBased() + " " + PREFIX_RATING + NON_EMPTY_RATING + " "
+                + PREFIX_PRIORITY
+                + "NONE" + PREFIX_STATUS + "UNREAD";
         EditCommand expectedCommand = new EditCommand(INDEX_FIRST_BOOK, new Rating(NON_EMPTY_RATING),
                 Priority.DEFAULT_PRIORITY, Status.DEFAULT_STATUS);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // delete rating
-        userInput = targetIndex.getOneBased() + " " + PREFIX_RATING + EMPTY_RATING;
+        userInput = targetIndex.getOneBased() + " " + PREFIX_RATING + EMPTY_RATING + " " + PREFIX_PRIORITY
+                + "LOW" + PREFIX_STATUS + "UNREAD";
         expectedCommand = new EditCommand(INDEX_FIRST_BOOK, new Rating(EMPTY_RATING),
                 Priority.LOW, Status.UNREAD);
         assertParseSuccess(parser, userInput, expectedCommand);
