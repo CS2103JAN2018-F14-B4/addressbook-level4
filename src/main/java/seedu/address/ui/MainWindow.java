@@ -17,9 +17,13 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.WindowSettings;
+import seedu.address.commons.events.ui.BookListSelectionChangedEvent;
 import seedu.address.commons.events.ui.ChangeThemeRequestEvent;
-import seedu.address.commons.events.ui.ClearBookDetailsRequestEvent;
+import seedu.address.commons.events.ui.ClearMainContentRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.RecentBooksSelectionChangedEvent;
+import seedu.address.commons.events.ui.SearchResultsSelectionChangedEvent;
+import seedu.address.commons.events.ui.ShowBookReviewsRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.events.ui.SwitchToBookListRequestEvent;
 import seedu.address.commons.events.ui.SwitchToRecentBooksRequestEvent;
@@ -42,6 +46,7 @@ public class MainWindow extends UiPart<Stage> {
 
     // Independent Ui parts residing in this Ui container
     private BookDetailsPanel bookDetailsPanel;
+    private BookReviewsPanel bookReviewsPanel;
     private BookListPanel bookListPanel;
     private SearchResultsPanel searchResultsPanel;
     private RecentBooksPanel recentBooksPanel;
@@ -130,7 +135,10 @@ public class MainWindow extends UiPart<Stage> {
      */
     void fillInnerParts() {
         bookDetailsPanel = new BookDetailsPanel();
+        bookReviewsPanel = new BookReviewsPanel();
         mainContentPlaceholder.getChildren().add(bookDetailsPanel.getRoot());
+        mainContentPlaceholder.getChildren().add(bookReviewsPanel.getRoot());
+        bookReviewsPanel.getRoot().setVisible(false);
 
         bookListPanel = new BookListPanel(logic.getDisplayBookList());
         searchResultsPanel = new SearchResultsPanel(logic.getSearchResultsList());
@@ -223,6 +231,7 @@ public class MainWindow extends UiPart<Stage> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Platform.runLater(() -> {
             bookDetailsPanel.clear();
+            bookReviewsPanel.clear();
             bookListPanel.clearSelectionAndScrollToTop();
             bookListPanel.getRoot().setVisible(true);
             searchResultsPanel.getRoot().setVisible(false);
@@ -235,6 +244,7 @@ public class MainWindow extends UiPart<Stage> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Platform.runLater(() -> {
             bookDetailsPanel.clear();
+            bookReviewsPanel.clear();
             searchResultsPanel.clearSelectionAndScrollToTop();
             bookListPanel.getRoot().setVisible(false);
             searchResultsPanel.getRoot().setVisible(true);
@@ -247,6 +257,7 @@ public class MainWindow extends UiPart<Stage> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Platform.runLater(() -> {
             bookDetailsPanel.clear();
+            bookReviewsPanel.clear();
             recentBooksPanel.clearSelectionAndScrollToTop();
             bookListPanel.getRoot().setVisible(false);
             searchResultsPanel.getRoot().setVisible(false);
@@ -255,9 +266,36 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     @Subscribe
-    private void handleClearBookDetailsRequestEvent(ClearBookDetailsRequestEvent event) {
+    private void handleClearBookDetailsRequestEvent(ClearMainContentRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        Platform.runLater(() -> bookDetailsPanel.clear());
+        Platform.runLater(() -> {
+            bookDetailsPanel.clear();
+            bookReviewsPanel.clear();
+        });
+    }
+
+    @Subscribe
+    private void handleBookListSelectionChangedEvent(BookListSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        bookReviewsPanel.clear();
+    }
+
+    @Subscribe
+    private void handleSearchResultsSelectionChangedEvent(SearchResultsSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        bookReviewsPanel.clear();
+    }
+
+    @Subscribe
+    private void handleRecentBooksSelectionChangedEvent(RecentBooksSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        bookReviewsPanel.clear();
+    }
+
+    @Subscribe
+    private void handleShowBookReviewsRequestEvent(ShowBookReviewsRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        bookDetailsPanel.clear();
     }
 
 }
