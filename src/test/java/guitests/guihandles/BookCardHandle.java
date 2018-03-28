@@ -22,7 +22,6 @@ public class BookCardHandle extends NodeHandle<Node> {
     private static final String CATEGORIES_FIELD_ID = "#categories";
     private static final String STATUS_FIELD_ID = "#status";
     private static final String PRIORITY_FIELD_ID = "#priority";
-    private static final String RATING_FIELD_ID = "#rating";
 
     private final Label idLabel;
     private final Label titleLabel;
@@ -65,10 +64,6 @@ public class BookCardHandle extends NodeHandle<Node> {
 
     private String getTitle() {
         return titleLabel.getText();
-    }
-
-    public String getRating() {
-        return ratingLable1.getText();
     }
 
     public List<String> getAuthors() {
