@@ -82,4 +82,11 @@ public class ReviewsCommand extends Command {
         EventsCenter.getInstance().post(new ShowBookReviewsRequestEvent(toLoad));
         return new CommandResult(String.format(MESSAGE_LOADING, toLoad));
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ReviewsCommand // instanceof handles nulls
+                && this.targetIndex.equals(((ReviewsCommand) other).targetIndex));
+    }
 }

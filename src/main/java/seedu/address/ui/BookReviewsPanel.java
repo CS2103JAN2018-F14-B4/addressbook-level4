@@ -17,6 +17,9 @@ import seedu.address.commons.events.ui.ShowBookReviewsRequestEvent;
 import seedu.address.logic.commands.ReviewsCommand;
 import seedu.address.model.book.Book;
 
+/**
+ * The panel showing book reviews.
+ */
 public class BookReviewsPanel extends UiPart<Region> {
     public static final String SEARCH_PAGE_URL =
             "https://www.goodreads.com/search?q=%isbn#other_reviews";
@@ -42,7 +45,7 @@ public class BookReviewsPanel extends UiPart<Region> {
             if (newState == Worker.State.SUCCEEDED) {
                 raise(new NewResultAvailableEvent(ReviewsCommand.MESSAGE_SUCCESS));
                 getRoot().setVisible(true);
-            } else if (newState == Worker.State.FAILED){
+            } else if (newState == Worker.State.FAILED) {
                 raise(new NewResultAvailableEvent(ReviewsCommand.MESSAGE_FAIL));
             }
         });
