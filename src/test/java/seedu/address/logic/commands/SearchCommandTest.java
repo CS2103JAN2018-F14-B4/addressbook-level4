@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalBooks.getTypicalBookShelf;
 
@@ -18,6 +19,7 @@ import seedu.address.model.BookShelf;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.network.NetworkManager;
 import seedu.address.testutil.SearchDescriptorBuilder;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
@@ -102,7 +104,7 @@ public class SearchCommandTest {
 
     private SearchCommand prepareCommand(SearchDescriptor descriptor) {
         SearchCommand searchCommand = new SearchCommand(descriptor);
-        searchCommand.setData(model, new CommandHistory(), new UndoStack());
+        searchCommand.setData(model, mock(NetworkManager.class), new CommandHistory(), new UndoStack());
         return searchCommand;
     }
 }

@@ -28,6 +28,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyBookShelf;
 import seedu.address.model.book.Book;
 import seedu.address.model.book.exceptions.DuplicateBookException;
+import seedu.address.network.Network;
 
 /**
  * The main LogicManager of the app.
@@ -36,12 +37,14 @@ public class LogicManager extends ComponentManager implements Logic {
     private final Logger logger = LogsCenter.getLogger(LogicManager.class);
 
     private final Model model;
+    private final Network network;
     private final CommandHistory history;
     private final BookShelfParser bookShelfParser;
     private final UndoStack undoStack;
 
-    public LogicManager(Model model) {
+    public LogicManager(Model model, Network network) {
         this.model = model;
+        this.network = network;
         history = new CommandHistory();
         bookShelfParser = new BookShelfParser();
         undoStack = new UndoStack();
@@ -52,7 +55,7 @@ public class LogicManager extends ComponentManager implements Logic {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
         try {
             Command command = bookShelfParser.parseCommand(commandText);
-            command.setData(model, history, undoStack);
+            command.setData(model, network, history, undoStack);
             CommandResult result = command.execute();
             undoStack.push(command);
             return result;

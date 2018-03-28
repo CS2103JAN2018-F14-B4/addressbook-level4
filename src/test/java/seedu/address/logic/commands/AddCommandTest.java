@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.prepareUndoCommand;
@@ -23,6 +24,7 @@ import seedu.address.model.BookShelf;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.network.NetworkManager;
 
 /**
  * Contains integration tests (interaction with the Model and UndoCommand) and unit tests for
@@ -179,7 +181,7 @@ public class AddCommandTest {
      */
     private AddCommand prepareCommand(Index index) {
         AddCommand addCommand = new AddCommand(index);
-        addCommand.setData(model, new CommandHistory(), new UndoStack());
+        addCommand.setData(model, mock(NetworkManager.class), new CommandHistory(), new UndoStack());
         return addCommand;
     }
 
