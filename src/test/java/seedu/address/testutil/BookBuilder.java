@@ -38,8 +38,6 @@ public class BookBuilder {
     private Status status;
     private Priority priority;
     private Rating rating;
-    private Priority priority;
-    private Status status;
     private Gid gid;
     private Isbn isbn;
     private PublicationDate publicationDate;
@@ -119,7 +117,7 @@ public class BookBuilder {
      * Sets the {@code Priority} of the {@code Book} that we are building.
      */
     public BookBuilder withPriority(String priority) {
-        this.priority = new Priority(priority);
+        this.priority = Priority.findPriority(priority);
         return this;
     }
 
@@ -127,7 +125,7 @@ public class BookBuilder {
      * Sets the {@code Status} of the {@code Book} that we are building.
      */
     public BookBuilder withStatus(String status) {
-        this.status = new Status(status);
+        this.status = Status.findStatus(status);
         return this;
     }
 
