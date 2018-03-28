@@ -38,15 +38,13 @@ public class BookCard extends UiPart<Region> {
     private Label status;
     @FXML
     private Label priority;
-    @FXML
-    private Label rating;
 
     public BookCard(Book book, int displayedIndex) {
         super(FXML);
         this.book = book;
         id.setText(displayedIndex + ". ");
         title.setText(book.getTitle().title);
-        rating.setText(String.valueOf(book.getRating().value));
+        rating.setText(String.valueOf(book.getRating().rating));
         book.getAuthors().forEach(author -> authors.getChildren()
                 .add(new Label(author.fullName)));
         book.getCategories().forEach(category -> categories.getChildren()
