@@ -31,11 +31,12 @@ public class EditCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer) "
             + PREFIX_RATING + "RATING\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_RATING + "-1" + PREFIX_PRIORITY + "LOW" + PREFIX_STATUS + "UNREAD";
+            + PREFIX_RATING + "-1" + PREFIX_PRIORITY + Priority.DEFAULT_PRIORITY + PREFIX_STATUS
+            + Status.DEFAULT_STATUS;
 
-    public static final String MESSAGE_ADD_RATING_SUCCESS = "Added rating to Book: %1$s";
-    public static final String MESSAGE_DELETE_RATING_SUCCESS = "Removed rating from Book: %1$s";
-    public static final String MESSAGE_WRONG_ACTIVE_LIST = "Cannot be rated.";
+    public static final String MESSAGE_ADD_RATING_SUCCESS = "Editing to Book: %1$s";
+    public static final String MESSAGE_DELETE_RATING_SUCCESS = "Removed editing from Book: %1$s";
+    public static final String MESSAGE_WRONG_ACTIVE_LIST = "Cannot be edited.";
 
     private final Index index;
     private final Rating rating;
@@ -77,7 +78,7 @@ public class EditCommand extends UndoableCommand {
 
     @Override
     protected void preprocessUndoableCommand() throws CommandException {
-        List<Book> lastShownList = model.getFilteredBookList();
+        List<Book> lastShownList = model.getDisplayBookList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
@@ -85,8 +86,9 @@ public class EditCommand extends UndoableCommand {
 
         bookToEdit = lastShownList.get(index.getZeroBased());
         editedBook = new Book(bookToEdit.getGid(), bookToEdit.getIsbn(), bookToEdit.getAuthors(),
-                bookToEdit.getTitle(), bookToEdit.getCategories(), bookToEdit.getDescription(), rating,
-                bookToEdit.getPriority(), bookToEdit.getStatus(), bookToEdit.getPublisher(),
+                bookToEdit.getTitle(), bookToEdit.getCategories(), bookToEdit.getDescription(),
+                bookToEdit.getStatus(),bookToEdit.getPriority(), rating,
+                bookToEdit.getPublisher(),
                 bookToEdit.getPublicationDate());
     }
 
@@ -95,7 +97,7 @@ public class EditCommand extends UndoableCommand {
      * {@code bookToEdit}.
      */
     private String generateSuccessMessage(Book bookToEdit) {
-        String message = (rating.value != -1) ? MESSAGE_ADD_RATING_SUCCESS : MESSAGE_DELETE_RATING_SUCCESS;
+        String message = (rating.rating != -1) ? MESSAGE_ADD_RATING_SUCCESS : MESSAGE_DELETE_RATING_SUCCESS;
         return String.format(message, bookToEdit);
     }
 
