@@ -43,10 +43,6 @@ public class XmlAdaptedBook {
     @XmlElement(required = true)
     private Integer rating;
     @XmlElement(required = true)
-    private String status;
-    @XmlElement(required = true)
-    private String priority;
-    @XmlElement(required = true)
     private String publisher;
     @XmlElement(required = true)
     private String publicationDate;
@@ -71,6 +67,7 @@ public class XmlAdaptedBook {
                           String publisher, String publicationDate) {
         this.title = title;
         this.description = description;
+        this.rating = -1;
         if (authors != null) {
             this.authors = new ArrayList<>(authors);
         }
@@ -153,18 +150,6 @@ public class XmlAdaptedBook {
                     Rating.class.getSimpleName()));
         }
         final Rating rating = new Rating(this.rating);
-
-        if (this.priority == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    Priority.class.getSimpleName()));
-        }
-        final Priority priority = new Priority(this.priority);
-
-        if (this.status == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    Status.class.getSimpleName()));
-        }
-        final Status status = new Status(this.status);
 
         if (this.gid == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
