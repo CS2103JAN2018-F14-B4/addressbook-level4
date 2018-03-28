@@ -56,7 +56,6 @@
           </FlowPane>
           <Label fx:id="publisher" text="\$publisher" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
           <Label fx:id="publicationDate" text="\$publicationDate" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
-          <Label fx:id="rating" text="\$rating" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
         </children>
         <VBox.margin>
           <Insets top="12.0"/>
