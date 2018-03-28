@@ -2,11 +2,9 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PRIORITY_ARTEMIS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PRIORITY_BABYLON;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_RATING_ARTEMIS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_RATING_BABYLON;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_ARTEMIS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_BABYLON;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.showBookAtIndex;
@@ -95,7 +93,7 @@ public class EditCommandTest {
      */
     private EditCommand prepareCommand(Index index, int rating, String priority, String status) {
         EditCommand editCommand = new EditCommand(index, new Rating(rating),
-                Priority.findPriority(priority),Status.findStatus(status));
+                Priority.findPriority(priority), Status.findStatus(status));
         editCommand.setData(model, new CommandHistory(), new UndoStack());
         return editCommand;
     }
