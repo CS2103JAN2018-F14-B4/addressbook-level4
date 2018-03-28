@@ -114,22 +114,6 @@ public class BookBuilder {
     }
 
     /**
-     * Sets the {@code Priority} of the {@code Book} that we are building.
-     */
-    public BookBuilder withPriority(String priority) {
-        this.priority = Priority.findPriority(priority);
-        return this;
-    }
-
-    /**
-     * Sets the {@code Status} of the {@code Book} that we are building.
-     */
-    public BookBuilder withStatus(String status) {
-        this.status = Status.findStatus(status);
-        return this;
-    }
-
-    /**
      * Sets the {@code Gid} of the {@code Book} that we are building.
      */
     public BookBuilder withGid(String gid) {
