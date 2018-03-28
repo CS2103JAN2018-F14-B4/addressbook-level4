@@ -51,7 +51,7 @@ public class BookDetailsPanelTest extends GuiUnitTest {
 
         // no ratings
         Book bookWithNoRating = new BookBuilder().withRating(-1).build();
-        postNow(new BookListSelectionChangedEvent(new BookCard(bookWithNoRating, 0)));
+        postNow(new BookListSelectionChangedEvent(bookWithNoRating));
         assertTrue(bookDetailsPanelHandle.isVisible());
         assertDetailsPanelDisplaysBook(bookWithNoRating);
 

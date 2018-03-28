@@ -46,11 +46,11 @@ public class BookShelfParserTest {
     @Test
     public void parseCommand_edit() throws Exception {
         final Rating rating = new Rating(-1);
-        final Priority priority = new Priority("LOW");
-        final Status status = new Status("UNREAD");
+        final Priority priority = Priority.DEFAULT_PRIORITY;
+        final Status status = Status.DEFAULT_STATUS;
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_BOOK.getOneBased() + " " + PREFIX_RATING + rating.value + " " + PREFIX_PRIORITY
-                + priority.priority + " " + PREFIX_STATUS + status.status);
+                + INDEX_FIRST_BOOK.getOneBased() + " " + PREFIX_RATING + rating.rating + " " + PREFIX_PRIORITY
+                + Priority.DEFAULT_PRIORITY + " " + Status.DEFAULT_STATUS);
         assertEquals(new EditCommand(INDEX_FIRST_BOOK, rating, priority, status), command);
     }
     @Test
