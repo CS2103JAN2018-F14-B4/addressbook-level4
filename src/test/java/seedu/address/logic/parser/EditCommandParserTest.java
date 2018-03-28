@@ -35,7 +35,7 @@ public class EditCommandParserTest {
 
         // delete rating
         userInput = targetIndex.getOneBased() + " " + PREFIX_RATING + EMPTY_RATING + " " + PREFIX_PRIORITY
-                + "LOW" + PREFIX_STATUS + "UNREAD";
+                + "LOW" + " " + PREFIX_STATUS + "UNREAD";
         expectedCommand = new EditCommand(INDEX_FIRST_BOOK, new Rating(EMPTY_RATING),
                 Priority.LOW, Status.UNREAD);
         assertParseSuccess(parser, userInput, expectedCommand);
