@@ -87,7 +87,7 @@ public class EditCommand extends UndoableCommand {
         bookToEdit = lastShownList.get(index.getZeroBased());
         editedBook = new Book(bookToEdit.getGid(), bookToEdit.getIsbn(), bookToEdit.getAuthors(),
                 bookToEdit.getTitle(), bookToEdit.getCategories(), bookToEdit.getDescription(),
-                bookToEdit.getStatus(),bookToEdit.getPriority(), rating,
+                bookToEdit.getStatus(), bookToEdit.getPriority(), rating,
                 bookToEdit.getPublisher(),
                 bookToEdit.getPublicationDate());
     }
