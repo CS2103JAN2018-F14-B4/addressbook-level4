@@ -38,7 +38,7 @@ public class EditCommandTest {
 
     @Test
     public void execute_invalidBookIndexUnfilteredList_failure() throws Exception {
-        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredBookList().size() + 1);
+        Index outOfBoundIndex = Index.fromOneBased(model.getDisplayBookList().size() + 1);
         EditCommand editCommand = prepareCommand(outOfBoundIndex, VALID_RATING_BABYLON, VALID_PRIORITY_BABYLON,
                 VALID_STATUS_BABYLON);
 
@@ -65,11 +65,11 @@ public class EditCommandTest {
     @Test
     public void equals() {
         final EditCommand standardCommand = new EditCommand(INDEX_FIRST_BOOK, new Rating(VALID_RATING_ARTEMIS),
-                new Priority(VALID_PRIORITY_ARTEMIS), new Status(VALID_STATUS_ARTEMIS));
+                Priority.DEFAULT_PRIORITY, Status.DEFAULT_STATUS);
 
         // same values -> returns true
         EditCommand commandWithSameValues = new EditCommand(INDEX_FIRST_BOOK, new Rating(VALID_RATING_ARTEMIS),
-                new Priority(VALID_PRIORITY_ARTEMIS), new Status(VALID_STATUS_ARTEMIS));
+                Priority.DEFAULT_PRIORITY, Status.DEFAULT_STATUS);
         assertTrue(standardCommand.equals(commandWithSameValues));
 
         // same object -> returns true
@@ -83,11 +83,11 @@ public class EditCommandTest {
 
         // different index -> returns false
         assertFalse(standardCommand.equals(new EditCommand(INDEX_SECOND_BOOK, new Rating(VALID_RATING_ARTEMIS),
-                new Priority(VALID_PRIORITY_ARTEMIS), new Status(VALID_STATUS_ARTEMIS))));
+                Priority.DEFAULT_PRIORITY, Status.DEFAULT_STATUS)));
 
         // different Rating -> returns false
         assertFalse(standardCommand.equals(new EditCommand(INDEX_FIRST_BOOK, new Rating(VALID_RATING_BABYLON),
-                new Priority(VALID_PRIORITY_ARTEMIS), new Status(VALID_STATUS_ARTEMIS))));
+                Priority.DEFAULT_PRIORITY, Status.DEFAULT_STATUS)));
     }
 
     /**
@@ -95,7 +95,7 @@ public class EditCommandTest {
      */
     private EditCommand prepareCommand(Index index, int rating, String priority, String status) {
         EditCommand editCommand = new EditCommand(index, new Rating(rating),
-                new Priority(priority), new Status(status));
+                Priority.findPriority(priority),Status.findStatus(status));
         editCommand.setData(model, new CommandHistory(), new UndoStack());
         return editCommand;
     }
