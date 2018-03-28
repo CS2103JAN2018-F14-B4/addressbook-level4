@@ -21,6 +21,8 @@ public class Book {
     private final Status status;
     private final Priority priority;
     private final Rating rating;
+    private final Priority priority;
+    private final Status status;
     private final Gid gid;
     private final Isbn isbn;
     private final PublicationDate publicationDate;
@@ -92,6 +94,14 @@ public class Book {
 
     public Rating getRating() {
         return rating;
+    }
+
+    public Priority getPriority() {
+        return priority;
+    }
+
+    public Status getStatus() {
+        return status;
     }
 
     public Gid getGid() {
