@@ -34,8 +34,8 @@ public class EditCommand extends UndoableCommand {
             + PREFIX_RATING + "-1" + PREFIX_PRIORITY + Priority.DEFAULT_PRIORITY + PREFIX_STATUS
             + Status.DEFAULT_STATUS;
 
-    public static final String MESSAGE_ADD_RATING_SUCCESS = "Editing to Book: %1$s";
-    public static final String MESSAGE_DELETE_RATING_SUCCESS = "Removed editing from Book: %1$s";
+    public static final String MESSAGE_ADD_EDITING_SUCCESS = "Editing to Book: %1$s";
+    public static final String MESSAGE_DELETE_EDITING_SUCCESS = "Removed editing from Book: %1$s";
     public static final String MESSAGE_WRONG_ACTIVE_LIST = "Cannot be edited.";
 
     private final Index index;
@@ -97,7 +97,7 @@ public class EditCommand extends UndoableCommand {
      * {@code bookToEdit}.
      */
     private String generateSuccessMessage(Book bookToEdit) {
-        String message = (rating.rating != -1) ? MESSAGE_ADD_RATING_SUCCESS : MESSAGE_DELETE_RATING_SUCCESS;
+        String message = (rating.rating != -1) ? MESSAGE_ADD_EDITING_SUCCESS : MESSAGE_DELETE_EDITING_SUCCESS;
         return String.format(message, bookToEdit);
     }
 
@@ -116,6 +116,6 @@ public class EditCommand extends UndoableCommand {
         // state check
         EditCommand e = (EditCommand) other;
         return index.equals(e.index)
-                && rating.equals(e.rating);
+                && rating.equals(e.rating) && priority.equals(e.priority) && status.equals(e.status);
     }
 }
