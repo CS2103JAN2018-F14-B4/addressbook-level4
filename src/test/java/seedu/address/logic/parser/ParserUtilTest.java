@@ -117,58 +117,6 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parsePriority_null_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parsePriority((String) null));
-        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parsePriority((Optional<String>) null));
-    }
-
-    @Test
-    public void parsePriority_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parsePriority(Optional.empty()).isPresent());
-    }
-
-    @Test
-    public void parsePriority_validValueWithoutWhitespace_returnsPriority() throws Exception {
-        Priority expectedPriority = new Priority(VALID_PRIORITY);
-        assertEquals(expectedPriority, ParserUtil.parsePriority(VALID_PRIORITY));
-        assertEquals(Optional.of(expectedPriority), ParserUtil.parsePriority(Optional.of(VALID_PRIORITY)));
-    }
-
-    @Test
-    public void parsePriority_validValueWithWhitespace_returnsTrimmedPriority() throws Exception {
-        String descWithWhitespace = WHITESPACE + VALID_PRIORITY + WHITESPACE;
-        Priority expectedPriority = new Priority(VALID_PRIORITY);
-        assertEquals(expectedPriority, ParserUtil.parsePriority(descWithWhitespace));
-        assertEquals(Optional.of(expectedPriority), ParserUtil.parsePriority(Optional.of(descWithWhitespace)));
-    }
-
-    @Test
-    public void parseStatus_null_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseStatus((String) null));
-        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseStatus((Optional<String>) null));
-    }
-
-    @Test
-    public void parseStatus_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parseStatus(Optional.empty()).isPresent());
-    }
-
-    @Test
-    public void parseStatus_validValueWithoutWhitespace_returnsStatus() throws Exception {
-        Status expectedStatus = new Status(VALID_STATUS);
-        assertEquals(expectedStatus, ParserUtil.parseStatus(VALID_STATUS));
-        assertEquals(Optional.of(expectedStatus), ParserUtil.parseStatus(Optional.of(VALID_STATUS)));
-    }
-
-    @Test
-    public void parseStatus_validValueWithWhitespace_returnsTrimmedStatus() throws Exception {
-        String descWithWhitespace = WHITESPACE + VALID_STATUS + WHITESPACE;
-        Status expectedStatus = new Status(VALID_STATUS);
-        assertEquals(expectedStatus, ParserUtil.parseStatus(descWithWhitespace));
-        assertEquals(Optional.of(expectedStatus), ParserUtil.parseStatus(Optional.of(descWithWhitespace)));
-    }
-
-    @Test
     public void parseRating_null_throwsNullPointerException() {
         Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseRating((Integer) null));
         Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseRating((Optional<Integer>) null));
