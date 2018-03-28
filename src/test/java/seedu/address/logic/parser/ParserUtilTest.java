@@ -28,8 +28,6 @@ public class ParserUtilTest {
     private static final String VALID_TITLE = "Valid Title";
     private static final String VALID_DESCRIPTION = "Valid Description";
     private static final int VALID_RATING = -1;
-    private static final String VALID_PRIORITY = "LOW";
-    private static final String VALID_STATUS = "UNREAD";
     private static final String VALID_AUTHOR_1 = "Author A";
     private static final String VALID_AUTHOR_2 = "Author B";
     private static final String VALID_CATEGORY_1 = "Category A";
