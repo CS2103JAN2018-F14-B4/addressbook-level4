@@ -36,6 +36,9 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
 
         int rating = Integer.valueOf(argMultimap.getValue(PREFIX_RATING).orElse("-1"));
-        return new EditCommand(index, new Rating(rating), Priority.DEFAULT_PRIORITY, Status.DEFAULT_STATUS);
+        String priority = argMultimap.getValue(PREFIX_PRIORITY).orElse("NONE");
+        String status = argMultimap.getValue(PREFIX_PRIORITY).orElse("UNREAD");
+        return new EditCommand(index, new Rating(rating), Priority.findPriority(priority),
+                Status.findStatus(status));
     }
 }
