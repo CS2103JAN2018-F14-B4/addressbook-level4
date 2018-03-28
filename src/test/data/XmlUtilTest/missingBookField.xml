@@ -7,4 +7,7 @@
     <status>UNREAD</status>
     <authors>Andy Weir</authors>
     <categories>Fiction</categories>
+    <status>READ</status>
+    <priority>LOW</priority>
+    <rating>-1</rating>
 </book>

@@ -72,7 +72,7 @@ public class BookShelfParser {
             return new HistoryCommand();
 
         case ListCommand.COMMAND_WORD:
-            return new ListCommand();
+            return new ListCommandParser().parse(arguments);
 
         case RecentCommand.COMMAND_WORD:
             return new RecentCommand();

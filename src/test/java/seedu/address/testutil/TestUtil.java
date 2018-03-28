@@ -2,6 +2,8 @@ package seedu.address.testutil;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Base64;
+import java.util.Random;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.FileUtil;
@@ -16,7 +18,9 @@ public class TestUtil {
     /**
      * Folder used for temp files created during testing. Ignored by Git.
      */
-    private static final String SANDBOX_FOLDER = FileUtil.getPath("./src/test/data/sandbox/");
+    private static final String SANDBOX_FOLDER = FileUtil.getPath("./build/tmp/sandbox/");
+    private static final int RANDOM_BYTE_LENGTH = 6;
+    private static final String PREFIX_SEPARATOR = "_";
 
     /**
      * Appends {@code fileName} to the sandbox folder path and returns the resulting string.
@@ -28,27 +32,39 @@ public class TestUtil {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return SANDBOX_FOLDER + fileName;
+        String randomizedFileName = generateRandomPrefix() + PREFIX_SEPARATOR + fileName;
+        return SANDBOX_FOLDER + randomizedFileName;
     }
 
     /**
-     * Returns the middle index of the book in the {@code model}'s book list.
+     * Returns the middle index of the book in the {@code model}'s display book list.
      */
     public static Index getMidIndex(Model model) {
-        return Index.fromOneBased(model.getBookShelf().getBookList().size() / 2);
+        return Index.fromOneBased(model.getDisplayBookList().size() / 2);
     }
 
     /**
-     * Returns the last index of the book in the {@code model}'s book list.
+     * Returns the last index of the book in the {@code model}'s display book list.
      */
     public static Index getLastIndex(Model model) {
-        return Index.fromOneBased(model.getBookShelf().getBookList().size());
+        return Index.fromOneBased(model.getDisplayBookList().size());
     }
 
     /**
-     * Returns the book in the {@code model}'s book list at {@code index}.
+     * Returns the book in the {@code model}'s display book list at {@code index}.
      */
     public static Book getBook(Model model, Index index) {
-        return model.getBookShelf().getBookList().get(index.getZeroBased());
+        return model.getDisplayBookList().get(index.getZeroBased());
     }
+
+    /**
+     * Returns a random 8 character string to be used as a prefix to a filename.
+     */
+    private static String generateRandomPrefix() {
+        byte[] randomBytes = new byte[RANDOM_BYTE_LENGTH];
+        new Random().nextBytes(randomBytes);
+        byte[] encodedBytes = Base64.getEncoder().encode(randomBytes);
+        return new String(encodedBytes).replace("/", "-");
+    }
+
 }

@@ -22,6 +22,7 @@ import seedu.address.model.book.Book;
 public class BookDetailsPanel extends UiPart<Region> {
 
     private static final String FXML = "BookDetailsPanel.fxml";
+    private static final String DEFAULT_LABEL_STYLE_CLASS = "label";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -39,6 +40,12 @@ public class BookDetailsPanel extends UiPart<Region> {
     private Label publisher;
     @FXML
     private Label publicationDate;
+    @FXML
+    private Label status;
+    @FXML
+    private Label priority;
+    @FXML
+    private Label rating;
     @FXML
     private Label description;
     @FXML
@@ -64,6 +71,13 @@ public class BookDetailsPanel extends UiPart<Region> {
             rating.setText((book.getRating().toString()));
             description.setText(book.getDescription().toString());
 
+            status.setText(book.getStatus().getDisplayText());
+            status.getStyleClass().setAll(DEFAULT_LABEL_STYLE_CLASS, book.getStatus().getStyleClass());
+            priority.setText(book.getPriority().getDisplayText());
+            priority.getStyleClass().setAll(DEFAULT_LABEL_STYLE_CLASS, book.getPriority().getStyleClass());
+            rating.setText(book.getRating().getDisplayText());
+            rating.getStyleClass().setAll(DEFAULT_LABEL_STYLE_CLASS, book.getRating().getStyleClass());
+
             authors.getChildren().clear();
             categories.getChildren().clear();
             book.getAuthors().forEach(author -> authors.getChildren()
@@ -83,18 +97,18 @@ public class BookDetailsPanel extends UiPart<Region> {
     @Subscribe
     private void handleBookListSelectionChangedEvent(BookListSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        showBook(event.getNewSelection().book);
+        showBook(event.getNewSelection());
     }
 
     @Subscribe
     private void handleSearchResultsSelectionChangedEvent(SearchResultsSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        showBook(event.getNewSelection().book);
+        showBook(event.getNewSelection());
     }
 
     @Subscribe
     private void handleRecentBooksSelectionChangedEvent(RecentBooksSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        showBook(event.getNewSelection().book);
+        showBook(event.getNewSelection());
     }
 }
