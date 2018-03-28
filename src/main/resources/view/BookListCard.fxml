@@ -27,7 +27,6 @@
           </minWidth>
         </Label>
         <Label fx:id="title" styleClass="cell_big_label" text="\$title" />
-        <Label fx:id="rating" styleClass="cell_big_label" text="\$rating" />
       </HBox>
       <FlowPane fx:id="authors" styleClass="pills-authors-small" />
       <FlowPane fx:id="categories" styleClass="pills-categories-small">
