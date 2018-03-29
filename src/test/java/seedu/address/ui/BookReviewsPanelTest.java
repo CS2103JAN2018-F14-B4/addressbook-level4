@@ -31,7 +31,6 @@ public class BookReviewsPanelTest extends GuiUnitTest {
 
         // associated reviews page of a book
         new GuiRobot().interact(() -> bookReviewsPanel.loadPageForBook(ARTEMIS));
-        Thread.sleep(800);
         URL expectedPage = new URL(BookReviewsPanel.SEARCH_PAGE_URL.replace("%isbn", ARTEMIS.getIsbn().isbn));
         assertEquals(expectedPage, bookReviewsPanelHandle.getLoadedUrl());
     }
