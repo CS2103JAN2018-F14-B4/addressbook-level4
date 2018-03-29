@@ -28,14 +28,14 @@ public class EditCommandParserTest {
         Index targetIndex = INDEX_FIRST_BOOK;
         String userInput = targetIndex.getOneBased() + " " + PREFIX_RATING + NON_EMPTY_RATING + " "
                 + PREFIX_PRIORITY
-                + "NONE" + PREFIX_STATUS + "UNREAD";
+                + "n" + " " + PREFIX_STATUS + "u";
         EditCommand expectedCommand = new EditCommand(INDEX_FIRST_BOOK, new Rating(NON_EMPTY_RATING),
                 Priority.DEFAULT_PRIORITY, Status.DEFAULT_STATUS);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // delete rating
         userInput = targetIndex.getOneBased() + " " + PREFIX_RATING + EMPTY_RATING + " " + PREFIX_PRIORITY
-                + "LOW" + " " + PREFIX_STATUS + "UNREAD";
+                + "l" + " " + PREFIX_STATUS + "u";
         expectedCommand = new EditCommand(INDEX_FIRST_BOOK, new Rating(EMPTY_RATING),
                 Priority.LOW, Status.UNREAD);
         assertParseSuccess(parser, userInput, expectedCommand);
