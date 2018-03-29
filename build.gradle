@@ -112,8 +112,7 @@ allTests.dependsOn nonGuiTests
 test {
     test.maxParallelForks = Math.min(4, Runtime.runtime.availableProcessors())
     minHeapSize = "512m"
-    maxHeapSize = "1024m"
-    jvmArgs '-Xmx1024m'
+    maxHeapSize = "1536m"
 
     systemProperty 'testfx.setup.timeout', '60000'
 
