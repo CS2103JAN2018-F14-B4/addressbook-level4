@@ -49,8 +49,8 @@ public class BookShelfParserTest {
         final Priority priority = Priority.DEFAULT_PRIORITY;
         final Status status = Status.DEFAULT_STATUS;
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_BOOK.getOneBased() + " " + PREFIX_RATING + rating.rating + " " + PREFIX_PRIORITY
-                + "NONE" + " " + PREFIX_STATUS + "UNREAD");
+                + INDEX_FIRST_BOOK.getOneBased() + " " + PREFIX_RATING + "-1" + " " + PREFIX_PRIORITY
+                + "n" + " " + PREFIX_STATUS + "u");
         assertEquals(new EditCommand(INDEX_FIRST_BOOK, rating, priority, status), command);
     }
     @Test
