@@ -60,7 +60,6 @@ public class EditCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        requireAllNonNull(bookToEdit, editedBook);
         if (model.getActiveListType() != ActiveListType.BOOK_SHELF) {
             throw new CommandException(MESSAGE_WRONG_ACTIVE_LIST);
         }
@@ -78,8 +77,8 @@ public class EditCommand extends UndoableCommand {
 
     @Override
     protected void preprocessUndoableCommand() throws CommandException {
+        requireAllNonNull(bookToEdit, editedBook);
         List<Book> lastShownList = model.getDisplayBookList();
-
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
         }
