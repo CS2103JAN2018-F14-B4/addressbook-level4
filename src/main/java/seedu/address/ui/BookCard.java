@@ -44,7 +44,6 @@ public class BookCard extends UiPart<Region> {
         this.book = book;
         id.setText(displayedIndex + ". ");
         title.setText(book.getTitle().title);
-        rating.setText(String.valueOf(book.getRating().rating));
         book.getAuthors().forEach(author -> authors.getChildren()
                 .add(new Label(author.fullName)));
         book.getCategories().forEach(category -> categories.getChildren()
