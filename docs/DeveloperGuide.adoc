@@ -458,16 +458,20 @@ image::UndoRedoActivityDiagram.png[width="550"]
 **Additional Info:** See the discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
 // end::undoredo[]
 
-=== Rate for recent books: `rate` command
+=== edit for recent books: `edit r/rating p/pirority s/status` command
 
 ==== Current implementation
 
-When `rate` command is entered, eventually `SwitchToRateBooksRequestEvent` is posted to the
-`EventCenter`. The interaction between components is shown in the diagram below.
+When `edit` command is entered,
+1. `Paser` will extract the command for each field information from the user input.
+2. 'editedBook' will be created, and containing the new field information.
+3. Targeting book 'bookToEdit' will be found by the index.
+4. 'editedBook' Book will replace the target 'bookToEdit'.
 
-The user performs `select 1` to view information on the 1st book in the book shelf. User can see the default rating is -1.
+The user performs `select 1` to view information on the 1st book in the book shelf.
+User can see the default rating is -1, the default priority is NONE, the default status is UNREAD.
 
-The user performs `rate 1 r/ 1` to rate 1st with 1 point.
+The user performs `rate 1 r/ 1 p/ l s/ u ` to rate 1st with 1 point, low priority and unread.
 
 ==== Design considerations
 
