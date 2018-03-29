@@ -128,23 +128,4 @@ public class ParserUtil {
         return description.isPresent() ? Optional.of(parseDescription(description.get())) : Optional.empty();
     }
 
-    /**
-     * Parses a {@code String rating} into a {@code Rating}.
-     * Leading and trailing whitespaces will be trimmed.
-     */
-    public static Rating parseRating(int rating) {
-        requireNonNull(rating);
-        return new Rating(rating);
-    }
-
-    /**
-     * Parses a {@code Optional<String> rating} into an {@code Optional<Rating>}
-     * if {@code rating} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<Rating> parseRating(Optional<Integer> rating) {
-        requireNonNull(rating);
-        return rating.isPresent() ? Optional.of(parseRating(rating.get())) : Optional.empty();
-    }
-
 }
