@@ -66,7 +66,6 @@ public class BookDetailsPanel extends UiPart<Region> {
             isbn.setText(book.getIsbn().toString());
             publisher.setText(book.getPublisher().toString());
             publicationDate.setText(book.getPublicationDate().toString());
-            rating.setText((book.getRating().toString()));
             description.setText(book.getDescription().toString());
 
             status.setText(book.getStatus().getDisplayText());
