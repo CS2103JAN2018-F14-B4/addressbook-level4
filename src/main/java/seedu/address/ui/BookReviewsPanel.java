@@ -68,7 +68,7 @@ public class BookReviewsPanel extends UiPart<Region> {
     }
 
     private void loadPage(String url) {
-        Platform.runLater(() -> browser.getEngine().load(url));
+        browser.getEngine().load(url);
     }
 
     protected void hide() {
@@ -78,6 +78,6 @@ public class BookReviewsPanel extends UiPart<Region> {
     @Subscribe
     private void handleShowBookReviewsRequestEvent(ShowBookReviewsRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPageForBook(event.getBook());
+        Platform.runLater(() -> loadPageForBook(event.getBook()));
     }
 }
