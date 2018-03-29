@@ -9,6 +9,7 @@ import java.net.URL;
 import org.junit.Before;
 import org.junit.Test;
 
+import guitests.GuiRobot;
 import guitests.guihandles.BookReviewsPanelHandle;
 
 public class BookReviewsPanelTest extends GuiUnitTest {
@@ -29,7 +30,7 @@ public class BookReviewsPanelTest extends GuiUnitTest {
         assertFalse(bookReviewsPanelHandle.isVisible());
 
         // associated reviews page of a book
-        bookReviewsPanel.loadPageForBook(ARTEMIS);
+        new GuiRobot().interact(() -> bookReviewsPanel.loadPageForBook(ARTEMIS));
         Thread.sleep(600);
         URL expectedPage = new URL(BookReviewsPanel.SEARCH_PAGE_URL.replace("%isbn", ARTEMIS.getIsbn().isbn));
         assertEquals(expectedPage, bookReviewsPanelHandle.getLoadedUrl());
