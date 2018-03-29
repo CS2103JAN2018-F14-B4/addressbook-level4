@@ -49,7 +49,7 @@ public class SearchCommand extends Command {
     }
 
     /**
-     * Creates a {@code SearchCommand} that does not use the JavaFX thread to update the model and UI.
+     * Creates a {@code SearchCommand} that can choose not use the JavaFX thread to update the model and UI.
      * This constructor is provided for unit-testing purposes.
      */
     protected SearchCommand(SearchDescriptor searchDescriptor, boolean useJavafxThread) {

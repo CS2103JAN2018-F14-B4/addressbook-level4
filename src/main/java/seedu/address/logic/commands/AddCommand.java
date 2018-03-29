@@ -43,7 +43,7 @@ public class AddCommand extends UndoableCommand {
     }
 
     /**
-     * Creates a {@code AddCommand} that does not use the JavaFX thread to update the model and UI.
+     * Creates a {@code AddCommand} that can choose not use the JavaFX thread to update the model and UI.
      * This constructor is provided for unit-testing purposes.
      */
     protected AddCommand(Index targetIndex, boolean useJavafxThread) {
