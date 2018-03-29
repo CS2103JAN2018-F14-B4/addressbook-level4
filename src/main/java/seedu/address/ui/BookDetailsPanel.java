@@ -3,6 +3,7 @@ package seedu.address.ui;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
+import com.sun.javafx.webkit.Accessor;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -10,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Region;
+import javafx.scene.web.WebView;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.BookListSelectionChangedEvent;
 import seedu.address.commons.events.ui.RecentBooksSelectionChangedEvent;
@@ -45,7 +47,7 @@ public class BookDetailsPanel extends UiPart<Region> {
     @FXML
     private Label rating;
     @FXML
-    private Label description;
+    private WebView description;
     @FXML
     private ScrollPane scrollPane;
 
@@ -53,6 +55,9 @@ public class BookDetailsPanel extends UiPart<Region> {
         super(FXML);
         registerAsAnEventHandler(this);
         getRoot().setVisible(false);
+
+        // disable interaction with web view
+        description.setDisable(true);
     }
 
     private void scrollToTop() {
@@ -66,7 +71,9 @@ public class BookDetailsPanel extends UiPart<Region> {
             isbn.setText(book.getIsbn().toString());
             publisher.setText(book.getPublisher().toString());
             publicationDate.setText(book.getPublicationDate().toString());
-            description.setText(book.getDescription().toString());
+            description.getEngine().loadContent(book.getDescription().toHtml());
+            // set transparent background for web view
+            Accessor.getPageFor(description.getEngine()).setBackgroundColor(0);
 
             status.setText(book.getStatus().getDisplayText());
             status.getStyleClass().setAll(DEFAULT_LABEL_STYLE_CLASS, book.getStatus().getStyleClass());

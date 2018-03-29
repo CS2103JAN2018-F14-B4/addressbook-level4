@@ -1,17 +1,22 @@
 package guitests.guihandles;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 import java.util.stream.Collectors;
 
+import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
+import javafx.scene.web.WebView;
+import seedu.address.commons.core.LogsCenter;
 
 /**
  * Provides a handle for the {@code BookDetailsPanel} of the UI.
  */
 public class BookDetailsPanelHandle extends NodeHandle<Node> {
-    public static final String BOOK_DETAILS_PANE_ID = "#bookDetailsPane";
+    protected static final String BOOK_DETAILS_PANE_ID = "#bookDetailsPane";
 
     private static final String TITLE_FIELD_ID = "#title";
     private static final String ISBN_FIELD_ID = "#isbn";
@@ -25,7 +30,7 @@ public class BookDetailsPanelHandle extends NodeHandle<Node> {
     private final Label isbnLabel;
     private final Label publisherLabel;
     private final Label publicationDateLabel;
-    private final Label descriptionLabel;
+    private final WebView descriptionView;
     private List<Label> authorsLabel;
     private List<Label> categoriesLabel;
 
@@ -39,7 +44,7 @@ public class BookDetailsPanelHandle extends NodeHandle<Node> {
         this.isbnLabel = getChildNode(ISBN_FIELD_ID);
         this.publisherLabel = getChildNode(PUBLISHER_FIELD_ID);
         this.publicationDateLabel = getChildNode(PUBLICATION_DATE_FIELD_ID);
-        this.descriptionLabel = getChildNode(DESCRIPTION_FIELD_ID);
+        this.descriptionView = getChildNode(DESCRIPTION_FIELD_ID);
 
         updateAuthorsLabel();
         updateCategoriesLabel();
@@ -62,7 +67,15 @@ public class BookDetailsPanelHandle extends NodeHandle<Node> {
     }
 
     public String getDescription() {
-        return descriptionLabel.getText();
+        final FutureTask<String> query = new FutureTask<>(() -> (String) descriptionView.getEngine()
+                .executeScript("document.body.innerHTML"));
+        guiRobot.interact(query);
+        try {
+            return query.get();
+        } catch (InterruptedException | ExecutionException e) {
+            LogsCenter.getLogger(this.getClass()).warning("Failed to fetch book description.");
+            return "";
+        }
     }
 
     public List<String> getAuthors() {

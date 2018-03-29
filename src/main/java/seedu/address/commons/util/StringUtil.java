@@ -13,6 +13,8 @@ import java.net.URLEncoder;
  */
 public class StringUtil {
 
+    private static final String HTML_TAGS_REGEX = "<[/]?[a-zA-Z]*>";
+
     /**
      * Returns true if the {@code sentence} contains the {@code word}.
      *   Ignores case, but a full word match is required.
@@ -82,5 +84,12 @@ public class StringUtil {
         } catch (UnsupportedEncodingException e) {
             return "";
         }
+    }
+
+    /**
+     * Returns the string {@code s} without any HTML tags.
+     */
+    public static String stripHtmlTags(String s) {
+        return s.replaceAll(HTML_TAGS_REGEX, "").trim();
     }
 }
