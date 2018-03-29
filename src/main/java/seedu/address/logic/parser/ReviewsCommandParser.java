@@ -8,14 +8,14 @@ import seedu.address.logic.commands.ReviewsCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
- * Parses input arguments and creates a new ReviewsCommand object
+ * Parses input arguments and creates a new ReviewsCommand object.
  */
 public class ReviewsCommandParser implements Parser<ReviewsCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the ReviewsCommand
      * and returns an ReviewsCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
+     * @throws ParseException if the user input does not conform the expected format.
      */
     public ReviewsCommand parse(String args) throws ParseException {
         try {

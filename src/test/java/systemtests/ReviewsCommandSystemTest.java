@@ -1,5 +1,6 @@
 package systemtests;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -99,6 +100,6 @@ public class ReviewsCommandSystemTest extends BibliotekSystemTest {
      */
     private void assertBookReviewsPanelVisible() {
         assertTrue(getBookReviewsPanel().isVisible());
-        assertTrue(!getBookDetailsPanel().isVisible());
+        assertFalse(getBookDetailsPanel().isVisible());
     }
 }

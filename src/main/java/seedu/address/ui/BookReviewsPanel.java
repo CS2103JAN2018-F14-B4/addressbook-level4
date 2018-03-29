@@ -59,7 +59,7 @@ public class BookReviewsPanel extends UiPart<Region> {
         Platform.runLater(() -> browser.getEngine().load(url));
     }
 
-    protected void clear() {
+    protected void hide() {
         getRoot().setVisible(false);
     }
 
