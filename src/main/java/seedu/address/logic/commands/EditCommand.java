@@ -23,16 +23,15 @@ import seedu.address.model.book.exceptions.DuplicateBookException;
  */
 public class EditCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "rate";
+    public static final String COMMAND_WORD = "edit";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the rating of the book identified "
             + "by the index number used in the last book listing. "
             + "Existing rating will be overwritten by the input.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + PREFIX_RATING + "RATING\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_RATING + "-1" + PREFIX_PRIORITY + Priority.DEFAULT_PRIORITY + PREFIX_STATUS
-            + Status.DEFAULT_STATUS;
+            + PREFIX_RATING + "-1" + PREFIX_PRIORITY + "low" + PREFIX_STATUS
+            + "unread";
 
     public static final String MESSAGE_ADD_EDITING_SUCCESS = "Editing to Book: %1$s";
     public static final String MESSAGE_DELETE_EDITING_SUCCESS = "Removed editing from Book: %1$s";
@@ -60,6 +59,7 @@ public class EditCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
+        requireAllNonNull(bookToEdit, editedBook);
         if (model.getActiveListType() != ActiveListType.BOOK_SHELF) {
             throw new CommandException(MESSAGE_WRONG_ACTIVE_LIST);
         }
@@ -77,7 +77,6 @@ public class EditCommand extends UndoableCommand {
 
     @Override
     protected void preprocessUndoableCommand() throws CommandException {
-        requireAllNonNull(bookToEdit, editedBook);
         List<Book> lastShownList = model.getDisplayBookList();
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
@@ -86,7 +85,7 @@ public class EditCommand extends UndoableCommand {
         bookToEdit = lastShownList.get(index.getZeroBased());
         editedBook = new Book(bookToEdit.getGid(), bookToEdit.getIsbn(), bookToEdit.getAuthors(),
                 bookToEdit.getTitle(), bookToEdit.getCategories(), bookToEdit.getDescription(),
-                bookToEdit.getStatus(), bookToEdit.getPriority(), rating,
+                status, priority, rating,
                 bookToEdit.getPublisher(),
                 bookToEdit.getPublicationDate());
     }
