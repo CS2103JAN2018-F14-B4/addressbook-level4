@@ -45,6 +45,9 @@ public class EditCommandParserTest {
     public void parse_missingCompulsoryField_failure() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
 
+        //no parameters
+        assertParseFailure(parser, EditCommand.COMMAND_WORD + " 1", expectedMessage);
+
         // no parameters
         assertParseFailure(parser, EditCommand.COMMAND_WORD, expectedMessage);
 
