@@ -19,7 +19,7 @@ public class BookReviewsPanelTest extends GuiUnitTest {
 
     @Before
     public void setUp() {
-        guiRobot.interact(() -> bookReviewsPanel = new BookReviewsPanel(false));
+        guiRobot.interact(() -> bookReviewsPanel = new BookReviewsPanel());
         uiPartRule.setUiPart(bookReviewsPanel);
         bookReviewsPanelHandle = new BookReviewsPanelHandle(bookReviewsPanel.getRoot());
     }
