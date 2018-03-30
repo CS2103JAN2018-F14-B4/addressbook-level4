@@ -1,8 +1,15 @@
 // show only the reviews section
-var r = document.getElementById('other_reviews');
-if (r) {
-    document.body.innerHTML = '';
-    document.body.appendChild(r);
+var meta = document.getElementById('bookMeta');
+var reviews = document.getElementById('other_reviews');
+if (meta && reviews) {
+    document.body.innerHTML = '<div class="siteHeader__logo"></div>' +
+        '<div id="mainContent" style="padding: 0 12px 5px; max-width: 750px;"></div>';
+    var mainContent = document.getElementById('mainContent');
+    var header = document.createElement('div');
+    header.style = 'float: right;';
+    header.appendChild(meta);
+    mainContent.appendChild(header);
+    mainContent.appendChild(reviews);
 }
 
 // disables links, given a class name
