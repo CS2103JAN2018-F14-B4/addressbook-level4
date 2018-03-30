@@ -36,7 +36,6 @@ public class BookCardHandle extends NodeHandle<Node> {
 
         this.idLabel = getChildNode(ID_FIELD_ID);
         this.titleLabel = getChildNode(TITLE_FIELD_ID);
-        this.ratingLabel = getChildNode(RATING_FIELD_ID);
 
         Region authorsContainer = getChildNode(AUTHORS_FIELD_ID);
         this.authorsLabel = authorsContainer
@@ -54,6 +53,7 @@ public class BookCardHandle extends NodeHandle<Node> {
 
         this.statusLabel = getChildNode(STATUS_FIELD_ID);
         this.priorityLabel = getChildNode(PRIORITY_FIELD_ID);
+        this.ratingLabel = getChildNode(RATING_FIELD_ID);
     }
 
     public String getId() {
