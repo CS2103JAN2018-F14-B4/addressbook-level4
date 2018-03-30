@@ -64,7 +64,7 @@ public class BookCardHandle extends NodeHandle<Node> {
         return titleLabel.getText();
     }
 
-    public List<String> getAuthors() {
+    private List<String> getAuthors() {
         return authorsLabel
                 .stream()
                 .map(Label::getText)

@@ -16,6 +16,7 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.book.Author;
 import seedu.address.model.book.Category;
 import seedu.address.model.book.Description;
@@ -150,5 +151,18 @@ public class ParserUtilTest {
                 new HashSet<>(Arrays.asList(new Category(VALID_CATEGORY_1), new Category(VALID_CATEGORY_2)));
 
         assertEquals(expectedCategorySet, actualCategorySet);
+    }
+
+    @Test
+    public void parseRating_validRating_success() throws ParseException {
+        assertEquals(-1, ParserUtil.parseRating("-1").rating);
+        assertEquals(0, ParserUtil.parseRating("0").rating);
+        assertEquals(5, ParserUtil.parseRating("5").rating);
+    }
+
+    @Test
+    public void parseRating_invalidRating_throwsParseException() throws ParseException {
+        thrown.expect(ParseException.class);
+        ParserUtil.parseRating("6");
     }
 }

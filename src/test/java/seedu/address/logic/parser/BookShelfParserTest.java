@@ -45,6 +45,7 @@ public class BookShelfParserTest {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(DeleteCommand.COMMAND_WORD + " 1");
         assertEquals(new DeleteCommand(INDEX_FIRST_BOOK), command);
     }
+
     @Test
     public void parseCommand_edit() throws Exception {
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
@@ -53,6 +54,7 @@ public class BookShelfParserTest {
         assertEquals(new EditCommand(INDEX_FIRST_BOOK, new EditDescriptorBuilder().withRating(new Rating(2))
                 .withPriority(Priority.NONE).withStatus(Status.UNREAD).build()), command);
     }
+
     @Test
     public void parseCommand_exit() throws Exception {
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD) instanceof ExitCommand);

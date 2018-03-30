@@ -103,7 +103,7 @@ public class EditCommandTest {
     }
 
     @Test
-    public void executeUndoRedo_validIndexUnfilteredList_success() throws Exception {
+    public void executeUndo_validIndexUnfilteredList_success() throws Exception {
         UndoStack undoStack = new UndoStack();
         UndoCommand undoCommand = prepareUndoCommand(model, undoStack);
         Book editedBook = new BookBuilder().build();
@@ -120,7 +120,7 @@ public class EditCommandTest {
     }
 
     @Test
-    public void executeUndoRedo_invalidIndexUnfilteredList_failure() {
+    public void executeUndo_invalidIndexUnfilteredList_failure() {
         UndoStack undoStack = new UndoStack();
         UndoCommand undoCommand = prepareUndoCommand(model, undoStack);
         Index outOfBoundIndex = Index.fromOneBased(model.getDisplayBookList().size() + 1);
@@ -130,12 +130,12 @@ public class EditCommandTest {
         // execution failed -> editCommand not pushed into undoStack
         assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
 
-        // no commands in undoStack -> undoCommand and redoCommand fail
+        // no commands in undoStack -> undoCommand fail
         assertCommandFailure(undoCommand, model, UndoCommand.MESSAGE_FAILURE);
     }
 
     @Test
-    public void execute_invalidBookIndexUnfilteredList_failure() throws Exception {
+    public void execute_invalidBookIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getDisplayBookList().size() + 1);
         EditDescriptor descriptor = new EditDescriptorBuilder().withStatus(Status.DEFAULT_STATUS).build();
         EditCommand editCommand = prepareCommand(outOfBoundIndex, descriptor);
@@ -148,7 +148,7 @@ public class EditCommandTest {
      * but smaller than size of book shelf.
      */
     @Test
-    public void execute_invalidBookIndexFilteredList_failure() throws Exception {
+    public void execute_invalidBookIndexFilteredList_failure() {
         showBookAtIndex(model, INDEX_FIRST_BOOK);
         Index outOfBoundIndex = INDEX_SECOND_BOOK;
         // ensures that outOfBoundIndex is still in bounds of book shelf
@@ -188,7 +188,7 @@ public class EditCommandTest {
     }
 
     /**
-     * Returns an {@code EditCommand} with parameters {@code index} and {@code descriptor}
+     * Returns an {@code EditCommand} with parameters {@code index} and {@code descriptor}.
      */
     private EditCommand prepareCommand(Index index, EditDescriptor descriptor) {
         EditCommand editCommand = new EditCommand(index, descriptor);

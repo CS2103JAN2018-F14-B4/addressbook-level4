@@ -23,7 +23,7 @@ public class EditDescriptorBuilder {
     }
 
     /**
-     * Returns an {@code EditDescriptor} with fields containing {@code book}'s details
+     * Returns an {@code EditDescriptor} with fields containing {@code book}'s details.
      */
     public EditDescriptorBuilder(Book book) {
         descriptor = new EditCommand.EditDescriptor();

@@ -59,7 +59,7 @@ public class EditCommandSystemTest extends BibliotekSystemTest {
         /* ------------------ Performing edit operation while a filtered list is being shown ------------------------ */
 
         /* Case: filtered book list, edit index within bounds of book shelf and book list -> edited */
-        executeCommand(ListCommand.COMMAND_WORD + " s/u");
+        executeCommand(ListCommand.COMMAND_WORD + " " + PREFIX_STATUS + "u");
         index = INDEX_FIRST_BOOK;
         assertTrue(index.getZeroBased() < getModel().getDisplayBookList().size());
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + PREFIX_STATUS + "r";
@@ -68,7 +68,7 @@ public class EditCommandSystemTest extends BibliotekSystemTest {
         assertCommandSuccess(command, index, editedBook);
 
         /* Case: edit index within bounds of book shelf but out of bounds of filtered book list -> rejected */
-        executeCommand(ListCommand.COMMAND_WORD + " s/u");
+        executeCommand(ListCommand.COMMAND_WORD + " " + PREFIX_STATUS + "u");
         int invalidIndex = getModel().getDisplayBookList().size() + 1;
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + " " + PREFIX_RATING + "2",
                 Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
@@ -111,15 +111,15 @@ public class EditCommandSystemTest extends BibliotekSystemTest {
 
         /* Case: invalid status -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_BOOK.getOneBased() + " "
-                + PREFIX_STATUS + "status", EditCommand.MESSAGE_INVALID_STATUS);
+                + PREFIX_STATUS + "status", Messages.MESSAGE_INVALID_STATUS);
 
         /* Case: invalid priority -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_BOOK.getOneBased() + " "
-                + PREFIX_PRIORITY + "priority", EditCommand.MESSAGE_INVALID_PRIORITY);
+                + PREFIX_PRIORITY + "priority", Messages.MESSAGE_INVALID_PRIORITY);
 
         /* Case: invalid rating -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_BOOK.getOneBased() + " "
-                + PREFIX_RATING + "100", EditCommand.MESSAGE_INVALID_RATING);
+                + PREFIX_RATING + "100", Messages.MESSAGE_INVALID_RATING);
     }
 
     /**

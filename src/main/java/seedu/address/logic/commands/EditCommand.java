@@ -29,27 +29,17 @@ public class EditCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "edit";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the rating, status, and priority"
-            + " of the book identified "
-            + "by the index number used in the last book listing. "
-            + "Existing rating will be overwritten by the input.\n"
-            + "Parameters: [s/STATUS] [p/PRIORITY] [r/RATING] INDEX (must be a positive integer) "
+            + " of the book identified by the index number.\n"
+            + "Parameters: INDEX [s/STATUS] [p/PRIORITY] [r/RATING] "
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_RATING + "-1" + PREFIX_PRIORITY + "low" + PREFIX_STATUS
-            + "unread";
+            + PREFIX_RATING + "-1 " + PREFIX_PRIORITY + "low " + PREFIX_STATUS + "unread";
 
     public static final String MESSAGE_SUCCESS = "Edited Book: %1$s";
     public static final String MESSAGE_NO_PARAMETERS = "At least one field to edit must be provided.";
     public static final String MESSAGE_WRONG_ACTIVE_LIST = "Items from the current list cannot be edited.";
-    public static final String MESSAGE_INVALID_STATUS = "Invalid status entered. "
-            + "Allowed values are: READ, R, UNREAD, U, READING, and RD.";
-    public static final String MESSAGE_INVALID_PRIORITY = "Invalid priority entered. "
-            + "Allowed values are: NONE, N, LOW, L, MEDIUM, M, HIGH, and H.";
-    public static final String MESSAGE_INVALID_RATING = "Invalid rating entered. "
-            + "Please enter a valid integer between -1 and 5 (both inclusive).";
 
     private final Index index;
     private final EditDescriptor editDescriptor;
-
 
     private Book bookToEdit;
     private Book editedBook;
@@ -72,8 +62,7 @@ public class EditCommand extends UndoableCommand {
         try {
             model.updateBook(bookToEdit, editedBook);
         } catch (DuplicateBookException dpe) {
-            throw new AssertionError(
-                    "Editing target book should not result in a duplicate");
+            throw new AssertionError("Editing target book should not result in a duplicate");
         } catch (BookNotFoundException pnfe) {
             throw new AssertionError("The target book should not be missing");
         }
@@ -82,7 +71,6 @@ public class EditCommand extends UndoableCommand {
 
     @Override
     protected void preprocessUndoableCommand() throws CommandException {
-
         if (model.getActiveListType() != ActiveListType.BOOK_SHELF) {
             throw new CommandException(MESSAGE_WRONG_ACTIVE_LIST);
         }
@@ -110,8 +98,7 @@ public class EditCommand extends UndoableCommand {
         return new Book(bookToEdit.getGid(), bookToEdit.getIsbn(), bookToEdit.getAuthors(),
                 bookToEdit.getTitle(), bookToEdit.getCategories(), bookToEdit.getDescription(),
                 updatedStatus, updatedPriority, updatedRating,
-                bookToEdit.getPublisher(),
-                bookToEdit.getPublicationDate());
+                bookToEdit.getPublisher(), bookToEdit.getPublicationDate());
     }
 
     @Override
