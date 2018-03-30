@@ -15,13 +15,13 @@ import seedu.address.model.book.Rating;
 import seedu.address.model.book.Status;
 
 /**
- * Parses input arguments and creates a new {@code EditCommand} object
+ * Parses input arguments and creates a new {@code EditCommand} object.
  */
 public class EditCommandParser implements Parser<EditCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the {@code EditCommand}
-     * and returns a {@code RateCommand} object for execution.
-     * @throws ParseException if the user input does not conform the expected format
+     * and returns a {@code EditCommand} object for execution.
+     * @throws ParseException if the user input does not conform the expected format.
      */
     public EditCommand parse(String args) throws ParseException {
         requireNonNull(args);
