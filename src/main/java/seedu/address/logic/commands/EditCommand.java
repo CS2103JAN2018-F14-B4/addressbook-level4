@@ -19,21 +19,22 @@ import seedu.address.model.book.exceptions.BookNotFoundException;
 import seedu.address.model.book.exceptions.DuplicateBookException;
 
 /**
- * Changes the rating of an existing Book in the address book.
+ * Edits the status, priority, and rating of an existing book.
  */
 public class EditCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "edit";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the rating of the book identified "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the rating, status, and priority"
+            + " of the book identified "
             + "by the index number used in the last book listing. "
             + "Existing rating will be overwritten by the input.\n"
-            + "Parameters: INDEX (must be a positive integer) "
+            + "Parameters: [s/STATUS] [p/PRIORITY] [r/RATING] INDEX (must be a positive integer) "
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_RATING + "-1" + PREFIX_PRIORITY + "low" + PREFIX_STATUS
             + "unread";
 
-    public static final String MESSAGE_ADD_EDITING_SUCCESS = "Editing to Book: %1$s";
+    public static final String MESSAGE_ADD_EDITING_SUCCESS = "Edited Book: %1$s";
     public static final String MESSAGE_DELETE_EDITING_SUCCESS = "Removed editing from Book: %1$s";
     public static final String MESSAGE_WRONG_ACTIVE_LIST = "Cannot be edited.";
 
@@ -45,8 +46,10 @@ public class EditCommand extends UndoableCommand {
     private Book editedBook;
 
     /**
-     * @param index of the book in the filtered book list to edit the rating
-     * @param rating of the book to be updated to
+     * @param index of the book in the filtered book list to edit the rating.
+     * @param rating of the book to be updated to.
+     * @param priority of the book to be updated to.
+     * @param  status of the book to be updated to.
      */
     public EditCommand(Index index, Rating rating, Priority priority, Status status) {
         requireAllNonNull(index, rating, priority, status);
