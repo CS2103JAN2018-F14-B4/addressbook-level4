@@ -82,16 +82,16 @@ public class Book {
         return description;
     }
 
-    public Rating getRating() {
-        return rating;
+    public Status getStatus() {
+        return status;
     }
 
     public Priority getPriority() {
         return priority;
     }
 
-    public Status getStatus() {
-        return status;
+    public Rating getRating() {
+        return rating;
     }
 
     public Gid getGid() {
