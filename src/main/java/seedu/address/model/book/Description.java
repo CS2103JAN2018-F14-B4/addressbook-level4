@@ -2,8 +2,6 @@ package seedu.address.model.book;
 
 import static java.util.Objects.requireNonNull;
 
-import seedu.address.commons.util.StringUtil;
-
 /**
  * Represents a book's description.
  * Guarantees: immutable.
