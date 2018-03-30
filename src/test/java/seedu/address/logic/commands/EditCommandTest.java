@@ -28,11 +28,9 @@ import seedu.address.model.book.Status;
 import seedu.address.network.NetworkManager;
 
 /**
- * Contains integration tests (interaction with the Model) and unit tests for editCommand.
+ * Contains integration tests (interaction with the Model) and unit tests for EditCommand.
  */
 public class EditCommandTest {
-
-    public static final int RATING_STUB = -1;
 
     private Model model = new ModelManager(getTypicalBookShelf(), new UserPrefs());
 
@@ -91,7 +89,7 @@ public class EditCommandTest {
     }
 
     /**
-     * Returns an {@code editCommand} with parameters {@code index} and {@code Rating}.
+     * Returns an {@code EditCommand} with the specified parameters.
      */
     private EditCommand prepareCommand(Index index, int rating, String priority, String status) {
         EditCommand editCommand = new EditCommand(index, new Rating(rating),
