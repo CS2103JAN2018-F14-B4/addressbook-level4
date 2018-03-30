@@ -75,7 +75,7 @@ public class EditCommand extends UndoableCommand {
         } catch (BookNotFoundException pnfe) {
             throw new AssertionError("The target Book cannot be missing");
         }
-        return new CommandResult(generateSuccessMessage(editedBook));
+        return new CommandResult(String.format(MESSAGE_ADD_EDITING_SUCCESS, editedBook));
     }
 
     @Override
@@ -91,15 +91,6 @@ public class EditCommand extends UndoableCommand {
                 status, priority, rating,
                 bookToEdit.getPublisher(),
                 bookToEdit.getPublicationDate());
-    }
-
-    /**
-     * Generates a command execution success message based on whether the rating is added to or removed from
-     * {@code bookToEdit}.
-     */
-    private String generateSuccessMessage(Book bookToEdit) {
-        String message = (rating.rating != -1) ? MESSAGE_ADD_EDITING_SUCCESS : MESSAGE_DELETE_EDITING_SUCCESS;
-        return String.format(message, bookToEdit);
     }
 
     @Override
