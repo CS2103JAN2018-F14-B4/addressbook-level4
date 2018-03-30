@@ -17,11 +17,11 @@ import seedu.address.model.book.Category;
 public class BookCardHandle extends NodeHandle<Node> {
     private static final String ID_FIELD_ID = "#id";
     private static final String TITLE_FIELD_ID = "#title";
-    private static final String RATING_FIELD_ID = "#rating";
     private static final String AUTHORS_FIELD_ID = "#authors";
     private static final String CATEGORIES_FIELD_ID = "#categories";
     private static final String STATUS_FIELD_ID = "#status";
     private static final String PRIORITY_FIELD_ID = "#priority";
+    private static final String RATING_FIELD_ID = "#rating";
 
     private final Label idLabel;
     private final Label titleLabel;
