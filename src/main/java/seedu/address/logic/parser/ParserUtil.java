@@ -13,7 +13,6 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.model.book.Author;
 import seedu.address.model.book.Category;
 import seedu.address.model.book.Description;
-import seedu.address.model.book.Rating;
 import seedu.address.model.book.Title;
 
 
