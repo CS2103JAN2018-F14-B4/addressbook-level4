@@ -117,10 +117,6 @@ public class EditCommandParser implements Parser<EditCommand> {
             this.aliases = aliases;
         }
 
-        public Comparator<Book> getComparator() {
-            return comparator;
-        }
-
         /**
          * Returns the {@code SortMode} with a name or alias that matches the specified {@code searchTerm}.
          */
