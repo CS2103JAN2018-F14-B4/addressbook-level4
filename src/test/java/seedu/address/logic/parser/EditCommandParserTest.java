@@ -22,7 +22,6 @@ public class EditCommandParserTest {
     private EditCommandParser parser = new EditCommandParser();
 
     @Test
-
     public void parse_indexSpecified_success() throws Exception {
         // add rating
         Index targetIndex = INDEX_FIRST_BOOK;
@@ -45,7 +44,7 @@ public class EditCommandParserTest {
     public void parse_missingCompulsoryField_failure() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
 
-        //no parameters
+        // no parameters
         assertParseFailure(parser, EditCommand.COMMAND_WORD + " 1", expectedMessage);
 
         // no parameters
