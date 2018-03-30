@@ -29,8 +29,6 @@ public class BookCard extends UiPart<Region> {
     @FXML
     private Label id;
     @FXML
-    private Label rating;
-    @FXML
     private FlowPane authors;
     @FXML
     private FlowPane categories;
@@ -38,6 +36,8 @@ public class BookCard extends UiPart<Region> {
     private Label status;
     @FXML
     private Label priority;
+    @FXML
+    private Label rating;
 
     public BookCard(Book book, int displayedIndex) {
         super(FXML);
