@@ -15,8 +15,6 @@ import seedu.address.model.book.Category;
 import seedu.address.model.book.Description;
 import seedu.address.model.book.Title;
 
-
-
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
  * {@code ParserUtil} contains methods that take in {@code Optional} as parameters. However, it goes against Java's
