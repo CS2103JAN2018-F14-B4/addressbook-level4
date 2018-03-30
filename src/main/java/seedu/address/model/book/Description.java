@@ -10,8 +10,6 @@ import seedu.address.commons.util.StringUtil;
  */
 public class Description {
 
-    private static final String HTML_TAG_NEW_LINE = "<br>";
-
     public final String description;
 
     /**
@@ -24,14 +22,9 @@ public class Description {
         this.description = description;
     }
 
-    public String toHtml() {
-        return description;
-    }
-
     @Override
     public String toString() {
-        String descriptionWithoutTags = description.replaceAll(HTML_TAG_NEW_LINE , "\n");
-        return StringUtil.stripHtmlTags(descriptionWithoutTags);
+        return description;
     }
 
     @Override

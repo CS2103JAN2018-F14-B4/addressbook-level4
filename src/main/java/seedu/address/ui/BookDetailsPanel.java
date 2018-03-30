@@ -71,7 +71,7 @@ public class BookDetailsPanel extends UiPart<Region> {
             isbn.setText(book.getIsbn().toString());
             publisher.setText(book.getPublisher().toString());
             publicationDate.setText(book.getPublicationDate().toString());
-            description.getEngine().loadContent(book.getDescription().toHtml());
+            description.getEngine().loadContent(book.getDescription().toString());
             // set transparent background for web view
             Accessor.getPageFor(description.getEngine()).setBackgroundColor(0);
 
