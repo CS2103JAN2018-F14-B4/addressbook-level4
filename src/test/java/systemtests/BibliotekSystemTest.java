@@ -18,6 +18,7 @@ import org.junit.ClassRule;
 
 import guitests.guihandles.BookDetailsPanelHandle;
 import guitests.guihandles.BookListPanelHandle;
+import guitests.guihandles.BookReviewsPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
@@ -115,6 +116,10 @@ public abstract class BibliotekSystemTest {
         return mainWindowHandle.getBookDetailsPanel();
     }
 
+    public BookReviewsPanelHandle getBookReviewsPanel() {
+        return mainWindowHandle.getBookReviewsPanel();
+    }
+
     public StatusBarFooterHandle getStatusBarFooter() {
         return mainWindowHandle.getStatusBarFooter();
     }
@@ -148,7 +153,7 @@ public abstract class BibliotekSystemTest {
      */
     protected void showAllBooks() {
         executeCommand(ListCommand.COMMAND_WORD);
-        assertEquals(getModel().getBookShelf().getBookList().size(), getModel().getDisplayBookList().size());
+        assertEquals(getModel().getBookShelf().size(), getModel().getDisplayBookList().size());
     }
 
     /**
@@ -180,7 +185,7 @@ public abstract class BibliotekSystemTest {
      */
     protected void deleteAllBooks() {
         executeCommand(ClearCommand.COMMAND_WORD);
-        assertEquals(0, getModel().getBookShelf().getBookList().size());
+        assertEquals(0, getModel().getBookShelf().size());
     }
 
     /**

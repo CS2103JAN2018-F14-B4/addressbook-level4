@@ -96,7 +96,7 @@ public class BookShelfTest {
     public void removeBook_validBook_success() throws Exception {
         bookShelf.addBook(ARTEMIS);
         bookShelf.removeBook(ARTEMIS);
-        assertEquals(0, bookShelf.getBookList().size());
+        assertEquals(0, bookShelf.size());
     }
 
     @Test
@@ -130,6 +130,11 @@ public class BookShelfTest {
         @Override
         public ObservableList<Book> getBookList() {
             return books;
+        }
+
+        @Override
+        public int size() {
+            return books.size();
         }
     }
 

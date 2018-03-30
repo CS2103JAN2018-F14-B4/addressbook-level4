@@ -8,9 +8,12 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
 
 import java.util.Optional;
 
+import javafx.application.Platform;
 import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.network.ApiSearchRequestEvent;
+import seedu.address.commons.events.ui.NewResultAvailableEvent;
+import seedu.address.commons.events.ui.SwitchToSearchResultsRequestEvent;
 import seedu.address.commons.util.CollectionUtil;
+import seedu.address.model.ReadOnlyBookShelf;
 
 /**
  * Searches for books on Google Books that matches a set of parameters.
@@ -35,20 +38,63 @@ public class SearchCommand extends Command {
     public static final String MESSAGE_SEARCH_SUCCESS = "Found %s matching books.";
 
     private final SearchDescriptor searchDescriptor;
+    private final boolean useJavafxThread;
 
     /**
      * Creates a SearchCommand to search for matching books.
      * @param searchDescriptor parameters to search with.
      */
     public SearchCommand(SearchDescriptor searchDescriptor) {
+        this(searchDescriptor, true);
+    }
+
+    /**
+     * Creates a {@code SearchCommand} that can choose not use the JavaFX thread to update the model and UI.
+     * This constructor is provided for unit-testing purposes.
+     */
+    protected SearchCommand(SearchDescriptor searchDescriptor, boolean useJavafxThread) {
         requireNonNull(searchDescriptor);
         this.searchDescriptor = new SearchDescriptor(searchDescriptor);
+        this.useJavafxThread = useJavafxThread;
     }
 
     @Override
     public CommandResult execute() {
-        EventsCenter.getInstance().post(new ApiSearchRequestEvent(searchDescriptor.toSearchString()));
+        makeAsyncSearchRequest();
         return new CommandResult(MESSAGE_SEARCHING);
+    }
+
+    /**
+     * Makes an asynchronous request to search for books.
+     */
+    private void makeAsyncSearchRequest() {
+        network.searchBooks(searchDescriptor.toSearchString())
+                .thenAccept(this::onSuccessfulRequest)
+                .exceptionally(e -> {
+                    EventsCenter.getInstance().post(new NewResultAvailableEvent(SearchCommand.MESSAGE_SEARCH_FAIL));
+                    return null;
+                });
+    }
+
+    /**
+     * Handles the result of a successful request to search for books.
+     */
+    private void onSuccessfulRequest(ReadOnlyBookShelf bookShelf) {
+        if (useJavafxThread) {
+            Platform.runLater(() -> displaySearchResults(bookShelf));
+        } else {
+            displaySearchResults(bookShelf);
+        }
+    }
+
+    /**
+     * Updates the model with the given search results and posts events to update the UI.
+     */
+    private void displaySearchResults(ReadOnlyBookShelf bookShelf) {
+        model.updateSearchResults(bookShelf);
+        EventsCenter.getInstance().post(new SwitchToSearchResultsRequestEvent());
+        EventsCenter.getInstance().post(new NewResultAvailableEvent(
+                String.format(SearchCommand.MESSAGE_SEARCH_SUCCESS, bookShelf.size())));
     }
 
     @Override

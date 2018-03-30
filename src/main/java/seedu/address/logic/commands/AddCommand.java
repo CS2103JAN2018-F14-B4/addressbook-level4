@@ -5,12 +5,14 @@ import static java.util.Objects.requireNonNull;
 import java.util.List;
 import java.util.Objects;
 
+import javafx.application.Platform;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.events.network.ApiBookDetailsRequestEvent;
+import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.book.Book;
+import seedu.address.model.book.exceptions.DuplicateBookException;
 
 /**
  * Adds a book to the book shelf.
@@ -34,18 +36,64 @@ public class AddCommand extends UndoableCommand {
     private final Index targetIndex;
 
     private Book toAdd;
+    private final boolean useJavafxThread;
 
     public AddCommand(Index targetIndex) {
+        this(targetIndex, true);
+    }
+
+    /**
+     * Creates a {@code AddCommand} that can choose not use the JavaFX thread to update the model and UI.
+     * This constructor is provided for unit-testing purposes.
+     */
+    protected AddCommand(Index targetIndex, boolean useJavafxThread) {
         requireNonNull(targetIndex);
         this.targetIndex = targetIndex;
+        this.useJavafxThread = useJavafxThread;
     }
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult executeUndoableCommand() {
         requireNonNull(toAdd);
 
-        EventsCenter.getInstance().post(new ApiBookDetailsRequestEvent(toAdd.getGid().gid));
+        makeAsyncBookDetailsRequest();
         return new CommandResult(MESSAGE_ADDING);
+    }
+
+    /**
+     * Makes an asynchronous request to retrieve book details.
+     */
+    private void makeAsyncBookDetailsRequest() {
+        network.getBookDetails(toAdd.getGid().gid)
+                .thenAccept(this::onSuccessfulRequest)
+                .exceptionally(e -> {
+                    EventsCenter.getInstance().post(new NewResultAvailableEvent(AddCommand.MESSAGE_ADD_FAIL));
+                    return null;
+                });
+    }
+
+    /**
+     * Handles the result of a successful request for book details.
+     */
+    private void onSuccessfulRequest(Book book) {
+        if (useJavafxThread) {
+            Platform.runLater(() -> addBook(book));
+        } else {
+            addBook(book);
+        }
+    }
+
+    /**
+     * Adds the given book to the book shelf and posts events to update the UI.
+     */
+    protected void addBook(Book book) {
+        try {
+            model.addBook(book);
+            EventsCenter.getInstance().post(new NewResultAvailableEvent(
+                    String.format(AddCommand.MESSAGE_SUCCESS, book)));
+        } catch (DuplicateBookException e) {
+            EventsCenter.getInstance().post(new NewResultAvailableEvent(AddCommand.MESSAGE_DUPLICATE_BOOK));
+        }
     }
 
     @Override
