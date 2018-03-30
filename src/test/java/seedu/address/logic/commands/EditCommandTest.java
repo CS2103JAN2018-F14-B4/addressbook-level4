@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PRIORITY_BABYLON;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_RATING_ARTEMIS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_RATING_BABYLON;
@@ -24,6 +25,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.book.Priority;
 import seedu.address.model.book.Rating;
 import seedu.address.model.book.Status;
+import seedu.address.network.NetworkManager;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for editCommand.
@@ -94,7 +96,7 @@ public class EditCommandTest {
     private EditCommand prepareCommand(Index index, int rating, String priority, String status) {
         EditCommand editCommand = new EditCommand(index, new Rating(rating),
                 Priority.findPriority(priority), Status.findStatus(status));
-        editCommand.setData(model, new CommandHistory(), new UndoStack());
+        editCommand.setData(model, mock(NetworkManager.class), new CommandHistory(), new UndoStack());
         return editCommand;
     }
 }
