@@ -24,7 +24,8 @@ function disable(clazz) {
 function processPage() {
     var r = document.getElementsByClassName('reviewFooter');
     for (var i = 0; i < r.length; i++) {
-        var lc = r[i].querySelector('.likesCount'); r[i].innerHTML = lc.innerHTML;
+        var lc = r[i].querySelector('.likesCount');
+        if (lc) { r[i].innerHTML = lc.innerHTML; } else { r[i].innerHTML = ''; }
     }
     disable('user');
     disable('reviewDate');
@@ -35,8 +36,14 @@ function processPage() {
 // executes processPage after the completion of every ajax call
 XMLHttpRequest.prototype.realSend = XMLHttpRequest.prototype.send;
 XMLHttpRequest.prototype.send = function (value) {
-    this.addEventListener('load', () => processPage(), false);
+    this.addEventListener('load', () => {
+        try {
+            processPage();
+        } catch (e) {}
+    }, false);
     this.realSend(value);
 };
 
-processPage();
+try {
+    processPage();
+} catch (e) {}
