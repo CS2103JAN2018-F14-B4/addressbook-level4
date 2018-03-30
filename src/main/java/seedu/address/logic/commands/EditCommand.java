@@ -6,9 +6,12 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_RATING;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ActiveListType;
 import seedu.address.model.book.Book;
@@ -34,69 +37,79 @@ public class EditCommand extends UndoableCommand {
             + PREFIX_RATING + "-1" + PREFIX_PRIORITY + "low" + PREFIX_STATUS
             + "unread";
 
-    public static final String MESSAGE_ADD_EDITING_SUCCESS = "Edited Book: %1$s";
-    public static final String MESSAGE_DELETE_EDITING_SUCCESS = "Removed editing from Book: %1$s";
-    public static final String MESSAGE_WRONG_ACTIVE_LIST = "Cannot be edited.";
+    public static final String MESSAGE_SUCCESS = "Edited Book: %1$s";
+    public static final String MESSAGE_NO_PARAMETERS = "At least one field to edit must be provided.";
+    public static final String MESSAGE_WRONG_ACTIVE_LIST = "Items from the current list cannot be edited.";
     public static final String MESSAGE_INVALID_STATUS = "Invalid status entered. "
             + "Allowed values are: READ, R, UNREAD, U, READING, and RD.";
     public static final String MESSAGE_INVALID_PRIORITY = "Invalid priority entered. "
             + "Allowed values are: NONE, N, LOW, L, MEDIUM, M, HIGH, and H.";
     public static final String MESSAGE_INVALID_RATING = "Invalid rating entered. "
             + "Please enter a valid integer between -1 and 5 (both inclusive).";
-    public static final String MESSAGE_INVALID_SORT_BY = "Invalid sorting mode entered. "
-            + "Allowed values are: RATING, R, STATUS, S, PRIORITY, and P. ";
 
     private final Index index;
-    private final Rating rating;
-    private final Priority priority;
-    private final Status status;
+    private final EditDescriptor editDescriptor;
+
+
     private Book bookToEdit;
     private Book editedBook;
 
     /**
      * @param index of the book in the filtered book list to edit the rating.
-     * @param rating of the book to be updated to.
-     * @param priority of the book to be updated to.
-     * @param  status of the book to be updated to.
+     * @param editDescriptor details to edit the book with.
      */
-    public EditCommand(Index index, Rating rating, Priority priority, Status status) {
-        requireAllNonNull(index, rating, priority, status);
+    public EditCommand(Index index, EditDescriptor editDescriptor) {
+        requireAllNonNull(index, editDescriptor);
 
         this.index = index;
-        this.rating = rating;
-        this.priority = priority;
-        this.status = status;
+        this.editDescriptor = editDescriptor;
     }
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         requireAllNonNull(bookToEdit, editedBook);
-        if (model.getActiveListType() != ActiveListType.BOOK_SHELF) {
-            throw new CommandException(MESSAGE_WRONG_ACTIVE_LIST);
-        }
 
         try {
             model.updateBook(bookToEdit, editedBook);
         } catch (DuplicateBookException dpe) {
             throw new AssertionError(
-                    "Changing target Book's editing should not result in a duplicate");
+                    "Editing target book should not result in a duplicate");
         } catch (BookNotFoundException pnfe) {
-            throw new AssertionError("The target Book cannot be missing");
+            throw new AssertionError("The target book should not be missing");
         }
-        return new CommandResult(String.format(MESSAGE_ADD_EDITING_SUCCESS, editedBook));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, editedBook));
     }
 
     @Override
     protected void preprocessUndoableCommand() throws CommandException {
+
+        if (model.getActiveListType() != ActiveListType.BOOK_SHELF) {
+            throw new CommandException(MESSAGE_WRONG_ACTIVE_LIST);
+        }
+
         List<Book> lastShownList = model.getDisplayBookList();
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
         }
 
         bookToEdit = lastShownList.get(index.getZeroBased());
-        editedBook = new Book(bookToEdit.getGid(), bookToEdit.getIsbn(), bookToEdit.getAuthors(),
+        editedBook = createEditedBook(bookToEdit, editDescriptor);
+    }
+
+    /**
+     * Creates and returns a {@code Book} with the details of {@code bookToEdit}
+     * edited with {@code editDescriptor}.
+     */
+    private static Book createEditedBook(Book bookToEdit, EditDescriptor editDescriptor) {
+        requireAllNonNull(bookToEdit, editDescriptor);
+
+        Status updatedStatus = editDescriptor.getStatus().orElse(bookToEdit.getStatus());
+        Priority updatedPriority = editDescriptor.getPriority().orElse(bookToEdit.getPriority());
+        Rating updatedRating = editDescriptor.getRating().orElse(bookToEdit.getRating());
+
+        return new Book(bookToEdit.getGid(), bookToEdit.getIsbn(), bookToEdit.getAuthors(),
                 bookToEdit.getTitle(), bookToEdit.getCategories(), bookToEdit.getDescription(),
-                status, priority, rating,
+                updatedStatus, updatedPriority, updatedRating,
                 bookToEdit.getPublisher(),
                 bookToEdit.getPublicationDate());
     }
@@ -116,6 +129,80 @@ public class EditCommand extends UndoableCommand {
         // state check
         EditCommand e = (EditCommand) other;
         return index.equals(e.index)
-                && rating.equals(e.rating) && priority.equals(e.priority) && status.equals(e.status);
+                && editDescriptor.equals(e.editDescriptor)
+                && Objects.equals(bookToEdit, e.bookToEdit);
     }
+
+    /**
+     * Stores the details to edit the book with. Each non-empty field value will replace the
+     * corresponding field value of the book.
+     */
+    public static class EditDescriptor {
+        private Status status;
+        private Priority priority;
+        private Rating rating;
+
+        public EditDescriptor() {}
+
+        /**
+         * Copy constructor.
+         */
+        public EditDescriptor(EditDescriptor toCopy) {
+            setStatus(toCopy.status);
+            setPriority(toCopy.priority);
+            setRating(toCopy.rating);
+        }
+
+        /**
+         * Returns true if at least one field is edited.
+         */
+        public boolean isValid() {
+            return CollectionUtil.isAnyNonNull(this.status, this.priority, this.rating);
+        }
+
+        public void setStatus(Status status) {
+            this.status = status;
+        }
+
+        public Optional<Status> getStatus() {
+            return Optional.ofNullable(status);
+        }
+
+        public void setPriority(Priority priority) {
+            this.priority = priority;
+        }
+
+        public Optional<Priority> getPriority() {
+            return Optional.ofNullable(priority);
+        }
+
+        public void setRating(Rating rating) {
+            this.rating = rating;
+        }
+
+        public Optional<Rating> getRating() {
+            return Optional.ofNullable(rating);
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            // short circuit if same object
+            if (other == this) {
+                return true;
+            }
+
+            // instanceof handles nulls
+            if (!(other instanceof EditDescriptor)) {
+                return false;
+            }
+
+            // state check
+            EditDescriptor e = (EditDescriptor) other;
+
+            return getStatus().equals(e.getStatus())
+                    && getPriority().equals(e.getPriority())
+                    && getRating().equals(e.getRating());
+        }
+    }
+
 }

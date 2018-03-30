@@ -26,6 +26,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.book.Priority;
 import seedu.address.model.book.Rating;
 import seedu.address.model.book.Status;
+import seedu.address.testutil.EditDescriptorBuilder;
 
 public class BookShelfParserTest {
     @Rule
@@ -46,12 +47,11 @@ public class BookShelfParserTest {
     }
     @Test
     public void parseCommand_edit() throws Exception {
-
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_BOOK.getOneBased() + " " + PREFIX_RATING + "-1" + " " + PREFIX_PRIORITY
+                + INDEX_FIRST_BOOK.getOneBased() + " " + PREFIX_RATING + "2" + " " + PREFIX_PRIORITY
                 + "n" + " " + PREFIX_STATUS + "u");
-        assertEquals(new EditCommand(INDEX_FIRST_BOOK, new Rating(-1), Priority.DEFAULT_PRIORITY,
-                Status.DEFAULT_STATUS), command);
+        assertEquals(new EditCommand(INDEX_FIRST_BOOK, new EditDescriptorBuilder().withRating(new Rating(2))
+                .withPriority(Priority.NONE).withStatus(Status.UNREAD).build()), command);
     }
     @Test
     public void parseCommand_exit() throws Exception {

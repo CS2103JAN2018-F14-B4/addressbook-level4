@@ -5,18 +5,12 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_RATING;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_SORT_BY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
-
-import java.util.Comparator;
-import java.util.stream.Stream;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.Model;
-import seedu.address.model.book.Book;
 import seedu.address.model.book.Priority;
 import seedu.address.model.book.Rating;
 import seedu.address.model.book.Status;
@@ -42,22 +36,29 @@ public class EditCommandParser implements Parser<EditCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
         }
 
-        int rating = Integer.valueOf(argMultimap.getValue(PREFIX_RATING).orElse("-1"));
-        String priority = argMultimap.getValue(PREFIX_PRIORITY).orElse("n");
-        String status = argMultimap.getValue(PREFIX_STATUS).orElse("u");
+        EditCommand.EditDescriptor editDescriptor = new EditCommand.EditDescriptor();
 
-        Comparator<Book> comparator = Model.DEFAULT_BOOK_COMPARATOR;
-        if (argMultimap.getValue(PREFIX_SORT_BY).isPresent()) {
-            SortMode sortMode = SortMode.findSortMode(argMultimap.getValue(PREFIX_SORT_BY).get());
-            if (sortMode == null) {
-                throw new ParseException(EditCommand.MESSAGE_INVALID_SORT_BY);
-            }
-            comparator = sortMode.comparator;
+        if (argMultimap.getValue(PREFIX_STATUS).isPresent()) {
+            Status status = parseStatus(argMultimap.getValue(PREFIX_STATUS).get());
+            editDescriptor.setStatus(status);
         }
-        return new EditCommand(index, new Rating(rating), Priority.findPriority(priority),
-                Status.findStatus(status));
-    }
 
+        if (argMultimap.getValue(PREFIX_PRIORITY).isPresent()) {
+            Priority priority = parsePriority(argMultimap.getValue(PREFIX_PRIORITY).get());
+            editDescriptor.setPriority(priority);
+        }
+
+        if (argMultimap.getValue(PREFIX_RATING).isPresent()) {
+            Rating rating = parseRating(argMultimap.getValue(PREFIX_RATING).get());
+            editDescriptor.setRating(rating);
+        }
+
+        if (!editDescriptor.isValid()) {
+            throw new ParseException(EditCommand.MESSAGE_NO_PARAMETERS);
+        }
+
+        return new EditCommand(index, editDescriptor);
+    }
 
     /**
      * Parses the given {@code statusString} and returns a {@code Status}.
@@ -96,40 +97,5 @@ public class EditCommandParser implements Parser<EditCommand> {
         } catch (IllegalArgumentException e) {
             throw new ParseException(EditCommand.MESSAGE_INVALID_RATING);
         }
-    }
-
-    /**
-     * Represents a sorting mode, which specifies the comparator used to sort the display book list.
-     */
-    public enum SortMode {
-        STATUS(Comparator.comparing(Book::getStatus), "s", "statusa", "sa"),
-        STATUSD((book1, book2) -> book2.getStatus().compareTo(book1.getStatus()), "sd"),
-        PRIORITY(Comparator.comparing(Book::getPriority), "p", "prioritya", "pa"),
-        PRIORITYD((book1, book2) -> book2.getPriority().compareTo(book1.getPriority()), "pd"),
-        RATING(Comparator.comparing(Book::getRating), "r", "ratinga", "ra"),
-        RATINGD((book1, book2) -> book2.getRating().compareTo(book1.getRating()), "rd");
-
-        private final Comparator<Book> comparator;
-        private final String[] aliases;
-
-        SortMode(Comparator<Book> comparator, String... aliases) {
-            this.comparator = comparator;
-            this.aliases = aliases;
-        }
-
-        /**
-         * Returns the {@code SortMode} with a name or alias that matches the specified {@code searchTerm}.
-         */
-        private static SortMode findSortMode(String searchTerm) {
-            for (SortMode sortMode : values()) {
-                if (Stream.of(sortMode.aliases).anyMatch(searchTerm::equalsIgnoreCase)
-                        || searchTerm.equalsIgnoreCase(sortMode.toString())) {
-                    return sortMode;
-                }
-            }
-
-            return null;
-        }
-
     }
 }
