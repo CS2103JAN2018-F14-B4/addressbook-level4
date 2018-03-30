@@ -113,24 +113,6 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parseRating_null_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseRating((Integer) null));
-        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseRating((Optional<Integer>) null));
-    }
-
-    @Test
-    public void parseRating_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parseRating(Optional.empty()).isPresent());
-    }
-
-    @Test
-    public void parseRating_validValueWithoutWhitespace_returnsRating() throws Exception {
-        Rating expectedRating = new Rating(VALID_RATING);
-        assertEquals(expectedRating, ParserUtil.parseRating(VALID_RATING));
-        assertEquals(Optional.of(expectedRating), ParserUtil.parseRating(Optional.of(VALID_RATING)));
-    }
-
-    @Test
     public void parseAuthor_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
         ParserUtil.parseAuthor(null);
