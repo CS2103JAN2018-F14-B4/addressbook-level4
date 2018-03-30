@@ -31,8 +31,6 @@ public class BookDetailsPanel extends UiPart<Region> {
     @FXML
     private Label isbn;
     @FXML
-    private Label rating;
-    @FXML
     private FlowPane authors;
     @FXML
     private FlowPane categories;
@@ -44,6 +42,8 @@ public class BookDetailsPanel extends UiPart<Region> {
     private Label status;
     @FXML
     private Label priority;
+    @FXML
+    private Label rating;
     @FXML
     private Label description;
     @FXML
