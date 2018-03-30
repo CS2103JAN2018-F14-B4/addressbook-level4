@@ -462,7 +462,7 @@ image::UndoRedoActivityDiagram.png[width="550"]
 **Additional Info:** See the discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
 // end::undoredo[]
 
-=== edit for recent books: `edit r/rating p/pirority s/status` command
+=== Edit status, priority, and rating of books: `edit r/rating p/pirority s/status` command
 
 ==== Current implementation
 
@@ -481,11 +481,11 @@ The user performs `rate 1 r/ 1 p/ l s/ u ` to rate 1st with 1 point, low priorit
 
 ===== Aspect: What to show to user about the rating
 
-* **Alternative 1 (current choice):** Show user the number of rating
-** Pros: Easy to implement
+* **Alternative 1 (current choice):** Show user the number of rating.
+** Pros: Easy to implement.
 ** Cons: User may get bored about the rating.
 * **Alternative 2:** Show them the stars.
-** Pros: Difficult to implement
+** Pros: Difficult to implement.
 ** Cons: User may get excited to see those stars, and the number of stars can show the rating clearer.
 
 
