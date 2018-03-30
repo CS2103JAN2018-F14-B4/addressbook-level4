@@ -3,7 +3,6 @@
     <books>
         <title>Artemis</title>
         <description>This is Artemis.</description>
-        <rating>-1</rating>
         <authors>Andy Weir</authors>
         <categories>Fiction</categories>
         <status>READ</status>
@@ -17,7 +16,6 @@
     <books>
         <title>Babylon's Ashes</title>
         <description>This is Babylon's Ashes.</description>
-        <rating>-1</rating>
         <authors>James S. A. Corey</authors>
         <categories>Fiction</categories>
         <status>READING</status>
