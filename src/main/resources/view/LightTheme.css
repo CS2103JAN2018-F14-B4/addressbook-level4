@@ -1,3 +1,10 @@
+body {
+  background-color: transparent;
+  font-size: 11pt;
+  font-family: "Segoe UI";
+  color: black;
+}
+
 .background {
     -fx-background-color: #ECEFF1;
     background-color: #ECEFF1; /* Used in the default.html file */

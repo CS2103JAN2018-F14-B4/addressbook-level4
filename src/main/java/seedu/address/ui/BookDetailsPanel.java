@@ -98,6 +98,11 @@ public class BookDetailsPanel extends UiPart<Region> {
         getRoot().setVisible(false);
     }
 
+    protected void setStyleSheet(String styleSheet) {
+        description.getEngine().setUserStyleSheetLocation(getClass().getClassLoader()
+                .getResource(styleSheet).toExternalForm());
+    }
+
     @Subscribe
     private void handleBookListSelectionChangedEvent(BookListSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
