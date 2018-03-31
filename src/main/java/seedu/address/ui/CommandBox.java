@@ -15,6 +15,7 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import org.controlsfx.control.textfield.TextFields;
+
 /**
  * The UI component that is responsible for receiving user command inputs.
  */
@@ -30,7 +31,7 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private TextField commandTextField;
 
-    public static final String[] COMMAND_ARRAY = {"add","clear","delete","exit","help","history","list","search","select","theme","undoable","undo"};
+    public static final String[] COMMAND_ARRAY = {"add", "clear", "delete", "exit", "help", "history", "list", "search", "select", "theme", "undoable", "undo"};
 
     public CommandBox(Logic logic) {
         super(FXML);
@@ -47,19 +48,19 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private void handleKeyPress(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
-        case UP:
-            // As up and down buttons will alter the position of the caret,
-            // consuming it causes the caret's position to remain unchanged
-            keyEvent.consume();
+            case UP:
+                // As up and down buttons will alter the position of the caret,
+                // consuming it causes the caret's position to remain unchanged
+                keyEvent.consume();
 
-            navigateToPreviousInput();
-            break;
-        case DOWN:
-            keyEvent.consume();
-            navigateToNextInput();
-            break;
-        default:
-            // let JavaFx handle the keypress
+                navigateToPreviousInput();
+                break;
+            case DOWN:
+                keyEvent.consume();
+                navigateToNextInput();
+                break;
+            default:
+                // let JavaFx handle the keypress
         }
     }
 
