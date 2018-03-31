@@ -11,6 +11,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -31,12 +32,11 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private TextField commandTextField;
 
-    public static final String[] COMMAND_ARRAY = {"add", "clear", "delete", "exit", "help", "history", "list", "search", "select", "theme", "undoable", "undo"};
 
     public CommandBox(Logic logic) {
         super(FXML);
         this.logic = logic;
-        TextFields.bindAutoCompletion(commandTextField, COMMAND_ARRAY);
+        TextFields.bindAutoCompletion(commandTextField, Command.COMMAND_ARRAY);
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();

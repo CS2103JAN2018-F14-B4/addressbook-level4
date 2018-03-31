@@ -14,6 +14,7 @@ public abstract class Command {
     protected CommandHistory history;
     protected UndoStack undoStack;
 
+    public static final String[] COMMAND_ARRAY = {"add", "clear", "delete", "exit", "help", "history", "list", "search", "select", "theme", "undoable", "undo"};
     /**
      * Constructs a feedback message to summarise an operation that displayed a listing of books.
      *
