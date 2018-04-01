@@ -14,7 +14,7 @@ import seedu.address.model.book.Book;
  */
 public class BookDescriptionView extends UiPart<Region> {
 
-    private static final int HEIGHT_PAD = 50;
+    private static final int HEIGHT_PAD = 20;
 
     private static final String FXML = "BookDescriptionView.fxml";
 
