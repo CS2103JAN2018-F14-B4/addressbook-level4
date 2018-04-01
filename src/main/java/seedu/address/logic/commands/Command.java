@@ -10,11 +10,12 @@ import seedu.address.model.Model;
  * Represents a command with hidden internal logic and the ability to be executed.
  */
 public abstract class Command {
+    public static final String[] COMMAND_ARRAY = {"add", "clear", "delete", "exit", "help", "history", "list", "search", "select", "theme", "undoable", "undo"};
     protected Model model;
     protected CommandHistory history;
     protected UndoStack undoStack;
 
-    public static final String[] COMMAND_ARRAY = {"add", "clear", "delete", "exit", "help", "history", "list", "search", "select", "theme", "undoable", "undo"};
+
     /**
      * Constructs a feedback message to summarise an operation that displayed a listing of books.
      *
