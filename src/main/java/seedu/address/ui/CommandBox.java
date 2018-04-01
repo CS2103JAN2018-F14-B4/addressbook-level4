@@ -2,7 +2,10 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
+import org.controlsfx.control.textfield.TextFields;
+
 import javafx.collections.ObservableList;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
@@ -11,9 +14,11 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+
 
 /**
  * The UI component that is responsible for receiving user command inputs.
@@ -30,9 +35,11 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private TextField commandTextField;
 
+
     public CommandBox(Logic logic) {
         super(FXML);
         this.logic = logic;
+        TextFields.bindAutoCompletion(commandTextField, Command.COMMAND_ARRAY);
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
@@ -45,8 +52,6 @@ public class CommandBox extends UiPart<Region> {
     private void handleKeyPress(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
         case UP:
-            // As up and down buttons will alter the position of the caret,
-            // consuming it causes the caret's position to remain unchanged
             keyEvent.consume();
 
             navigateToPreviousInput();
@@ -56,7 +61,7 @@ public class CommandBox extends UiPart<Region> {
             navigateToNextInput();
             break;
         default:
-            // let JavaFx handle the keypress
+                // let JavaFx handle the keypress
         }
     }
 
