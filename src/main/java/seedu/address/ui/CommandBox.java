@@ -2,7 +2,10 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
+import org.controlsfx.control.textfield.TextFields;
+
 import javafx.collections.ObservableList;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
@@ -14,7 +17,7 @@ import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
-import org.controlsfx.control.textfield.TextFields;
+
 
 /**
  * The UI component that is responsible for receiving user command inputs.
@@ -23,15 +26,15 @@ public class CommandBox extends UiPart<Region> {
 
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
-
+    private static final String[] COMMAND_ARRAY = {
+        "add", "clear", "delete", "exit", "help", "history", "list", "search", "select", "theme", "undoable", "undo"
+    };
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
 
     @FXML
     private TextField commandTextField;
-
-    public static final String[] COMMAND_ARRAY = {"add","clear","delete","exit","help","history","list","search","select","theme","undoable","undo"};
 
     public CommandBox(Logic logic) {
         super(FXML);
