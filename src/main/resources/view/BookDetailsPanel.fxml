@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.web.WebView?>
 
 <StackPane fx:id="bookDetailsPane" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
   <padding>
@@ -56,7 +55,7 @@
           <Insets top="12.0" />
         </VBox.margin>
       </GridPane>
-      <WebView fx:id="description" maxWidth="600.0" />
+      <StackPane fx:id="descriptionPlaceholder" VBox.vgrow="NEVER" />
     </VBox>
   </ScrollPane>
 </StackPane>

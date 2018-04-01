@@ -3,7 +3,6 @@ package seedu.address.ui;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
-import com.sun.javafx.webkit.Accessor;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -11,7 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Region;
-import javafx.scene.web.WebView;
+import javafx.scene.layout.StackPane;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.BookListSelectionChangedEvent;
 import seedu.address.commons.events.ui.RecentBooksSelectionChangedEvent;
@@ -27,6 +26,9 @@ public class BookDetailsPanel extends UiPart<Region> {
     private static final String DEFAULT_LABEL_STYLE_CLASS = "label";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
+
+    // Independent Ui parts residing in this Ui container
+    private BookDescriptionView bookDescriptionView;
 
     @FXML
     private Label title;
@@ -47,7 +49,7 @@ public class BookDetailsPanel extends UiPart<Region> {
     @FXML
     private Label rating;
     @FXML
-    private WebView description;
+    private StackPane descriptionPlaceholder;
     @FXML
     private ScrollPane scrollPane;
 
@@ -56,8 +58,8 @@ public class BookDetailsPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
         getRoot().setVisible(false);
 
-        // disable interaction with web view
-        description.setDisable(true);
+        bookDescriptionView = new BookDescriptionView();
+        descriptionPlaceholder.getChildren().add(bookDescriptionView.getRoot());
     }
 
     private void scrollToTop() {
@@ -71,9 +73,7 @@ public class BookDetailsPanel extends UiPart<Region> {
             isbn.setText(book.getIsbn().toString());
             publisher.setText(book.getPublisher().toString());
             publicationDate.setText(book.getPublicationDate().toString());
-            description.getEngine().loadContent(book.getDescription().toString());
-            // set transparent background for web view
-            Accessor.getPageFor(description.getEngine()).setBackgroundColor(0);
+            bookDescriptionView.loadContent(book);
 
             status.setText(book.getStatus().getDisplayText());
             status.getStyleClass().setAll(DEFAULT_LABEL_STYLE_CLASS, book.getStatus().getStyleClass());
@@ -94,13 +94,12 @@ public class BookDetailsPanel extends UiPart<Region> {
         });
     }
 
-    protected void hide() {
-        getRoot().setVisible(false);
+    protected void setStyleSheet(String styleSheet) {
+        bookDescriptionView.setStyleSheet(styleSheet);
     }
 
-    protected void setStyleSheet(String styleSheet) {
-        description.getEngine().setUserStyleSheetLocation(getClass().getClassLoader()
-                .getResource(styleSheet).toExternalForm());
+    protected void hide() {
+        getRoot().setVisible(false);
     }
 
     @Subscribe

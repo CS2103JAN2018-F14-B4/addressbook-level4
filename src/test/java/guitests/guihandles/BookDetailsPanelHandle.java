@@ -1,15 +1,11 @@
 package guitests.guihandles;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.FutureTask;
 import java.util.stream.Collectors;
 
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
-import javafx.scene.web.WebView;
-import seedu.address.commons.core.LogsCenter;
 
 /**
  * Provides a handle for the {@code BookDetailsPanel} of the UI.
@@ -21,7 +17,6 @@ public class BookDetailsPanelHandle extends NodeHandle<Node> {
     private static final String ISBN_FIELD_ID = "#isbn";
     private static final String PUBLISHER_FIELD_ID = "#publisher";
     private static final String PUBLICATION_DATE_FIELD_ID = "#publicationDate";
-    private static final String DESCRIPTION_FIELD_ID = "#description";
     private static final String AUTHORS_FIELD_ID = "#authors";
     private static final String CATEGORIES_FIELD_ID = "#categories";
 
@@ -29,7 +24,7 @@ public class BookDetailsPanelHandle extends NodeHandle<Node> {
     private final Label isbnLabel;
     private final Label publisherLabel;
     private final Label publicationDateLabel;
-    private final WebView descriptionView;
+    private final BookDescriptionViewHandle bookDescriptionViewHandle;
     private List<Label> authorsLabel;
     private List<Label> categoriesLabel;
 
@@ -43,7 +38,8 @@ public class BookDetailsPanelHandle extends NodeHandle<Node> {
         this.isbnLabel = getChildNode(ISBN_FIELD_ID);
         this.publisherLabel = getChildNode(PUBLISHER_FIELD_ID);
         this.publicationDateLabel = getChildNode(PUBLICATION_DATE_FIELD_ID);
-        this.descriptionView = getChildNode(DESCRIPTION_FIELD_ID);
+        this.bookDescriptionViewHandle =
+                new BookDescriptionViewHandle(getChildNode(BookDescriptionViewHandle.BOOK_DESCRIPTION_VIEW_ID));
 
         updateAuthorsLabel();
         updateCategoriesLabel();
@@ -66,15 +62,7 @@ public class BookDetailsPanelHandle extends NodeHandle<Node> {
     }
 
     public String getDescription() {
-        final FutureTask<String> query = new FutureTask<>(() -> (String) descriptionView.getEngine()
-                .executeScript("document.body.innerHTML"));
-        guiRobot.interact(query);
-        try {
-            return query.get();
-        } catch (InterruptedException | ExecutionException e) {
-            LogsCenter.getLogger(this.getClass()).warning("Failed to fetch book description.");
-            return "";
-        }
+        return bookDescriptionViewHandle.getContent();
     }
 
     public List<String> getAuthors() {
