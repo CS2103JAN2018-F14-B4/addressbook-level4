@@ -95,10 +95,10 @@ public class AddCommand extends UndoableCommand {
             model.addBook(book);
             EventsCenter.getInstance().post(new NewResultAvailableEvent(
                     String.format(AddCommand.MESSAGE_SUCCESS, book)));
-            EventsCenter.getInstance().post(new EnableCommandBoxRequestEvent());
         } catch (DuplicateBookException e) {
             EventsCenter.getInstance().post(new NewResultAvailableEvent(AddCommand.MESSAGE_DUPLICATE_BOOK));
         }
+        EventsCenter.getInstance().post(new EnableCommandBoxRequestEvent());
     }
 
     @Override

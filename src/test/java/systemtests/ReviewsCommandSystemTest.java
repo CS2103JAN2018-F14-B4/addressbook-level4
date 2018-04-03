@@ -48,7 +48,7 @@ public class ReviewsCommandSystemTest extends BibliotekSystemTest {
 
         /* ------------ Perform reviews operations on the shown search results list ------------ */
         executeCommand(SearchCommand.COMMAND_WORD + " hello");
-        new GuiRobot().waitForEvent(() -> !getResultDisplay().getText().equals(SearchCommand.MESSAGE_SEARCHING));
+        new GuiRobot().waitForEvent(() -> !getCommandBox().isDisabled(), 6500);
         assertCommandSuccess(ReviewsCommand.COMMAND_WORD + " 1", getModel().getSearchResultsList().get(0));
         assertCommandFailure(ReviewsCommand.COMMAND_WORD + " 39", MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
 

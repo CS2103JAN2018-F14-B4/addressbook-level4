@@ -2,6 +2,7 @@ package systemtests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 import static seedu.address.ui.testutil.GuiTestAssert.assertDetailsPanelDisplaysBook;
@@ -348,6 +349,20 @@ public abstract class BibliotekSystemTest {
      */
     protected void assertCommandBoxShowsErrorStyle() {
         assertEquals(COMMAND_BOX_ERROR_STYLE, getCommandBox().getStyleClass());
+    }
+
+    /**
+     * Asserts that the command box is disabled.
+     */
+    protected void assertCommandBoxDisabled() {
+        assertTrue(getCommandBox().isDisabled());
+    }
+
+    /**
+     * Asserts that the command box is enabled.
+     */
+    protected void assertCommandBoxEnabled() {
+        assertFalse(getCommandBox().isDisabled());
     }
 
     /**

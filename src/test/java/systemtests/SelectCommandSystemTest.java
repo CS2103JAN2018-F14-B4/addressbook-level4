@@ -94,7 +94,7 @@ public class SelectCommandSystemTest extends BibliotekSystemTest {
 
         // Note: this test requires an Internet connection.
         executeCommand(SearchCommand.COMMAND_WORD + " hello");
-        new GuiRobot().waitForEvent(() -> !getResultDisplay().getText().equals(SearchCommand.MESSAGE_SEARCHING));
+        new GuiRobot().waitForEvent(() -> !getCommandBox().isDisabled(), 6500);
         assertSearchResultsSelectSuccess(SelectCommand.COMMAND_WORD + " 1", Index.fromOneBased(1));
         assertSearchResultsSelectSuccess(SelectCommand.COMMAND_WORD + " 1", Index.fromOneBased(1));
 

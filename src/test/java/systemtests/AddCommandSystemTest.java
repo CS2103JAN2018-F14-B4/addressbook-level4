@@ -23,7 +23,7 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
     @Test
     public void add() throws Exception {
         executeCommand(SearchCommand.COMMAND_WORD + " hello");
-        new GuiRobot().waitForEvent(() -> !getResultDisplay().getText().equals(SearchCommand.MESSAGE_SEARCHING));
+        new GuiRobot().waitForEvent(() -> !getCommandBox().isDisabled(), 6500);
 
         Model model = getModel();
         ObservableList<Book> searchResultsList = model.getSearchResultsList();
@@ -44,7 +44,7 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
         deleteAllBooks();
 
         executeCommand(SearchCommand.COMMAND_WORD + " hello");
-        new GuiRobot().waitForEvent(() -> !getResultDisplay().getText().equals(SearchCommand.MESSAGE_SEARCHING));
+        new GuiRobot().waitForEvent(() -> !getCommandBox().isDisabled(), 6500);
 
         model = getModel();
         searchResultsList = model.getSearchResultsList();
@@ -77,12 +77,12 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
 
         command = AddCommand.COMMAND_WORD + " 1";
         executeCommand(command);
-        new GuiRobot().waitForEvent(() -> !getResultDisplay().getText().equals(AddCommand.MESSAGE_ADDING));
+        new GuiRobot().waitForEvent(() -> !getCommandBox().isDisabled(), 6500);
         assertApplicationDisplaysExpected("", AddCommand.MESSAGE_DUPLICATE_BOOK, model);
 
         /* Case: add a valid book -> added */
         executeCommand(SearchCommand.COMMAND_WORD + " mary");
-        new GuiRobot().waitForEvent(() -> !getResultDisplay().getText().equals(SearchCommand.MESSAGE_SEARCHING));
+        new GuiRobot().waitForEvent(() -> !getCommandBox().isDisabled(), 6500);
         selectSearchResult(INDEX_FIRST_BOOK);
         executeCommand("recent");
         model = getModel();
@@ -97,7 +97,7 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
         /* Case: add a duplicate book -> rejected */
         model = getModel();
         executeCommand(command);
-        new GuiRobot().waitForEvent(() -> !getResultDisplay().getText().equals(AddCommand.MESSAGE_ADDING));
+        new GuiRobot().waitForEvent(() -> !getCommandBox().isDisabled(), 6500);
         assertApplicationDisplaysExpected("", AddCommand.MESSAGE_DUPLICATE_BOOK, model);
 
         /* Case: invalid index (0) -> rejected */
@@ -133,7 +133,7 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
 
         /* Case: add from empty search result list -> rejected */
         executeCommand(SearchCommand.COMMAND_WORD + " !@#$%^&*()(*%$#@!#$%^&&*");
-        new GuiRobot().waitForEvent(() -> !getResultDisplay().getText().equals(SearchCommand.MESSAGE_SEARCHING));
+        new GuiRobot().waitForEvent(() -> !getCommandBox().isDisabled(), 6500);
         model.updateSearchResults(new BookShelf());
         assertCommandFailure(AddCommand.COMMAND_WORD + " " + INDEX_FIRST_BOOK.getOneBased(),
                 MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
@@ -158,8 +158,9 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
 
         executeCommand(command);
         assertCommandBoxShowsDefaultStyle();
+        assertCommandBoxDisabled();
 
-        new GuiRobot().waitForEvent(() -> !getResultDisplay().getText().equals(AddCommand.MESSAGE_ADDING));
+        new GuiRobot().waitForEvent(() -> !getCommandBox().isDisabled(), 6500);
 
         String expectedResultMessage = String.format(AddCommand.MESSAGE_SUCCESS, toAdd);
         assertBookInBookShelf(toAdd);
@@ -169,6 +170,7 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
         assertSelectedSearchResultsCardUnchanged();
         assertSelectedRecentBooksCardUnchanged();
         assertCommandBoxShowsDefaultStyle();
+        assertCommandBoxEnabled();
         assertStatusBarUnchangedExceptSyncStatus();
     }
 
