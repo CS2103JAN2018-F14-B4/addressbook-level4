@@ -17,6 +17,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 
+import guitests.GuiRobot;
 import guitests.guihandles.BookDetailsPanelHandle;
 import guitests.guihandles.BookListPanelHandle;
 import guitests.guihandles.BookReviewsPanelHandle;
@@ -150,6 +151,19 @@ public abstract class BibliotekSystemTest {
     }
 
     /**
+     * Executes a {@code command} in the application's {@code CommandBox} and waits for it to complete.
+     * In particular, this method will wait for the text in the result display to be changed to something other
+     * than {@code resultText}, and for the command box to be enabled again.
+     */
+    protected void executeBackgroundCommand(String command, String resultText) {
+        executeCommand(command);
+
+        new GuiRobot().waitForEvent(() -> !getResultDisplay().getText().equals(resultText),
+                GuiRobot.NETWORK_ACTION_TIMEOUT_MILLISECONDS);
+        new GuiRobot().waitForEvent(() -> !getCommandBox().isDisabled(), GuiRobot.NETWORK_ACTION_TIMEOUT_MILLISECONDS);
+    }
+
+    /**
      * Displays all books in the book shelf.
      */
     protected void showAllBooks() {
@@ -213,7 +227,7 @@ public abstract class BibliotekSystemTest {
     /**
      * Asserts that the {@code CommandBox} displays {@code expectedCommandInput}, the {@code ResultDisplay} displays
      * {@code expectedResultMessage}, the model and storage contains the same book objects as {@code expectedModel}
-     * and the book list and search results panel displays the books in the model correctly.
+     * and the currently displayed list displays the books in the model correctly.
      */
     protected void assertApplicationDisplaysExpected(String expectedCommandInput, String expectedResultMessage,
             Model expectedModel) {
@@ -221,9 +235,15 @@ public abstract class BibliotekSystemTest {
         assertEquals(expectedResultMessage, getResultDisplay().getText());
         assertEquals(expectedModel, getModel());
         assertEquals(expectedModel.getBookShelf(), testApp.readStorageBookShelf());
-        assertListMatching(getBookListPanel(), expectedModel.getDisplayBookList());
-        assertListMatching(getSearchResultsPanel(), expectedModel.getSearchResultsList());
-        assertListMatching(getRecentBooksPanel(), expectedModel.getRecentBooksList());
+        if (getBookListPanel().isVisible()) {
+            assertListMatching(getBookListPanel(), expectedModel.getDisplayBookList());
+        }
+        if (getSearchResultsPanel().isVisible()) {
+            assertListMatching(getSearchResultsPanel(), expectedModel.getSearchResultsList());
+        }
+        if (getRecentBooksPanel().isVisible()) {
+            assertListMatching(getRecentBooksPanel(), expectedModel.getRecentBooksList());
+        }
     }
 
     /**
