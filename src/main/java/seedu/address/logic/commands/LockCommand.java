@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.book.HideAllBooks;
 
 public class LockCommand extends Command{
 
@@ -13,7 +14,14 @@ public class LockCommand extends Command{
 
     public static final String MESSAGE_SUCCESS = "Bibliotek is locked!";
 
-    private static String
+    private static String password;
+
+    private final HideAllBooks predicate = new HideAllBooks();
+
+    public LockCommand(String word) {
+        this.password = word;
+    }
+
     /**
      * Executes the command and returns the result message.
      *
@@ -22,6 +30,7 @@ public class LockCommand extends Command{
      */
     @Override
     public CommandResult execute() throws CommandException {
-        return null;
+        model.updateBookListFilter(predicate);
+        return new CommandResult(MESSAGE_SUCCESS);
     }
 }
