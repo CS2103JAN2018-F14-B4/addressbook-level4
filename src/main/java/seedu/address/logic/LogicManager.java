@@ -14,6 +14,7 @@ import seedu.address.commons.events.ui.SwitchToRecentBooksRequestEvent;
 import seedu.address.commons.events.ui.SwitchToSearchResultsRequestEvent;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.UnlockCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.BookShelfParser;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -33,6 +34,8 @@ public class LogicManager extends ComponentManager implements Logic {
     private final CommandHistory history;
     private final BookShelfParser bookShelfParser;
     private final UndoStack undoStack;
+    private static boolean isLock = false;
+    private static String password;
 
     public LogicManager(Model model, Network network) {
         this.model = model;
@@ -40,6 +43,8 @@ public class LogicManager extends ComponentManager implements Logic {
         history = new CommandHistory();
         bookShelfParser = new BookShelfParser();
         undoStack = new UndoStack();
+        isLock = true;
+        password = model.getPassword();
     }
 
     @Override
@@ -48,12 +53,43 @@ public class LogicManager extends ComponentManager implements Logic {
         try {
             Command command = bookShelfParser.parseCommand(commandText);
             command.setData(model, network, history, undoStack);
-            CommandResult result = command.execute();
-            undoStack.push(command);
+            CommandResult result;
+            if (isLock == true) {
+                if (command instanceof UnlockCommand) {
+                    UnlockCommand unlockcommand = (UnlockCommand) command;
+                    result = unlockcommand.execute();
+                } else {
+                    result = new CommandResult("Bibliotek is locked," +
+                            " please unlock it first!");
+                }
+            } else {
+                result = command.execute();
+                undoStack.push(command);
+            }
             return result;
         } finally {
             history.add(commandText);
         }
+    }
+
+    public static String getPassword() {
+        return password;
+    }
+
+    public static boolean getLock() {
+        return isLock;
+    }
+
+    public static void setPassword(String word) {
+        password = word;
+    }
+
+    public static void lock() {
+        isLock = true;
+    }
+
+    public static void unLock() {
+        isLock = false;
     }
 
     @Override
