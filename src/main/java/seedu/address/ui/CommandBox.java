@@ -48,6 +48,9 @@ public class CommandBox extends UiPart<Region> {
      */
     @FXML
     private void handleKeyPress(KeyEvent keyEvent) {
+        if (!commandTextField.isEditable()) {
+            return;
+        }
         switch (keyEvent.getCode()) {
         case UP:
             // As up and down buttons will alter the position of the caret,
@@ -105,6 +108,9 @@ public class CommandBox extends UiPart<Region> {
      */
     @FXML
     private void handleCommandInputChanged() {
+        if (!commandTextField.isEditable()) {
+            return;
+        }
         try {
             CommandResult commandResult = logic.execute(commandTextField.getText());
             initHistory();
@@ -156,14 +162,12 @@ public class CommandBox extends UiPart<Region> {
     @Subscribe
     private void handleDisableCommandBoxRequestEvent(DisableCommandBoxRequestEvent event) {
         commandTextField.setEditable(false);
-        commandTextField.setDisable(true);
         commandTextField.setFocusTraversable(false);
     }
 
     @Subscribe
     private void handleEnableCommandBoxRequestEvent(EnableCommandBoxRequestEvent event) {
         commandTextField.setEditable(true);
-        commandTextField.setDisable(false);
         commandTextField.setFocusTraversable(true);
     }
 }

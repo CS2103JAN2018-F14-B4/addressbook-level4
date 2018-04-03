@@ -394,7 +394,7 @@ body {
     -fx-text-fill: #222;
 }
 
-#commandTextField:disabled {
+#commandTextField:readonly {
     -fx-opacity: 0.8;
 }
 

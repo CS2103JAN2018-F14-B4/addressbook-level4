@@ -45,6 +45,6 @@ public class CommandBoxHandle extends NodeHandle<TextField> {
     }
 
     public boolean isDisabled() {
-        return getRootNode().isDisabled();
+        return !getRootNode().isEditable();
     }
 }
