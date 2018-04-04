@@ -49,6 +49,9 @@ public interface Model {
     /** Adds the given book */
     void addBook(Book book) throws DuplicateBookException;
 
+    /** Adds the given password*/
+    void addPassword(String word);
+
     /**
      * Replaces the given book {@code target} with {@code editedBook}.
      *
@@ -71,6 +74,11 @@ public interface Model {
      * Returns the comparator used for sorting the book list.
      */
     Comparator<? super Book> getBookListSorter();
+
+    /**
+     * Returns the comparator used for getting the password of the Bibliotek.
+     */
+    String getPassword();
 
     /**
      * Updates the filter of the filtered book list to filter by the given {@code predicate}.

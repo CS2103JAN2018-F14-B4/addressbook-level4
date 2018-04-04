@@ -23,7 +23,7 @@ public class UnlockCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        if (!LogicManager.isLocked()) {
+        if (!LogicManager.getLock()) {
             return new CommandResult(MESSAGE_SUCCESS);
         }
 
