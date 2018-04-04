@@ -160,7 +160,7 @@ public abstract class BibliotekSystemTest {
 
         new GuiRobot().waitForEvent(() -> !getResultDisplay().getText().equals(resultText),
                 GuiRobot.NETWORK_ACTION_TIMEOUT_MILLISECONDS);
-        new GuiRobot().waitForEvent(() -> !getCommandBox().isDisabled(), GuiRobot.NETWORK_ACTION_TIMEOUT_MILLISECONDS);
+        new GuiRobot().waitForEvent(() -> getCommandBox().isEnabled(), GuiRobot.NETWORK_ACTION_TIMEOUT_MILLISECONDS);
     }
 
     /**
@@ -375,14 +375,14 @@ public abstract class BibliotekSystemTest {
      * Asserts that the command box is disabled.
      */
     protected void assertCommandBoxDisabled() {
-        assertTrue(getCommandBox().isDisabled());
+        assertFalse(getCommandBox().isEnabled());
     }
 
     /**
      * Asserts that the command box is enabled.
      */
     protected void assertCommandBoxEnabled() {
-        assertFalse(getCommandBox().isDisabled());
+        assertTrue(getCommandBox().isEnabled());
     }
 
     /**

@@ -156,7 +156,7 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
 
         new GuiRobot().waitForEvent(() -> !getResultDisplay().getText().equals(AddCommand.MESSAGE_ADDING),
                 GuiRobot.NETWORK_ACTION_TIMEOUT_MILLISECONDS);
-        new GuiRobot().waitForEvent(() -> !getCommandBox().isDisabled(), GuiRobot.NETWORK_ACTION_TIMEOUT_MILLISECONDS);
+        new GuiRobot().waitForEvent(() -> getCommandBox().isEnabled(), GuiRobot.NETWORK_ACTION_TIMEOUT_MILLISECONDS);
 
         String expectedResultMessage = String.format(AddCommand.MESSAGE_SUCCESS, toAdd);
         assertBookInBookShelf(toAdd);
