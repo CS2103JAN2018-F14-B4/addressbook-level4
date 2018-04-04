@@ -4,14 +4,14 @@ import seedu.address.logic.LogicManager;
 
 public class DecryptCommand extends Command {
 
-    public static final String COMMAND_WORD = "unlock";
+    public static final String COMMAND_WORD = "decrypted";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Unlock the Bibliotek.\n"
+            + ": Decrypted the Bibliotek.\n"
             + "Parameters: PASSWORD\n"
             + "Example: " + COMMAND_WORD + " 123456";
 
-    public static final String MESSAGE_SUCCESS = "Bibliotek is unlocked!";
+    public static final String MESSAGE_SUCCESS = "Bibliotek is decrypted!";
 
     public static final String MESSAGE_WRONG_PASSWORD = "You have input wrong password, please check again!";
 

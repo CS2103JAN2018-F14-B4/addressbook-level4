@@ -6,12 +6,12 @@ import seedu.address.model.book.HideAllBooks;
 
 public class EncryptCommand extends Command{
 
-    public static final String COMMAND_WORD = "lock";
+    public static final String COMMAND_WORD = "encrypt";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Lock the Bibliotek.\n";
+            + ": Encrypt the Bibliotek.\n";
 
-    public static final String MESSAGE_SUCCESS = "Bibliotek is locked!";
+    public static final String MESSAGE_SUCCESS = "Bibliotek is encrypted!";
 
     private final HideAllBooks predicate = new HideAllBooks();
 
