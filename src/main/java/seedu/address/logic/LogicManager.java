@@ -14,7 +14,7 @@ import seedu.address.commons.events.ui.SwitchToRecentBooksRequestEvent;
 import seedu.address.commons.events.ui.SwitchToSearchResultsRequestEvent;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
-import seedu.address.logic.commands.UnlockCommand;
+import seedu.address.logic.commands.DecryptCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.BookShelfParser;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -35,7 +35,7 @@ public class LogicManager extends ComponentManager implements Logic {
     private final BookShelfParser bookShelfParser;
     private final UndoStack undoStack;
     private static boolean isLock = false;
-    private static String password;
+    private static String key;
 
     public LogicManager(Model model, Network network) {
         this.model = model;
@@ -44,7 +44,7 @@ public class LogicManager extends ComponentManager implements Logic {
         bookShelfParser = new BookShelfParser();
         undoStack = new UndoStack();
         isLock = true;
-        password = model.getPassword();
+        key = model.getPassword();
     }
 
     @Override
@@ -55,9 +55,9 @@ public class LogicManager extends ComponentManager implements Logic {
             command.setData(model, network, history, undoStack);
             CommandResult result;
             if (isLock == true) {
-                if (command instanceof UnlockCommand) {
-                    UnlockCommand unlockcommand = (UnlockCommand) command;
-                    result = unlockcommand.execute();
+                if (command instanceof DecryptCommand) {
+                    DecryptCommand decryptCommand = (DecryptCommand) command;
+                    result = decryptCommand.execute();
                 } else {
                     result = new CommandResult("Bibliotek is locked," +
                             " please unlock it first!");
@@ -72,16 +72,16 @@ public class LogicManager extends ComponentManager implements Logic {
         }
     }
 
-    public static String getPassword() {
-        return password;
+    public static String getKey() {
+        return key;
     }
 
     public static boolean getLock() {
         return isLock;
     }
 
-    public static void setPassword(String word) {
-        password = word;
+    public static void setKey(String word) {
+        key = word;
     }
 
     public static void lock() {

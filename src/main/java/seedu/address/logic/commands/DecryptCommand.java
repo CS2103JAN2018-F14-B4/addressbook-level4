@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 import seedu.address.logic.LogicManager;
 
-public class UnlockCommand extends Command {
+public class DecryptCommand extends Command {
 
     public static final String COMMAND_WORD = "unlock";
 
@@ -17,7 +17,7 @@ public class UnlockCommand extends Command {
 
     private String password;
 
-    public UnlockCommand(String word) {
+    public DecryptCommand(String word) {
         this.password = word;
     }
 
@@ -27,7 +27,7 @@ public class UnlockCommand extends Command {
             return new CommandResult(MESSAGE_SUCCESS);
         }
 
-        if (this.password.equals(LogicManager.getPassword())) {
+        if (this.password.equals(LogicManager.getKey())) {
             LogicManager.unLock();
             return new CommandResult(MESSAGE_SUCCESS);
         } else {
@@ -42,7 +42,7 @@ public class UnlockCommand extends Command {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof UnlockCommand // instanceof handles nulls
-                && this.password.equals(((UnlockCommand) other).getPassword())); // state check
+                || (other instanceof DecryptCommand // instanceof handles nulls
+                && this.password.equals(((DecryptCommand) other).getPassword())); // state check
     }
 }

@@ -4,7 +4,7 @@ import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.book.HideAllBooks;
 
-public class LockCommand extends Command{
+public class EncryptCommand extends Command{
 
     public static final String COMMAND_WORD = "lock";
 
