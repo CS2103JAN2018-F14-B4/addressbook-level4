@@ -9,8 +9,10 @@ import com.google.common.eventbus.Subscribe;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.BookShelfChangedEvent;
+import seedu.address.commons.events.model.KeyChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.model.BookShelf;
 import seedu.address.model.ReadOnlyBookShelf;
 import seedu.address.model.UserPrefs;
 
@@ -81,6 +83,17 @@ public class StorageManager extends ComponentManager implements Storage {
     @Override
     @Subscribe
     public void handleBookShelfChangedEvent(BookShelfChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
+        try {
+            saveBookShelf(event.data);
+        } catch (IOException e) {
+            raise(new DataSavingExceptionEvent(e));
+        }
+    }
+
+    @Override
+    @Subscribe
+    public void handleKeyChangedEvent(KeyChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
         try {
             saveBookShelf(event.data);

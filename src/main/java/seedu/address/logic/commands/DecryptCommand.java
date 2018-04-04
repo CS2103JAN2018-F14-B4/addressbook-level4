@@ -4,7 +4,7 @@ import seedu.address.logic.LogicManager;
 
 public class DecryptCommand extends Command {
 
-    public static final String COMMAND_WORD = "decrypted";
+    public static final String COMMAND_WORD = "decrypt";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Decrypted the Bibliotek.\n"
@@ -27,7 +27,7 @@ public class DecryptCommand extends Command {
             return new CommandResult(MESSAGE_SUCCESS);
         }
 
-        if (this.password.equals(LogicManager.getKey())) {
+        if (this.password.compareTo(LogicManager.getKey()) == 0) {
             LogicManager.unLock();
             return new CommandResult(MESSAGE_SUCCESS);
         } else {

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 import seedu.address.commons.events.model.BookShelfChangedEvent;
+import seedu.address.commons.events.model.KeyChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyBookShelf;
@@ -40,5 +41,7 @@ public interface Storage extends BookShelfStorage, UserPrefsStorage, RecentBooks
      * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
      */
     void handleBookShelfChangedEvent(BookShelfChangedEvent bsce);
+
+    void handleKeyChangedEvent(KeyChangedEvent bsce);
 
 }

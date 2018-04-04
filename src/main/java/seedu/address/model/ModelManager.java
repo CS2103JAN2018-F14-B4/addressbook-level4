@@ -15,6 +15,7 @@ import javafx.collections.transformation.SortedList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.BookShelfChangedEvent;
+import seedu.address.commons.events.model.KeyChangedEvent;
 import seedu.address.model.book.Book;
 import seedu.address.model.book.UniqueBookCircularList;
 import seedu.address.model.book.exceptions.BookNotFoundException;
@@ -94,6 +95,11 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new BookShelfChangedEvent(bookShelf));
     }
 
+    /** Raises an event to indicate the key has changed */
+    private void indicateKeyChangedException(String key) {
+        raise(new KeyChangedEvent(key, bookShelf));
+    }
+
     @Override
     public void deleteBook(Book target) throws BookNotFoundException {
         bookShelf.removeBook(target);
@@ -106,6 +112,16 @@ public class ModelManager extends ComponentManager implements Model {
         updateBookListFilter(PREDICATE_SHOW_ALL_BOOKS);
         updateBookListSorter(DEFAULT_BOOK_COMPARATOR);
         indicateBookShelfChanged();
+    }
+
+    /**
+     * Adds the given key
+     *
+     * @param key
+     */
+    @Override
+    public void setKey(String key) {
+        bookShelf.setKey(key);
     }
 
     @Override
@@ -135,6 +151,14 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public Comparator<? super Book> getBookListSorter() {
         return sortedBookList.getComparator();
+    }
+
+    /**
+     * Returns the comparator used for getting the password of the Bibliotek.
+     */
+    @Override
+    public String getKey() {
+        return null;
     }
 
     @Override

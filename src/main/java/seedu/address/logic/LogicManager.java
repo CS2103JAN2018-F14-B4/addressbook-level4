@@ -44,7 +44,7 @@ public class LogicManager extends ComponentManager implements Logic {
         bookShelfParser = new BookShelfParser();
         undoStack = new UndoStack();
         isLock = true;
-        key = model.getPassword();
+        key = model.getKey();
     }
 
     @Override

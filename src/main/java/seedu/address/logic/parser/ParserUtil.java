@@ -121,6 +121,16 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code String key} into a {@code Key}.
+     * Leading and trailing whitespaces will be trimmed.
+     */
+    protected static String parseKey(String key) {
+        requireNonNull(key);
+        String trimmedKey = key.trim();
+        return new String(trimmedKey);
+    }
+
+    /**
      * Parses a {@code Optional<String> description} into an {@code Optional<Description>}
      * if {@code description} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
