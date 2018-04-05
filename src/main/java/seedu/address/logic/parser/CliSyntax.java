@@ -15,5 +15,7 @@ public class CliSyntax {
     public static final Prefix PREFIX_PRIORITY = new Prefix("p/");
     public static final Prefix PREFIX_RATING = new Prefix("r/");
     public static final Prefix PREFIX_SORT_BY = new Prefix("by/");
+    public static final Prefix PREFIX_OLD_KEY = new Prefix("old/");
+    public static final Prefix PREFIX_NEW_KEY = new Prefix("new/");
 
 }

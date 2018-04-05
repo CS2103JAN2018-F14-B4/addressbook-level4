@@ -23,12 +23,12 @@ public class DecryptCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        if (!LogicManager.getLock()) {
+        if (!LogicManager.getEncrypt()) {
             return new CommandResult(MESSAGE_SUCCESS);
         }
 
         if (this.key.compareTo(LogicManager.getKey()) == 0) {
-            LogicManager.unLock();
+            LogicManager.decrypt();
             return new CommandResult(MESSAGE_SUCCESS);
         } else {
             return new CommandResult(MESSAGE_WRONG_PASSWORD);

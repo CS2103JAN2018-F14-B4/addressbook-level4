@@ -8,11 +8,13 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
+import com.google.common.eventbus.Subscribe;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import seedu.address.commons.core.ComponentManager;
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.BookShelfChangedEvent;
 import seedu.address.commons.events.model.KeyChangedEvent;
@@ -96,8 +98,8 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /** Raises an event to indicate the key has changed */
-    private void indicateKeyChangedException(String key) {
-        raise(new KeyChangedEvent(key, bookShelf));
+    private void indicateKeyChange(String key) {
+        raise(new KeyChangedEvent(key));
     }
 
     @Override
@@ -115,7 +117,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /**
-     * Adds the given key
+     * Adds the given password
      *
      * @param key
      */
@@ -229,6 +231,11 @@ public class ModelManager extends ComponentManager implements Model {
                 && displayBookList.equals(other.displayBookList)
                 && searchResults.equals(other.searchResults)
                 && recentBooks.equals(other.recentBooks);
+    }
+
+    @Subscribe
+    private void handleKeyChangedEvent(KeyChangedEvent event) {
+        setKey(event.getKey());
     }
 
 }

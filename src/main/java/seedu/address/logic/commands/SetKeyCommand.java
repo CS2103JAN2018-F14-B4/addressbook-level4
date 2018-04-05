@@ -1,7 +1,10 @@
 package seedu.address.logic.commands;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.model.KeyChangedEvent;
 import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.ModelManager;
 
 import java.util.Objects;
 
@@ -10,8 +13,8 @@ public class SetKeyCommand extends Command{
     public static final String COMMAND_WORD = "setKey";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Set the encrypt key of the bibliotek:"
-            + "Parameters: OLDKEY NEWKEY "
-            + "Example: " + COMMAND_WORD + " 123456 abcde ";
+            + "Parameters: [old/OLDKEY] [new/NEWKEY] "
+            + "Example: " + COMMAND_WORD + " old/123456 abcde ";
 
     public static final String MESSAGE_SUCCESS = "Set success";
     public static final String WRONG_OLDKEY = "Input the wrong oldkey, please check again!";
@@ -42,6 +45,7 @@ public class SetKeyCommand extends Command{
     public CommandResult execute() throws CommandException {
         if (oldKey.equals(LogicManager.getKey())) {
             LogicManager.setKey(newKey);
+            EventsCenter.getInstance().post(new KeyChangedEvent(newKey));
             return new CommandResult(MESSAGE_SUCCESS);
         } else {
             return new CommandResult(WRONG_OLDKEY);

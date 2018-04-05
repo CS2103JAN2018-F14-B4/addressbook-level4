@@ -40,8 +40,6 @@ public interface Storage extends BookShelfStorage, UserPrefsStorage, RecentBooks
      * Saves the current version of the Book Shelf to the hard disk. Creates a new file if it is missing.
      * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
      */
-    void handleBookShelfChangedEvent(BookShelfChangedEvent bsce);
-
-    void handleKeyChangedEvent(KeyChangedEvent bsce);
+    void handleBookShelfChangedEvent(BookShelfChangedEvent bsce);;
 
 }

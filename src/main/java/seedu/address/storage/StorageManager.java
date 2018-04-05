@@ -91,17 +91,6 @@ public class StorageManager extends ComponentManager implements Storage {
         }
     }
 
-    @Override
-    @Subscribe
-    public void handleKeyChangedEvent(KeyChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
-        try {
-            saveBookShelf(event.data);
-        } catch (IOException e) {
-            raise(new DataSavingExceptionEvent(e));
-        }
-    }
-
     // ================ RecentBooks methods ===============================
 
     @Override

@@ -5,17 +5,18 @@ import seedu.address.model.ReadOnlyBookShelf;
 
 public class KeyChangedEvent extends BaseEvent {
 
-    public final ReadOnlyBookShelf data;
-
     public final String key;
 
-    public KeyChangedEvent(String key, ReadOnlyBookShelf data) {
+    public KeyChangedEvent(String key) {
         this.key = key;
-        this.data = data;
+    }
+
+    public String getKey() {
+        return key;
     }
 
     @Override
     public String toString() {
-        return "number of books " + data.size();
+        return "key " + key;
     }
 }

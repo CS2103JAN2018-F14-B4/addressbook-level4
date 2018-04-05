@@ -7,6 +7,7 @@ import com.google.common.eventbus.Subscribe;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.KeyChangedEvent;
 import seedu.address.commons.events.ui.BookListSelectionChangedEvent;
 import seedu.address.commons.events.ui.SearchResultsSelectionChangedEvent;
 import seedu.address.commons.events.ui.SwitchToBookListRequestEvent;
@@ -34,7 +35,7 @@ public class LogicManager extends ComponentManager implements Logic {
     private final CommandHistory history;
     private final BookShelfParser bookShelfParser;
     private final UndoStack undoStack;
-    private static boolean isLock = false;
+    private static boolean isEncrypt = false;
     private static String key;
 
     public LogicManager(Model model, Network network) {
@@ -43,7 +44,7 @@ public class LogicManager extends ComponentManager implements Logic {
         history = new CommandHistory();
         bookShelfParser = new BookShelfParser();
         undoStack = new UndoStack();
-        isLock = true;
+        isEncrypt = true;
         key = model.getKey();
     }
 
@@ -54,7 +55,7 @@ public class LogicManager extends ComponentManager implements Logic {
             Command command = bookShelfParser.parseCommand(commandText);
             command.setData(model, network, history, undoStack);
             CommandResult result;
-            if (isLock == true) {
+            if (isEncrypt == true) {
                 if (command instanceof DecryptCommand) {
                     DecryptCommand decryptCommand = (DecryptCommand) command;
                     result = decryptCommand.execute();
@@ -76,20 +77,20 @@ public class LogicManager extends ComponentManager implements Logic {
         return key;
     }
 
-    public static boolean getLock() {
-        return isLock;
+    public static boolean getEncrypt() {
+        return isEncrypt;
     }
 
     public static void setKey(String word) {
         key = word;
     }
 
-    public static void lock() {
-        isLock = true;
+    public static void encrypt() {
+        isEncrypt = true;
     }
 
-    public static void unLock() {
-        isLock = false;
+    public static void decrypt() {
+        isEncrypt = false;
     }
 
     @Override
@@ -141,4 +142,6 @@ public class LogicManager extends ComponentManager implements Logic {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         model.addRecentBook(event.getNewSelection());
     }
+
+
 }

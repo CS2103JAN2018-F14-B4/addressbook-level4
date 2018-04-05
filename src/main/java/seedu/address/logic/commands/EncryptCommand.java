@@ -24,7 +24,7 @@ public class EncryptCommand extends Command{
     @Override
     public CommandResult execute() throws CommandException {
         model.updateBookListFilter(predicate);
-        LogicManager.lock();
+        LogicManager.encrypt();
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
