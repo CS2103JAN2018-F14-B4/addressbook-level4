@@ -31,22 +31,22 @@
 <li><a href="#adding-a-book-code-add-code">3.3. Adding a book: <code>add</code></a></li>
 <li><a href="#listing-filtering-and-sorting-your-books-code-list-code">3.4. Listing, filtering, and sorting your books : <code>list</code></a></li>
 <li><a href="#selecting-a-book-code-select-code">3.5. Selecting a book : <code>select</code></a></li>
-<li><a href="#editing-a-book-code-edit-code-code-coming-in-v1-3-code">3.6. Editing a book : <code>edit</code> <code>[coming in v1.3]</code></a></li>
+<li><a href="#editing-a-book-code-edit-code-since-v1-4">3.6. Editing a book : <code>edit</code> [since v1.4]</a></li>
 <li><a href="#deleting-a-book-code-delete-code">3.7. Deleting a book : <code>delete</code></a></li>
-<li><a href="#viewing-book-reviews-code-reviews-code-code-since-v1-3-code">3.8. Viewing book reviews: <code>reviews</code> <code>[since v1.3]</code></a></li>
-<li><a href="#listing-recently-viewed-books-code-recent-code-code-since-v1-2-code">3.9. Listing recently viewed books: <code>recent</code> <code>[since v1.2]</code></a></li>
-<li><a href="#finding-a-book-in-the-library-code-library-code-code-coming-in-v1-4-code">3.10. Finding a book in the library: <code>library</code> <code>[coming in v1.4]</code></a></li>
-<li><a href="#placing-a-book-on-watchlist-code-watch-code-code-coming-in-v1-4-code">3.11. Placing a book on watchlist: <code>watch</code> <code>[coming in v1.4]</code></a></li>
-<li><a href="#ordering-a-book-online-code-order-code-code-coming-in-v1-5-code">3.12. Ordering a book online: <code>order</code> <code>[coming in v1.5]</code></a></li>
+<li><a href="#viewing-book-reviews-code-reviews-code-since-v1-3">3.8. Viewing book reviews: <code>reviews</code> [since v1.3]</a></li>
+<li><a href="#listing-recently-viewed-books-code-recent-code-since-v1-2">3.9. Listing recently viewed books: <code>recent</code> [since v1.2]</a></li>
+<li><a href="#finding-a-book-in-the-library-code-library-code-coming-in-v1-4">3.10. Finding a book in the library: <code>library</code> [coming in v1.4]</a></li>
+<li><a href="#placing-a-book-on-watchlist-code-watch-code-coming-in-v1-4">3.11. Placing a book on watchlist: <code>watch</code> [coming in v1.4]</a></li>
+<li><a href="#ordering-a-book-online-code-order-code-coming-in-v1-5">3.12. Ordering a book online: <code>order</code> [coming in v1.5]</a></li>
 <li><a href="#listing-entered-commands-code-history-code">3.13. Listing entered commands : <code>history</code></a></li>
 <li><a href="#undoing-previous-command-code-undo-code">3.14. Undoing previous command : <code>undo</code></a></li>
 <li><a href="#clearing-all-entries-code-clear-code">3.15. Clearing all entries : <code>clear</code></a></li>
-<li><a href="#changing-application-theme-code-since-v1-2-code">3.16. Changing application theme <code>[since v1.2]</code></a></li>
-<li><a href="#changing-settings-code-settings-code-code-coming-in-v1-4-code">3.17. Changing settings: <code>settings</code> <code>[coming in v1.4]</code></a></li>
+<li><a href="#changing-application-theme-since-v1-2">3.16. Changing application theme [since v1.2]</a></li>
+<li><a href="#changing-settings-code-settings-code-coming-in-v1-4">3.17. Changing settings: <code>settings</code> [coming in v1.4]</a></li>
 <li><a href="#closing-the-program-code-exit-code">3.18. Closing the program : <code>exit</code></a></li>
 <li><a href="#saving-the-data">3.19. Saving the data</a></li>
-<li><a href="#getting-book-recommendations-code-suggest-code-code-coming-in-v2-0-code">3.20. Getting book recommendations: <code>suggest</code> <code>[coming in v2.0]</code></a></li>
-<li><a href="#importing-books-from-other-e-readers-code-import-code-code-coming-in-v2-0-code">3.21. Importing books from other E-Readers: <code>import</code> <code>[coming in v2.0]</code></a></li>
+<li><a href="#getting-book-recommendations-code-suggest-code-coming-in-v2-0">3.20. Getting book recommendations: <code>suggest</code> [coming in v2.0]</a></li>
+<li><a href="#importing-books-from-other-e-readers-code-import-code-coming-in-v2-0">3.21. Importing books from other E-Readers: <code>import</code> [coming in v2.0]</a></li>
 </ul>
 </li>
 <li><a href="#faq">4. FAQ</a></li>
@@ -163,10 +163,10 @@ e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> wil
 <p><strong><code>list</code></strong> : lists all books</p>
 </li>
 <li>
-<p><strong><code>search</code></strong><code>t/Babylon&#8217;s Ashes c/Science Fiction</code> : searches for books with <code>Babylon&#8217;s Ashes</code> in their title, belonging to the category <code>Science Fiction</code>.</p>
+<p><strong><code>search t/Babylon&#8217;s Ashes c/Science Fiction</code></strong> : searches for books with <code>Babylon&#8217;s Ashes</code> in their title, belonging to the category <code>Science Fiction</code>.</p>
 </li>
 <li>
-<p><strong><code>delete</code></strong><code>3</code> : deletes the 3rd book shown in the current list</p>
+<p><strong><code>delete 3</code></strong> : deletes the 3rd book shown in the current list</p>
 </li>
 <li>
 <p><strong><code>exit</code></strong> : exits the app</p>
@@ -198,10 +198,10 @@ e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> wil
 <p>Items in square brackets are optional e.g you can use <code>[t/TITLE] [a/AUTHOR]</code> as <code>t/Harry Potter a/Rowling</code> or as <code>t/Harry Potter</code> (but there cannot be no parameters).</p>
 </li>
 <li>
-<p>Items with <code>…</code>​ after them can be used multiple times including zero times e.g. you can use <code>[a/AUTHOR]&#8230;&#8203;</code> as <code>&#160;</code> (i.e. 0 times), <code>a/Dubner</code>, <code>a/Dubner a/Steven Levitt</code> etc.</p>
+<p>Items with <code>…</code>​ after them can be used multiple times, including zero times. For example, you can use <code>[a/AUTHOR]&#8230;&#8203;</code> as <code>&#160;</code> (i.e. 0 times), <code>a/Dubner</code>, <code>a/Dubner a/Steven Levitt</code>, etc.</p>
 </li>
 <li>
-<p>Parameters can be in any order e.g. if the command specifies <code>a/AUTHOR t/TITLE</code>, <code>t/TITLE a/AUTHOR</code> is acceptable.</p>
+<p>Parameters can be in any order. For example, if the command specifies <code>a/AUTHOR t/TITLE</code>, <code>t/TITLE a/AUTHOR</code> is acceptable.</p>
 </li>
 </ul>
 </div>
@@ -247,12 +247,7 @@ You can only perform <code>search</code> with Internet connection.
 </table>
 </div>
 <div class="paragraph">
-<p>If you want to find any books with <code>Harry Potter</code> as keyword, you enter <code>search Harry Potter</code>.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/SearchCommandSearching.png" alt="SearchCommandSearching" width="700">
-</div>
+<p>If you want to find any books with <code>Harry Potter</code> as keyword, enter <code>search Harry Potter</code>.</p>
 </div>
 <div class="paragraph">
 <p>Bibliotek shows <code>Searching for matching books&#8230;&#8203;</code> to indicate that your <code>search</code> is being processed.
@@ -260,12 +255,17 @@ This may take some time since an external service is being called to fetch your 
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/SearchCommandFound.png" alt="SearchCommandFound" width="700">
+<img src="images/SearchCommandSearching.png" alt="SearchCommandSearching" width="700">
 </div>
 </div>
 <div class="paragraph">
 <p>When your search results are ready, Bibliotek shows <code>Found xx matching books.</code> and displays your
 search results in the left panel.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/SearchCommandFound.png" alt="SearchCommandFound" width="700">
+</div>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -341,8 +341,12 @@ You also need Internet connection.
 </div>
 </div>
 <div class="paragraph">
-<p>If you want to add <code>Harry Potter and the Classical World</code> to your book shelf, you enter
-<code>add 2</code>.</p>
+<p>If you want to add <code>Harry Potter and the Classical World</code> to your book shelf, enter <code>add 2</code>.</p>
+</div>
+<div class="paragraph">
+<p>Bibliotek shows <code>Adding the book into your book shelf&#8230;&#8203;</code> to indicate that your <code>add</code> is being processed.
+This may take some time since an external service is being called to fetch more detailed information about
+the book before adding it to your book shelf.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -350,9 +354,7 @@ You also need Internet connection.
 </div>
 </div>
 <div class="paragraph">
-<p>Bibliotek shows <code>Adding the book into your book shelf</code> to indicate that your <code>add</code> is being processed.
-This may take some time since an external service is being called to fetch more detailed information about
-the book before adding it to your book shelf.</p>
+<p>Once the necessary information is fetched and the book is added, Bibliotek shows <code>New book added: TITLE - Authors: AUTHORS</code>.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -360,9 +362,7 @@ the book before adding it to your book shelf.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Once the necessary information is fetched and the book is added, Bibliotek shows
-<code>New book added: TITLE - Authors: AUTHORS</code>. You can verify that the book have been added by entering <code>list</code>
-and scrolling to the last entry in your book shelf.</p>
+<p>You can verify that the book have been added by entering <code>list t/TITLE</code>. In this case, you can enter <code>list t/Harry Potter</code>.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -385,7 +385,7 @@ Adds the 1st book in the search results.</p>
 <div class="sect2">
 <h3 id="listing-filtering-and-sorting-your-books-code-list-code"><a class="anchor" href="#listing-filtering-and-sorting-your-books-code-list-code"></a>3.4. Listing, filtering, and sorting your books : <code>list</code></h3>
 <div class="paragraph">
-<p>If you want to view a portion of the books in your book shelf, use the <code>list</code> command.<br>
+<p>If you want to view all the books in your book shelf or just a portion of them, use the <code>list</code> command.<br>
 Format: <code>list [t/TITLE] [a/AUTHOR] [c/CATEGORY] [s/STATUS] [p/PRIORITY] [r/RATING] [by/SORT_BY]</code></p>
 </div>
 <div class="sidebarblock">
@@ -483,14 +483,14 @@ Format: <code>list [t/TITLE] [a/AUTHOR] [c/CATEGORY] [s/STATUS] [p/PRIORITY] [r/
 <div class="paragraph">
 <p>If you want to view all books in your book shelf, you can simply enter <code>list</code>.</p>
 </div>
+<div class="paragraph">
+<p>Bibliotek shows <code>Listed xx books.</code> to indicate that the command was successful.
+The left panel will show all the books in your book shelf.</p>
+</div>
 <div class="imageblock">
 <div class="content">
 <img src="images/ListCommand.png" alt="ListCommand" width="700">
 </div>
-</div>
-<div class="paragraph">
-<p>Bibliotek shows <code>Listed xx books.</code> to indicate that the command was successful.
-The left panel will show all the books in your book shelf.</p>
 </div>
 <div class="paragraph">
 <p>Other examples:</p>
@@ -541,7 +541,11 @@ Format: <code>select INDEX</code></p>
 </div>
 <div class="paragraph">
 <p>If you are interested in <code>The Ivory Tower and Harry Potter</code> and wish to view more information,
-you enter <code>select 3</code>.</p>
+enter <code>select 3</code>.</p>
+</div>
+<div class="paragraph">
+<p>Bibliotek shows <code>Selected Book: 3</code> to indicate that your <code>select</code> is successful. The left panel
+is auto-scrolled to the selected book and the right panel shows detailed information of the book.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -549,21 +553,17 @@ you enter <code>select 3</code>.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Bibliotek shows <code>Selected Book: 3</code> to indicate that your <code>select</code> is successful. The left panel
-is auto-scrolled to the selected book and the right panel shows detailed information of the book.</p>
-</div>
-<div class="paragraph">
 <p>Alternatively, instead of entering <code>select 3</code>, you can directly select <code>The Ivory Tower and Harry Potter</code>
 by clicking on it in the left panel.</p>
+</div>
+<div class="paragraph">
+<p>Bibliotek shows the detailed information of the book in the right panel. Note that no confirmation message
+will be shown in this case.</p>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="images/SelectCommandUI.png" alt="SelectCommandUI" width="700">
 </div>
-</div>
-<div class="paragraph">
-<p>Bibliotek shows the detailed information of the book in the right panel. Note that no confirmation message
-will be shown in this case.</p>
 </div>
 <div class="paragraph">
 <p>Other examples:</p>
@@ -589,7 +589,7 @@ Selects the 1st book in the search results.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="editing-a-book-code-edit-code-code-coming-in-v1-3-code"><a class="anchor" href="#editing-a-book-code-edit-code-code-coming-in-v1-3-code"></a>3.6. Editing a book : <code>edit</code> <code>[coming in v1.3]</code></h3>
+<h3 id="editing-a-book-code-edit-code-since-v1-4"><a class="anchor" href="#editing-a-book-code-edit-code-since-v1-4"></a>3.6. Editing a book : <code>edit</code> [since v1.4]</h3>
 <div class="paragraph">
 <p>After reading a book, you may want to give the book a rating or set the book as read. Or, you may want
 to change the priority of books to remind yourself what you should read next. These can be done using <code>edit</code>.<br>
@@ -600,13 +600,22 @@ Format: <code>edit INDEX [s/STATUS] [p/PRIORITY] [r/RATING]</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p>Edits the book at the specified <code>INDEX</code>. The index refers to the index number shown in the last book shelf listing. The index <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
+<p>Edits the book at the specified <code>INDEX</code>. The index refers to the index number shown in the most recent listing. The index <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
 </li>
 <li>
 <p>At least one of the optional fields must be provided.</p>
 </li>
 <li>
 <p>Existing values will be updated to the input values.</p>
+</li>
+<li>
+<p><code>STATUS</code> must be one of the following (items in parenthesis are aliases): <code>read</code> (<code>r</code>), <code>unread</code> (<code>u</code>), or <code>reading</code> (<code>rd</code>).</p>
+</li>
+<li>
+<p><code>PRIORITY</code> must be one of the following (items in parenthesis are aliases): <code>none</code> (<code>n</code>), <code>low</code> (<code>l</code>), <code>medium</code> (<code>m</code>), or <code>high</code> (<code>h</code>).</p>
+</li>
+<li>
+<p><code>RATING</code> must be a valid rating from 0 to 5, or -1, to select unrated books.</p>
 </li>
 </ul>
 </div>
@@ -630,11 +639,11 @@ You can only perform <code>edit</code> when the list shown is from your book she
 <div class="ulist">
 <ul>
 <li>
-<p><code>edit 1 p/HIGH</code><br>
+<p><code>edit 1 p/high</code><br>
 Changes the priority of the 1st book to <code>HIGH</code>.</p>
 </li>
 <li>
-<p><code>edit 2 s/READ r/5</code><br>
+<p><code>edit 2 s/read r/5</code><br>
 Marks the 2nd book as <code>READ</code> and changes its rating to <code>5</code>.</p>
 </li>
 </ul>
@@ -697,16 +706,16 @@ They may serve as useful reference in the future.
 </div>
 </div>
 <div class="paragraph">
-<p>If you no longer want to read <code>Artemis</code> and wish to remove it from your book shelf, enter <code>delete 1</code>.</p>
+<p>If you no longer want to read <code>Harry Potter and the Classical World</code> and wish to remove it from your book shelf, enter <code>delete 1</code>.</p>
+</div>
+<div class="paragraph">
+<p>Bibliotek shows <code>Deleted Book: TITLE - Authors: AUTHORS</code> to indicate that your <code>delete</code> is successful.
+The book no longer exist in the left panel.</p>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="images/DeleteCommand.png" alt="DeleteCommand" width="700">
 </div>
-</div>
-<div class="paragraph">
-<p>Bibliotek shows <code>Deleted Book: TITLE - Authors: AUTHORS</code> to indicate that your <code>delete</code> is successful.
-The book no longer exist in the left panel.</p>
 </div>
 <div class="paragraph">
 <p>Other examples:</p>
@@ -722,7 +731,7 @@ Deletes the 1st book in the results of the <code>list</code> command.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="viewing-book-reviews-code-reviews-code-code-since-v1-3-code"><a class="anchor" href="#viewing-book-reviews-code-reviews-code-code-since-v1-3-code"></a>3.8. Viewing book reviews: <code>reviews</code> <code>[since v1.3]</code></h3>
+<h3 id="viewing-book-reviews-code-reviews-code-since-v1-3"><a class="anchor" href="#viewing-book-reviews-code-reviews-code-since-v1-3"></a>3.8. Viewing book reviews: <code>reviews</code> [since v1.3]</h3>
 <div class="paragraph">
 <p>If a book catches your eyes but you are not sure whether it&#8217;s worth the read, use
 <code>reviews</code> to find out what other readers think.<br>
@@ -762,45 +771,20 @@ You can only perform <code>reviews</code> with Internet connection.
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/ReviewsCommandList.png" alt="ReviewsCommandList" width="700">
+<img src="images/SearchCommandFound.png" alt="SearchCommandFound" width="700">
 </div>
 </div>
 <div class="paragraph">
-<p>If you want to view book reviews for <code>Catching Fire</code>, enter <code>reviews 4</code>.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/ReviewsCommandLoading.png" alt="ReviewsCommandLoading" width="700">
-</div>
+<p>If you want to view book reviews for <code>Consider Phlebas</code>, enter <code>reviews 2</code>.</p>
 </div>
 <div class="paragraph">
-<p>Bibliotek shows <code>Loading reviews of book: TITLE - Authors: AUTHORS</code> to indicate that your <code>reviews</code> is being processed.
-Bibliotek is loading the reviews page of the book on <a href="https://goodreads.com">goodreads</a>.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-The web page may take some time to load and will only be shown when ready.
-</td>
-</tr>
-</table>
+<p>Bibliotek shows <code>Showing reviews for book: TITLE - Authors: AUTHORS.</code> and displays a browser at the right panel.
+The browser will begin loading the reviews page of the book on <a href="https://goodreads.com">goodreads</a>.
+Once the web page has loaded, you will be able to see the reviews, as shown below.</p>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="images/ReviewsCommandLoaded.png" alt="ReviewsCommandLoaded" width="700">
-</div>
-</div>
-<div class="paragraph">
-<p>Once the web page is ready, Bibliotek shows <code>Reviews loaded successfully!</code> and displays the web page
-at the right panel. Scroll down the web page to see the reviews for the book.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/ReviewsCommandScrollDown.png" alt="ReviewsCommandScrollDown" width="700">
 </div>
 </div>
 <div class="paragraph">
@@ -817,7 +801,7 @@ Shows online reviews of 1st book in the search results.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="listing-recently-viewed-books-code-recent-code-code-since-v1-2-code"><a class="anchor" href="#listing-recently-viewed-books-code-recent-code-code-since-v1-2-code"></a>3.9. Listing recently viewed books: <code>recent</code> <code>[since v1.2]</code></h3>
+<h3 id="listing-recently-viewed-books-code-recent-code-since-v1-2"><a class="anchor" href="#listing-recently-viewed-books-code-recent-code-since-v1-2"></a>3.9. Listing recently viewed books: <code>recent</code> [since v1.2]</h3>
 <div class="paragraph">
 <p>You recently selected a book in one of your searches but did not add it into your
 book shelf, and now you have trouble searching up that book again? No worries, <code>recent</code>
@@ -865,15 +849,18 @@ Format: <code>recent</code></p>
 you regret not adding <code>The Ivory Tower and Harry Potter</code> into your book shelf. Instead of
 performing the search again, you can enter <code>recent</code> to view recently selected books.</p>
 </div>
+<div class="paragraph">
+<p>Bibliotek shows <code>Listed all recently selected books.</code> to indicate that your <code>recent</code> command
+is successful. You can scroll down the left panel to locate <code>The Ivory Tower and Harry Potter</code>
+(index 4 in this case).</p>
+</div>
 <div class="imageblock">
 <div class="content">
 <img src="images/RecentCommand.png" alt="RecentCommand" width="700">
 </div>
 </div>
 <div class="paragraph">
-<p>Bibliotek shows <code>Listed all recently selected books</code> to indicate that your <code>recent</code> command
-is successful. You can scroll down the left panel to locate <code>The Ivory Tower and Harry Potter</code>
-(index 4 in this case). You can enter <code>add 4</code> to add the book into your book shelf.</p>
+<p>You can then enter <code>add 4</code> to add the book into your book shelf.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -890,7 +877,7 @@ that book.
 </div>
 </div>
 <div class="sect2">
-<h3 id="finding-a-book-in-the-library-code-library-code-code-coming-in-v1-4-code"><a class="anchor" href="#finding-a-book-in-the-library-code-library-code-code-coming-in-v1-4-code"></a>3.10. Finding a book in the library: <code>library</code> <code>[coming in v1.4]</code></h3>
+<h3 id="finding-a-book-in-the-library-code-library-code-coming-in-v1-4"><a class="anchor" href="#finding-a-book-in-the-library-code-library-code-coming-in-v1-4"></a>3.10. Finding a book in the library: <code>library</code> [coming in v1.4]</h3>
 <div class="paragraph">
 <p>If you want to know whether a book is available in a library, use <code>library</code>.<br>
 Format: <code>library INDEX</code></p>
@@ -935,7 +922,7 @@ Search your chosen library for the 1st book in your book shelf.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="placing-a-book-on-watchlist-code-watch-code-code-coming-in-v1-4-code"><a class="anchor" href="#placing-a-book-on-watchlist-code-watch-code-code-coming-in-v1-4-code"></a>3.11. Placing a book on watchlist: <code>watch</code> <code>[coming in v1.4]</code></h3>
+<h3 id="placing-a-book-on-watchlist-code-watch-code-coming-in-v1-4"><a class="anchor" href="#placing-a-book-on-watchlist-code-watch-code-coming-in-v1-4"></a>3.11. Placing a book on watchlist: <code>watch</code> [coming in v1.4]</h3>
 <div class="paragraph">
 <p>Interested in so many books that searching them up using <code>library</code> is time consuming?
 With <code>watch</code>, you can automatically get notified when a book in your watchlist
@@ -976,7 +963,7 @@ everytime you start up the application.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="ordering-a-book-online-code-order-code-code-coming-in-v1-5-code"><a class="anchor" href="#ordering-a-book-online-code-order-code-code-coming-in-v1-5-code"></a>3.12. Ordering a book online: <code>order</code> <code>[coming in v1.5]</code></h3>
+<h3 id="ordering-a-book-online-code-order-code-coming-in-v1-5"><a class="anchor" href="#ordering-a-book-online-code-order-code-coming-in-v1-5"></a>3.12. Ordering a book online: <code>order</code> [coming in v1.5]</h3>
 <div class="paragraph">
 <p>If you wish to purchase a book, use <code>order</code>.<br>
 Format: <code>order INDEX</code></p>
@@ -1090,7 +1077,7 @@ Format: <code>undo</code></p>
 </table>
 </div>
 <div class="paragraph">
-<p>Suppose you just deleted a book <code>Artemis</code>.</p>
+<p>Suppose you just deleted a book <code>Harry Potter and the Classical World</code>.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -1100,14 +1087,14 @@ Format: <code>undo</code></p>
 <div class="paragraph">
 <p>If you regret your deletion and wish to undo it, enter <code>undo</code>.</p>
 </div>
+<div class="paragraph">
+<p>Bibliotek shows <code>Undo success!</code> to indicate that your <code>undo</code> is successful. <code>Harry Potter and the Classical World</code> is back in your
+book shelf as seen in the left panel.</p>
+</div>
 <div class="imageblock">
 <div class="content">
 <img src="images/UndoCommand.png" alt="UndoCommand" width="700">
 </div>
-</div>
-<div class="paragraph">
-<p>Bibliotek shows <code>Undo success!</code> to indicate that your <code>undo</code> is successful. <code>Artemis</code> is back in your
-book shelf as seen in the left panel.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1162,18 +1149,18 @@ You can only perform <code>clear</code> if the list shown is from your book shel
 <div class="paragraph">
 <p>If you want to delete all books, enter <code>clear</code>.</p>
 </div>
+<div class="paragraph">
+<p>Bibliotek shows <code>Book shelf has been cleared!</code> to indicate that your <code>clear</code> is successful.
+The left and right panels are now empty.</p>
+</div>
 <div class="imageblock">
 <div class="content">
 <img src="images/ClearCommand.png" alt="ClearCommand" width="700">
 </div>
 </div>
-<div class="paragraph">
-<p>Bibliotek shows <code>Book shelf has been cleared!</code> to indicate that your <code>clear</code> is successful.
-The left and right panels are now empty.</p>
-</div>
 </div>
 <div class="sect2">
-<h3 id="changing-application-theme-code-since-v1-2-code"><a class="anchor" href="#changing-application-theme-code-since-v1-2-code"></a>3.16. Changing application theme <code>[since v1.2]</code></h3>
+<h3 id="changing-application-theme-since-v1-2"><a class="anchor" href="#changing-application-theme-since-v1-2"></a>3.16. Changing application theme [since v1.2]</h3>
 <div class="paragraph">
 <p>If you don&#8217;t like the default theme used by Bibliotek, you can change it using <code>theme</code>.<br>
 Format: <code>theme THEME_NAME</code></p>
@@ -1198,13 +1185,13 @@ Format: <code>theme THEME_NAME</code></p>
 <div class="paragraph">
 <p>You can change the application to the white theme using <code>theme white</code>.</p>
 </div>
+<div class="paragraph">
+<p>Bibliotek shows <code>Application theme changed to: white</code> to indicate that your theme change is successful.</p>
+</div>
 <div class="imageblock">
 <div class="content">
 <img src="images/ThemeWhite.png" alt="ThemeWhite" width="700">
 </div>
-</div>
-<div class="paragraph">
-<p>Bibliotek shows <code>Application theme changed to: white</code> to indicate that your theme change is successful.</p>
 </div>
 <div class="paragraph">
 <p>The same goes for <code>theme light</code>:</p>
@@ -1224,81 +1211,9 @@ Format: <code>theme THEME_NAME</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="changing-settings-code-settings-code-code-coming-in-v1-4-code"><a class="anchor" href="#changing-settings-code-settings-code-code-coming-in-v1-4-code"></a>3.17. Changing settings: <code>settings</code> <code>[coming in v1.4]</code></h3>
+<h3 id="changing-settings-code-settings-code-coming-in-v1-4"><a class="anchor" href="#changing-settings-code-settings-code-coming-in-v1-4"></a>3.17. Changing settings: <code>settings</code> [coming in v1.4]</h3>
 <div class="sect3">
-<h4 id="settings-library"><a class="anchor" href="#settings-library"></a>3.17.1. Library <code>[coming in v1.4]</code></h4>
-<div class="paragraph">
-<p>If you want to search for books in other libraries, you can change your settings.<br>
-Format: <code>settings lib/LIBRARY</code></p>
-</div>
-<div class="sidebarblock">
-<div class="content">
-<div class="ulist">
-<ul>
-<li>
-<p>Change the library searched when you perform <code>library</code>.</p>
-</li>
-<li>
-<p>Default library searched is National Library Board.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>Only some libraries are supported. Do <a href="https://f14-b4.netlify.com/contactus">contact us</a>
-if there are other libraries you wish are supported.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect3">
-<h4 id="settings-order"><a class="anchor" href="#settings-order"></a>3.17.2. Online shopping site <code>[coming in v1.5]</code></h4>
-<div class="paragraph">
-<p>If you want to purchase books on other online booksellers, you can change your settings.<br>
-Format: <code>settings order/SITE</code></p>
-</div>
-<div class="sidebarblock">
-<div class="content">
-<div class="ulist">
-<ul>
-<li>
-<p>Change the online bookseller searched when you perform <code>order</code>.</p>
-</li>
-<li>
-<p>Default online book selling site is Book Depository.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>Only some sites are supported. Do <a href="https://f14-b4.netlify.com/contactus">contact us</a>
-if there are other sites you wish are supported.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect3">
-<h4 id="command-alias-code-coming-in-v1-5-code"><a class="anchor" href="#command-alias-code-coming-in-v1-5-code"></a>3.17.3. Command alias <code>[coming in v1.5]</code></h4>
+<h4 id="command-alias-coming-in-v1-5"><a class="anchor" href="#command-alias-coming-in-v1-5"></a>3.17.1. Command alias [coming in v1.5]</h4>
 <div class="paragraph">
 <p>If you don&#8217;t like the word for a command or think it is too long, you can add a
 command alias to make the command more intuitive or reduce typing.<br>
@@ -1350,7 +1265,79 @@ Remove the command alias of <code>add</code>.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="font-size-code-coming-in-v2-0-code"><a class="anchor" href="#font-size-code-coming-in-v2-0-code"></a>3.17.4. Font size <code>[coming in v2.0]</code></h4>
+<h4 id="settings-library"><a class="anchor" href="#settings-library"></a>3.17.2. Library [coming in v2.0]</h4>
+<div class="paragraph">
+<p>If you want to search for books in other libraries, you can change your settings.<br>
+Format: <code>settings lib/LIBRARY</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Change the library searched when you perform <code>library</code>.</p>
+</li>
+<li>
+<p>Default library searched is National Library Board.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Only some libraries are supported. Do <a href="https://f14-b4.netlify.com/contactus">contact us</a>
+if there are other libraries you wish are supported.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="settings-order"><a class="anchor" href="#settings-order"></a>3.17.3. Online shopping site [coming in v2.0]</h4>
+<div class="paragraph">
+<p>If you want to purchase books on other online booksellers, you can change your settings.<br>
+Format: <code>settings order/SITE</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Change the online bookseller searched when you perform <code>order</code>.</p>
+</li>
+<li>
+<p>Default online book selling site is Book Depository.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Only some sites are supported. Do <a href="https://f14-b4.netlify.com/contactus">contact us</a>
+if there are other sites you wish are supported.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="font-size-coming-in-v2-0"><a class="anchor" href="#font-size-coming-in-v2-0"></a>3.17.4. Font size [coming in v2.0]</h4>
 <div class="paragraph">
 <p>Think the font size is too small or large for your liking? You can customize the
 font size to your own needs.<br>
@@ -1358,7 +1345,7 @@ Format: <code>settings fontsize/FONTSIZE</code></p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="password-code-coming-in-v2-0-code"><a class="anchor" href="#password-code-coming-in-v2-0-code"></a>3.17.5. Password <code>[coming in v2.0]</code></h4>
+<h4 id="password-coming-in-v2-0"><a class="anchor" href="#password-coming-in-v2-0"></a>3.17.5. Password [coming in v2.0]</h4>
 <div class="paragraph">
 <p>If you want to keep your data secure, you can opt to set a password for the application.<br>
 Format: <code>settings password/PASSWORD</code></p>
@@ -1407,7 +1394,7 @@ There is no need to save manually.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="getting-book-recommendations-code-suggest-code-code-coming-in-v2-0-code"><a class="anchor" href="#getting-book-recommendations-code-suggest-code-code-coming-in-v2-0-code"></a>3.20. Getting book recommendations: <code>suggest</code> <code>[coming in v2.0]</code></h3>
+<h3 id="getting-book-recommendations-code-suggest-code-coming-in-v2-0"><a class="anchor" href="#getting-book-recommendations-code-suggest-code-coming-in-v2-0"></a>3.20. Getting book recommendations: <code>suggest</code> [coming in v2.0]</h3>
 <div class="paragraph">
 <p>Having problems deciding what to read next? Bibliotek can give you book recommendations
 based on the books in your book shelf. Use <code>suggest</code> to obtain your personalized recommendations!<br>
@@ -1427,7 +1414,7 @@ Give appropriate ratings to books you have read to obtain recommendations that a
 </div>
 </div>
 <div class="sect2">
-<h3 id="importing-books-from-other-e-readers-code-import-code-code-coming-in-v2-0-code"><a class="anchor" href="#importing-books-from-other-e-readers-code-import-code-code-coming-in-v2-0-code"></a>3.21. Importing books from other E-Readers: <code>import</code> <code>[coming in v2.0]</code></h3>
+<h3 id="importing-books-from-other-e-readers-code-import-code-coming-in-v2-0"><a class="anchor" href="#importing-books-from-other-e-readers-code-import-code-coming-in-v2-0"></a>3.21. Importing books from other E-Readers: <code>import</code> [coming in v2.0]</h3>
 <div class="paragraph">
 <p>If you are using other E-Readers and have many books in your collection that you wish to
 add into your Bibliotek book shelf, <code>import</code> is the command you are looking for.<br>
@@ -1456,54 +1443,85 @@ Format: <code>import SOURCE</code></p>
 <div class="sect1">
 <h2 id="command-summary"><a class="anchor" href="#command-summary"></a>5. Command Summary</h2>
 <div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Add</strong> <code>add INDEX</code><br>
-e.g. <code>add 1</code></p>
-</li>
-<li>
-<p><strong>Clear</strong> : <code>clear</code></p>
-</li>
-<li>
-<p><strong>Delete</strong> : <code>delete INDEX</code><br></p>
-</li>
-<li>
-<p><strong>Exit</strong> : <code>exit</code></p>
-</li>
-<li>
-<p><strong>Help</strong> : <code>help</code></p>
-</li>
-<li>
-<p><strong>History</strong> : <code>history</code></p>
-</li>
-<li>
-<p><strong>List</strong> : <code>list</code></p>
-</li>
-<li>
-<p><strong>Recent</strong> : <code>recent</code></p>
-</li>
-<li>
-<p><strong>Search</strong> : <code>search [SEARCH_TERM] [i/ISBN] [t/TITLE] [a/AUTHOR] [c/CATEGORY]</code><br>
-e.g. <code>search t/Babylon&#8217;s Ashes c/Science Fiction</code></p>
-</li>
-<li>
-<p><strong>Select</strong> : <code>select INDEX</code><br></p>
-</li>
-<li>
-<p><strong>Theme</strong> : <code>theme THEME_NAME</code><br></p>
-</li>
-<li>
-<p><strong>Undo</strong> : <code>undo</code></p>
-</li>
-</ul>
-</div>
+<table class="tableblock frame-all grid-all" style="width: 70%;">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Command</th>
+<th class="tableblock halign-left valign-top">Syntax</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Add</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>add INDEX</code></p>
+<p class="tableblock">e.g. <code>add 1</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Clear</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>clear</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Delete</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>delete INDEX</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Edit</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>edit INDEX [s/STATUS] [p/PRIORITY] [r/RATING]</code></p>
+<p class="tableblock">e.g. <code>edit 2 s/READ r/5</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Exit</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>exit</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Help</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>help</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>History</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>history</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>List</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>list</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Recent</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>recent</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Reviews</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>reviews INDEX</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Search</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>search [SEARCH_TERM] [i/ISBN] [t/TITLE] [a/AUTHOR] [c/CATEGORY]</code></p>
+<p class="tableblock">e.g. <code>search t/Babylon&#8217;s Ashes c/Science Fiction</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Select</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>select INDEX</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Theme</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>theme THEME_NAME</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Undo</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>undo</code></p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-05 16:56:02 UTC
+Last updated 2018-04-05 20:50:47 UTC
 </div>
 </div>
 </body>
