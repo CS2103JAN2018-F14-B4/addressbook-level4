@@ -3,9 +3,11 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Set;
+import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,31 +29,23 @@ public class UniqueList<T> implements Iterable<T> {
     public UniqueList() {}
 
     /**
-     * Creates a UniqueList using given set.
-     * Enforces no nulls.
+     * Returns all items in this list as a list.
+     * This list is mutable and change-insulated against the internal list.
      */
-    public UniqueList(Set<T> items) {
-        requireAllNonNull(items);
-        internalList.addAll(items);
-
+    public List<T> toList() {
         assert CollectionUtil.elementsAreUnique(internalList);
+        return new ArrayList<>(internalList);
     }
 
     /**
-     * Returns all items in this list as a Set.
-     * This set is mutable and change-insulated against the internal list.
+     * Replaces the items in this list with those in the given collection.
      */
-    public Set<T> toSet() {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        return new HashSet<>(internalList);
-    }
-
-    /**
-     * Replaces the items in this list with those in the argument list.
-     */
-    public void setItems(Set<T> items) {
+    public void setItems(Collection<T> items) throws DuplicateDataException {
         requireAllNonNull(items);
-        internalList.setAll(items);
+        internalList.clear();
+        for (T toAdd : items) {
+            add(toAdd);
+        }
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 
@@ -59,7 +53,7 @@ public class UniqueList<T> implements Iterable<T> {
      * Ensures every item in the argument list exists in this object.
      */
     public void mergeFrom(UniqueList<T> from) {
-        final Set<T> alreadyInside = this.toSet();
+        final List<T> alreadyInside = this.toList();
         from.internalList.stream()
                 .filter(tag -> !alreadyInside.contains(tag))
                 .forEach(internalList::add);
@@ -87,6 +81,22 @@ public class UniqueList<T> implements Iterable<T> {
         }
         internalList.add(toAdd);
 
+        assert CollectionUtil.elementsAreUnique(internalList);
+    }
+
+    /**
+     * Adds all items in the given collection into this list.
+     * Any duplicates found will be ignored.
+     */
+    public void addAllIgnoresDuplicates(Collection<T> items) {
+        requireAllNonNull(items);
+        for (T toAdd : items) {
+            try {
+                add(toAdd);
+            } catch (DuplicateDataException e) {
+                e.printStackTrace();
+            }
+        }
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 
