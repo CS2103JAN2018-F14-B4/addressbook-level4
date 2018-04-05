@@ -20,6 +20,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ShowLibraryResultRequestEvent;
 import seedu.address.commons.util.StringUtil;
 
+//@@author qiu-siqi
 /**
  * The region showing availability of the book in NLB.
  */

@@ -89,7 +89,8 @@ public class StringUtil {
      * Checks whether the string {@code s} denotes a valid URL.
      */
     public static boolean isValidUrl(String s) {
-        return s.matches("http(s)?://([\\w-]+\\.)+[\\w-]+(/[\\w- ./?%&=,]*)?");
+        requireNonNull(s);
+        return s.matches("http(s)?://([\\w-]+\\.)+[\\w-]+(/[\\w- ./?%&=,']*)?");
     }
 
 }

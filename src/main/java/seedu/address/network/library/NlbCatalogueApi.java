@@ -12,6 +12,7 @@ import seedu.address.model.book.Book;
 import seedu.address.network.HttpClient;
 import seedu.address.network.HttpResponse;
 
+//@@author qiu-siqi
 /**
  * Provides access to the NLB catalogue.
  */
@@ -36,6 +37,7 @@ public class NlbCatalogueApi {
      * @return CompleteableFuture which resolves to a single book page.
      */
     public CompletableFuture<String> searchForBook(Book book) {
+        requireNonNull(book);
         return execute(URL_ADVANCED_SEARCH, book);
     }
 
@@ -45,7 +47,7 @@ public class NlbCatalogueApi {
      * @param book book to search for.
      * @return Map with all the key value pairs.
      */
-    private Map<String, String> makeParamsMap(Book book) {
+    protected static Map<String, String> makeParamsMap(Book book) {
         Map<String, String> paramsMap = new HashMap<>();
 
         paramsMap.put("ENTRY1_NAME", "TI");

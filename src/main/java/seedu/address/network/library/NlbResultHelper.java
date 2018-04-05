@@ -1,18 +1,21 @@
 package seedu.address.network.library;
 
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
 import seedu.address.model.book.Book;
 
+//@@author qiu-siqi
 /**
  * Provides utilities to manage result from NLB catalogue search.
  */
 public class NlbResultHelper {
 
-    private static final String FULL_DISPLAY_STRING = "<span>Full Display</span>";
-    private static final String URL_PREFIX = "https://catalogue.nlb.gov.sg";
-    private static final String URL_FULL_DISPLAY = "https://catalogue.nlb.gov.sg/cgi-bin/spydus.exe/"
+    protected static final String URL_FULL_DISPLAY = "https://catalogue.nlb.gov.sg/cgi-bin/spydus.exe/"
             + "ENQ/EXPNOS/BIBENQ?ENTRY=%s&ENTRY_NAME=BS&ENTRY_TYPE=K&GQ=%s&SORTS=SQL_REL_TITLE";
+    protected static final String NO_RESULTS_FOUND = "No results found.";
+    private static final String FULL_DISPLAY_STRING = "<span>Full Display</span>";
     private static final String SEARCH_STRING = "/cgi-bin/spydus.exe/FULL/EXPNOS/BIBENQ/";
-    private static final String NO_RESULTS_FOUND = "No results found.";
+    private static final String URL_PREFIX = "https://catalogue.nlb.gov.sg";
 
     /**
      * Obtains a URL linking to the display of a single book, if search only found that single book.
@@ -24,6 +27,8 @@ public class NlbResultHelper {
      * @return String containing the single book page as HTML content.
      */
     protected static String getUrl(String result, Book book) {
+        requireAllNonNull(result, book);
+
         if (!isFullDisplay(result)) {
             return getTopResultUrl(result);
         }

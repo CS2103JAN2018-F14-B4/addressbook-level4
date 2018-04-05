@@ -13,6 +13,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ActiveListType;
 import seedu.address.model.book.Book;
 
+//@@author qiu-siqi
 /**
  * Searches for a book in the library.
  */
@@ -88,5 +89,12 @@ public class LibraryCommand extends Command {
         EventsCenter.getInstance().post(new ShowLibraryResultRequestEvent(result));
         EventsCenter.getInstance().post(new NewResultAvailableEvent(
                 String.format(MESSAGE_SUCCESS, book)));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof LibraryCommand // instanceof handles nulls
+                && this.targetIndex.equals(((LibraryCommand) other).targetIndex));
     }
 }

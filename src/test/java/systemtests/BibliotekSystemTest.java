@@ -2,6 +2,7 @@ package systemtests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 import static seedu.address.ui.testutil.GuiTestAssert.assertDetailsPanelDisplaysBook;
@@ -17,6 +18,7 @@ import org.junit.BeforeClass;
 import org.junit.ClassRule;
 
 import guitests.guihandles.BookDetailsPanelHandle;
+import guitests.guihandles.BookInLibraryPanelHandle;
 import guitests.guihandles.BookListPanelHandle;
 import guitests.guihandles.BookReviewsPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
@@ -118,6 +120,10 @@ public abstract class BibliotekSystemTest {
 
     public BookReviewsPanelHandle getBookReviewsPanel() {
         return mainWindowHandle.getBookReviewsPanel();
+    }
+
+    public BookInLibraryPanelHandle getBookInLibraryPanel() {
+        return mainWindowHandle.getBookInLibraryPanel();
     }
 
     public StatusBarFooterHandle getStatusBarFooter() {
@@ -334,6 +340,26 @@ public abstract class BibliotekSystemTest {
     protected void assertSelectedRecentBooksCardUnchanged() {
         assertFalse(getBookDetailsPanel().isIsbnChanged());
         assertFalse(getRecentBooksPanel().isSelectedBookCardChanged());
+    }
+
+    /**
+     * Checks that {@code BookReviewsPanel} is visible, {@code BookDetailsPanel} and {@code BookInLibraryPanel}
+     * is not visible.
+     */
+    protected void assertBookReviewsPanelVisible() {
+        assertTrue(getBookReviewsPanel().isVisible());
+        assertFalse(getBookDetailsPanel().isVisible());
+        assertFalse(getBookInLibraryPanel().isVisible());
+    }
+
+    /**
+     * Checks that {@code BookInLibraryPanel} is visible, {@code BookDetailsPanel} and {@code BookReviewsPanel}
+     * is not visible.
+     */
+    protected void assertBookInLibraryPanelVisible() {
+        assertTrue(getBookInLibraryPanel().isVisible());
+        assertFalse(getBookDetailsPanel().isVisible());
+        assertFalse(getBookReviewsPanel().isVisible());
     }
 
     /**
