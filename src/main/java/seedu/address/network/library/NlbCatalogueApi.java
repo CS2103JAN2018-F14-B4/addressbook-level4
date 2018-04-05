@@ -7,7 +7,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
+import java.util.concurrent.ExecutionException;
 
+import seedu.address.commons.util.StringUtil;
 import seedu.address.model.book.Book;
 import seedu.address.network.HttpClient;
 import seedu.address.network.HttpResponse;
@@ -33,7 +35,7 @@ public class NlbCatalogueApi {
      * Searches for a book in NLB catalogue.
      *
      * @param book book to search for.
-     * @return CompletableFuture that resolves to a String containing the search results as HTML content.
+     * @return CompleteableFuture which resolves to a single book page.
      */
     public CompletableFuture<String> searchForBook(Book book) {
         return execute(URL_SEARCH_BOOKS, makeParamsMap(book));
@@ -62,14 +64,38 @@ public class NlbCatalogueApi {
      *
      * @param url the url used for the POST request.
      * @param params the query parameters for the POST request.
-     * @return CompleteableFuture that resolves to a String containing the search results as HTML content.
+     * @return CompleteableFuture which resolves to a single book page.
      */
     private CompletableFuture<String> execute(String url, Map<String, String> params) {
         return httpClient
                 .makePostRequest(url, params)
                 .thenApply(NlbCatalogueApi::requireHtmlContentType)
                 .thenApply(NlbCatalogueApi::requireHttpStatusOk)
-                .thenApply(HttpResponse::getResponseBody);
+                .thenApply(HttpResponse::getResponseBody)
+                .thenApply(NlbResultHelper::getTopResultUrlIfIsList);
+    }
+
+    /**
+     * Executes a HTTP GET request if {@code result} is a valid URL and waits for it.
+     * Throws a {@link CompletionException} if the request failed.
+     *
+     * @param result result from querying NLB catalogue
+     * @return String containing the single book page as HTML content.
+     */
+    private String getUrlContent(String result) {
+        if (!StringUtil.isValidUrl(result)) {
+            return result;
+        }
+        try {
+            return httpClient
+                    .makeGetRequest(result)
+                    .thenApply(NlbCatalogueApi::requireHtmlContentType)
+                    .thenApply(NlbCatalogueApi::requireHttpStatusOk)
+                    .thenApply(HttpResponse::getResponseBody)
+                    .get();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new CompletionException(e);
+        }
     }
 
     /**
