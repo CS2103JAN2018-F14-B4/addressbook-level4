@@ -8,9 +8,11 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DuplicateDataException;
 import seedu.address.commons.util.CollectionUtil;
 
@@ -20,6 +22,8 @@ import seedu.address.commons.util.CollectionUtil;
  * Supports minimal set of list operations for the app's features.
  */
 public class UniqueList<T> implements Iterable<T> {
+
+    private static final Logger logger = LogsCenter.getLogger(UniqueList.class);
 
     protected final ObservableList<T> internalList = FXCollections.observableArrayList();
 
@@ -94,7 +98,7 @@ public class UniqueList<T> implements Iterable<T> {
             try {
                 add(toAdd);
             } catch (DuplicateDataException e) {
-                e.printStackTrace();
+                logger.fine("Duplicate data: " + toAdd);
             }
         }
         assert CollectionUtil.elementsAreUnique(internalList);
