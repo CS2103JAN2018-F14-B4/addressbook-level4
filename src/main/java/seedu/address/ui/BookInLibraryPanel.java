@@ -10,15 +10,13 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.ShowBookInLibraryRequestEvent;
+import seedu.address.commons.events.ui.ShowLibraryResultRequestEvent;
 import seedu.address.model.book.Book;
 
 /**
  * The region showing availability of the book in NLB.
  */
 public class BookInLibraryPanel extends UiPart<Region> {
-    protected static final String SEARCH_PAGE_URL =
-            "https://catalogue.nlb.gov.sg/cgi-bin/spydus.exe/MSGTRN/EXPNOS/COMB?HOMEPRMS=COMBPARAMS";
 
     private static final String FXML = "bookInNlbPanel.fxml";
 
@@ -37,12 +35,8 @@ public class BookInLibraryPanel extends UiPart<Region> {
         getRoot().setOnKeyPressed(Event::consume);
     }
 
-    protected void loadPageForBook(Book book) {
-        loadPage(SEARCH_PAGE_URL);
-    }
-
-    private void loadPage(String url) {
-        browser.getEngine().load(url);
+    private void loadPageWithResult(String result) {
+        browser.getEngine().loadContent(result);
     }
 
     protected void hide() {
@@ -50,10 +44,10 @@ public class BookInLibraryPanel extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handleShowBookInLibraryRequestEvent(ShowBookInLibraryRequestEvent event) {
+    private void handleShowBookInLibraryRequestEvent(ShowLibraryResultRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Platform.runLater(() -> {
-            loadPageForBook(event.getBook());
+            loadPageWithResult(event.getResult());
             getRoot().setVisible(true);
         });
     }

@@ -23,7 +23,7 @@ import seedu.address.commons.events.ui.ClearMainContentRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.RecentBooksSelectionChangedEvent;
 import seedu.address.commons.events.ui.SearchResultsSelectionChangedEvent;
-import seedu.address.commons.events.ui.ShowBookInLibraryRequestEvent;
+import seedu.address.commons.events.ui.ShowLibraryResultRequestEvent;
 import seedu.address.commons.events.ui.ShowBookReviewsRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.events.ui.SwitchToBookListRequestEvent;
@@ -312,7 +312,7 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     @Subscribe
-    private void handleShowBookInLibraryRequestEvent(ShowBookInLibraryRequestEvent event) {
+    private void handleShowBookInLibraryRequestEvent(ShowLibraryResultRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         hideMainContent();
         bookInLibraryPanel.getRoot().setVisible(true);

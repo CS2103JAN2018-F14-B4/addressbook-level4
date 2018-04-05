@@ -7,7 +7,8 @@ import java.util.List;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.events.ui.ShowBookInLibraryRequestEvent;
+import seedu.address.commons.events.ui.NewResultAvailableEvent;
+import seedu.address.commons.events.ui.ShowLibraryResultRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ActiveListType;
 import seedu.address.model.book.Book;
@@ -22,6 +23,9 @@ public class LibraryCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_SUCCESS = "Showing availability of book: %1$s.";
+    public static final String MESSAGE_FAIL = "Failed to search for book in library. "
+            + "Make sure you are connected to the Internet.";
+    public static final String MESSAGE_SEARCHING = "Searching for the book in the library...";
     public static final String MESSAGE_WRONG_ACTIVE_LIST = "Cannot view availability of books "
             + "in the current list.";
 
@@ -36,17 +40,50 @@ public class LibraryCommand extends Command {
     public CommandResult execute() throws CommandException {
         requireNonNull(model);
 
-        if (model.getActiveListType() != ActiveListType.BOOK_SHELF) {
-            throw new CommandException(MESSAGE_WRONG_ACTIVE_LIST);
-        }
+        checkActiveListType();
+        checkValidIndex();
 
+        makeAsyncBookInLibraryRequest(model.getDisplayBookList().get(targetIndex.getZeroBased()));
+        return new CommandResult(MESSAGE_SEARCHING);
+    }
+
+    /**
+     * Throws a {@link CommandException} if the given index is not valid.
+     */
+    private void checkValidIndex() throws CommandException {
         List<Book> lastShownList = model.getDisplayBookList();
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
         }
-        Book book = model.getDisplayBookList().get(targetIndex.getZeroBased());
+    }
 
-        EventsCenter.getInstance().post(new ShowBookInLibraryRequestEvent(book));
-        return new CommandResult(String.format(MESSAGE_SUCCESS, book));
+    /**
+     * Throws a {@link CommandException} if the current display list does not support this command.
+     */
+    private void checkActiveListType() throws CommandException {
+        if (model.getActiveListType() != ActiveListType.BOOK_SHELF) {
+            throw new CommandException(MESSAGE_WRONG_ACTIVE_LIST);
+        }
+    }
+
+    /**
+     * Makes an asynchronous request to search for {@code book} in library.
+     */
+    private void makeAsyncBookInLibraryRequest(Book book) {
+        network.searchLibraryForBook(book)
+                .thenAccept(result -> onSuccessfulRequest(result, book))
+                .exceptionally(e -> {
+                    EventsCenter.getInstance().post(new NewResultAvailableEvent(MESSAGE_FAIL));
+                    return null;
+                });
+    }
+
+    /**
+     * Handles the result of a successful search for the book in library.
+     */
+    private void onSuccessfulRequest(String result, Book book) {
+        EventsCenter.getInstance().post(new ShowLibraryResultRequestEvent(result));
+        EventsCenter.getInstance().post(new NewResultAvailableEvent(
+                String.format(MESSAGE_SUCCESS, book)));
     }
 }
