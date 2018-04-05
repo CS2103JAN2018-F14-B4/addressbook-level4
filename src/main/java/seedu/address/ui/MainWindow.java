@@ -4,7 +4,6 @@ import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -244,43 +243,37 @@ public class MainWindow extends UiPart<Stage> {
     @Subscribe
     private void handleSwitchToBookListRequestEvent(SwitchToBookListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        Platform.runLater(() -> {
-            hideMainContent();
-            bookListPanel.clearSelectionAndScrollToTop();
-            bookListPanel.getRoot().setVisible(true);
-            searchResultsPanel.getRoot().setVisible(false);
-            recentBooksPanel.getRoot().setVisible(false);
-        });
+        hideMainContent();
+        bookListPanel.clearSelectionAndScrollToTop();
+        bookListPanel.getRoot().setVisible(true);
+        searchResultsPanel.getRoot().setVisible(false);
+        recentBooksPanel.getRoot().setVisible(false);
     }
 
     @Subscribe
     private void handleSwitchToSearchResultsRequestEvent(SwitchToSearchResultsRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        Platform.runLater(() -> {
-            hideMainContent();
-            searchResultsPanel.clearSelectionAndScrollToTop();
-            bookListPanel.getRoot().setVisible(false);
-            searchResultsPanel.getRoot().setVisible(true);
-            recentBooksPanel.getRoot().setVisible(false);
-        });
+        hideMainContent();
+        searchResultsPanel.clearSelectionAndScrollToTop();
+        bookListPanel.getRoot().setVisible(false);
+        searchResultsPanel.getRoot().setVisible(true);
+        recentBooksPanel.getRoot().setVisible(false);
     }
 
     @Subscribe
     private void handleSwitchToRecentBooksRequestEvent(SwitchToRecentBooksRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        Platform.runLater(() -> {
-            hideMainContent();
-            recentBooksPanel.clearSelectionAndScrollToTop();
-            bookListPanel.getRoot().setVisible(false);
-            searchResultsPanel.getRoot().setVisible(false);
-            recentBooksPanel.getRoot().setVisible(true);
-        });
+        hideMainContent();
+        recentBooksPanel.clearSelectionAndScrollToTop();
+        bookListPanel.getRoot().setVisible(false);
+        searchResultsPanel.getRoot().setVisible(false);
+        recentBooksPanel.getRoot().setVisible(true);
     }
 
     @Subscribe
     private void handleClearBookDetailsRequestEvent(ClearMainContentRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        Platform.runLater(this::hideMainContent);
+        hideMainContent();
     }
 
     @Subscribe
