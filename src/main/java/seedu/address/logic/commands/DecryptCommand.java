@@ -15,10 +15,10 @@ public class DecryptCommand extends Command {
 
     public static final String MESSAGE_WRONG_PASSWORD = "You have input wrong password, please check again!";
 
-    private String password;
+    private String key;
 
-    public DecryptCommand(String word) {
-        this.password = word;
+    public DecryptCommand(String key) {
+        this.key = key;
     }
 
     @Override
@@ -27,7 +27,7 @@ public class DecryptCommand extends Command {
             return new CommandResult(MESSAGE_SUCCESS);
         }
 
-        if (this.password.compareTo(LogicManager.getKey()) == 0) {
+        if (this.key.compareTo(LogicManager.getKey()) == 0) {
             LogicManager.unLock();
             return new CommandResult(MESSAGE_SUCCESS);
         } else {
@@ -35,14 +35,14 @@ public class DecryptCommand extends Command {
         }
     }
 
-    public String getPassword() {
-        return password;
+    public String getKey() {
+        return key;
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof DecryptCommand // instanceof handles nulls
-                && this.password.equals(((DecryptCommand) other).getPassword())); // state check
+                && this.key.equals(((DecryptCommand) other).getKey())); // state check
     }
 }

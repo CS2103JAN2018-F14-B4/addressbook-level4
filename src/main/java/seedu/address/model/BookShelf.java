@@ -21,10 +21,11 @@ public class BookShelf implements ReadOnlyBookShelf {
 
     private final UniqueBookList books;
     private String key;
+    private final static String ORIGINAL_KEY = "shijin";
 
     public BookShelf() {
         books = new UniqueBookList();
-        key = "111111";
+        key = ORIGINAL_KEY;
     }
 
     /**

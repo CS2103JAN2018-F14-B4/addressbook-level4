@@ -133,6 +133,11 @@ public class BookShelfTest {
         }
 
         @Override
+        public String getKey() {
+            return "111111";
+        }
+
+        @Override
         public int size() {
             return books.size();
         }

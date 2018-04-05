@@ -158,7 +158,7 @@ public class ModelManager extends ComponentManager implements Model {
      */
     @Override
     public String getKey() {
-        return null;
+        return bookShelf.getKey();
     }
 
     @Override
