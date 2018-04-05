@@ -13,6 +13,9 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ActiveListType;
 import seedu.address.model.book.Book;
 
+/**
+ * Searches for a book in the library.
+ */
 public class LibraryCommand extends Command {
 
     public static final String COMMAND_WORD = "library";

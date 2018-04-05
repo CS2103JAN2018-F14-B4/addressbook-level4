@@ -1,31 +1,40 @@
 package seedu.address.network.library;
 
+import seedu.address.model.book.Book;
+
 /**
  * Provides utilities to manage result from NLB catalogue search.
  */
 public class NlbResultHelper {
 
-    private static String FULL_DISPLAY_STRING = "<span>Full Display</span>";
-    private static String URL_PREFIX = "https://catalogue.nlb.gov.sg";
-    private static String SEARCH_STRING = "/cgi-bin/spydus.exe/FULL/EXPNOS/BIBENQ/";
-    private static String NO_RESULTS_FOUND = "No results found.";
+    private static final String FULL_DISPLAY_STRING = "<span>Full Display</span>";
+    private static final String URL_PREFIX = "https://catalogue.nlb.gov.sg";
+    private static final String URL_FULL_DISPLAY = "https://catalogue.nlb.gov.sg/cgi-bin/spydus.exe/"
+            + "ENQ/EXPNOS/BIBENQ?ENTRY=%s&ENTRY_NAME=BS&ENTRY_TYPE=K&GQ=%s&SORTS=SQL_REL_TITLE";
+    private static final String SEARCH_STRING = "/cgi-bin/spydus.exe/FULL/EXPNOS/BIBENQ/";
+    private static final String NO_RESULTS_FOUND = "No results found.";
 
     /**
-     * Obtains the URL of the top search result, if {@code result} contains a list of search results,
-     * else returns {@code result}.
+     * Obtains a URL linking to the display of a single book, if search only found that single book.
+     * Obtains the URL of the top search result, if {@code result} contains a list of search results.
      * Returns a custom String if the list is empty.
+     *
+     * @param result result from querying NLB catalogue.
+     * @param book book that was queried for.
+     * @return String containing the single book page as HTML content.
      */
-    protected static String getTopResultUrlIfIsList(String result) {
-        if (isFullDisplay(result)) {
-            return result;
+    protected static String getUrl(String result, Book book) {
+        if (!isFullDisplay(result)) {
+            return getTopResultUrl(result);
         }
-        return getTopResultUrl(result);
+        String searchTerms = book.getTitle().toString() + " " + book.getAuthorsAsString();
+        return String.format(URL_FULL_DISPLAY, searchTerms, searchTerms);
     }
 
     /**
      * Checks whether {@code result} is the full display result page of a single book.
      */
-    protected static boolean isFullDisplay(String result) {
+    private static boolean isFullDisplay(String result) {
         return result.contains(FULL_DISPLAY_STRING);
     }
 
@@ -56,7 +65,7 @@ public class NlbResultHelper {
         StringBuilder builder = new StringBuilder();
         builder.append(URL_PREFIX);
 
-        for (int i = index; ; i++) {
+        for (int i = index;; i++) {
             if (i >= len || result.charAt(i) == '\"') {
                 break;
             }

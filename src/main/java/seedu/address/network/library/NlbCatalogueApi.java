@@ -7,9 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
-import java.util.concurrent.ExecutionException;
 
-import seedu.address.commons.util.StringUtil;
 import seedu.address.model.book.Book;
 import seedu.address.network.HttpClient;
 import seedu.address.network.HttpResponse;
@@ -19,7 +17,7 @@ import seedu.address.network.HttpResponse;
  */
 public class NlbCatalogueApi {
 
-    protected static final String URL_SEARCH_BOOKS =
+    protected static final String URL_ADVANCED_SEARCH =
             "https://catalogue.nlb.gov.sg/cgi-bin/spydus.exe/ENQ/EXPNOS/BIBENQ";
     private static final String CONTENT_TYPE_HTML = "text/html";
     private static final int HTTP_STATUS_OK = 200;
@@ -38,14 +36,14 @@ public class NlbCatalogueApi {
      * @return CompleteableFuture which resolves to a single book page.
      */
     public CompletableFuture<String> searchForBook(Book book) {
-        return execute(URL_SEARCH_BOOKS, makeParamsMap(book));
+        return execute(URL_ADVANCED_SEARCH, book);
     }
 
     /**
      * Obtain all parameters as key value pairs, which is used to search for the specific book.
      *
      * @param book book to search for.
-     * @return Map<String, String> with all the key value pairs.
+     * @return Map with all the key value pairs.
      */
     private Map<String, String> makeParamsMap(Book book) {
         Map<String, String> paramsMap = new HashMap<>();
@@ -60,42 +58,19 @@ public class NlbCatalogueApi {
     }
 
     /**
-     * Asynchronously executes a HTTP POST request to the specified url with the specified parameters.
+     * Asynchronously executes a HTTP POST request to the specified url to find the specified book.
      *
      * @param url the url used for the POST request.
-     * @param params the query parameters for the POST request.
+     * @param book the book to search for.
      * @return CompleteableFuture which resolves to a single book page.
      */
-    private CompletableFuture<String> execute(String url, Map<String, String> params) {
+    private CompletableFuture<String> execute(String url, Book book) {
         return httpClient
-                .makePostRequest(url, params)
+                .makePostRequest(url, makeParamsMap(book))
                 .thenApply(NlbCatalogueApi::requireHtmlContentType)
                 .thenApply(NlbCatalogueApi::requireHttpStatusOk)
                 .thenApply(HttpResponse::getResponseBody)
-                .thenApply(NlbResultHelper::getTopResultUrlIfIsList);
-    }
-
-    /**
-     * Executes a HTTP GET request if {@code result} is a valid URL and waits for it.
-     * Throws a {@link CompletionException} if the request failed.
-     *
-     * @param result result from querying NLB catalogue
-     * @return String containing the single book page as HTML content.
-     */
-    private String getUrlContent(String result) {
-        if (!StringUtil.isValidUrl(result)) {
-            return result;
-        }
-        try {
-            return httpClient
-                    .makeGetRequest(result)
-                    .thenApply(NlbCatalogueApi::requireHtmlContentType)
-                    .thenApply(NlbCatalogueApi::requireHttpStatusOk)
-                    .thenApply(HttpResponse::getResponseBody)
-                    .get();
-        } catch (InterruptedException | ExecutionException e) {
-            throw new CompletionException(e);
-        }
+                .thenApply(result -> NlbResultHelper.getUrl(result, book));
     }
 
     /**
