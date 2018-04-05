@@ -14,6 +14,7 @@ import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.LibraryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RecentCommand;
 import seedu.address.logic.commands.ReviewsCommand;
@@ -26,7 +27,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 /**
  * Parses user input.
  */
-public class BookShelfParser {
+public class BibliotekParser {
 
     /**
      * Used for initial separation of command word and args.
@@ -71,6 +72,9 @@ public class BookShelfParser {
 
         case HistoryCommand.COMMAND_WORD:
             return new HistoryCommand();
+
+        case LibraryCommand.COMMAND_WORD:
+            return new LibraryCommandParser().parse(arguments);
 
         case ListCommand.COMMAND_WORD:
             return new ListCommandParser().parse(arguments);

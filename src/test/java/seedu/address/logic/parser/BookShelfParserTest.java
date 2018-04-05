@@ -32,7 +32,7 @@ public class BookShelfParserTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private final BookShelfParser parser = new BookShelfParser();
+    private final BibliotekParser parser = new BibliotekParser();
 
     @Test
     public void parseCommand_add() throws Exception {

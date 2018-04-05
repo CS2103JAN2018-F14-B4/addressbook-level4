@@ -23,6 +23,7 @@ import seedu.address.commons.events.ui.ClearMainContentRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.RecentBooksSelectionChangedEvent;
 import seedu.address.commons.events.ui.SearchResultsSelectionChangedEvent;
+import seedu.address.commons.events.ui.ShowBookInLibraryRequestEvent;
 import seedu.address.commons.events.ui.ShowBookReviewsRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.events.ui.SwitchToBookListRequestEvent;
@@ -47,6 +48,7 @@ public class MainWindow extends UiPart<Stage> {
     // Independent Ui parts residing in this Ui container
     private BookDetailsPanel bookDetailsPanel;
     private BookReviewsPanel bookReviewsPanel;
+    private BookInLibraryPanel bookInLibraryPanel;
     private BookListPanel bookListPanel;
     private SearchResultsPanel searchResultsPanel;
     private RecentBooksPanel recentBooksPanel;
@@ -136,9 +138,12 @@ public class MainWindow extends UiPart<Stage> {
     void fillInnerParts() {
         bookDetailsPanel = new BookDetailsPanel();
         bookReviewsPanel = new BookReviewsPanel();
+        bookInLibraryPanel = new BookInLibraryPanel();
         mainContentPlaceholder.getChildren().add(bookDetailsPanel.getRoot());
         mainContentPlaceholder.getChildren().add(bookReviewsPanel.getRoot());
+        mainContentPlaceholder.getChildren().add(bookInLibraryPanel.getRoot());
         bookReviewsPanel.getRoot().setVisible(false);
+        bookInLibraryPanel.getRoot().setVisible(false);
         bookDetailsPanel.setStyleSheet(prefs.getAppTheme().getCssFile());
 
         bookListPanel = new BookListPanel(logic.getDisplayBookList());
@@ -209,6 +214,12 @@ public class MainWindow extends UiPart<Stage> {
         primaryStage.show();
     }
 
+    private void hideMainContent() {
+        bookDetailsPanel.hide();
+        bookReviewsPanel.hide();
+        bookInLibraryPanel.hide();
+    }
+
     /**
      * Closes the application.
      */
@@ -234,8 +245,7 @@ public class MainWindow extends UiPart<Stage> {
     private void handleSwitchToBookListRequestEvent(SwitchToBookListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Platform.runLater(() -> {
-            bookDetailsPanel.hide();
-            bookReviewsPanel.hide();
+            hideMainContent();
             bookListPanel.clearSelectionAndScrollToTop();
             bookListPanel.getRoot().setVisible(true);
             searchResultsPanel.getRoot().setVisible(false);
@@ -247,8 +257,7 @@ public class MainWindow extends UiPart<Stage> {
     private void handleSwitchToSearchResultsRequestEvent(SwitchToSearchResultsRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Platform.runLater(() -> {
-            bookDetailsPanel.hide();
-            bookReviewsPanel.hide();
+            hideMainContent();
             searchResultsPanel.clearSelectionAndScrollToTop();
             bookListPanel.getRoot().setVisible(false);
             searchResultsPanel.getRoot().setVisible(true);
@@ -260,8 +269,7 @@ public class MainWindow extends UiPart<Stage> {
     private void handleSwitchToRecentBooksRequestEvent(SwitchToRecentBooksRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Platform.runLater(() -> {
-            bookDetailsPanel.hide();
-            bookReviewsPanel.hide();
+            hideMainContent();
             recentBooksPanel.clearSelectionAndScrollToTop();
             bookListPanel.getRoot().setVisible(false);
             searchResultsPanel.getRoot().setVisible(false);
@@ -272,34 +280,41 @@ public class MainWindow extends UiPart<Stage> {
     @Subscribe
     private void handleClearBookDetailsRequestEvent(ClearMainContentRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        Platform.runLater(() -> {
-            bookDetailsPanel.hide();
-            bookReviewsPanel.hide();
-        });
+        Platform.runLater(this::hideMainContent);
     }
 
     @Subscribe
     private void handleBookListSelectionChangedEvent(BookListSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        bookReviewsPanel.hide();
+        hideMainContent();
+        bookDetailsPanel.getRoot().setVisible(true);
     }
 
     @Subscribe
     private void handleSearchResultsSelectionChangedEvent(SearchResultsSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        bookReviewsPanel.hide();
+        hideMainContent();
+        bookDetailsPanel.getRoot().setVisible(true);
     }
 
     @Subscribe
     private void handleRecentBooksSelectionChangedEvent(RecentBooksSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        bookReviewsPanel.hide();
+        hideMainContent();
+        bookDetailsPanel.getRoot().setVisible(true);
     }
 
     @Subscribe
     private void handleShowBookReviewsRequestEvent(ShowBookReviewsRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        bookDetailsPanel.hide();
+        hideMainContent();
+        bookReviewsPanel.getRoot().setVisible(true);
     }
 
+    @Subscribe
+    private void handleShowBookInLibraryRequestEvent(ShowBookInLibraryRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        hideMainContent();
+        bookInLibraryPanel.getRoot().setVisible(true);
+    }
 }

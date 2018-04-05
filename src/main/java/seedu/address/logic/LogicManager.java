@@ -15,7 +15,7 @@ import seedu.address.commons.events.ui.SwitchToSearchResultsRequestEvent;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.BookShelfParser;
+import seedu.address.logic.parser.BibliotekParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.ActiveListType;
 import seedu.address.model.Model;
@@ -31,14 +31,14 @@ public class LogicManager extends ComponentManager implements Logic {
     private final Model model;
     private final Network network;
     private final CommandHistory history;
-    private final BookShelfParser bookShelfParser;
+    private final BibliotekParser bookShelfParser;
     private final UndoStack undoStack;
 
     public LogicManager(Model model, Network network) {
         this.model = model;
         this.network = network;
         history = new CommandHistory();
-        bookShelfParser = new BookShelfParser();
+        bookShelfParser = new BibliotekParser();
         undoStack = new UndoStack();
     }
 
