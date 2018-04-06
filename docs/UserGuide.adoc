@@ -299,6 +299,22 @@ Examples:
 * `decrypt shijin`
 Decrypt the biblitek with KEY shijin.
 
+=== Set the key of biblitek : `Setkey` `[coming in v1.5]`
+
+Using the security funciton of biblitek, you may want to change the encryption key of the biblitek +
+Format: `Setkey old/OLDKEY new/NEWKEY`
+
+****
+* Change the oldkey to newkey.
+****
+
+TIP: You should remember your newkey so that you will not block outside the biblitek
+
+Examples:
+
+* `Setkey old/shijin new/111111`
+Change the biblitek key from shijin to 111111.
+
 === Deleting a book : `delete`
 
 No longer want a book in your book shelf? Remove it using `delete`. +
