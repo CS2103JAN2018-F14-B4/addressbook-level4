@@ -19,6 +19,9 @@ public class XmlSerializableBookShelf {
 
     @XmlElement
     private List<XmlAdaptedBook> books;
+    //@@author 592363789
+    @XmlElement
+    private XmlAdaptedKey key;
 
     /**
      * Creates an empty XmlSerializableBookShelf.
@@ -26,6 +29,7 @@ public class XmlSerializableBookShelf {
      */
     public XmlSerializableBookShelf() {
         books = new ArrayList<>();
+        key = new XmlAdaptedKey("shijin");
     }
 
     /**
@@ -34,6 +38,7 @@ public class XmlSerializableBookShelf {
     public XmlSerializableBookShelf(ReadOnlyBookShelf src) {
         this();
         books.addAll(src.getBookList().stream().map(XmlAdaptedBook::new).collect(Collectors.toList()));
+        key = new XmlAdaptedKey(src.getKey());
     }
 
     /**
@@ -47,6 +52,9 @@ public class XmlSerializableBookShelf {
         for (XmlAdaptedBook b : books) {
             bookShelf.addBook(b.toModelType());
         }
+        //@@author 592363789
+        bookShelf.setKey(key.toString());
+        //@@author 592363789
         return bookShelf;
     }
 

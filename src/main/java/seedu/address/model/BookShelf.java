@@ -21,11 +21,10 @@ public class BookShelf implements ReadOnlyBookShelf {
 
     private final UniqueBookList books;
     private String key;
-    private final static String ORIGINAL_KEY = "shijin";
 
     public BookShelf() {
         books = new UniqueBookList();
-        key = ORIGINAL_KEY;
+        key = "shijin";
     }
 
     /**
@@ -47,7 +46,7 @@ public class BookShelf implements ReadOnlyBookShelf {
      */
     public void resetData(ReadOnlyBookShelf newData) {
         requireNonNull(newData);
-
+        this.key = newData.getKey();
         try {
             setBooks(newData.getBookList());
         } catch (DuplicateBookException e) {
