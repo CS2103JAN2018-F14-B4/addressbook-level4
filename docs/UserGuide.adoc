@@ -265,56 +265,6 @@ Changes the priority of the 1st book to `HIGH`.
 * `edit 2 s/READ r/5` +
 Marks the 2nd book as `READ` and changes its rating to `5`.
 
-=== Encrypt the biblitek : `encrypt` `[coming in v1.4]`
-
-Using the biblitek, you may not want others to know what you read and reading. These can be done using `encrypt`. +
-Format: `encrypt`
-
-****
-* The biblitek will be encrypted autolly. Encrypt the biblitek with the original key: `shijin`
-****
-
-WARNING: Once you encrypt the biblitek, you should decrypt it first before you want to do further instruction.
-
-Examples:
-
-* `encrypt`
-Encrypt the biblitek.
-
-=== Decrypt the biblitek : `decrypt` `[coming in v1.4]`
-
-Using the biblitek, you may decrypt the biblitek after you encrypt the biblitek. +
-Format: `decrypt KEY`
-
-****
-* Decrypt the biblitek with the key
-* The key is orignal set to be "shijin" or set by you last time using `setKey` command
-****
-
-WARNING: Once you encrypt the biblitek or just openning the biblitek,
-         you should decrypt it first before you want to do further instruction.
-
-Examples:
-
-* `decrypt shijin`
-Decrypt the biblitek with KEY shijin.
-
-=== Set the key of biblitek : `Setkey` `[coming in v1.5]`
-
-Using the security funciton of biblitek, you may want to change the encryption key of the biblitek +
-Format: `Setkey old/OLDKEY new/NEWKEY`
-
-****
-* Change the oldkey to newkey.
-****
-
-TIP: You should remember your newkey so that you will not block outside the biblitek
-
-Examples:
-
-* `Setkey old/shijin new/111111`
-Change the biblitek key from shijin to 111111.
-
 === Deleting a book : `delete`
 
 No longer want a book in your book shelf? Remove it using `delete`. +
@@ -570,6 +520,56 @@ image::ThemeLight.png[width="700"]
 And `theme dark`:
 
 image::ThemeDark.png[width="700"]
+
+=== Encrypt the biblitek : `encrypt` `[coming in v1.4]`
+
+Using the biblitek, you may not want others to know what you read and reading. These can be done using `encrypt`. +
+Format: `encrypt`
+
+****
+* The biblitek will be encrypted autolly. Encrypt the biblitek with the original key: `shijin`
+****
+
+WARNING: Once you encrypt the biblitek, you should decrypt it first before you want to do further instruction.
+
+Examples:
+
+* `encrypt`
+Encrypt the biblitek.
+
+=== Decrypt the biblitek : `decrypt` `[coming in v1.4]`
+
+Using the biblitek, you may decrypt the biblitek after you encrypt the biblitek. +
+Format: `decrypt KEY`
+
+****
+* Decrypt the biblitek with the key
+* The key is orignal set to be "shijin" or set by you last time using `setKey` command
+****
+
+WARNING: Once you encrypt the biblitek or just openning the biblitek,
+         you should decrypt it first before you want to do further instruction.
+
+Examples:
+
+* `decrypt shijin`
+Decrypt the biblitek with KEY shijin.
+
+=== Set the key of biblitek : `Setkey` `[coming in v1.5]`
+
+Using the security funciton of biblitek, you may want to change the encryption key of the biblitek +
+Format: `Setkey old/OLDKEY new/NEWKEY`
+
+****
+* Change the oldkey to newkey.
+****
+
+TIP: You should remember your newkey so that you will not block outside the biblitek
+
+Examples:
+
+* `Setkey old/shijin new/111111`
+Change the biblitek key from shijin to 111111.
 
 === Changing settings: `settings` `[coming in v1.4]`
 
