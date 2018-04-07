@@ -42,23 +42,27 @@ public class NlbCatalogueApiTest {
     }
 
     @Test
+    public void makeSearchUrl_validBook_success() {
+        assertEquals("https://catalogue.nlb.gov.sg/cgi-bin/spydus.exe/ENQ/EXPNOS/BIBENQ?ENTRY=Artemis+Andy+Weir"
+                + "&ENTRY_NAME=BS&ENTRY_TYPE=K&GQ=Artemis+Andy+Weir&SORTS=SQL_REL_TITLE",
+                NlbCatalogueApi.makeSearchUrl(TypicalBooks.ARTEMIS).replaceAll(" ", "+"));
+    }
+
+    @Test
     public void searchForBooks_validParam_success() throws IOException {
-        when(mockClient.makePostRequest(NlbCatalogueApi.URL_ADVANCED_SEARCH,
-                NlbCatalogueApi.makeParamsMap(TypicalBooks.ARTEMIS))).thenReturn(makeFutureResponse(200,
-                        FileUtil.readFromFile(VALID_RESPONSE_BRIEF_DISPLAY)));
+        when(mockClient.makeGetRequest(NlbCatalogueApi.makeSearchUrl(TypicalBooks.ARTEMIS)))
+                .thenReturn(makeFutureResponse(200, FileUtil.readFromFile(VALID_RESPONSE_BRIEF_DISPLAY)));
 
         String result = nlbCatalogueApi.searchForBook(TypicalBooks.ARTEMIS).join();
 
-        verify(mockClient).makePostRequest(NlbCatalogueApi.URL_ADVANCED_SEARCH,
-                NlbCatalogueApi.makeParamsMap(TypicalBooks.ARTEMIS));
+        verify(mockClient).makeGetRequest(NlbCatalogueApi.makeSearchUrl(TypicalBooks.ARTEMIS));
         assertEquals(VALID_RESPONSE_BRIEF_DISPLAY_URL, result);
     }
 
     @Test
     public void searchForBooks_badResponseType_throwsCompletionException() {
-        when(mockClient.makePostRequest(NlbCatalogueApi.URL_ADVANCED_SEARCH,
-                NlbCatalogueApi.makeParamsMap(TypicalBooks.ARTEMIS))).thenReturn(makeFutureResponse(503,
-                ""));
+        when(mockClient.makeGetRequest(NlbCatalogueApi.makeSearchUrl(TypicalBooks.ARTEMIS)))
+                .thenReturn(makeFutureResponse(503, ""));
 
         thrown.expect(CompletionException.class);
         nlbCatalogueApi.searchForBook(TypicalBooks.ARTEMIS).join();
@@ -66,9 +70,9 @@ public class NlbCatalogueApiTest {
 
     @Test
     public void searchForBooks_badReturnType_throwsCompletionException() throws IOException {
-        when(mockClient.makePostRequest(NlbCatalogueApi.URL_ADVANCED_SEARCH,
-                NlbCatalogueApi.makeParamsMap(TypicalBooks.ARTEMIS))).thenReturn(makeFutureResponse(200,
-                "application/json", FileUtil.readFromFile(JsonDeserializerTest.VALID_SEARCH_RESPONSE_FILE)));
+        when(mockClient.makeGetRequest(NlbCatalogueApi.makeSearchUrl(TypicalBooks.ARTEMIS)))
+                .thenReturn(makeFutureResponse(200, "application/json",
+                        FileUtil.readFromFile(JsonDeserializerTest.VALID_SEARCH_RESPONSE_FILE)));
 
         thrown.expect(CompletionException.class);
         nlbCatalogueApi.searchForBook(TypicalBooks.ARTEMIS).join();

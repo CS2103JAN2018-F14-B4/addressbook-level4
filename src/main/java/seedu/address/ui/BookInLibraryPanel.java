@@ -9,16 +9,13 @@ import com.google.common.eventbus.Subscribe;
 import com.google.common.io.Resources;
 
 import javafx.application.Platform;
-import javafx.concurrent.Worker;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
+import javafx.scene.layout.StackPane;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ShowLibraryResultRequestEvent;
-import seedu.address.commons.util.StringUtil;
 
 //@@author qiu-siqi
 /**
@@ -35,12 +32,13 @@ public class BookInLibraryPanel extends UiPart<Region> {
     private final String clearPageScript;
 
     @FXML
-    private WebView browser;
-    private WebEngine engine;
+    private StackPane browserPlaceholder;
+    private WebViewManager webViewManager;
 
-    public BookInLibraryPanel() {
+    public BookInLibraryPanel(WebViewManager webViewManager) {
         super(FXML);
 
+        this.webViewManager = webViewManager;
         registerAsAnEventHandler(this);
         getRoot().setVisible(false);
 
@@ -54,34 +52,18 @@ public class BookInLibraryPanel extends UiPart<Region> {
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
 
-        engine = browser.getEngine();
-        engine.getLoadWorker().progressProperty().addListener(n -> {
-            logger.info(n.toString());
-            // run custom javascript when loading is nearly complete
-            if (engine.getLoadWorker().getProgress() > 0.70) {
-                engine.executeScript(nlbResultScript);
-                getRoot().setDisable(false);
-            }
-        });
-
-        engine.getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
-            logger.info(newState.toString());
-            // run custom javascript when loading is complete
-            if (newState == Worker.State.SUCCEEDED) {
-                engine.executeScript(nlbResultScript);
-            }
+        webViewManager.onLoadProgress(getRoot(), 0.59, () -> {
+            webViewManager.executeScript(nlbResultScript);
+            getRoot().setDisable(false);
         });
     }
 
-    /**
-     * Loads WebView with content depending on type of {@code result}.
-     */
     private void loadPageWithResult(String result) {
-        if (StringUtil.isValidUrl(result)) {
-            engine.load(result);
-        } else {
-            engine.loadContent(result);
-        }
+        webViewManager.load(browserPlaceholder, result);
+    }
+
+    private void clearPage() {
+        webViewManager.executeScript(clearPageScript);
     }
 
     protected void hide() {
@@ -92,11 +74,11 @@ public class BookInLibraryPanel extends UiPart<Region> {
     private void handleShowBookInLibraryRequestEvent(ShowLibraryResultRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Platform.runLater(() -> {
-            engine.executeScript(clearPageScript);
+            clearPage();
             // Prevent browser from getting focus
             getRoot().setDisable(true);
-            loadPageWithResult(event.getResult());
             getRoot().setVisible(true);
+            loadPageWithResult(event.getResult());
         });
     }
 }

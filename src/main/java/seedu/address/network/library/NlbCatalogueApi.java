@@ -3,8 +3,6 @@ package seedu.address.network.library;
 import static java.util.Objects.requireNonNull;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 
@@ -18,8 +16,9 @@ import seedu.address.network.HttpResponse;
  */
 public class NlbCatalogueApi {
 
-    protected static final String URL_ADVANCED_SEARCH =
-            "https://catalogue.nlb.gov.sg/cgi-bin/spydus.exe/ENQ/EXPNOS/BIBENQ";
+    private static final String SEARCH_URL =
+            "https://catalogue.nlb.gov.sg/cgi-bin/spydus.exe/ENQ/EXPNOS/BIBENQ?ENTRY=%t %a&ENTRY_NAME=BS"
+                    + "&ENTRY_TYPE=K&GQ=%t %a&SORTS=SQL_REL_TITLE";
     private static final String CONTENT_TYPE_HTML = "text/html";
     private static final int HTTP_STATUS_OK = 200;
 
@@ -38,48 +37,31 @@ public class NlbCatalogueApi {
      */
     public CompletableFuture<String> searchForBook(Book book) {
         requireNonNull(book);
-        return execute(URL_ADVANCED_SEARCH, book);
+        return execute(makeSearchUrl(book), book);
     }
 
     /**
-     * Obtain all parameters as key value pairs, which is used to search for the specific book.
-     *
-     * @param book book to search for.
-     * @return Map with all the key value pairs.
+     * Obtains the search URL for a particular {@code book} to search for.
      */
-    protected static Map<String, String> makeParamsMap(Book book) {
-        Map<String, String> paramsMap = new HashMap<>();
-
-        paramsMap.put("ENTRY1_NAME", "TI");
-        paramsMap.put("ENTRY1", book.getTitle().toString());
-        paramsMap.put("ENTRY2_NAME", "AU");
-        paramsMap.put("ENTRY2", book.getAuthorsAsString());
-        paramsMap.put("PD", makePublicationYearParam(book.getPublicationDate().getYear()));
-
-        return paramsMap;
+    protected static String makeSearchUrl(Book book) {
+        requireNonNull(book);
+        return SEARCH_URL.replace("%t", book.getTitle().toString()).replace("%a", book.getAuthorsAsString());
     }
 
     /**
-     * Asynchronously executes a HTTP POST request to the specified url to find the specified book.
+     * Asynchronously executes a HTTP GET request to the specified url to find the specified book.
      *
-     * @param url the url used for the POST request.
+     * @param url the url used for the GET request.
      * @param book the book to search for.
      * @return CompleteableFuture which resolves to a single book page.
      */
     private CompletableFuture<String> execute(String url, Book book) {
         return httpClient
-                .makePostRequest(url, makeParamsMap(book))
+                .makeGetRequest(url)
                 .thenApply(NlbCatalogueApi::requireHtmlContentType)
                 .thenApply(NlbCatalogueApi::requireHttpStatusOk)
                 .thenApply(HttpResponse::getResponseBody)
                 .thenApply(result -> NlbResultHelper.getUrl(result, book));
-    }
-
-    /**
-     * Gives a range of years to search for given a particular year.
-     */
-    private static String makePublicationYearParam(int year) {
-        return year == -1 ? "1500-2500" : (year - 2) + "-" + (year + 2);
     }
 
     /**
