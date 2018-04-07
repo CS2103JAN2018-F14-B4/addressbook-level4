@@ -32,6 +32,8 @@ public class TestApp extends MainApp {
 
     protected static final String DEFAULT_RECENT_BOOKS_FILE_LOCATION_FOR_TESTING =
             TestUtil.getFilePathInSandboxFolder("recentbooks.xml");
+    protected static final String DEFAULT_ALIAS_LIST_FILE_LOCATION_FOR_TESTING =
+            TestUtil.getFilePathInSandboxFolder("aliaslist.xml");
     protected static final String DEFAULT_PREF_FILE_LOCATION_FOR_TESTING =
             TestUtil.getFilePathInSandboxFolder("pref_testing.json");
     protected static final String BOOK_SHELF_NAME = "Test";
@@ -69,6 +71,7 @@ public class TestApp extends MainApp {
         double y = Screen.getPrimary().getVisualBounds().getMinY();
         userPrefs.updateLastUsedGuiSetting(new WindowSettings(800.0, 800.0, (int) x, (int) y));
         userPrefs.setBookShelfFilePath(saveFileLocation);
+        userPrefs.setAliasListFilePath(DEFAULT_ALIAS_LIST_FILE_LOCATION_FOR_TESTING);
         userPrefs.setBookShelfName(BOOK_SHELF_NAME);
         return userPrefs;
     }

@@ -6,12 +6,14 @@ import static org.junit.Assert.assertTrue;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import guitests.guihandles.AliasCardHandle;
 import guitests.guihandles.BookCardHandle;
 import guitests.guihandles.BookDetailsPanelHandle;
 import guitests.guihandles.BookListPanelHandle;
 import guitests.guihandles.RecentBooksPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.SearchResultsPanelHandle;
+import seedu.address.model.alias.Alias;
 import seedu.address.model.book.Author;
 import seedu.address.model.book.Book;
 import seedu.address.model.book.Category;
@@ -48,6 +50,20 @@ public class GuiTestAssert {
      */
     public static void assertCardDisplaysBook(Book expectedBook, BookCardHandle actualCard) {
         assertTrue(actualCard.equals(expectedBook));
+    }
+
+    /**
+     * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
+     */
+    public static void assertAliasCardEquals(AliasCardHandle expectedCard, AliasCardHandle actualCard) {
+        assertTrue(actualCard.equals(expectedCard));
+    }
+
+    /**
+     * Asserts that {@code actualCard} displays the details of {@code expectedAlias}.
+     */
+    public static void assertAliasCardDisplaysAlias(Alias expectedAlias, AliasCardHandle actualCard) {
+        assertTrue(actualCard.equals(expectedAlias));
     }
 
     /**
