@@ -1,5 +1,7 @@
 package seedu.address.storage;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.Objects;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -13,6 +15,9 @@ import seedu.address.model.alias.Alias;
 public class XmlAdaptedAlias {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Alias' %s field is missing!";
+    protected static final String NAME_FIELD = "name";
+    protected static final String PREFIX_FIELD = "prefix";
+    protected static final String ARGUMENTS_FIELD = "arguments";
 
     @XmlElement(required = true)
     private String name;
@@ -40,6 +45,7 @@ public class XmlAdaptedAlias {
      * Converts a given {@code Alias} into an {@code XmlAdaptedAlias} for JAXB use.
      */
     public XmlAdaptedAlias(Alias alias) {
+        requireNonNull(alias);
         this.name = alias.getName();
         this.prefix = alias.getPrefix();
         this.arguments = alias.getArguments();
@@ -52,13 +58,13 @@ public class XmlAdaptedAlias {
      */
     public Alias toModelType() throws IllegalValueException {
         if (name == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "name"));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, NAME_FIELD));
         }
         if (prefix == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "prefix"));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, PREFIX_FIELD));
         }
         if (arguments == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "arguments"));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, ARGUMENTS_FIELD));
         }
 
         return new Alias(name, prefix, arguments);

@@ -23,6 +23,7 @@ public class XmlAliasListStorage implements AliasListStorage {
     private final String filePath;
 
     public XmlAliasListStorage(String filePath) {
+        requireNonNull(filePath);
         this.filePath = filePath;
     }
 
@@ -33,6 +34,13 @@ public class XmlAliasListStorage implements AliasListStorage {
 
     @Override
     public Optional<ReadOnlyAliasList> readAliasList() throws DataConversionException, IOException {
+        return readAliasList(filePath);
+    }
+
+    /**
+     * @see #readAliasList()
+     */
+    public Optional<ReadOnlyAliasList> readAliasList(String filePath) throws DataConversionException, IOException {
         File aliasListFile = new File(filePath);
 
         if (!aliasListFile.exists()) {
@@ -51,6 +59,13 @@ public class XmlAliasListStorage implements AliasListStorage {
 
     @Override
     public void saveAliasList(ReadOnlyAliasList aliasList) throws IOException {
+        saveAliasList(aliasList, filePath);
+    }
+
+    /**
+     * @see #saveAliasList(ReadOnlyAliasList)
+     */
+    public void saveAliasList(ReadOnlyAliasList aliasList, String filePath) throws IOException {
         requireNonNull(aliasList);
         requireNonNull(filePath);
 

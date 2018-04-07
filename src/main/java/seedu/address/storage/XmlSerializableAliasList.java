@@ -1,5 +1,7 @@
 package seedu.address.storage;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,6 +35,7 @@ public class XmlSerializableAliasList {
      */
     public XmlSerializableAliasList(ReadOnlyAliasList src) {
         this();
+        requireNonNull(src);
         aliases.addAll(src.getAliasList().stream().map(XmlAdaptedAlias::new).collect(Collectors.toList()));
     }
 
