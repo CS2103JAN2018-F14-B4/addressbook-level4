@@ -40,6 +40,7 @@ import seedu.address.model.Model;
 import seedu.address.model.book.Book;
 import seedu.address.testutil.TypicalBooks;
 import seedu.address.ui.CommandBox;
+import seedu.address.ui.WebViewManager;
 
 /**
  * A system test class for Bibliotek, which provides access to handles of GUI components and helper methods
@@ -72,9 +73,10 @@ public abstract class BibliotekSystemTest {
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         setupHelper.tearDownStage();
         EventsCenter.clearSubscribers();
+        WebViewManager.getInstance().cleanUp();
     }
 
     /**

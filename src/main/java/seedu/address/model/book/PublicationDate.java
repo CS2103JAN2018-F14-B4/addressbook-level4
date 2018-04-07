@@ -20,13 +20,6 @@ public class PublicationDate {
         this.date = date;
     }
 
-    /**
-     * Returns the year of publication.
-     */
-    public int getYear() {
-        return "".equals(date) ? -1 : Integer.parseInt(date.split("-")[0]);
-    }
-
     @Override
     public String toString() {
         return date;

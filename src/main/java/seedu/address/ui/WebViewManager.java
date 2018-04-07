@@ -1,5 +1,11 @@
 package seedu.address.ui;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javafx.application.Platform;
+import javafx.beans.InvalidationListener;
+import javafx.beans.value.ChangeListener;
 import javafx.concurrent.Worker;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
@@ -17,12 +23,16 @@ import seedu.address.commons.util.StringUtil;
 public class WebViewManager {
 
     private static WebViewManager webViewManager;
-    private static WebView browser;
-    private static WebEngine engine;
+    private WebView browser;
+    private WebEngine engine;
+    private List<InvalidationListener> invalidationListeners;
+    private List<ChangeListener> changeListeners;
 
     private WebViewManager() {
         browser = new WebView();
         engine = browser.getEngine();
+        invalidationListeners = new ArrayList<>();
+        changeListeners = new ArrayList<>();
     }
 
     /**
@@ -89,11 +99,13 @@ public class WebViewManager {
      * @param runnable Action to perform upon successfully loading a page.
      */
     protected void onLoadSuccess(Node root, Runnable runnable) {
-        engine.getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
+        ChangeListener<? super Worker.State> newListener = (obs, oldState, newState) -> {
             if (root.isVisible() && newState == Worker.State.SUCCEEDED) {
                 runnable.run();
             }
-        });
+        };
+        engine.getLoadWorker().stateProperty().addListener(newListener);
+        changeListeners.add(newListener);
     }
 
     /**
@@ -107,12 +119,13 @@ public class WebViewManager {
      * @param runnable Action to perform upon successfully loading a page.
      */
     protected void onLoadProgress(Node root, double progress, Runnable runnable) {
-        engine.getLoadWorker().progressProperty().addListener(n -> {
-            System.out.println(engine.getLoadWorker().getProgress());
+        InvalidationListener newListener = n -> {
             if (root.isVisible() && engine.getLoadWorker().getProgress() > progress) {
                 runnable.run();
             }
-        });
+        };
+        engine.getLoadWorker().progressProperty().addListener(newListener);
+        invalidationListeners.add(newListener);
     }
 
     /**
@@ -121,5 +134,16 @@ public class WebViewManager {
      */
     public WebView getWebView() {
         return browser;
+    }
+
+    /**
+     * Free up unneeded resources.
+     */
+    public void cleanUp() {
+        webViewManager = null;
+        Platform.runLater(() -> {
+            invalidationListeners.forEach(engine.getLoadWorker().progressProperty()::removeListener);
+            changeListeners.forEach(engine.getLoadWorker().stateProperty()::removeListener);
+        });
     }
 }

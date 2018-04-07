@@ -36,17 +36,9 @@ public class NetworkManager extends ComponentManager implements Network {
         nlbCatalogueApi = new NlbCatalogueApi(httpClient);
     }
 
-    protected NetworkManager(HttpClient httpClient, GoogleBooksApi googleBooksApi) {
-        super();
-        requireAllNonNull(httpClient, googleBooksApi);
-        this.httpClient = httpClient;
-        this.googleBooksApi = googleBooksApi;
-        nlbCatalogueApi = new NlbCatalogueApi(httpClient);
-    }
-
     protected NetworkManager(HttpClient httpClient, GoogleBooksApi googleBooksApi, NlbCatalogueApi nlbCatalogueApi) {
         super();
-        requireAllNonNull(httpClient, googleBooksApi);
+        requireAllNonNull(httpClient, googleBooksApi, nlbCatalogueApi);
         this.httpClient = httpClient;
         this.googleBooksApi = googleBooksApi;
         this.nlbCatalogueApi = nlbCatalogueApi;

@@ -44,8 +44,6 @@ public class MainWindow extends UiPart<Stage> {
     private Stage primaryStage;
     private Logic logic;
 
-    private WebViewManager webViewManager;
-
     // Independent Ui parts residing in this Ui container
     private BookDetailsPanel bookDetailsPanel;
     private BookReviewsPanel bookReviewsPanel;
@@ -137,11 +135,9 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        webViewManager = WebViewManager.getInstance();
-
         bookDetailsPanel = new BookDetailsPanel();
-        bookInLibraryPanel = new BookInLibraryPanel(webViewManager);
-        bookReviewsPanel = new BookReviewsPanel(webViewManager);
+        bookInLibraryPanel = new BookInLibraryPanel(WebViewManager.getInstance());
+        bookReviewsPanel = new BookReviewsPanel(WebViewManager.getInstance());
         mainContentPlaceholder.getChildren().add(bookDetailsPanel.getRoot());
         mainContentPlaceholder.getChildren().add(bookReviewsPanel.getRoot());
         mainContentPlaceholder.getChildren().add(bookInLibraryPanel.getRoot());
