@@ -15,6 +15,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.AliasListChangedEvent;
 import seedu.address.commons.events.model.BookShelfChangedEvent;
 import seedu.address.model.alias.Alias;
 import seedu.address.model.alias.ReadOnlyAliasList;
@@ -211,6 +212,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void addAlias(Alias alias) {
         aliases.add(alias);
+        indicateAliasListChanged();
     }
 
     @Override
@@ -221,6 +223,12 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void removeAlias(String name) {
         aliases.remove(name);
+        indicateAliasListChanged();
+    }
+
+    /** Raises an event to indicate the alias list has changed */
+    private void indicateAliasListChanged() {
+        raise(new AliasListChangedEvent(aliases));
     }
 
     @Override

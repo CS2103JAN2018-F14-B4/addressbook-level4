@@ -22,6 +22,7 @@ import seedu.address.commons.events.ui.ClearMainContentRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.RecentBooksSelectionChangedEvent;
 import seedu.address.commons.events.ui.SearchResultsSelectionChangedEvent;
+import seedu.address.commons.events.ui.ShowAliasListRequestEvent;
 import seedu.address.commons.events.ui.ShowBookReviewsRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.events.ui.SwitchToBookListRequestEvent;
@@ -46,6 +47,7 @@ public class MainWindow extends UiPart<Stage> {
     // Independent Ui parts residing in this Ui container
     private BookDetailsPanel bookDetailsPanel;
     private BookReviewsPanel bookReviewsPanel;
+    private AliasListPanel aliasListPanel;
     private BookListPanel bookListPanel;
     private SearchResultsPanel searchResultsPanel;
     private RecentBooksPanel recentBooksPanel;
@@ -135,8 +137,10 @@ public class MainWindow extends UiPart<Stage> {
     void fillInnerParts() {
         bookDetailsPanel = new BookDetailsPanel();
         bookReviewsPanel = new BookReviewsPanel();
+        aliasListPanel = new AliasListPanel(logic.getDisplayAliasList());
         mainContentPlaceholder.getChildren().add(bookDetailsPanel.getRoot());
         mainContentPlaceholder.getChildren().add(bookReviewsPanel.getRoot());
+        mainContentPlaceholder.getChildren().add(aliasListPanel.getRoot());
         bookReviewsPanel.getRoot().setVisible(false);
         bookDetailsPanel.setStyleSheet(prefs.getAppTheme().getCssFile());
 
@@ -267,30 +271,42 @@ public class MainWindow extends UiPart<Stage> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         bookDetailsPanel.hide();
         bookReviewsPanel.hide();
+        aliasListPanel.hide();
     }
 
     @Subscribe
     private void handleBookListSelectionChangedEvent(BookListSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         bookReviewsPanel.hide();
+        aliasListPanel.hide();
     }
 
     @Subscribe
     private void handleSearchResultsSelectionChangedEvent(SearchResultsSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         bookReviewsPanel.hide();
+        aliasListPanel.hide();
     }
 
     @Subscribe
     private void handleRecentBooksSelectionChangedEvent(RecentBooksSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         bookReviewsPanel.hide();
+        aliasListPanel.hide();
     }
 
     @Subscribe
     private void handleShowBookReviewsRequestEvent(ShowBookReviewsRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         bookDetailsPanel.hide();
+        aliasListPanel.hide();
     }
 
+    @Subscribe
+    private void handleShowAliasListRequestEvent(ShowAliasListRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        bookDetailsPanel.hide();
+        bookReviewsPanel.hide();
+        aliasListPanel.show();
+    }
 }
