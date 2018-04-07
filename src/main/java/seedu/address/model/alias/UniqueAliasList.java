@@ -28,6 +28,7 @@ public class UniqueAliasList extends UniqueList<Alias> implements ReadOnlyAliasL
      */
     public UniqueAliasList(ReadOnlyAliasList toBeCopied) {
         super();
+        requireNonNull(toBeCopied);
         toBeCopied.getAliasList().forEach(this::add);
     }
 
@@ -56,7 +57,7 @@ public class UniqueAliasList extends UniqueList<Alias> implements ReadOnlyAliasL
     public Optional<Alias> getAliasByName(String name) {
         requireNonNull(name);
         return internalList.stream()
-                .filter(alias -> name.equalsIgnoreCase(alias.getName()))
+                .filter(alias -> name.trim().equalsIgnoreCase(alias.getName()))
                 .findFirst();
     }
 

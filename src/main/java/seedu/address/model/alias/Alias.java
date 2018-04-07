@@ -43,7 +43,9 @@ public class Alias {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Alias // instanceof handles nulls
-                && this.name.equals(((Alias) other).name)); // state check
+                && this.name.equals(((Alias) other).name)
+                && this.prefix.equals(((Alias) other).prefix)
+                && this.arguments.equals(((Alias) other).arguments)); // state check
     }
 
     @Override
