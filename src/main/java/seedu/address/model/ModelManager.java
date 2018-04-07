@@ -5,6 +5,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -15,6 +16,9 @@ import javafx.collections.transformation.SortedList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.BookShelfChangedEvent;
+import seedu.address.model.alias.Alias;
+import seedu.address.model.alias.ReadOnlyAliasList;
+import seedu.address.model.alias.UniqueAliasList;
 import seedu.address.model.book.Book;
 import seedu.address.model.book.UniqueBookCircularList;
 import seedu.address.model.book.exceptions.BookNotFoundException;
@@ -34,12 +38,14 @@ public class ModelManager extends ComponentManager implements Model {
     private final ObservableList<Book> displayBookList;
     private final BookShelf searchResults;
     private final UniqueBookCircularList recentBooks;
+    private final UniqueAliasList aliases;
+    private final ObservableList<Alias> displayAliasList;
 
     /**
-     * Initializes a ModelManager with the given bookShelf, userPrefs and recentBooksList.
+     * Initializes a ModelManager with the given bookShelf, userPrefs, recentBooksList, and aliasList.
      */
     public ModelManager(ReadOnlyBookShelf bookShelf, UserPrefs userPrefs,
-                        ReadOnlyBookShelf recentBooksList) {
+                        ReadOnlyBookShelf recentBooksList, ReadOnlyAliasList aliasList) {
         super();
         requireAllNonNull(bookShelf, userPrefs, recentBooksList);
 
@@ -58,10 +64,13 @@ public class ModelManager extends ComponentManager implements Model {
         for (int index = list.size() - 1; index >= 0; index--) {
             this.recentBooks.addToFront(list.get(index));
         }
+
+        this.aliases = new UniqueAliasList(aliasList);
+        this.displayAliasList = new SortedList<>(this.aliases.asObservableList(), ALIAS_COMPARATOR);
     }
 
     public ModelManager(ReadOnlyBookShelf bookShelf, UserPrefs userPrefs) {
-        this(bookShelf, userPrefs, new BookShelf());
+        this(bookShelf, userPrefs, new BookShelf(), new UniqueAliasList());
     }
 
     public ModelManager() {
@@ -89,7 +98,7 @@ public class ModelManager extends ComponentManager implements Model {
         return bookShelf;
     }
 
-    /** Raises an event to indicate the model has changed */
+    /** Raises an event to indicate the book shelf has changed */
     private void indicateBookShelfChanged() {
         raise(new BookShelfChangedEvent(bookShelf));
     }
@@ -187,6 +196,33 @@ public class ModelManager extends ComponentManager implements Model {
         recentBooks.addToFront(newBook);
     }
 
+    //=========== Alias List =============================================================================
+
+    @Override
+    public ReadOnlyAliasList getAliasList() {
+        return aliases;
+    }
+
+    @Override
+    public ObservableList<Alias> getDisplayAliasList() {
+        return FXCollections.unmodifiableObservableList(displayAliasList);
+    }
+
+    @Override
+    public void addAlias(Alias alias) {
+        aliases.add(alias);
+    }
+
+    @Override
+    public Optional<Alias> getAlias(String name) {
+        return aliases.getAliasByName(name);
+    }
+
+    @Override
+    public void removeAlias(String name) {
+        aliases.remove(name);
+    }
+
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object
@@ -204,7 +240,8 @@ public class ModelManager extends ComponentManager implements Model {
         return bookShelf.equals(other.bookShelf)
                 && displayBookList.equals(other.displayBookList)
                 && searchResults.equals(other.searchResults)
-                && recentBooks.equals(other.recentBooks);
+                && recentBooks.equals(other.recentBooks)
+                && aliases.equals(other.aliases);
     }
 
 }
