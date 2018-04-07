@@ -13,7 +13,7 @@ import seedu.address.model.alias.Alias;
  */
 public class AliasListPanelHandle extends NodeHandle<Node> {
 
-    public static final String ALIAS_LIST_PANEL_ID = "#aliasListContainer";
+    public static final String ALIAS_LIST_PANEL_ID = "#aliasListPanel";
     private static final String LIST_VIEW_FIELD_ID = "#aliasListView";
     private static final String CARD_PANE_ID = "#aliasCardPane";
 

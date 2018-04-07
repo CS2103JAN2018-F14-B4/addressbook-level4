@@ -213,6 +213,15 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
+     * Clears the list selections in the book list, search results, and recent books panel.
+     */
+    private void clearAllListSelections() {
+        bookListPanel.clearSelection();
+        searchResultsPanel.clearSelection();
+        recentBooksPanel.clearSelection();
+    }
+
+    /**
      * Closes the application.
      */
     @FXML
@@ -238,7 +247,8 @@ public class MainWindow extends UiPart<Stage> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         bookDetailsPanel.hide();
         bookReviewsPanel.hide();
-        bookListPanel.clearSelectionAndScrollToTop();
+        bookListPanel.clearSelection();
+        bookListPanel.scrollToTop();
         bookListPanel.getRoot().setVisible(true);
         searchResultsPanel.getRoot().setVisible(false);
         recentBooksPanel.getRoot().setVisible(false);
@@ -249,7 +259,8 @@ public class MainWindow extends UiPart<Stage> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         bookDetailsPanel.hide();
         bookReviewsPanel.hide();
-        searchResultsPanel.clearSelectionAndScrollToTop();
+        searchResultsPanel.clearSelection();
+        searchResultsPanel.scrollToTop();
         bookListPanel.getRoot().setVisible(false);
         searchResultsPanel.getRoot().setVisible(true);
         recentBooksPanel.getRoot().setVisible(false);
@@ -260,7 +271,8 @@ public class MainWindow extends UiPart<Stage> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         bookDetailsPanel.hide();
         bookReviewsPanel.hide();
-        recentBooksPanel.clearSelectionAndScrollToTop();
+        recentBooksPanel.clearSelection();
+        recentBooksPanel.scrollToTop();
         bookListPanel.getRoot().setVisible(false);
         searchResultsPanel.getRoot().setVisible(false);
         recentBooksPanel.getRoot().setVisible(true);
@@ -298,6 +310,7 @@ public class MainWindow extends UiPart<Stage> {
     @Subscribe
     private void handleShowBookReviewsRequestEvent(ShowBookReviewsRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        clearAllListSelections();
         bookDetailsPanel.hide();
         aliasListPanel.hide();
     }
@@ -305,6 +318,7 @@ public class MainWindow extends UiPart<Stage> {
     @Subscribe
     private void handleShowAliasListRequestEvent(ShowAliasListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        clearAllListSelections();
         bookDetailsPanel.hide();
         bookReviewsPanel.hide();
         aliasListPanel.show();
