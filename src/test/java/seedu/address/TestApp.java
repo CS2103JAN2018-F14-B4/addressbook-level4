@@ -27,21 +27,20 @@ import systemtests.ModelHelper;
  */
 public class TestApp extends MainApp {
 
-    public static final String SAVE_LOCATION_FOR_TESTING = TestUtil.getFilePathInSandboxFolder("sampleData.xml");
     public static final String APP_TITLE = "Test App";
-
-    protected static final String DEFAULT_RECENT_BOOKS_FILE_LOCATION_FOR_TESTING =
-            TestUtil.getFilePathInSandboxFolder("recentbooks.xml");
-    protected static final String DEFAULT_ALIAS_LIST_FILE_LOCATION_FOR_TESTING =
-            TestUtil.getFilePathInSandboxFolder("aliaslist.xml");
-    protected static final String DEFAULT_PREF_FILE_LOCATION_FOR_TESTING =
-            TestUtil.getFilePathInSandboxFolder("pref_testing.json");
     protected static final String BOOK_SHELF_NAME = "Test";
-    protected String saveFileLocation;
+
+    private String saveFileLocation;
+    private final String recentBooksFileLocation;
+    private final String aliasListFileLocation;
+    private final String prefFileLocation;
 
     public TestApp(Supplier<ReadOnlyBookShelf> initialDataSupplier, String saveFileLocation) {
         super();
         this.saveFileLocation = saveFileLocation;
+        this.recentBooksFileLocation = TestUtil.getFilePathInSandboxFolder("recentbooks.xml");
+        this.aliasListFileLocation = TestUtil.getFilePathInSandboxFolder("aliaslist.xml");
+        this.prefFileLocation = TestUtil.getFilePathInSandboxFolder("pref_testing.json");
 
         // If some initial local data has been provided, write those to the file
         if (initialDataSupplier.get() != null) {
@@ -54,8 +53,8 @@ public class TestApp extends MainApp {
     protected Config initConfig(String configFilePath) {
         Config config = super.initConfig(configFilePath);
         config.setAppTitle(APP_TITLE);
-        config.setUserPrefsFilePath(DEFAULT_PREF_FILE_LOCATION_FOR_TESTING);
-        config.setRecentBooksFilePath(DEFAULT_RECENT_BOOKS_FILE_LOCATION_FOR_TESTING);
+        config.setUserPrefsFilePath(prefFileLocation);
+        config.setRecentBooksFilePath(recentBooksFileLocation);
         return config;
     }
 
@@ -66,7 +65,7 @@ public class TestApp extends MainApp {
         double y = Screen.getPrimary().getVisualBounds().getMinY();
         userPrefs.updateLastUsedGuiSetting(new WindowSettings(800.0, 800.0, (int) x, (int) y));
         userPrefs.setBookShelfFilePath(saveFileLocation);
-        userPrefs.setAliasListFilePath(DEFAULT_ALIAS_LIST_FILE_LOCATION_FOR_TESTING);
+        userPrefs.setAliasListFilePath(aliasListFileLocation);
         userPrefs.setBookShelfName(BOOK_SHELF_NAME);
         return userPrefs;
     }

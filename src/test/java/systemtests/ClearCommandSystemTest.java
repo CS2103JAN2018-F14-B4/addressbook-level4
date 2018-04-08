@@ -11,7 +11,6 @@ import seedu.address.model.BookShelf;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.alias.UniqueAliasList;
 
 public class ClearCommandSystemTest extends BibliotekSystemTest {
 
@@ -53,8 +52,9 @@ public class ClearCommandSystemTest extends BibliotekSystemTest {
      * @see BibliotekSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandSuccess(String command) {
+        Model model = getModel();
         assertCommandSuccess(command, ClearCommand.MESSAGE_SUCCESS, new ModelManager(new BookShelf(), new UserPrefs(),
-                getModel().getRecentBooksListAsBookShelf(), new UniqueAliasList()));
+                model.getRecentBooksListAsBookShelf(), model.getAliasList()));
     }
 
     /**
@@ -64,6 +64,7 @@ public class ClearCommandSystemTest extends BibliotekSystemTest {
      */
     private void assertCommandSuccess(String command, String expectedResultMessage, Model expectedModel) {
         executeCommand(command);
+
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarUnchangedExceptSyncStatus();
