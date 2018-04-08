@@ -67,6 +67,7 @@ public class AddAliasCommandTest {
         assertCommandSuccess(command, model, String.format(AddAliasCommand.MESSAGE_UPDATE, alias), expectedModel);
     }
 
+    //@@author
     @Test
     public void equals() {
         AddAliasCommand command = prepareCommand(new Alias("1", "1", "1"));

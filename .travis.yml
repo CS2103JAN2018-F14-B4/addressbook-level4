@@ -7,7 +7,7 @@ install: true
 
 script: >-
     ./config/travis/run-checks.sh &&
-    travis_retry ./gradlew clean checkstyleMain checkstyleTest headless allTests asciidoctor
+    travis_retry ./gradlew --stacktrace clean checkstyleMain checkstyleTest headless allTests asciidoctor
 
 deploy:
   skip_cleanup: true
