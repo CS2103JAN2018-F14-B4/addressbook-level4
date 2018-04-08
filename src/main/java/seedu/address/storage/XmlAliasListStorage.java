@@ -28,11 +28,6 @@ public class XmlAliasListStorage implements AliasListStorage {
     }
 
     @Override
-    public String getAliasListFilePath() {
-        return filePath;
-    }
-
-    @Override
     public Optional<ReadOnlyAliasList> readAliasList() throws DataConversionException, IOException {
         return readAliasList(filePath);
     }

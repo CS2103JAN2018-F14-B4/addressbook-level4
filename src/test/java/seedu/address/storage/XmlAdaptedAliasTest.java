@@ -1,6 +1,8 @@
 package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.storage.XmlAdaptedAlias.ARGUMENTS_FIELD;
 import static seedu.address.storage.XmlAdaptedAlias.MISSING_FIELD_MESSAGE_FORMAT;
 import static seedu.address.storage.XmlAdaptedAlias.NAME_FIELD;
@@ -44,5 +46,35 @@ public class XmlAdaptedAliasTest {
         XmlAdaptedAlias alias = new XmlAdaptedAlias(VALID_NAME, VALID_PREFIX, null);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, ARGUMENTS_FIELD);
         Assert.assertThrows(IllegalValueException.class, expectedMessage, alias::toModelType);
+    }
+
+    @Test
+    public void equals() {
+        XmlAdaptedAlias xmlAdaptedAlias = new XmlAdaptedAlias(VALID_NAME, VALID_PREFIX, VALID_ARGUMENTS);
+
+        // same object -> return true
+        assertTrue(xmlAdaptedAlias.equals(xmlAdaptedAlias));
+
+        // same values -> return true
+        XmlAdaptedAlias xmlAdaptedAliasCopy = new XmlAdaptedAlias(VALID_NAME, VALID_PREFIX, VALID_ARGUMENTS);
+        assertTrue(xmlAdaptedAlias.equals(xmlAdaptedAliasCopy));
+
+        // different types -> returns false
+        assertFalse(xmlAdaptedAlias.equals("string"));
+
+        // null -> returns false
+        assertFalse(xmlAdaptedAlias.equals(null));
+
+        // different name -> return false
+        XmlAdaptedAlias differentAlias = new XmlAdaptedAlias("x", VALID_PREFIX, VALID_ARGUMENTS);
+        assertFalse(xmlAdaptedAlias.equals(differentAlias));
+
+        // different prefix -> return false
+        differentAlias = new XmlAdaptedAlias(VALID_NAME, "x", VALID_ARGUMENTS);
+        assertFalse(xmlAdaptedAlias.equals(differentAlias));
+
+        // different arguments -> return false
+        differentAlias = new XmlAdaptedAlias(VALID_NAME, VALID_PREFIX, "x");
+        assertFalse(xmlAdaptedAlias.equals(differentAlias));
     }
 }

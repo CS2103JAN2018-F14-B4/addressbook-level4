@@ -113,11 +113,6 @@ public class StorageManager extends ComponentManager implements Storage {
     // ================ AliasList methods ==================================
 
     @Override
-    public String getAliasListFilePath() {
-        return aliasListStorage.getAliasListFilePath();
-    }
-
-    @Override
     public Optional<ReadOnlyAliasList> readAliasList() throws DataConversionException, IOException {
         return aliasListStorage.readAliasList();
     }

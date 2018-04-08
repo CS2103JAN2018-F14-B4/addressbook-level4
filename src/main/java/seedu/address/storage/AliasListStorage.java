@@ -12,11 +12,6 @@ import seedu.address.model.alias.ReadOnlyAliasList;
 public interface AliasListStorage {
 
     /**
-     * Returns the file path of the data file.
-     */
-    String getAliasListFilePath();
-
-    /**
      * Returns alias list data as a {@link ReadOnlyAliasList}.
      * Returns {@code Optional.empty()} if storage file is not found.
      *
