@@ -1,6 +1,5 @@
 package guitests.guihandles;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -9,7 +8,7 @@ import javafx.scene.control.ListView;
 import seedu.address.model.alias.Alias;
 
 /**
- * Provides a handle for {@code AliasListPanel} containing the list of {@code Alias}.
+ * Provides a handle for {@code AliasListPanel} containing the list of aliases.
  */
 public class AliasListPanelHandle extends NodeHandle<Node> {
 
@@ -22,25 +21,6 @@ public class AliasListPanelHandle extends NodeHandle<Node> {
     public AliasListPanelHandle(Node aliasListPanelNode) {
         super(aliasListPanelNode);
         aliasListView = getChildNode(LIST_VIEW_FIELD_ID);
-    }
-
-    /**
-     * Returns a handle to the selected {@code AliasCardHandle}.
-     * A maximum of 1 item can be selected at any time.
-     * @throws AssertionError if no card is selected, or more than 1 card is selected.
-     */
-    public AliasCardHandle getHandleToSelectedCard() {
-        List<Alias> aliasList = aliasListView.getSelectionModel().getSelectedItems();
-
-        if (aliasList.size() != 1) {
-            throw new AssertionError("Alias list size expected 1.");
-        }
-
-        return getAllCardNodes().stream()
-                .map(AliasCardHandle::new)
-                .filter(handle -> handle.equals(aliasList.get(0)))
-                .findFirst()
-                .orElseThrow(IllegalStateException::new);
     }
 
     /**
@@ -65,13 +45,6 @@ public class AliasListPanelHandle extends NodeHandle<Node> {
 
         guiRobot.interact(() -> aliasListView.scrollTo(index));
         guiRobot.pauseForHuman();
-    }
-
-    /**
-     * Selects the {@code AliasCard} at {@code index} in the list.
-     */
-    public void select(int index) {
-        aliasListView.getSelectionModel().select(index);
     }
 
     /**
@@ -101,10 +74,4 @@ public class AliasListPanelHandle extends NodeHandle<Node> {
         return getRootNode().isVisible();
     }
 
-    /**
-     * Returns the size of the list.
-     */
-    public int getListSize() {
-        return aliasListView.getItems().size();
-    }
 }

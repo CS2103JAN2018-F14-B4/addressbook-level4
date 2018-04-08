@@ -37,20 +37,15 @@ public class TestApp extends MainApp {
     protected static final String DEFAULT_PREF_FILE_LOCATION_FOR_TESTING =
             TestUtil.getFilePathInSandboxFolder("pref_testing.json");
     protected static final String BOOK_SHELF_NAME = "Test";
-    protected Supplier<ReadOnlyBookShelf> initialDataSupplier = () -> null;
-    protected String saveFileLocation = SAVE_LOCATION_FOR_TESTING;
-
-    public TestApp() {
-    }
+    protected String saveFileLocation;
 
     public TestApp(Supplier<ReadOnlyBookShelf> initialDataSupplier, String saveFileLocation) {
         super();
-        this.initialDataSupplier = initialDataSupplier;
         this.saveFileLocation = saveFileLocation;
 
         // If some initial local data has been provided, write those to the file
         if (initialDataSupplier.get() != null) {
-            createDataFileWithData(new XmlSerializableBookShelf(this.initialDataSupplier.get()),
+            createDataFileWithData(new XmlSerializableBookShelf(initialDataSupplier.get()),
                     this.saveFileLocation);
         }
     }

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import guitests.guihandles.AliasCardHandle;
+import guitests.guihandles.AliasListPanelHandle;
 import guitests.guihandles.BookCardHandle;
 import guitests.guihandles.BookDetailsPanelHandle;
 import guitests.guihandles.BookListPanelHandle;
@@ -100,6 +101,17 @@ public class GuiTestAssert {
     }
 
     /**
+     * Asserts that the list in {@code aliasListPanelHandle} displays the details of {@code aliases} correctly and
+     * in the correct order.
+     */
+    public static void assertListMatching(AliasListPanelHandle aliasListPanelHandle, Alias... aliases) {
+        for (int i = 0; i < aliases.length; i++) {
+            aliasListPanelHandle.navigateToCard(i);
+            assertAliasCardDisplaysAlias(aliases[i], aliasListPanelHandle.getAliasCardHandle(i).get());
+        }
+    }
+
+    /**
      * Asserts that the list in {@code bookListPanelHandle} displays the details of {@code books} correctly and
      * in the correct order.
      */
@@ -121,6 +133,14 @@ public class GuiTestAssert {
      */
     public static void assertListMatching(RecentBooksPanelHandle recentBooksPanelHandle, List<Book> books) {
         assertListMatching(recentBooksPanelHandle, books.toArray(new Book[0]));
+    }
+
+    /**
+     * Asserts that the list in {@code aliasListPanelHandle} displays the details of {@code aliases} correctly and
+     * in the correct order.
+     */
+    public static void assertListMatching(AliasListPanelHandle aliasListPanelHandle, List<Alias> aliases) {
+        assertListMatching(aliasListPanelHandle, aliases.toArray(new Alias[0]));
     }
 
     /**

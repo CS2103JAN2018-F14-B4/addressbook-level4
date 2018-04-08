@@ -71,7 +71,6 @@ public class ReviewsCommandSystemTest extends BibliotekSystemTest {
      * Verifications 1, 3 and 4 are performed by
      * {@code BibliotekSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * @see BibliotekSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-     * @see BibliotekSystemTest#assertSelectedBookListCardChanged(Index)
      */
     private void assertCommandSuccess(String command, Book toLoad) {
         Model expectedModel = getModel();
@@ -85,7 +84,6 @@ public class ReviewsCommandSystemTest extends BibliotekSystemTest {
         assertSelectedBookListCardDeselected();
         assertSelectedSearchResultsCardDeselected();
         assertSelectedRecentBooksCardDeselected();
-        assertCommandBoxShowsDefaultStyle();
         assertBookReviewsPanelVisible();
         assertStatusBarUnchanged();
     }
