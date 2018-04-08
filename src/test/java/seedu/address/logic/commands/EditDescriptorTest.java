@@ -10,7 +10,7 @@ import seedu.address.model.book.Priority;
 import seedu.address.model.book.Rating;
 import seedu.address.model.book.Status;
 import seedu.address.testutil.EditDescriptorBuilder;
-
+//@@author 592363789
 public class EditDescriptorTest {
 
     @Test

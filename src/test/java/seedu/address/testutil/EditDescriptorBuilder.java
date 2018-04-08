@@ -6,7 +6,7 @@ import seedu.address.model.book.Book;
 import seedu.address.model.book.Priority;
 import seedu.address.model.book.Rating;
 import seedu.address.model.book.Status;
-
+//@@author 592363789
 /**
  * A utility class to help with building EditDescriptor objects.
  */

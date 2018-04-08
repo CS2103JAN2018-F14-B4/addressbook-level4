@@ -1,5 +1,5 @@
 package seedu.address.model.book;
-
+//@@author 592363789
 /**
  * Represents a book's status (whether it is read, being read, or unread).
  */

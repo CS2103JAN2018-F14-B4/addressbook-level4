@@ -20,7 +20,7 @@ import seedu.address.model.book.Rating;
 import seedu.address.model.book.Status;
 import seedu.address.model.book.exceptions.BookNotFoundException;
 import seedu.address.model.book.exceptions.DuplicateBookException;
-
+//@@author 592363789
 /**
  * Edits the status, priority, and rating of an existing book.
  */
