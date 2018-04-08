@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMAND;
 
 import seedu.address.model.alias.Alias;
@@ -29,6 +30,7 @@ public class AddAliasCommand extends Command {
      * @param toAdd the alias to be added.
      */
     public AddAliasCommand(Alias toAdd) {
+        requireNonNull(toAdd);
         this.toAdd = toAdd;
     }
 

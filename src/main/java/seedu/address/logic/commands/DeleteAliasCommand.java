@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.Optional;
 
 import seedu.address.model.alias.Alias;
@@ -27,6 +29,7 @@ public class DeleteAliasCommand extends Command {
      * @param toDelete the name of the alias to be deleted.
      */
     public DeleteAliasCommand(String toDelete) {
+        requireNonNull(toDelete);
         this.toDelete = toDelete.trim().toLowerCase();
     }
 
