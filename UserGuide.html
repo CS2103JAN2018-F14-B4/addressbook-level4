@@ -41,12 +41,15 @@
 <li><a href="#listing-entered-commands-code-history-code">3.13. Listing entered commands : <code>history</code></a></li>
 <li><a href="#undoing-previous-command-code-undo-code">3.14. Undoing previous command : <code>undo</code></a></li>
 <li><a href="#clearing-all-entries-code-clear-code">3.15. Clearing all entries : <code>clear</code></a></li>
-<li><a href="#changing-application-theme-since-v1-2">3.16. Changing application theme [since v1.2]</a></li>
-<li><a href="#changing-settings-code-settings-code-coming-in-v1-5">3.17. Changing settings: <code>settings</code> [coming in v1.5]</a></li>
-<li><a href="#closing-the-program-code-exit-code">3.18. Closing the program : <code>exit</code></a></li>
-<li><a href="#saving-the-data">3.19. Saving the data</a></li>
-<li><a href="#getting-book-recommendations-code-suggest-code-coming-in-v2-0">3.20. Getting book recommendations: <code>suggest</code> [coming in v2.0]</a></li>
-<li><a href="#importing-books-from-other-e-readers-code-import-code-coming-in-v2-0">3.21. Importing books from other E-Readers: <code>import</code> [coming in v2.0]</a></li>
+<li><a href="#adding-a-command-alias-code-addalias-code-since-v1-5">3.16. Adding a command alias : <code>addalias</code> [since v1.5]</a></li>
+<li><a href="#listing-command-aliases-code-aliases-code-since-v1-5">3.17. Listing command aliases : <code>aliases</code> [since v1.5]</a></li>
+<li><a href="#delete-a-command-alias-code-deletealias-code-since-v1-5">3.18. Delete a command alias : <code>deletealias</code> [since v1.5]</a></li>
+<li><a href="#changing-theme-code-theme-code-since-v1-2">3.19. Changing theme : <code>theme</code> [since v1.2]</a></li>
+<li><a href="#changing-settings-code-settings-code-coming-in-v1-5">3.20. Changing settings: <code>settings</code> [coming in v1.5]</a></li>
+<li><a href="#closing-the-program-code-exit-code">3.21. Closing the program : <code>exit</code></a></li>
+<li><a href="#saving-the-data">3.22. Saving the data</a></li>
+<li><a href="#getting-book-recommendations-code-suggest-code-coming-in-v2-0">3.23. Getting book recommendations: <code>suggest</code> [coming in v2.0]</a></li>
+<li><a href="#importing-books-from-other-e-readers-code-import-code-coming-in-v2-0">3.24. Importing books from other E-Readers: <code>import</code> [coming in v2.0]</a></li>
 </ul>
 </li>
 <li><a href="#faq">4. FAQ</a></li>
@@ -1160,7 +1163,144 @@ The left and right panels are now empty.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="changing-application-theme-since-v1-2"><a class="anchor" href="#changing-application-theme-since-v1-2"></a>3.16. Changing application theme [since v1.2]</h3>
+<h3 id="adding-a-command-alias-code-addalias-code-since-v1-5"><a class="anchor" href="#adding-a-command-alias-code-addalias-code-since-v1-5"></a>3.16. Adding a command alias : <code>addalias</code> [since v1.5]</h3>
+<div class="paragraph">
+<p>If there is a command that you use frequently, and you find typing out the entire command to be too tedious,
+you can add a command alias to reduce the amount of typing needed.<br>
+Format: <code>addalias ALIAS_NAME cmd/COMMAND</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Adds a command alias for the specified <code>COMMAND</code>.</p>
+</li>
+<li>
+<p><code>COMMAND</code> should refer to a default, built-in command, and can optionally include command parameters.</p>
+</li>
+<li>
+<p><code>ALIAS_NAME</code> is case-insensitive, and must not contain any spaces or tabs.</p>
+</li>
+<li>
+<p>If there is an existing alias with the same name as <code>ALIAS_NAME</code>, the existing alias will be overwritten.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+If <code>COMMAND</code> does not specify a valid built-in command, you will
+get an <code>Unknown command</code> message when you attempt to use the command alias.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+You can use command aliases to specify default named parameters (parameters with a prefix, such as <code>t/TITLE</code>).<br>
+For example, if you want a custom <code>list</code> command that sorts by title (in reverse alphabetical order) by default,
+you can add a command alias using <code>addalias ls cmd/list by/titled</code>.<br>
+You can override this default sort mode by specifying a different sort mode, e.g. <code>ls by/status</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>addalias rm cmd/delete</code><br>
+Adds a command alias with the name <code>rm</code>.<br>
+You can then use <code>rm INDEX</code> in place of <code>delete INDEX</code>.</p>
+</li>
+<li>
+<p><code>addalias read cmd/edit s/read p/none</code><br>
+Adds a command alias with the name <code>read</code>.<br>
+You can then use <code>read INDEX</code> in place of <code>edit INDEX s/read p/none</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="listing-command-aliases-code-aliases-code-since-v1-5"><a class="anchor" href="#listing-command-aliases-code-aliases-code-since-v1-5"></a>3.17. Listing command aliases : <code>aliases</code> [since v1.5]</h3>
+<div class="paragraph">
+<p>If you have forgotten some of your command aliases, and need a quick refresher, you can use
+the <code>aliases</code> command to view all your command aliases.<br>
+Format: <code>aliases</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Lists all command aliases.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>After entering the <code>aliases</code> command, Bibliotek shows <code>Listed xx aliases.</code> to indicate that the command was successful.
+The right panel will display a list of all your command aliases.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/AliasesCommand.png" alt="AliasesCommand" width="700">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="delete-a-command-alias-code-deletealias-code-since-v1-5"><a class="anchor" href="#delete-a-command-alias-code-deletealias-code-since-v1-5"></a>3.18. Delete a command alias : <code>deletealias</code> [since v1.5]</h3>
+<div class="paragraph">
+<p>If you no longer require a command alias, you can remove it using <code>deletealias</code>.<br>
+Format: <code>deletealias ALIAS_NAME</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Deletes the command alias specified by the <code>ALIAS_NAME</code>.</p>
+</li>
+<li>
+<p><code>ALIAS_NAME</code> is case-insensitive, and must match the name of an existing alias.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>deletealias rm</code><br>
+Deletes the command alias with the name <code>rm</code>.</p>
+</li>
+<li>
+<p><code>deletealias read</code><br>
+Deletes the command alias with the name <code>read</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="changing-theme-code-theme-code-since-v1-2"><a class="anchor" href="#changing-theme-code-theme-code-since-v1-2"></a>3.19. Changing theme : <code>theme</code> [since v1.2]</h3>
 <div class="paragraph">
 <p>If you don&#8217;t like the default theme used by Bibliotek, you can change it using <code>theme</code>.<br>
 Format: <code>theme THEME_NAME</code></p>
@@ -1211,61 +1351,9 @@ Format: <code>theme THEME_NAME</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="changing-settings-code-settings-code-coming-in-v1-5"><a class="anchor" href="#changing-settings-code-settings-code-coming-in-v1-5"></a>3.17. Changing settings: <code>settings</code> [coming in v1.5]</h3>
+<h3 id="changing-settings-code-settings-code-coming-in-v1-5"><a class="anchor" href="#changing-settings-code-settings-code-coming-in-v1-5"></a>3.20. Changing settings: <code>settings</code> [coming in v1.5]</h3>
 <div class="sect3">
-<h4 id="command-alias-coming-in-v1-5"><a class="anchor" href="#command-alias-coming-in-v1-5"></a>3.17.1. Command alias [coming in v1.5]</h4>
-<div class="paragraph">
-<p>If you don&#8217;t like the word for a command or think it is too long, you can add a
-command alias to make the command more intuitive or reduce typing.<br>
-Format: <code>settings alias/COMMAND: ALIAS</code></p>
-</div>
-<div class="sidebarblock">
-<div class="content">
-<div class="ulist">
-<ul>
-<li>
-<p>Change the alias of the given command.</p>
-</li>
-<li>
-<p>Each command can have 1 alias.</p>
-</li>
-<li>
-<p>By default, all commands have no alias.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-Remove the alias using <code>settings alias/COMMAND:</code>
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Examples:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>settings alias/add: a</code><br>
-Change the command alias of <code>add</code> to <code>a</code>.</p>
-</li>
-<li>
-<p><code>settings alias/add:</code><br>
-Remove the command alias of <code>add</code>.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect3">
-<h4 id="settings-library"><a class="anchor" href="#settings-library"></a>3.17.2. Library [coming in v2.0]</h4>
+<h4 id="settings-library"><a class="anchor" href="#settings-library"></a>3.20.1. Library [coming in v2.0]</h4>
 <div class="paragraph">
 <p>If you want to search for books in other libraries, you can change your settings.<br>
 Format: <code>settings lib/LIBRARY</code></p>
@@ -1301,7 +1389,7 @@ if there are other libraries you wish are supported.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="settings-order"><a class="anchor" href="#settings-order"></a>3.17.3. Online shopping site [coming in v2.0]</h4>
+<h4 id="settings-order"><a class="anchor" href="#settings-order"></a>3.20.2. Online shopping site [coming in v2.0]</h4>
 <div class="paragraph">
 <p>If you want to purchase books on other online booksellers, you can change your settings.<br>
 Format: <code>settings order/SITE</code></p>
@@ -1337,7 +1425,7 @@ if there are other sites you wish are supported.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="font-size-coming-in-v2-0"><a class="anchor" href="#font-size-coming-in-v2-0"></a>3.17.4. Font size [coming in v2.0]</h4>
+<h4 id="font-size-coming-in-v2-0"><a class="anchor" href="#font-size-coming-in-v2-0"></a>3.20.3. Font size [coming in v2.0]</h4>
 <div class="paragraph">
 <p>Think the font size is too small or large for your liking? You can customize the
 font size to your own needs.<br>
@@ -1345,7 +1433,7 @@ Format: <code>settings fontsize/FONTSIZE</code></p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="password-coming-in-v2-0"><a class="anchor" href="#password-coming-in-v2-0"></a>3.17.5. Password [coming in v2.0]</h4>
+<h4 id="password-coming-in-v2-0"><a class="anchor" href="#password-coming-in-v2-0"></a>3.20.4. Password [coming in v2.0]</h4>
 <div class="paragraph">
 <p>If you want to keep your data secure, you can opt to set a password for the application.<br>
 Format: <code>settings password/PASSWORD</code></p>
@@ -1380,21 +1468,21 @@ Remove your password using <code>settings password/</code>
 </div>
 </div>
 <div class="sect2">
-<h3 id="closing-the-program-code-exit-code"><a class="anchor" href="#closing-the-program-code-exit-code"></a>3.18. Closing the program : <code>exit</code></h3>
+<h3 id="closing-the-program-code-exit-code"><a class="anchor" href="#closing-the-program-code-exit-code"></a>3.21. Closing the program : <code>exit</code></h3>
 <div class="paragraph">
 <p>Use <code>exit</code> to close the program.<br>
 Format: <code>exit</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="saving-the-data"><a class="anchor" href="#saving-the-data"></a>3.19. Saving the data</h3>
+<h3 id="saving-the-data"><a class="anchor" href="#saving-the-data"></a>3.22. Saving the data</h3>
 <div class="paragraph">
 <p>Bibliotek saves data in the hard disk automatically after any command that changes the data.<br>
 There is no need to save manually.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="getting-book-recommendations-code-suggest-code-coming-in-v2-0"><a class="anchor" href="#getting-book-recommendations-code-suggest-code-coming-in-v2-0"></a>3.20. Getting book recommendations: <code>suggest</code> [coming in v2.0]</h3>
+<h3 id="getting-book-recommendations-code-suggest-code-coming-in-v2-0"><a class="anchor" href="#getting-book-recommendations-code-suggest-code-coming-in-v2-0"></a>3.23. Getting book recommendations: <code>suggest</code> [coming in v2.0]</h3>
 <div class="paragraph">
 <p>Having problems deciding what to read next? Bibliotek can give you book recommendations
 based on the books in your book shelf. Use <code>suggest</code> to obtain your personalized recommendations!<br>
@@ -1414,7 +1502,7 @@ Give appropriate ratings to books you have read to obtain recommendations that a
 </div>
 </div>
 <div class="sect2">
-<h3 id="importing-books-from-other-e-readers-code-import-code-coming-in-v2-0"><a class="anchor" href="#importing-books-from-other-e-readers-code-import-code-coming-in-v2-0"></a>3.21. Importing books from other E-Readers: <code>import</code> [coming in v2.0]</h3>
+<h3 id="importing-books-from-other-e-readers-code-import-code-coming-in-v2-0"><a class="anchor" href="#importing-books-from-other-e-readers-code-import-code-coming-in-v2-0"></a>3.24. Importing books from other E-Readers: <code>import</code> [coming in v2.0]</h3>
 <div class="paragraph">
 <p>If you are using other E-Readers and have many books in your collection that you wish to
 add into your Bibliotek book shelf, <code>import</code> is the command you are looking for.<br>
@@ -1443,7 +1531,7 @@ Format: <code>import SOURCE</code></p>
 <div class="sect1">
 <h2 id="command-summary"><a class="anchor" href="#command-summary"></a>5. Command Summary</h2>
 <div class="sectionbody">
-<table class="tableblock frame-all grid-all" style="width: 70%;">
+<table class="tableblock frame-all grid-all" style="width: 72%;">
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -1461,12 +1549,25 @@ Format: <code>import SOURCE</code></p>
 <p class="tableblock">e.g. <code>add 1</code></p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Add Alias</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>addalias ALIAS_NAME cmd/COMMAND</code></p>
+<p class="tableblock">e.g. <code>addalias read cmd/edit s/read p/none</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Aliases</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>aliases</code></p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Clear</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>clear</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Delete</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>delete INDEX</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Delete Alias</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>deletealias ALIAS_NAME</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Edit</strong></p></td>
@@ -1521,7 +1622,7 @@ Format: <code>import SOURCE</code></p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-06 05:27:30 UTC
+Last updated 2018-04-08 20:23:20 UTC
 </div>
 </div>
 </body>
