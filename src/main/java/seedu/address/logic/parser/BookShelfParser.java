@@ -81,7 +81,7 @@ public class BookShelfParser {
      */
     private static String buildCommand(Alias alias, String unnamedArgs, String namedArgs) {
         String commandPrefix = alias.getPrefix() + " " + unnamedArgs.trim();
-        String commandNamedArgs = alias.getArguments() + " " + namedArgs.trim();
+        String commandNamedArgs = alias.getNamedArgs() + " " + namedArgs.trim();
         String result = commandPrefix.trim() + " " + commandNamedArgs.trim();
         return result.trim();
     }

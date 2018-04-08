@@ -525,6 +525,6 @@ body {
     -fx-margin: 0 6px 0 0;
 }
 
-.label.alias-arguments {
+.label.alias-named-args {
     -fx-text-fill: #616161;
 }

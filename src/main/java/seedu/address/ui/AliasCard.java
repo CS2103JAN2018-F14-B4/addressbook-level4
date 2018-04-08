@@ -21,7 +21,7 @@ public class AliasCard extends UiPart<Region> {
     @FXML
     private Label prefix;
     @FXML
-    private Label arguments;
+    private Label namedArgs;
 
     public AliasCard(Alias alias, int displayedIndex) {
         super(FXML);
@@ -29,7 +29,7 @@ public class AliasCard extends UiPart<Region> {
         id.setText(displayedIndex + ".");
         name.setText(alias.getName());
         prefix.setText(alias.getPrefix());
-        arguments.setText(alias.getArguments());
+        namedArgs.setText(alias.getNamedArgs());
     }
 
     @Override

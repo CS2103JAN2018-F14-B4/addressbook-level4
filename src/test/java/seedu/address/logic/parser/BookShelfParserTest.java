@@ -52,7 +52,7 @@ public class BookShelfParserTest {
     public void applyCommandAlias_matchingAlias_success() throws Exception {
         String namedArgs = "s/unread by/title";
         String command = UNREAD.getName() + "  " + namedArgs;
-        assertEquals(UNREAD.getPrefix() + " " + UNREAD.getArguments() + " " + namedArgs,
+        assertEquals(UNREAD.getPrefix() + " " + UNREAD.getNamedArgs() + " " + namedArgs,
                 parser.applyCommandAlias(command));
 
         command = SEARCH.getName() + " 1984 a/george orwell   ";

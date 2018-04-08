@@ -3,6 +3,6 @@
     <!-- alias with invalid prefix field -->
     <aliases>
         <name>urd</name>
-        <arguments>s/unread</arguments>
+        <namedArgs>s/unread</namedArgs>
     </aliases>
 </aliaslist>

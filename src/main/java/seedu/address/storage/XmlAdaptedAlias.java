@@ -17,14 +17,14 @@ public class XmlAdaptedAlias {
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Alias' %s field is missing!";
     protected static final String NAME_FIELD = "name";
     protected static final String PREFIX_FIELD = "prefix";
-    protected static final String ARGUMENTS_FIELD = "arguments";
+    protected static final String NAMED_ARGS_FIELD = "namedArgs";
 
     @XmlElement(required = true)
     private String name;
     @XmlElement(required = true)
     private String prefix;
     @XmlElement(required = true)
-    private String arguments;
+    private String namedArgs;
 
     /**
      * Constructs an {@code XmlAdaptedAlias}.
@@ -35,10 +35,10 @@ public class XmlAdaptedAlias {
     /**
      * Constructs an {@code XmlAdaptedAlias} with the given alias details.
      */
-    public XmlAdaptedAlias(String name, String prefix, String arguments) {
+    public XmlAdaptedAlias(String name, String prefix, String namedArgs) {
         this.name = name;
         this.prefix = prefix;
-        this.arguments = arguments;
+        this.namedArgs = namedArgs;
     }
 
     /**
@@ -48,7 +48,7 @@ public class XmlAdaptedAlias {
         requireNonNull(alias);
         this.name = alias.getName();
         this.prefix = alias.getPrefix();
-        this.arguments = alias.getArguments();
+        this.namedArgs = alias.getNamedArgs();
     }
 
     /**
@@ -63,11 +63,11 @@ public class XmlAdaptedAlias {
         if (prefix == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, PREFIX_FIELD));
         }
-        if (arguments == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, ARGUMENTS_FIELD));
+        if (namedArgs == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, NAMED_ARGS_FIELD));
         }
 
-        return new Alias(name, prefix, arguments);
+        return new Alias(name, prefix, namedArgs);
     }
 
     @Override
@@ -83,6 +83,6 @@ public class XmlAdaptedAlias {
         XmlAdaptedAlias otherAlias = (XmlAdaptedAlias) other;
         return Objects.equals(name, otherAlias.name)
                 && Objects.equals(prefix, otherAlias.prefix)
-                && Objects.equals(arguments, otherAlias.arguments);
+                && Objects.equals(namedArgs, otherAlias.namedArgs);
     }
 }

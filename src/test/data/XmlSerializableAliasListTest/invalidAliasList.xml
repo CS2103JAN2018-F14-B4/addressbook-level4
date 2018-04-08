@@ -3,16 +3,16 @@
     <aliases>
         <name>rm</name>
         <prefix>delete</prefix>
-        <arguments></arguments>
+        <namedArgs></namedArgs>
     </aliases>
     <aliases>
         <name>s</name>
         <prefix>search</prefix>
-        <arguments></arguments>
+        <namedArgs></namedArgs>
     </aliases>
     <!-- alias with invalid prefix field -->
     <aliases>
         <name>urd</name>
-        <arguments>s/unread</arguments>
+        <namedArgs>s/unread</namedArgs>
     </aliases>
 </aliaslist>

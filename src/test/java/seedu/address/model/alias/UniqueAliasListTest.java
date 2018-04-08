@@ -52,7 +52,7 @@ public class UniqueAliasListTest {
         assertEquals(1, aliasList.size());
         Alias updatedAlias = aliasList.getAliasByName("1").get();
         assertEquals("updated", updatedAlias.getPrefix());
-        assertEquals("updated", updatedAlias.getArguments());
+        assertEquals("updated", updatedAlias.getNamedArgs());
     }
 
     @Test

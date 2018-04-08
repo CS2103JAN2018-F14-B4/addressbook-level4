@@ -14,6 +14,6 @@
     <Label fx:id="id" styleClass="alias-id" text="\$id"/>
     <Label fx:id="name" styleClass="alias-name" text="\$name"/>
     <Label fx:id="prefix" styleClass="alias-prefix" text="\$prefix"/>
-    <Label fx:id="arguments" styleClass="alias-arguments" text="\$arguments"/>
+    <Label fx:id="namedArgs" styleClass="alias-named-args" text="\$namedArgs"/>
   </FlowPane>
 </HBox>

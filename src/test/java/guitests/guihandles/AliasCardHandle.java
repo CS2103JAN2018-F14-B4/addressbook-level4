@@ -11,12 +11,12 @@ public class AliasCardHandle extends NodeHandle<Node> {
     private static final String ID_FIELD_ID = "#id";
     private static final String NAME_FIELD_ID = "#name";
     private static final String PREFIX_FIELD_ID = "#prefix";
-    private static final String ARGUMENTS_FIELD_ID = "#arguments";
+    private static final String NAMED_ARGS_FIELD_ID = "#namedArgs";
 
     private final Label idLabel;
     private final Label nameLabel;
     private final Label prefixLabel;
-    private final Label argumentsLabel;
+    private final Label namedArgsLabel;
 
     public AliasCardHandle(Node cardNode) {
         super(cardNode);
@@ -24,7 +24,7 @@ public class AliasCardHandle extends NodeHandle<Node> {
         this.idLabel = getChildNode(ID_FIELD_ID);
         this.nameLabel = getChildNode(NAME_FIELD_ID);
         this.prefixLabel = getChildNode(PREFIX_FIELD_ID);
-        this.argumentsLabel = getChildNode(ARGUMENTS_FIELD_ID);
+        this.namedArgsLabel = getChildNode(NAMED_ARGS_FIELD_ID);
     }
 
     public String getId() {
@@ -39,8 +39,8 @@ public class AliasCardHandle extends NodeHandle<Node> {
         return prefixLabel.getText();
     }
 
-    private String getArguments() {
-        return argumentsLabel.getText();
+    private String getNamedArgs() {
+        return namedArgsLabel.getText();
     }
 
     /**
@@ -50,7 +50,7 @@ public class AliasCardHandle extends NodeHandle<Node> {
         return getId().equals(otherHandle.getId())
                 && getName().equals(otherHandle.getName())
                 && getPrefix().equals(otherHandle.getPrefix())
-                && getArguments().equals(otherHandle.getArguments());
+                && getNamedArgs().equals(otherHandle.getNamedArgs());
     }
 
     /**
@@ -59,6 +59,6 @@ public class AliasCardHandle extends NodeHandle<Node> {
     public boolean equals(Alias alias) {
         return getName().equals(alias.getName())
                 && getPrefix().equals(alias.getPrefix())
-                && getArguments().equals(alias.getArguments());
+                && getNamedArgs().equals(alias.getNamedArgs());
     }
 }

@@ -9,17 +9,17 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 public class Alias {
     private final String name;
     private final String prefix;
-    private final String arguments;
+    private final String namedArgs;
 
     /**
-     * Creates an {@code Alias} with the specified {@code name}, {@code prefix}, and {@code arguments}.
+     * Creates an {@code Alias} with the specified {@code name}, {@code prefix}, and {@code namedArgs}.
      * Every field must be present and non-null.
      */
-    public Alias(String name, String prefix, String arguments) {
-        requireAllNonNull(name, prefix, arguments);
+    public Alias(String name, String prefix, String namedArgs) {
+        requireAllNonNull(name, prefix, namedArgs);
         this.name = name.trim().toLowerCase();
         this.prefix = prefix.trim();
-        this.arguments = arguments.trim();
+        this.namedArgs = namedArgs.trim();
     }
 
     public String getName() {
@@ -30,13 +30,13 @@ public class Alias {
         return prefix;
     }
 
-    public String getArguments() {
-        return arguments;
+    public String getNamedArgs() {
+        return namedArgs;
     }
 
     @Override
     public String toString() {
-        return name + " - " + prefix + " " + arguments;
+        return name + " - " + prefix + " " + namedArgs;
     }
 
     @Override
@@ -45,7 +45,7 @@ public class Alias {
                 || (other instanceof Alias // instanceof handles nulls
                 && this.name.equals(((Alias) other).name)
                 && this.prefix.equals(((Alias) other).prefix)
-                && this.arguments.equals(((Alias) other).arguments)); // state check
+                && this.namedArgs.equals(((Alias) other).namedArgs)); // state check
     }
 
     @Override
