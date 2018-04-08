@@ -34,11 +34,6 @@ public interface Model {
         return book1.getTitle().compareTo(book2.getTitle());
     };
 
-    /**
-     * A {@code Comparator} for aliases that sorts by name, in alphabetical order.
-     */
-    Comparator<Alias> ALIAS_COMPARATOR = Comparator.comparing(Alias::getName);
-
     /** Returns the type of list that is currently active. */
     ActiveListType getActiveListType();
 

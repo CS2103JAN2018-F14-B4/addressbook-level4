@@ -75,6 +75,11 @@ public class AddAliasCommandSystemTest extends BibliotekSystemTest {
         executeCommand("read");
         model.updateBookListFilter(book -> book.getStatus() == Status.READ);
         assertApplicationDisplaysExpected("", String.format(ListCommand.MESSAGE_SUCCESS, 1), model);
+
+        /* case: perform list command using alias, with overridden named parameter */
+        executeCommand("read s/unread");
+        model.updateBookListFilter(book -> book.getStatus() == Status.UNREAD);
+        assertApplicationDisplaysExpected("", String.format(ListCommand.MESSAGE_SUCCESS, 2), model);
     }
 
     /**

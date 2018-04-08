@@ -23,7 +23,6 @@ public class AliasesCommandSystemTest extends BibliotekSystemTest {
         assertFalse(getAliasListPanel().isVisible());
 
         /* executing aliases command should hide all other main panels */
-        assertAliasCommandSuccess();
         executeCommand(ReviewsCommand.COMMAND_WORD + " " + INDEX_FIRST_BOOK.getOneBased());
         assertAliasCommandSuccess();
     }

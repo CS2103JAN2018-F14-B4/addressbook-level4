@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.model.alias.Alias.ALIAS_NAME_COMPARATOR;
 
 import java.util.Comparator;
 import java.util.List;
@@ -67,7 +68,7 @@ public class ModelManager extends ComponentManager implements Model {
         }
 
         this.aliases = new UniqueAliasList(aliasList);
-        this.displayAliasList = new SortedList<>(this.aliases.asObservableList(), ALIAS_COMPARATOR);
+        this.displayAliasList = new SortedList<>(this.aliases.asObservableList(), ALIAS_NAME_COMPARATOR);
     }
 
     public ModelManager(ReadOnlyBookShelf bookShelf, UserPrefs userPrefs) {

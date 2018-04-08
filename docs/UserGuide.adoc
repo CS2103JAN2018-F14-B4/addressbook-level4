@@ -500,14 +500,17 @@ Format: `addalias ALIAS_NAME cmd/COMMAND`
 
 ****
 * Adds a command alias for the specified `COMMAND`.
-* `COMMAND` must refer to a default, built-in command, and can optionally include command parameters.
+* `COMMAND` should refer to a default, built-in command, and can optionally include command parameters.
 * `ALIAS_NAME` is case-insensitive, and must not contain any spaces or tabs.
 * If there is an existing alias with the same name as `ALIAS_NAME`, the existing alias will be overwritten.
 ****
 
+WARNING: If `COMMAND` does not specify a valid built-in command, you will
+get an `Unknown command` message when you attempt to use the command alias.
+
 [TIP]
 You can use command aliases to specify default named parameters (parameters with a prefix, such as `t/TITLE`). +
-For example, if you want to have a custom `list` command that sorts by title (in reverse alphabetical order) by default,
+For example, if you want a custom `list` command that sorts by title (in reverse alphabetical order) by default,
 you can add a command alias using `addalias ls cmd/list by/titled`. +
 You can override this default sort mode by specifying a different sort mode, e.g. `ls by/status`.
 

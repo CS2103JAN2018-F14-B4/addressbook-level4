@@ -2,18 +2,25 @@ package seedu.address.model.alias;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Comparator;
+
 /**
  * Contains data about a single alias.
  * Guarantees: immutable.
  */
 public class Alias {
+    /**
+     * A {@code Comparator} for aliases that sorts by name, in alphabetical order.
+     */
+    public static final Comparator<Alias> ALIAS_NAME_COMPARATOR = Comparator.comparing(Alias::getName);
+
     private final String name;
     private final String prefix;
     private final String namedArgs;
 
     /**
      * Creates an {@code Alias} with the specified {@code name}, {@code prefix}, and {@code namedArgs}.
-     * Every field must be present and non-null.
+     * All fields must be non-null.
      */
     public Alias(String name, String prefix, String namedArgs) {
         requireAllNonNull(name, prefix, namedArgs);
