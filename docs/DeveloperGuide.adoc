@@ -23,8 +23,9 @@ Bibliotek is a free book cataloguing application that is simple, fast, and easy 
 Bibliotek was developed and is maintained by https://github.com/CS2103JAN2018-F14-B4[Team F14-B4]. Feel free to https://f14-b4.netlify.com/contactus[contact us] for any enquries.
 
 === Contributing
-Bibliotek is an open source project and contributors are always welcome. To get involved, start with the <<Setting up, Setting up>> section.
+Bibliotek is an open source project and contributors are always welcome. To get involved, start by reading <<Setting-Up>>.
 
+[[Setting-Up]]
 == Setting up
 
 === Prerequisites
@@ -196,7 +197,7 @@ image::LogicCommandClassDiagram.png[width="800"]
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
-.  `Logic` uses the `BookShelfParser` class to first map any command alias to the actual command then parse the actual command.
+.  `Logic` uses the `BookShelfParser` class to parse the user input.
 .  This results in a `Command` object which is executed by the `LogicManager`.
 .  The command execution can affect the `Model` (e.g. adding a book), make web API calls using the `Network`, and/or raise events.
 .  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
@@ -482,7 +483,7 @@ image::UndoRedoActivityDiagram.png[width="550"]
 
 When `edit` command is entered,
 
-. `EditCommandPaser` will extract the index and the parameters from the user input.
+. `EditCommandParser` will extract the index and the parameters from the user input.
 . `EditCommandParser` checks that at least one parameter is present, and that the parameter(s) are valid.
 . `EditCommandParser` creates an `EditCommand` with the index and parameter(s).
 . `EditCommand` is preprocessed to check that `ActiveListType` is correct and index is valid.
@@ -761,7 +762,7 @@ Each individual exercise in this section is component-based (i.e. you would not 
 [discrete]
 ==== `Logic` component
 
-*Scenario:* You are in charge of `logic`. During dog-fooding, your team realize that it is troublesome for a new user, who has not set up any custom alliases yet, to type the whole command in order to execute a command. Your team devise some strategies to help cut down the amount of typing necessary, and one of the suggestions was to implement aliases for the command words. Your job is to implement such aliases.
+*Scenario:* You are in charge of `logic`. During dog-fooding, your team realize that it is troublesome for a new user, who has not set up any custom aliases yet, to type the whole command in order to execute a command. Your team devise some strategies to help cut down the amount of typing necessary, and one of the suggestions was to implement aliases for the command words. Your job is to implement such aliases.
 
 [TIP]
 Do take a look at <<Design-Logic>> before attempting to modify the `Logic` component.
@@ -1043,8 +1044,8 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 ** Added `edit` command that allows user to rate, set status and change priority of
 some books.
 ** This allows the user to keep track of what to read and what have been read and give recommendations to others.
-* **Encrpyt data with a password** (minor)
-** Add an `encrpyt` command to encrpyt data with a password.
+* **Encrypt data with a password** (minor)
+** Add an `encrypt` command to encrypt data with a password.
 ** This allows users to keep their data private and safe.
 
 [discrete]
