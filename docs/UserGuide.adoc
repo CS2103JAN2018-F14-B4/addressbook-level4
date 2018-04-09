@@ -119,6 +119,50 @@ Returns a list of books containing the word `Artemis`, where `Andy Weir` matches
 * `search t/Babylon's Ashes c/Science Fiction` +
 Returns a list of `Science Fiction` books that contains `Babylon's Ashes` in the title.
 
+[[select-command]]
+=== Selecting a book : `select`
+
+If you are interested in a book and want to view more information about it, use `select`. +
+Format: `select INDEX`
+
+****
+* Selects the book at the specified `INDEX` and displays detailed information about it.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Suppose you have the following search results.
+
+image::SearchCommandFound.png[width="700"]
+
+If you are interested in `The Ivory Tower and Harry Potter` and wish to view more information,
+enter `select 3`.
+
+Bibliotek shows `Selected Book: 3` to indicate that your `select` is successful. The left panel
+is auto-scrolled to the selected book and the right panel shows detailed information of the book.
+
+image::SelectCommand.png[width="700"]
+
+Alternatively, instead of entering `select 3`, you can directly select `The Ivory Tower and Harry Potter`
+by clicking on it in the left panel.
+
+Bibliotek shows the detailed information of the book in the right panel. Note that no confirmation message
+will be shown in this case.
+
+image::SelectCommandUI.png[width="700"]
+
+Other examples:
+
+* `list` +
+`select 2` +
+Selects the 2nd book in your book shelf.
+* `list p/HIGH` +
+`select 1` +
+Selects the 1st book among books with `HIGH` priority in your book shelf.
+* `search Artemis a/Andy Weir` +
+`select 1` +
+Selects the 1st book in the search results.
+
 [[add-command]]
 === Adding a book : `add`
 
@@ -205,50 +249,6 @@ Lists books in your book shelf that contains `Andy Weir` in one of the authors' 
 * `list t/Babylon's Ashes c/Science Fiction` +
 Lists `Science Fiction` books in your book shelf that contains `Babylon's Ashes` in the title.
 
-[[select-command]]
-=== Selecting a book : `select`
-
-If you are interested in a book and want to view more information about it, use `select`. +
-Format: `select INDEX`
-
-****
-* Selects the book at the specified `INDEX` and displays detailed information about it.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
-****
-
-Suppose you have the following search results.
-
-image::SearchCommandFound.png[width="700"]
-
-If you are interested in `The Ivory Tower and Harry Potter` and wish to view more information,
-enter `select 3`.
-
-Bibliotek shows `Selected Book: 3` to indicate that your `select` is successful. The left panel
-is auto-scrolled to the selected book and the right panel shows detailed information of the book.
-
-image::SelectCommand.png[width="700"]
-
-Alternatively, instead of entering `select 3`, you can directly select `The Ivory Tower and Harry Potter`
-by clicking on it in the left panel.
-
-Bibliotek shows the detailed information of the book in the right panel. Note that no confirmation message
-will be shown in this case.
-
-image::SelectCommandUI.png[width="700"]
-
-Other examples:
-
-* `list` +
-`select 2` +
-Selects the 2nd book in your book shelf.
-* `list p/HIGH` +
-`select 1` +
-Selects the 1st book among books with `HIGH` priority in your book shelf.
-* `search Artemis a/Andy Weir` +
-`select 1` +
-Selects the 1st book in the search results.
-
 [[edit-command]]
 === Editing a book : `edit` _(since v1.4)_
 
@@ -308,38 +308,60 @@ Other examples:
 `delete 1` +
 Deletes the 1st book in the results of the `list` command.
 
-[[reviews-command]]
-=== Viewing book reviews : `reviews` _(since v1.3)_
+[[clear-command]]
+=== Clearing book shelf : `clear`
 
-If a book catches your eyes but you are not sure whether it's worth the read, use
-`reviews` to find out what other readers think. +
-Format: `reviews INDEX`
+Don't need the data in your book shelf anymore? Remove them using `clear`. +
+Format: `clear`
+
+WARNING: You can only perform `clear` if the list shown is from your book shelf.
+
+If you want to delete all books, enter `clear`.
+
+Bibliotek shows `Book shelf has been cleared!` to indicate that your `clear` is successful.
+The left and right panels are now empty.
+
+image::ClearCommand.png[width="700"]
+
+[[undo-command]]
+=== Undoing previous command : `undo`
+
+If you regret executing a command, use `undo` to reverse your action. +
+Format: `undo`
 
 ****
-* Loads reviews of the book at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
+* Restores the book shelf to the state before the previous _undoable_ command was executed.
 ****
 
-WARNING: You can only perform `reviews` with Internet connection.
+[NOTE]
+====
+Undoable commands: those commands that modify the book shelf's content (`add`, `edit`, `delete`, and `clear`).
+====
 
-Suppose you have the following search results.
+Suppose you just deleted a book `Harry Potter and the Classical World`.
 
-image::SearchCommandFound.png[width="700"]
+image::DeleteCommand.png[width="700"]
 
-If you want to view book reviews for `Consider Phlebas`, enter `reviews 2`.
+If you regret your deletion and wish to undo it, enter `undo`.
 
-Bibliotek shows `Showing reviews for book: TITLE - Authors: AUTHORS.` and displays a browser at the right panel.
-The browser will begin loading the reviews page of the book on https://goodreads.com[goodreads, window="_blank"].
-Once the web page has loaded, you will be able to see the reviews, as shown below.
+Bibliotek shows `Undo success!` to indicate that your `undo` is successful. `Harry Potter and the Classical World` is back in your
+book shelf as seen in the left panel.
 
-image::ReviewsCommandLoaded.png[width="700"]
+image::UndoCommand.png[width="700"]
+
+NOTE: Your entire book shelf is shown in the left panel after performing `undo`.
 
 Other examples:
 
-* `search t/Babylon's Ashes c/Science Fiction` +
-`reviews 1` +
-Shows online reviews of 1st book in the search results.
+* `select 1` +
+`list` +
+`undo` +
+The `undo` command fails as there are no undoable commands executed previously.
+
+* `delete 1` +
+`clear` +
+`undo` (reverses the `clear` command) +
+`undo` (reverses the `delete 1` command) +
 
 [[recent-command]]
 === Listing recently viewed books : `recent` _(since v1.2)_
@@ -377,6 +399,39 @@ You can then enter `add 4` to add the book into your book shelf.
 
 NOTE: If you don't see the intended book in the list, then too many book selections have been performed after
 that book.
+
+[[reviews-command]]
+=== Viewing book reviews : `reviews` _(since v1.3)_
+
+If a book catches your eyes but you are not sure whether it's worth the read, use
+`reviews` to find out what other readers think. +
+Format: `reviews INDEX`
+
+****
+* Loads reviews of the book at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+WARNING: You can only perform `reviews` with Internet connection.
+
+Suppose you have the following search results.
+
+image::SearchCommandFound.png[width="700"]
+
+If you want to view book reviews for `Consider Phlebas`, enter `reviews 2`.
+
+Bibliotek shows `Showing reviews for book: TITLE - Authors: AUTHORS.` and displays a browser at the right panel.
+The browser will begin loading the reviews page of the book on https://goodreads.com[goodreads, window="_blank"].
+Once the web page has loaded, you will be able to see the reviews, as shown below.
+
+image::ReviewsCommandLoaded.png[width="700"]
+
+Other examples:
+
+* `search t/Babylon's Ashes c/Science Fiction` +
+`reviews 1` +
+Shows online reviews of 1st book in the search results.
 
 [[library-command]]
 === Finding a book in the library : `library` _(since v1.5)_
@@ -422,61 +477,6 @@ Format: `history`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
-[[undo-command]]
-=== Undoing previous command : `undo`
-
-If you regret executing a command, use `undo` to reverse your action. +
-Format: `undo`
-
-****
-* Restores the book shelf to the state before the previous _undoable_ command was executed.
-****
-
-[NOTE]
-====
-Undoable commands: those commands that modify the book shelf's content (`add`, `delete`, `edit` and `clear`).
-====
-
-Suppose you just deleted a book `Harry Potter and the Classical World`.
-
-image::DeleteCommand.png[width="700"]
-
-If you regret your deletion and wish to undo it, enter `undo`.
-
-Bibliotek shows `Undo success!` to indicate that your `undo` is successful. `Harry Potter and the Classical World` is back in your
-book shelf as seen in the left panel.
-
-image::UndoCommand.png[width="700"]
-
-NOTE: Your entire book shelf is shown in the left panel after performing `undo`.
-
-Other examples:
-
-* `select 1` +
-`list` +
-`undo` +
-The `undo` command fails as there are no undoable commands executed previously.
-
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-
-[[clear-command]]
-=== Clearing all entries : `clear`
-
-Don't need the data in your book shelf anymore? Remove them using `clear`. +
-Format: `clear`
-
-WARNING: You can only perform `clear` if the list shown is from your book shelf.
-
-If you want to delete all books, enter `clear`.
-
-Bibliotek shows `Book shelf has been cleared!` to indicate that your `clear` is successful.
-The left and right panels are now empty.
-
-image::ClearCommand.png[width="700"]
-
 [[addalias-command]]
 === Adding a command alias : `addalias` _(since v1.5)_
 
@@ -496,8 +496,8 @@ get an `Unknown command` message when you attempt to use the command alias.
 
 [TIP]
 You can use command aliases to specify default named parameters (parameters with a prefix, such as `t/TITLE`). +
-For example, if you want a custom `list` command that sorts by title (in reverse alphabetical order) by default,
-you can add a command alias using `addalias ls cmd/list by/titled`. +
+For example, if you want a custom `list` command that sorts by rating by default,
+you can add a command alias using `addalias ls cmd/list by/rating`. +
 You can override this default sort mode by specifying a different sort mode, e.g. `ls by/status`.
 
 Examples:
@@ -513,8 +513,8 @@ You can then use `read INDEX` in place of `edit INDEX s/read p/none`.
 [[aliases-command]]
 === Listing command aliases : `aliases` _(since v1.5)_
 
-If you have forgotten some of your command aliases, and need a quick refresher, you can use
-the `aliases` command to view all your command aliases. +
+If you have forgotten some of your command aliases and need a quick refresher, you can use
+the `aliases` command to view them. +
 Format: `aliases`
 
 ****
