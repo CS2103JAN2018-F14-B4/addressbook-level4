@@ -33,7 +33,7 @@ import seedu.address.model.book.Status;
 import seedu.address.network.NetworkManager;
 import seedu.address.testutil.BookBuilder;
 import seedu.address.testutil.EditDescriptorBuilder;
-//@@author 592363789
+
 /**
  * Contains integration tests (interaction with the Model) and unit tests for EditCommand.
  */
@@ -133,7 +133,7 @@ public class EditCommandTest {
         // no commands in undoStack -> undoCommand fail
         assertCommandFailure(undoCommand, model, UndoCommand.MESSAGE_FAILURE);
     }
-
+    //@@author 592363789
     @Test
     public void execute_invalidBookIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getDisplayBookList().size() + 1);

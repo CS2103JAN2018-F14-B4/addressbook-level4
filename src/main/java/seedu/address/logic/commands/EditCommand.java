@@ -83,7 +83,7 @@ public class EditCommand extends UndoableCommand {
         bookToEdit = lastShownList.get(index.getZeroBased());
         editedBook = createEditedBook(bookToEdit, editDescriptor);
     }
-
+//@@author
     /**
      * Creates and returns a {@code Book} with the details of {@code bookToEdit}
      * edited with {@code editDescriptor}.
@@ -119,7 +119,7 @@ public class EditCommand extends UndoableCommand {
                 && editDescriptor.equals(e.editDescriptor)
                 && Objects.equals(bookToEdit, e.bookToEdit);
     }
-
+//@@author 592363789
     /**
      * Stores the details to edit the book with. Each non-empty field value will replace the
      * corresponding field value of the book.
