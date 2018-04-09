@@ -103,7 +103,7 @@ public class LibraryCommandTest {
     }
 
     /**
-     * Executes an {@code LibraryCommand} with the given {@code index}, and checks that
+     * Executes a {@code LibraryCommand} with the given {@code index}, and checks that
      * {@code network.searchLibraryForBook(book)} is being called with the correct book.
      */
     private void assertExecutionSuccess(Index index, Book expectedBook, Model expectedModel) {
@@ -120,7 +120,7 @@ public class LibraryCommandTest {
     }
 
     /**
-     * Returns an {@code LibraryCommand} with the parameter {@code index}.
+     * Returns a {@code LibraryCommand} with the parameter {@code index}.
      */
     private LibraryCommand prepareCommand(Index index) {
         LibraryCommand command = new LibraryCommand(index);

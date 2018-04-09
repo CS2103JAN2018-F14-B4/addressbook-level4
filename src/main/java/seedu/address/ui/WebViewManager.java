@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.application.Platform;
-import javafx.beans.InvalidationListener;
 import javafx.beans.value.ChangeListener;
 import javafx.concurrent.Worker;
 import javafx.scene.Node;
@@ -25,14 +24,14 @@ public class WebViewManager {
     private static WebViewManager webViewManager;
     private WebView browser;
     private WebEngine engine;
-    private List<InvalidationListener> invalidationListeners;
-    private List<ChangeListener> changeListeners;
+    private List<ChangeListener<? super Number>> loadProgressListeners;
+    private List<ChangeListener<? super Worker.State>> loadSuccessListeners;
 
     private WebViewManager() {
         browser = new WebView();
         engine = browser.getEngine();
-        invalidationListeners = new ArrayList<>();
-        changeListeners = new ArrayList<>();
+        loadProgressListeners = new ArrayList<>();
+        loadSuccessListeners = new ArrayList<>();
     }
 
     /**
@@ -105,7 +104,7 @@ public class WebViewManager {
             }
         };
         engine.getLoadWorker().stateProperty().addListener(newListener);
-        changeListeners.add(newListener);
+        loadSuccessListeners.add(newListener);
     }
 
     /**
@@ -119,13 +118,13 @@ public class WebViewManager {
      * @param runnable Action to perform upon successfully loading a page.
      */
     protected void onLoadProgress(Node root, double progress, Runnable runnable) {
-        InvalidationListener newListener = n -> {
+        ChangeListener<? super Number> newListener = (obs, oldNum, newNum) -> {
             if (root.isVisible() && engine.getLoadWorker().getProgress() > progress) {
                 runnable.run();
             }
         };
         engine.getLoadWorker().progressProperty().addListener(newListener);
-        invalidationListeners.add(newListener);
+        loadProgressListeners.add(newListener);
     }
 
     /**
@@ -142,8 +141,8 @@ public class WebViewManager {
     public void cleanUp() {
         webViewManager = null;
         Platform.runLater(() -> {
-            invalidationListeners.forEach(engine.getLoadWorker().progressProperty()::removeListener);
-            changeListeners.forEach(engine.getLoadWorker().stateProperty()::removeListener);
+            loadProgressListeners.forEach(engine.getLoadWorker().progressProperty()::removeListener);
+            loadSuccessListeners.forEach(engine.getLoadWorker().stateProperty()::removeListener);
         });
     }
 }

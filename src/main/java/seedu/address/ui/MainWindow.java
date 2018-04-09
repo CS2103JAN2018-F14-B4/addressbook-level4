@@ -140,8 +140,8 @@ public class MainWindow extends UiPart<Stage> {
     void fillInnerParts() {
         welcomePanel = new WelcomePanel();
         bookDetailsPanel = new BookDetailsPanel();
-        bookInLibraryPanel = new BookInLibraryPanel(WebViewManager.getInstance());
         bookReviewsPanel = new BookReviewsPanel(WebViewManager.getInstance());
+        bookInLibraryPanel = new BookInLibraryPanel(WebViewManager.getInstance());
         aliasListPanel = new AliasListPanel(logic.getDisplayAliasList());
         mainContentPlaceholder.getChildren().add(welcomePanel.getRoot());
         mainContentPlaceholder.getChildren().add(bookDetailsPanel.getRoot());
@@ -224,11 +224,11 @@ public class MainWindow extends UiPart<Stage> {
      * Hides all panels in the main content.
      */
     private void hideMainContent() {
+        welcomePanel.hide();
         bookDetailsPanel.hide();
         bookReviewsPanel.hide();
         bookInLibraryPanel.hide();
         aliasListPanel.hide();
-        welcomePanel.hide();
     }
 
     /**

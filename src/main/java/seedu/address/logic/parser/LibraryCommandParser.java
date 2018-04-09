@@ -8,14 +8,14 @@ import seedu.address.logic.commands.LibraryCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
- * Parses input arguments and creates a new LibraryCommand object
+ * Parses input arguments and creates a new LibraryCommand object.
  */
 public class LibraryCommandParser implements Parser<LibraryCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the LibraryCommand
      * and returns an LibraryCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
+     * @throws ParseException if the user input does not conform the expected format.
      */
     public LibraryCommand parse(String args) throws ParseException {
         try {

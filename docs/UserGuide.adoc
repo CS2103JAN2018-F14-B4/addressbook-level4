@@ -378,7 +378,8 @@ Format: `library INDEX`
 * Default library searched is National Library Board.
 ****
 
-WARNING: You can only perform `library` with Internet connection.
+WARNING: You can only perform `library` when the list shown is your book shelf. +
+You also need Internet connection.
 
 Suppose you have the following books in your display list.
 
@@ -395,12 +396,6 @@ Once the data is ready, Bibliotek shows `Showing availability of book: TITLE - A
 You will be able to see the availability of the book in the library in the right panel, as shown below.
 
 image::LibraryCommandAfter.png[width="700"]
-
-Examples:
-
-* `list` +
-`library 1` +
-Search the library for the 1st book in your book shelf.
 
 === Placing a book on watchlist: `watch` [coming in v1.5]
 
