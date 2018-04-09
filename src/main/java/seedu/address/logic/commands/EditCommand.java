@@ -83,7 +83,7 @@ public class EditCommand extends UndoableCommand {
         bookToEdit = lastShownList.get(index.getZeroBased());
         editedBook = createEditedBook(bookToEdit, editDescriptor);
     }
-
+    
     /**
      * Creates and returns a {@code Book} with the details of {@code bookToEdit}
      * edited with {@code editDescriptor}.
