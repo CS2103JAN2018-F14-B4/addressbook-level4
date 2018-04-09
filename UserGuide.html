@@ -35,7 +35,7 @@
 <li><a href="#deleting-a-book-code-delete-code">3.7. Deleting a book : <code>delete</code></a></li>
 <li><a href="#viewing-book-reviews-code-reviews-code-since-v1-3">3.8. Viewing book reviews: <code>reviews</code> [since v1.3]</a></li>
 <li><a href="#listing-recently-viewed-books-code-recent-code-since-v1-2">3.9. Listing recently viewed books: <code>recent</code> [since v1.2]</a></li>
-<li><a href="#finding-a-book-in-the-library-code-library-code-coming-in-v1-5">3.10. Finding a book in the library: <code>library</code> [coming in v1.5]</a></li>
+<li><a href="#finding-a-book-in-the-library-code-library-code-since-v1-5">3.10. Finding a book in the library: <code>library</code> [since v1.5]</a></li>
 <li><a href="#placing-a-book-on-watchlist-code-watch-code-coming-in-v1-5">3.11. Placing a book on watchlist: <code>watch</code> [coming in v1.5]</a></li>
 <li><a href="#ordering-a-book-online-code-order-code-coming-in-v1-5">3.12. Ordering a book online: <code>order</code> [coming in v1.5]</a></li>
 <li><a href="#listing-entered-commands-code-history-code">3.13. Listing entered commands : <code>history</code></a></li>
@@ -880,9 +880,9 @@ that book.
 </div>
 </div>
 <div class="sect2">
-<h3 id="finding-a-book-in-the-library-code-library-code-coming-in-v1-5"><a class="anchor" href="#finding-a-book-in-the-library-code-library-code-coming-in-v1-5"></a>3.10. Finding a book in the library: <code>library</code> [coming in v1.5]</h3>
+<h3 id="finding-a-book-in-the-library-code-library-code-since-v1-5"><a class="anchor" href="#finding-a-book-in-the-library-code-library-code-since-v1-5"></a>3.10. Finding a book in the library: <code>library</code> [since v1.5]</h3>
 <div class="paragraph">
-<p>If you want to know whether a book is available in a library, use <code>library</code>.<br>
+<p>If you want to know whether a book is available in the library, use <code>library</code>.<br>
 Format: <code>library INDEX</code></p>
 </div>
 <div class="sidebarblock">
@@ -912,16 +912,33 @@ You can only perform <code>library</code> with Internet connection.
 </table>
 </div>
 <div class="paragraph">
-<p>Examples:</p>
+<p>Suppose you have the following books in your display list.</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>list</code><br>
-<code>library 1</code><br>
-Search your chosen library for the 1st book in your book shelf.</p>
-</li>
-</ul>
+<div class="imageblock">
+<div class="content">
+<img src="images/LibraryCommandBefore.png" alt="LibraryCommandBefore" width="700">
+</div>
+</div>
+<div class="paragraph">
+<p>If you want to search the library for <code>Artemis</code>, enter <code>library 1</code>.</p>
+</div>
+<div class="paragraph">
+<p>Bibliotek shows <code>Searching for the book in the library&#8230;&#8203;</code> to indicate that your <code>library</code> command is being processed.
+This may take some time since data is being loaded from the online library catalogue.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/LibraryCommandSearching.png" alt="LibraryCommandSearching" width="700">
+</div>
+</div>
+<div class="paragraph">
+<p>Once the data is ready, Bibliotek shows <code>Showing availability of book: TITLE - Authors: AUTHORS</code>.
+You will be able to see the availability of the book in the library in the right panel, as shown below.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/LibraryCommandAfter.png" alt="LibraryCommandAfter" width="700">
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -1622,7 +1639,7 @@ Format: <code>import SOURCE</code></p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-09 14:36:46 UTC
+Last updated 2018-04-09 16:24:03 UTC
 </div>
 </div>
 </body>
