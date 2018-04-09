@@ -45,6 +45,8 @@ public class LibraryCommandTest {
     @Before
     public void setUp() {
         model = new ModelManager(TypicalBooks.getTypicalBookShelf(), new UserPrefs());
+        model.updateSearchResults(TypicalBooks.getTypicalBookShelf());
+        model.addRecentBook(TypicalBooks.ARTEMIS);
     }
 
     @Test
@@ -54,34 +56,47 @@ public class LibraryCommandTest {
     }
 
     @Test
-    public void execute_invalidActiveListType_failure() {
-        LibraryCommand smallIndex = prepareCommand(INDEX_FIRST_BOOK);
-        LibraryCommand largeIndex = prepareCommand(Index.fromOneBased(100));
-
-        model.setActiveListType(ActiveListType.SEARCH_RESULTS);
-        assertCommandFailure(smallIndex, model, LibraryCommand.MESSAGE_WRONG_ACTIVE_LIST);
-
-        model.setActiveListType(ActiveListType.RECENT_BOOKS);
-        assertCommandFailure(smallIndex, model, LibraryCommand.MESSAGE_WRONG_ACTIVE_LIST);
-
-        // Wrong active list message should take precedence over invalid index
-        assertCommandFailure(largeIndex, model, LibraryCommand.MESSAGE_WRONG_ACTIVE_LIST);
-    }
-
-    @Test
-    public void execute_validIndex_success() throws Exception {
+    public void execute_validIndexBookShelf_success() {
         assertExecutionSuccess(INDEX_FIRST_BOOK, model.getDisplayBookList().get(0), model);
     }
 
     @Test
-    public void execute_invalidIndexSearchResults_failure() {
+    public void execute_invalidIndexBookShelf_failure() {
         LibraryCommand libraryCommand = prepareCommand(Index.fromOneBased(model.getDisplayBookList().size() + 1));
 
         assertCommandFailure(libraryCommand, model, Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
     }
 
     @Test
-    public void equals() throws Exception {
+    public void execute_validIndexSearchResults_success() {
+        model.setActiveListType(ActiveListType.SEARCH_RESULTS);
+        assertExecutionSuccess(INDEX_FIRST_BOOK, model.getSearchResultsList().get(0), model);
+    }
+
+    @Test
+    public void execute_invalidIndexSearchResults_failure() {
+        model.setActiveListType(ActiveListType.SEARCH_RESULTS);
+        LibraryCommand libraryCommand = prepareCommand(Index.fromOneBased(model.getSearchResultsList().size() + 1));
+
+        assertCommandFailure(libraryCommand, model, Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_validIndexRecentBooks_success() {
+        model.setActiveListType(ActiveListType.RECENT_BOOKS);
+        assertExecutionSuccess(INDEX_FIRST_BOOK, model.getRecentBooksList().get(0), model);
+    }
+
+    @Test
+    public void execute_invalidIndexRecentBooks_failure() {
+        model.setActiveListType(ActiveListType.RECENT_BOOKS);
+        LibraryCommand libraryCommand = prepareCommand(Index.fromOneBased(model.getRecentBooksList().size() + 1));
+
+        assertCommandFailure(libraryCommand, model, Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void equals() {
         LibraryCommand libraryFirstCommand = prepareCommand(INDEX_FIRST_BOOK);
         LibraryCommand librarySecondCommand = prepareCommand(INDEX_SECOND_BOOK);
 

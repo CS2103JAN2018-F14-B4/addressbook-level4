@@ -8,6 +8,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.LibraryCommand;
 import seedu.address.logic.commands.RecentCommand;
+import seedu.address.logic.commands.SearchCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.Model;
 import seedu.address.model.book.Book;
@@ -17,22 +18,43 @@ public class LibraryCommandSystemTest extends BibliotekSystemTest {
 
     @Test
     public void library() {
-        Model model = getModel();
-        ObservableList<Book> bookList = model.getDisplayBookList();
+
+        /* ---------- Test on book shelf ------------- */
+
+        ObservableList<Book> bookList = getModel().getDisplayBookList();
 
         assertCommandSuccess(LibraryCommand.COMMAND_WORD + " 1", bookList.get(0));
         assertCommandSuccess(LibraryCommand.COMMAND_WORD + " " + bookList.size(),
                 bookList.get(bookList.size() - 1));
 
-        assertCommandFailure(LibraryCommand.COMMAND_WORD + " 0",
-                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, LibraryCommand.MESSAGE_USAGE));
-        assertCommandFailure(LibraryCommand.COMMAND_WORD + " " + bookList.size() + 1,
+        assertCommandFailure(LibraryCommand.COMMAND_WORD + " " + (bookList.size() + 1),
                 Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
+
+        /* ---------- Test on search results list ------------- */
+
+        executeBackgroundCommand(SearchCommand.COMMAND_WORD + " hello", SearchCommand.MESSAGE_SEARCHING);
+
+        bookList = getModel().getSearchResultsList();
+
+        assertCommandSuccess(LibraryCommand.COMMAND_WORD + " 1", bookList.get(0));
+        assertCommandFailure(LibraryCommand.COMMAND_WORD + " " + (bookList.size() + 1),
+                Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
+
+        /* ---------- Test on recent books list ------------- */
 
         executeCommand(SelectCommand.COMMAND_WORD + " 1");
         executeCommand(RecentCommand.COMMAND_WORD);
-        assertCommandFailure(LibraryCommand.COMMAND_WORD + " 1",
-                LibraryCommand.MESSAGE_WRONG_ACTIVE_LIST);
+
+        bookList = getModel().getRecentBooksList();
+
+        assertCommandSuccess(LibraryCommand.COMMAND_WORD + " 1", bookList.get(0));
+        assertCommandFailure(LibraryCommand.COMMAND_WORD + " " + (bookList.size() + 1),
+                Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
+
+        /* ---------- Negative test cases ------------- */
+
+        assertCommandFailure(LibraryCommand.COMMAND_WORD + " 0",
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, LibraryCommand.MESSAGE_USAGE));
     }
 
     /**

@@ -10,7 +10,6 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.events.ui.ShowLibraryResultRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.ActiveListType;
 import seedu.address.model.book.Book;
 
 //@@author qiu-siqi
@@ -44,10 +43,9 @@ public class LibraryCommand extends Command {
     public CommandResult execute() throws CommandException {
         requireNonNull(model);
 
-        checkActiveListType();
         checkValidIndex();
 
-        makeAsyncBookInLibraryRequest(model.getDisplayBookList().get(targetIndex.getZeroBased()));
+        makeAsyncBookInLibraryRequest(getBook(targetIndex));
         return new CommandResult(MESSAGE_SEARCHING);
     }
 
@@ -55,17 +53,61 @@ public class LibraryCommand extends Command {
      * Throws a {@link CommandException} if the given index is not valid.
      */
     private void checkValidIndex() throws CommandException {
-        List<Book> lastShownList = model.getDisplayBookList();
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
+        switch (model.getActiveListType()) {
+        case BOOK_SHELF:
+        {
+            List<Book> displayBookList = model.getDisplayBookList();
+
+            if (targetIndex.getZeroBased() >= displayBookList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
+            }
+
+            break;
+        }
+        case SEARCH_RESULTS:
+        {
+            List<Book> searchResultsList = model.getSearchResultsList();
+
+            if (targetIndex.getZeroBased() >= searchResultsList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
+            }
+
+            break;
+        }
+        case RECENT_BOOKS:
+        {
+            List<Book> recentBooksList = model.getRecentBooksList();
+
+            if (targetIndex.getZeroBased() >= recentBooksList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
+            }
+
+            break;
+        }
+        default:
+            throw new CommandException(MESSAGE_WRONG_ACTIVE_LIST);
         }
     }
 
     /**
-     * Throws a {@link CommandException} if the current display list does not support this command.
+     * Assumes: {@code targetIndex} is a valid index.
+     * Returns the book to search for.
      */
-    private void checkActiveListType() throws CommandException {
-        if (model.getActiveListType() != ActiveListType.BOOK_SHELF) {
+    private Book getBook(Index targetIndex) throws CommandException {
+        switch (model.getActiveListType()) {
+        case BOOK_SHELF:
+        {
+            return model.getDisplayBookList().get(targetIndex.getZeroBased());
+        }
+        case SEARCH_RESULTS:
+        {
+            return model.getSearchResultsList().get(targetIndex.getZeroBased());
+        }
+        case RECENT_BOOKS:
+        {
+            return model.getRecentBooksList().get(targetIndex.getZeroBased());
+        }
+        default:
             throw new CommandException(MESSAGE_WRONG_ACTIVE_LIST);
         }
     }
