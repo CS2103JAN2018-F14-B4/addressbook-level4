@@ -5,9 +5,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CompletionException;
 import java.util.concurrent.ExecutionException;
 
 import org.junit.Before;
@@ -20,6 +18,7 @@ import seedu.address.model.ReadOnlyBookShelf;
 import seedu.address.model.book.Book;
 import seedu.address.network.api.google.GoogleBooksApi;
 import seedu.address.network.library.NlbCatalogueApi;
+import seedu.address.testutil.TestUtil;
 import seedu.address.testutil.TypicalBooks;
 
 //@@author takuyakanbr
@@ -71,7 +70,7 @@ public class NetworkManagerTest {
     @Test
     public void handleGoogleApiSearchRequestEvent_failure() throws Exception {
         when(mockGoogleBooksApi.searchBooks(PARAM_FAILURE))
-                .thenReturn(getFailedFuture());
+                .thenReturn(TestUtil.getFailedFuture());
 
         CompletableFuture<ReadOnlyBookShelf> bookShelf = networkManager.searchBooks(PARAM_FAILURE);
         verify(mockGoogleBooksApi).searchBooks(PARAM_FAILURE);
@@ -94,7 +93,7 @@ public class NetworkManagerTest {
     @Test
     public void handleGoogleApiBookDetailsRequestEvent_failure() throws Exception {
         when(mockGoogleBooksApi.getBookDetails(PARAM_FAILURE))
-                .thenReturn(getFailedFuture());
+                .thenReturn(TestUtil.getFailedFuture());
 
         CompletableFuture<Book> book = networkManager.getBookDetails(PARAM_FAILURE);
         verify(mockGoogleBooksApi).getBookDetails(PARAM_FAILURE);
@@ -118,7 +117,7 @@ public class NetworkManagerTest {
     @Test
     public void nlbCatalogueApiSearchForBooks_failure() throws Exception {
         when(mockNlbCatalogueApi.searchForBook(BOOK_FAILURE))
-                .thenReturn(getFailedFuture());
+                .thenReturn(TestUtil.getFailedFuture());
 
         CompletableFuture<String> result = networkManager.searchLibraryForBook(BOOK_FAILURE);
         verify(mockNlbCatalogueApi).searchForBook(BOOK_FAILURE);
@@ -126,15 +125,4 @@ public class NetworkManagerTest {
         thrown.expect(ExecutionException.class);
         result.get();
     }
-
-    //@@author
-    /**
-     * Returns a {@link CompletableFuture} that has already completed exceptionally.
-     */
-    private static <T> CompletableFuture<T> getFailedFuture() {
-        return CompletableFuture.completedFuture(null).thenApply(obj -> {
-            throw new CompletionException(new IOException());
-        });
-    }
-
 }
