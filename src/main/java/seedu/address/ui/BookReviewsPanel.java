@@ -8,7 +8,6 @@ import com.google.common.base.Charsets;
 import com.google.common.eventbus.Subscribe;
 import com.google.common.io.Resources;
 
-import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
@@ -72,13 +71,15 @@ public class BookReviewsPanel extends UiPart<Region> {
         getRoot().setVisible(false);
     }
 
+    protected void show() {
+        getRoot().setVisible(true);
+    }
+
     @Subscribe
     private void handleShowBookReviewsRequestEvent(ShowBookReviewsRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        Platform.runLater(() -> {
-            clearPage();
-            getRoot().setVisible(true);
-            loadPageForBook(event.getBook());
-        });
+        clearPage();
+        getRoot().setVisible(true);
+        loadPageForBook(event.getBook());
     }
 }

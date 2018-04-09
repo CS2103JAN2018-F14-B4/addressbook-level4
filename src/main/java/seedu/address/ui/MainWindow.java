@@ -22,6 +22,7 @@ import seedu.address.commons.events.ui.ClearMainContentRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.RecentBooksSelectionChangedEvent;
 import seedu.address.commons.events.ui.SearchResultsSelectionChangedEvent;
+import seedu.address.commons.events.ui.ShowAliasListRequestEvent;
 import seedu.address.commons.events.ui.ShowBookReviewsRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.events.ui.ShowLibraryResultRequestEvent;
@@ -48,6 +49,7 @@ public class MainWindow extends UiPart<Stage> {
     private BookDetailsPanel bookDetailsPanel;
     private BookReviewsPanel bookReviewsPanel;
     private BookInLibraryPanel bookInLibraryPanel;
+    private AliasListPanel aliasListPanel;
     private BookListPanel bookListPanel;
     private SearchResultsPanel searchResultsPanel;
     private RecentBooksPanel recentBooksPanel;
@@ -138,9 +140,11 @@ public class MainWindow extends UiPart<Stage> {
         bookDetailsPanel = new BookDetailsPanel();
         bookInLibraryPanel = new BookInLibraryPanel(WebViewManager.getInstance());
         bookReviewsPanel = new BookReviewsPanel(WebViewManager.getInstance());
+        aliasListPanel = new AliasListPanel(logic.getDisplayAliasList());
         mainContentPlaceholder.getChildren().add(bookDetailsPanel.getRoot());
         mainContentPlaceholder.getChildren().add(bookReviewsPanel.getRoot());
         mainContentPlaceholder.getChildren().add(bookInLibraryPanel.getRoot());
+        mainContentPlaceholder.getChildren().add(aliasListPanel.getRoot());
         bookReviewsPanel.getRoot().setVisible(false);
         bookInLibraryPanel.getRoot().setVisible(false);
         bookDetailsPanel.setStyleSheet(prefs.getAppTheme().getCssFile());
@@ -213,10 +217,23 @@ public class MainWindow extends UiPart<Stage> {
         primaryStage.show();
     }
 
+    /**
+     * Hides all panels in the main content.
+     */
     private void hideMainContent() {
         bookDetailsPanel.hide();
         bookReviewsPanel.hide();
         bookInLibraryPanel.hide();
+        aliasListPanel.hide();
+    }
+
+    /**
+     * Clears the list selections in the book list, search results, and recent books panel.
+     */
+    private void clearAllListSelections() {
+        bookListPanel.clearSelection();
+        searchResultsPanel.clearSelection();
+        recentBooksPanel.clearSelection();
     }
 
     /**
@@ -244,7 +261,8 @@ public class MainWindow extends UiPart<Stage> {
     private void handleSwitchToBookListRequestEvent(SwitchToBookListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         hideMainContent();
-        bookListPanel.clearSelectionAndScrollToTop();
+        bookListPanel.clearSelection();
+        bookListPanel.scrollToTop();
         bookListPanel.getRoot().setVisible(true);
         searchResultsPanel.getRoot().setVisible(false);
         recentBooksPanel.getRoot().setVisible(false);
@@ -254,7 +272,8 @@ public class MainWindow extends UiPart<Stage> {
     private void handleSwitchToSearchResultsRequestEvent(SwitchToSearchResultsRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         hideMainContent();
-        searchResultsPanel.clearSelectionAndScrollToTop();
+        searchResultsPanel.clearSelection();
+        searchResultsPanel.scrollToTop();
         bookListPanel.getRoot().setVisible(false);
         searchResultsPanel.getRoot().setVisible(true);
         recentBooksPanel.getRoot().setVisible(false);
@@ -264,7 +283,8 @@ public class MainWindow extends UiPart<Stage> {
     private void handleSwitchToRecentBooksRequestEvent(SwitchToRecentBooksRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         hideMainContent();
-        recentBooksPanel.clearSelectionAndScrollToTop();
+        recentBooksPanel.clearSelection();
+        recentBooksPanel.scrollToTop();
         bookListPanel.getRoot().setVisible(false);
         searchResultsPanel.getRoot().setVisible(false);
         recentBooksPanel.getRoot().setVisible(true);
@@ -280,34 +300,44 @@ public class MainWindow extends UiPart<Stage> {
     private void handleBookListSelectionChangedEvent(BookListSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         hideMainContent();
-        bookDetailsPanel.getRoot().setVisible(true);
+        bookDetailsPanel.show();
     }
 
     @Subscribe
     private void handleSearchResultsSelectionChangedEvent(SearchResultsSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         hideMainContent();
-        bookDetailsPanel.getRoot().setVisible(true);
+        bookDetailsPanel.show();
     }
 
     @Subscribe
     private void handleRecentBooksSelectionChangedEvent(RecentBooksSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         hideMainContent();
-        bookDetailsPanel.getRoot().setVisible(true);
+        bookDetailsPanel.show();
     }
 
     @Subscribe
     private void handleShowBookReviewsRequestEvent(ShowBookReviewsRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        clearAllListSelections();
         hideMainContent();
-        bookReviewsPanel.getRoot().setVisible(true);
+        bookReviewsPanel.show();
     }
 
     @Subscribe
     private void handleShowBookInLibraryRequestEvent(ShowLibraryResultRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        clearAllListSelections();
         hideMainContent();
-        bookInLibraryPanel.getRoot().setVisible(true);
+        bookInLibraryPanel.show();
+    }
+
+    @Subscribe
+    private void handleShowAliasListRequestEvent(ShowAliasListRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        clearAllListSelections();
+        hideMainContent();
+        aliasListPanel.show();
     }
 }

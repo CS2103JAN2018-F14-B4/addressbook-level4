@@ -70,6 +70,10 @@ public class BookInLibraryPanel extends UiPart<Region> {
         getRoot().setVisible(false);
     }
 
+    protected void show() {
+        getRoot().setVisible(true);
+    }
+
     @Subscribe
     private void handleShowBookInLibraryRequestEvent(ShowLibraryResultRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
