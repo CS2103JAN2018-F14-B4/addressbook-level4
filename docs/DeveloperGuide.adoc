@@ -18,12 +18,7 @@ By: `Team F14-B4`      Since: `Jan 2018`      Licence: `MIT`
 
 === Prerequisites
 
-. *JDK `1.8.0_60`* or later
-+
-[NOTE]
-Having any Java 8 version is not enough. +
-This app will not work with earlier versions of Java 8.
-+
+. *JDK `9`* or later
 
 . *IntelliJ* IDE
 +
@@ -1268,7 +1263,7 @@ _{More to be added}_
 [appendix]
 == Non Functional Requirements
 
-.  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
+.  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `9` or higher installed.
 .  Should work on both 32-bit and 64-bit environments.
 .  Should come with automated unit tests and open source code.
 .  Should come with a user guide and a developer guide.
