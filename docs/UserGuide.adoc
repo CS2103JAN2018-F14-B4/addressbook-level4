@@ -295,7 +295,7 @@ Suppose you have the following books in your book shelf.
 
 image::ListCommand.png[width="700"]
 
-If you no longer want to read `Harry Potter and the Classical World` and wish to remove it from your book shelf, enter `delete 1`.
+If you no longer want to read `Harry Potter and the Classical World` and wish to remove it from your book shelf, enter `delete 3`.
 
 Bibliotek shows `Deleted Book: TITLE - Authors: AUTHORS` to indicate that your `delete` is successful.
 The book no longer exist in the left panel.
@@ -319,7 +319,7 @@ WARNING: You can only perform `clear` if the list shown is from your book shelf.
 If you want to delete all books, enter `clear`.
 
 Bibliotek shows `Book shelf has been cleared!` to indicate that your `clear` is successful.
-The left and right panels are now empty.
+The left panel is now empty.
 
 image::ClearCommand.png[width="700"]
 
@@ -419,7 +419,7 @@ Suppose you have the following search results.
 
 image::SearchCommandFound.png[width="700"]
 
-If you want to view book reviews for `Consider Phlebas`, enter `reviews 2`.
+If you want to view book reviews for `The Ivory Tower and Harry Potter`, enter `reviews 3`.
 
 Bibliotek shows `Showing reviews for book: TITLE - Authors: AUTHORS.` and displays a browser at the right panel.
 The browser will begin loading the reviews page of the book on https://goodreads.com[goodreads, window="_blank"].
@@ -461,6 +461,9 @@ Once the data is ready, Bibliotek shows `Showing availability of book: TITLE - A
 You will be able to see the availability of the book in the library in the right panel, as shown below.
 
 image::LibraryCommandAfter.png[width="700"]
+
+NOTE: If Bibliotek shows `Failed to retrieve information from online.`,
+it means your search request has timed out. You should try again after some time.
 
 [[history-command]]
 === Listing entered commands : `history`
