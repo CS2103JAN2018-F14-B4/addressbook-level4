@@ -23,7 +23,7 @@ import seedu.address.commons.events.ui.ShowLibraryResultRequestEvent;
  */
 public class BookInLibraryPanel extends UiPart<Region> {
 
-    private static final String FXML = "bookInNlbPanel.fxml";
+    private static final String FXML = "BookInLibraryPanel.fxml";
     private static final URL NLB_RESULT_SCRIPT_FILE = MainApp.class.getResource("/view/nlbResultScript.js");
     private static final URL CLEAR_PAGE_SCRIPT_FILE = MainApp.class.getResource("/view/clearPageScript.js");
 
