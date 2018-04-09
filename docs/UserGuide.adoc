@@ -378,8 +378,7 @@ Format: `library INDEX`
 * Default library searched is National Library Board.
 ****
 
-WARNING: You can only perform `library` when the list shown is your book shelf. +
-You also need Internet connection.
+WARNING: You can only perform `library` with Internet connection.
 
 Suppose you have the following books in your display list.
 
