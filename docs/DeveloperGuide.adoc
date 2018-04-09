@@ -371,7 +371,7 @@ since updating the search results will update its observable list, which will ca
 === Undo feature
 ==== Current Implementation
 
-The undo mechanism is facilitated by an `UndoStack`, which resides inside `LogicManager`. It supports undoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
+The undo mechanism is facilitated by an `UndoStack`, which resides inside `LogicManager`. It supports undoing of commands that modifies the state of the book shelf (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
 
 `UndoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
@@ -766,7 +766,7 @@ Each individual exercise in this section is component-based (i.e. you would not 
 [TIP]
 Do take a look at <<Design-Logic>> before attempting to modify the `Logic` component.
 
-. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all persons in the list.
+. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all books in the list.
 +
 ****
 * Hints
@@ -1019,6 +1019,9 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 * **Search for books using Google Books API** (major)
 ** Added the network component and a `search` command to allow the user to search for books on Google Books.
 ** This allows the user to easily search for particular books, and add them without having to enter all the information manually (using the updated `add` command).
+* **Customize aliases to use in place of full commands** (major)
+** Added `addalias`, `aliases` and `deletealias` commands to allow adding, viewing and deleting of aliases.
+** This allows users to reduce the typing needed.
 * **Change application theme** (minor)
 ** Added a `theme` command that allows the user to switch between the various themes included with Bibliotek.
 ** This allows the user to change the design of Bibliotek according to their own preferences.
@@ -1026,23 +1029,23 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 [discrete]
 ==== Qiu Siqi
 * **Search for books in the library** (major)
-** Update network component to support NLB catalogue.
-** Add `library` command to perform search in NLB catalogue.
+** Updated network component to support NLB catalogue.
+** Added `library` command to perform search in NLB catalogue.
 ** This allows the user to easily check the availability of books.
 * **Get recently viewed books** (minor)
-** Add a `recent` command that allows user to view previous selections that he did not add into his book shelf.
+** Added a `recent` command that allows user to view previous selections that he did not add into his book shelf.
 ** This allows the user to reconsider his choices without having to perform the search again.
 
 [discrete]
 ==== Shi Jin
 * **Mark a book as read, change the priority of a book and rate books** (major)
-** Add attributes rating, status, priority.
-** Add `edit` command that allows user to rate, set status and change priority of
+** Added attributes rating, status, priority.
+** Added `edit` command that allows user to rate, set status and change priority of
 some books.
 ** This allows the user to keep track of what to read and what have been read and give recommendations to others.
-* **Use aliases in place of full commands** (minor)
-** Add a `alias` command that allows users to change the current full commands to the aliases that users need.
-** This allows users to reduce the amount of typing needed.
+* **Encrpyt data with a password** (minor)
+** Add an `encrpyt` command to encrpyt data with a password.
+** This allows users to keep their data private and safe.
 
 [discrete]
 ==== Jianghao
@@ -1316,7 +1319,7 @@ These instructions only provide a starting point for testers to work on; testers
 
 .. Download the jar file and copy into an empty folder
 .. Double-click the jar file +
-   Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+   Expected: Shows the GUI with a set of sample books. The window size may not be optimum.
 
 . Saving window preferences
 
@@ -1326,15 +1329,15 @@ These instructions only provide a starting point for testers to work on; testers
 
 _{ more test cases ... }_
 
-=== Deleting a person
+=== Deleting a book
 
-. Deleting a person while all persons are listed
+. Deleting a book while all books are listed
 
-.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+.. Prerequisites: List all books using the `list` command. Multiple books in the list.
 .. Test case: `delete 1` +
-   Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+   Expected: First book is deleted from the list. Details of the deleted book shown in the status message. Timestamp in the status bar is updated.
 .. Test case: `delete 0` +
-   Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+   Expected: No book is deleted. Error details shown in the status message. Status bar remains the same.
 .. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
    Expected: Similar to previous.
 
