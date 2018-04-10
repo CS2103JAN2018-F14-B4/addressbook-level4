@@ -16,6 +16,7 @@ public class DecryptCommand extends Command {
     public static final String MESSAGE_WRONG_PASSWORD = "You have input wrong password, please check again!";
 
     private String key;
+    private boolean isTesting;
 
     public DecryptCommand(String key) {
         this.key = key;
@@ -23,6 +24,10 @@ public class DecryptCommand extends Command {
 
     @Override
     public CommandResult execute() {
+        if (isTesting == true) {
+            key = "testing";
+        }
+
         if (!LogicManager.getEncrypt()) {
             return new CommandResult(MESSAGE_SUCCESS);
         }
@@ -37,6 +42,10 @@ public class DecryptCommand extends Command {
 
     public String getKey() {
         return key;
+    }
+
+    public void setTesting() {
+        isTesting = true;
     }
 
     @Override

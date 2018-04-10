@@ -39,7 +39,7 @@ public class EncryptCommandTest {
         // different commandtypes -> returns false
         assertFalse(encryptCommand.equals(new ClearCommand()));
 
-        // different types -? return false
+        // different types -> return false
         assertFalse(encryptCommand.equals(0));
 
     }
