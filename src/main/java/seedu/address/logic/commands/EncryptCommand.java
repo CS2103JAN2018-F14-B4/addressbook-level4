@@ -22,7 +22,7 @@ public class EncryptCommand extends Command{
      * @throws CommandException If an error occurs during command execution.
      */
     @Override
-    public CommandResult execute() throws CommandException {
+    public CommandResult execute() {
         model.updateBookListFilter(predicate);
         LogicManager.encrypt();
         return new CommandResult(MESSAGE_SUCCESS);
