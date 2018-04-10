@@ -608,10 +608,10 @@ by only showing these books.
 
 When `encrypt` command is entered,
 
-. `EditCommand` is processed to set isEncrypt to be true.
-. The `Biblitek` cannot be run any command except `decrypt` and `help` command.
+. `EncryptCommand` is processed to set isEncrypt to be true.
+. The `Bibliotek` cannot be run any command except `decrypt` and `help` command.
 
-When the `Biblitek` is encrypted and `decrypt` command is entered,
+When the `Bibliotek` is encrypted and `decrypt` command is entered,
 
 . `DecryptCommandParser` will extract key from the user input.
 . `DecryptCommandParser` creates an `DecryptCommand` the key.
@@ -626,7 +626,18 @@ When `setKey` command is entered,
 . `setKeyCommand` is preprocessed to check that oldKey is correct.
 . `setKeyCommand` is processed to post an keyChangedEvent to the eventcenter.
 . Modelmanager indicate the keyChangedevent and handle it, and set the bookshelf's key to be new key.
-. StorageManager handle the event by update the biblitek with the new key.
+. StorageManager handle the event by update the bibliotek with the new key.
+
+==== Design considerations
+
+===== Aspect: Whether to use three commands instead of only one
+
+* **Alternative 1 (current choice):** Use three commands to do the encrypt, decrypt and setkey actions
+** Pros: Users can clearly know what they can do about the key.
+** Cons: Users should learn two more commands
+* **Alternative 2:** Use only one setKey command to solve all three features.
+** Pros: Seem that users can eliminate the typing.
+** Cons: Users will feel confuse, not so clear about the command.
 
 === Logging
 
