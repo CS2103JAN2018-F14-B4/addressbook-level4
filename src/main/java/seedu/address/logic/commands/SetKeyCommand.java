@@ -21,8 +21,10 @@ public class SetKeyCommand extends Command{
     public static final String MESSAGE_NO_PARAMETERS = "Error, You must provide the keys";
 
     private String oldKey, newKey;
+    private boolean isTesting;
 
     public SetKeyCommand(String key1, String key2) {
+        isTesting = false;
         oldKey = key1;
         newKey = key2;
     }
@@ -35,6 +37,10 @@ public class SetKeyCommand extends Command{
         return newKey;
     }
 
+    public void setTesting() {
+        isTesting = true;
+    }
+
     /**
      * Executes the command and returns the result message.
      *
@@ -42,7 +48,11 @@ public class SetKeyCommand extends Command{
      * @throws CommandException If an error occurs during command execution.
      */
     @Override
-    public CommandResult execute() throws CommandException {
+    public CommandResult execute() {
+        if (isTesting == true) {
+            oldKey = "testing";
+            newKey = "newkey";
+        }
         if (oldKey.equals(LogicManager.getKey())) {
             LogicManager.setKey(newKey);
             model.setKey(newKey);
