@@ -431,7 +431,7 @@ body {
     -fx-padding: 1 5 1 5;
     -fx-border-radius: 7;
     -fx-background-radius: 7;
-    -fx-font-size: 10pt;
+    -fx-font-size: 11pt;
 }
 
 .pills-small .label {
@@ -446,7 +446,7 @@ body {
     -fx-text-fill: #222;
     -fx-padding: 1 3 1 3;
     -fx-background-color: #66BB6A99;
-    -fx-font-size: 10pt;
+    -fx-font-size: 11pt;
 }
 
 .pills-authors-small .label {
@@ -460,7 +460,7 @@ body {
     -fx-text-fill: #222;
     -fx-padding: 1 3 1 3;
     -fx-background-color: #00BCD499;
-    -fx-font-size: 10pt;
+    -fx-font-size: 11pt;
 }
 
 .pills-categories-small .label {
