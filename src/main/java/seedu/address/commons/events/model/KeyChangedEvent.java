@@ -5,18 +5,14 @@ import seedu.address.model.ReadOnlyBookShelf;
 
 public class KeyChangedEvent extends BaseEvent {
 
-    public final String key;
+    public final ReadOnlyBookShelf bs;
 
-    public KeyChangedEvent(String key) {
-        this.key = key;
-    }
-
-    public String getKey() {
-        return key;
+    public KeyChangedEvent(ReadOnlyBookShelf bookShelf) {
+        bs = bookShelf;
     }
 
     @Override
     public String toString() {
-        return "key " + key;
+        return "Set key processing";
     }
 }

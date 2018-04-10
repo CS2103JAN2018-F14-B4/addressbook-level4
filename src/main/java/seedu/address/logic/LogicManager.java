@@ -6,6 +6,7 @@ import com.google.common.eventbus.Subscribe;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.ComponentManager;
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.KeyChangedEvent;
 import seedu.address.commons.events.ui.BookListSelectionChangedEvent;
@@ -16,6 +17,7 @@ import seedu.address.commons.events.ui.SwitchToSearchResultsRequestEvent;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.DecryptCommand;
+import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.BookShelfParser;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -44,8 +46,12 @@ public class LogicManager extends ComponentManager implements Logic {
         history = new CommandHistory();
         bookShelfParser = new BookShelfParser();
         undoStack = new UndoStack();
-        isEncrypt = true;
         key = model.getKey();
+        if (key == null) {
+            isEncrypt = false;
+        } else {
+            isEncrypt = true;
+        }
     }
 
     @Override
@@ -53,17 +59,17 @@ public class LogicManager extends ComponentManager implements Logic {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
         try {
             Command command = bookShelfParser.parseCommand(commandText);
-            command.setData(model, network, history, undoStack);
             CommandResult result;
-            if (isEncrypt == true) {
+            if (isEncrypt == true && !(command instanceof HelpCommand)) {
                 if (command instanceof DecryptCommand) {
                     DecryptCommand decryptCommand = (DecryptCommand) command;
                     result = decryptCommand.execute();
                 } else {
-                    result = new CommandResult("Bibliotek is locked," +
-                            " please unlock it first!");
+                    result = new CommandResult("Bibliotek is encrypted," +
+                            " please decrypt it first!");
                 }
             } else {
+                command.setData(model, network, history, undoStack);
                 result = command.execute();
                 undoStack.push(command);
             }

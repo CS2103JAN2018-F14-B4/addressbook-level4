@@ -24,7 +24,7 @@ public class BookShelf implements ReadOnlyBookShelf {
 
     public BookShelf() {
         books = new UniqueBookList();
-        key = "shijin";
+        key = "";
     }
 
     /**

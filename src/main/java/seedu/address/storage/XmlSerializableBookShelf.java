@@ -1,15 +1,14 @@
 package seedu.address.storage;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.BookShelf;
 import seedu.address.model.ReadOnlyBookShelf;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * An Immutable BookShelf that is serializable to XML format
@@ -19,9 +18,8 @@ public class XmlSerializableBookShelf {
 
     @XmlElement
     private List<XmlAdaptedBook> books;
-    //@@author 592363789
     @XmlElement
-    private XmlAdaptedKey key;
+    private String key;
 
     /**
      * Creates an empty XmlSerializableBookShelf.
@@ -29,7 +27,7 @@ public class XmlSerializableBookShelf {
      */
     public XmlSerializableBookShelf() {
         books = new ArrayList<>();
-        key = new XmlAdaptedKey("shijin");
+        key = null;
     }
 
     /**
@@ -38,7 +36,7 @@ public class XmlSerializableBookShelf {
     public XmlSerializableBookShelf(ReadOnlyBookShelf src) {
         this();
         books.addAll(src.getBookList().stream().map(XmlAdaptedBook::new).collect(Collectors.toList()));
-        key = new XmlAdaptedKey(src.getKey());
+        key = src.getKey();
     }
 
     /**
@@ -52,9 +50,9 @@ public class XmlSerializableBookShelf {
         for (XmlAdaptedBook b : books) {
             bookShelf.addBook(b.toModelType());
         }
-        //@@author 592363789
-        bookShelf.setKey(key.toString());
-        //@@author 592363789
+
+        bookShelf.setKey(key);
+
         return bookShelf;
     }
 

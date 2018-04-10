@@ -14,7 +14,7 @@ public class SetKeyCommand extends Command{
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Set the encrypt key of the bibliotek:"
             + "Parameters: [old/OLDKEY] [new/NEWKEY] "
-            + "Example: " + COMMAND_WORD + " old/123456 abcde ";
+            + "Example: " + COMMAND_WORD + " old/123456 new/abcde ";
 
     public static final String MESSAGE_SUCCESS = "Set success";
     public static final String WRONG_OLDKEY = "Input the wrong oldkey, please check again!";
@@ -45,7 +45,7 @@ public class SetKeyCommand extends Command{
     public CommandResult execute() throws CommandException {
         if (oldKey.equals(LogicManager.getKey())) {
             LogicManager.setKey(newKey);
-            EventsCenter.getInstance().post(new KeyChangedEvent(newKey));
+            model.setKey(newKey);
             return new CommandResult(MESSAGE_SUCCESS);
         } else {
             return new CommandResult(WRONG_OLDKEY);

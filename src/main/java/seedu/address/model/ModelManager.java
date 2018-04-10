@@ -98,8 +98,8 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /** Raises an event to indicate the key has changed */
-    private void indicateKeyChange(String key) {
-        raise(new KeyChangedEvent(key));
+    private void indicateKeyChanged() {
+        raise(new KeyChangedEvent(bookShelf));
     }
 
     @Override
@@ -124,6 +124,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void setKey(String key) {
         bookShelf.setKey(key);
+        indicateKeyChanged();
     }
 
     @Override
@@ -231,11 +232,6 @@ public class ModelManager extends ComponentManager implements Model {
                 && displayBookList.equals(other.displayBookList)
                 && searchResults.equals(other.searchResults)
                 && recentBooks.equals(other.recentBooks);
-    }
-
-    @Subscribe
-    private void handleKeyChangedEvent(KeyChangedEvent event) {
-        setKey(event.getKey());
     }
 
 }
