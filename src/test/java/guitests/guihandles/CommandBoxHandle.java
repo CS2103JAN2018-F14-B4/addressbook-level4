@@ -33,6 +33,7 @@ public class CommandBoxHandle extends NodeHandle<TextField> {
         guiRobot.pauseForHuman();
 
         guiRobot.type(KeyCode.ENTER);
+        guiRobot.sleep(15);
 
         return !getStyleClass().contains(CommandBox.ERROR_STYLE_CLASS);
     }
@@ -46,5 +47,9 @@ public class CommandBoxHandle extends NodeHandle<TextField> {
 
     public boolean isEnabled() {
         return getRootNode().isEditable();
+    }
+
+    public void disable() {
+        getRootNode().setEditable(false);
     }
 }

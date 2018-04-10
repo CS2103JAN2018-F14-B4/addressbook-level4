@@ -18,7 +18,9 @@ import org.junit.BeforeClass;
 import org.junit.ClassRule;
 
 import guitests.GuiRobot;
+import guitests.guihandles.AliasListPanelHandle;
 import guitests.guihandles.BookDetailsPanelHandle;
+import guitests.guihandles.BookInLibraryPanelHandle;
 import guitests.guihandles.BookListPanelHandle;
 import guitests.guihandles.BookReviewsPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
@@ -28,6 +30,7 @@ import guitests.guihandles.RecentBooksPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.SearchResultsPanelHandle;
 import guitests.guihandles.StatusBarFooterHandle;
+import guitests.guihandles.WelcomePanelHandle;
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
@@ -37,8 +40,10 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.BookShelf;
 import seedu.address.model.Model;
 import seedu.address.model.book.Book;
+import seedu.address.testutil.TestUtil;
 import seedu.address.testutil.TypicalBooks;
 import seedu.address.ui.CommandBox;
+import seedu.address.ui.WebViewManager;
 
 /**
  * A system test class for Bibliotek, which provides access to handles of GUI components and helper methods
@@ -71,9 +76,10 @@ public abstract class BibliotekSystemTest {
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         setupHelper.tearDownStage();
         EventsCenter.clearSubscribers();
+        WebViewManager.getInstance().cleanUp();
     }
 
     /**
@@ -87,7 +93,7 @@ public abstract class BibliotekSystemTest {
      * Returns the directory of the data file.
      */
     protected String getDataFileLocation() {
-        return TestApp.SAVE_LOCATION_FOR_TESTING;
+        return TestUtil.getFilePathInSandboxFolder("sampleData.xml");
     }
 
     public MainWindowHandle getMainWindowHandle() {
@@ -114,12 +120,24 @@ public abstract class BibliotekSystemTest {
         return mainWindowHandle.getMainMenu();
     }
 
+    public WelcomePanelHandle getWelcomePanel() {
+        return mainWindowHandle.getWelcomePanel();
+    }
+
     public BookDetailsPanelHandle getBookDetailsPanel() {
         return mainWindowHandle.getBookDetailsPanel();
     }
 
     public BookReviewsPanelHandle getBookReviewsPanel() {
         return mainWindowHandle.getBookReviewsPanel();
+    }
+
+    public BookInLibraryPanelHandle getBookInLibraryPanel() {
+        return mainWindowHandle.getBookInLibraryPanel();
+    }
+
+    public AliasListPanelHandle getAliasListPanel() {
+        return mainWindowHandle.getAliasListPanel();
     }
 
     public StatusBarFooterHandle getStatusBarFooter() {
@@ -247,6 +265,13 @@ public abstract class BibliotekSystemTest {
     }
 
     /**
+     * Asserts that the alias list panel displays the aliases in the model correctly.
+     */
+    protected void assertAliasListDisplaysExpected(Model expectedModel) {
+        assertListMatching(getAliasListPanel(), expectedModel.getDisplayAliasList());
+    }
+
+    /**
      * Calls {@code BookListPanelHandle}, {@code SearchResultsPanelHandle},  {@code StatusBarFooterHandle},
      * and {@code BookDetailsPanelHandle} to remember their current state.
      */
@@ -358,6 +383,26 @@ public abstract class BibliotekSystemTest {
     }
 
     /**
+     * Checks that {@code BookReviewsPanel} is visible, {@code BookDetailsPanel} and {@code BookInLibraryPanel}
+     * is not visible.
+     */
+    protected void assertBookReviewsPanelVisible() {
+        assertTrue(getBookReviewsPanel().isVisible());
+        assertFalse(getBookDetailsPanel().isVisible());
+        assertFalse(getBookInLibraryPanel().isVisible());
+    }
+
+    /**
+     * Checks that {@code BookInLibraryPanel} is visible, {@code BookDetailsPanel} and {@code BookReviewsPanel}
+     * is not visible.
+     */
+    protected void assertBookInLibraryPanelVisible() {
+        assertTrue(getBookInLibraryPanel().isVisible());
+        assertFalse(getBookDetailsPanel().isVisible());
+        assertFalse(getBookReviewsPanel().isVisible());
+    }
+
+    /**
      * Asserts that the command box's shows the default style.
      */
     protected void assertCommandBoxShowsDefaultStyle() {
@@ -414,7 +459,10 @@ public abstract class BibliotekSystemTest {
             assertEquals("", getCommandBox().getInput());
             assertEquals("", getResultDisplay().getText());
             assertListMatching(getBookListPanel(), getModel().getDisplayBookList());
+            assertTrue(getWelcomePanel().isVisible());
             assertFalse(getBookDetailsPanel().isVisible());
+            assertFalse(getBookReviewsPanel().isVisible());
+            assertFalse(getAliasListPanel().isVisible());
             assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
             assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
         } catch (Exception e) {
