@@ -29,7 +29,12 @@ public class SetKeyCommandParser implements Parser<SetKeyCommand> {
             newKey = String.valueOf(ParserUtil.parseKey(argMultimap.getValue(PREFIX_NEW_KEY).get()));
         }
 
-        boolean isValid = CollectionUtil.isAnyNonNull(oldKey) && CollectionUtil.isAnyNonNull(newKey);
+        boolean isValid = CollectionUtil.isAnyNonNull(oldKey) || CollectionUtil.isAnyNonNull(newKey);
+        boolean isV = CollectionUtil.isAnyNonNull(oldKey) && CollectionUtil.isAnyNonNull(newKey);
+
+        if (args.trim().isEmpty() || !isV) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SetKeyCommand.MESSAGE_USAGE));
+        }
 
         if (!isValid) {
             throw new ParseException(SetKeyCommand.MESSAGE_NO_PARAMETERS);

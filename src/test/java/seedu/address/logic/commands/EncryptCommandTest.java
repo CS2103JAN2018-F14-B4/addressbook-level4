@@ -2,9 +2,16 @@ package seedu.address.logic.commands;
 
 import org.junit.Before;
 import org.junit.Test;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.ReadOnlyBookShelf;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.book.Book;
+import seedu.address.network.Network;
+
+import java.util.concurrent.CompletableFuture;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -25,11 +32,6 @@ public class EncryptCommandTest {
 
         EncryptCommand encryptCommand = new EncryptCommand();
 
-        EncryptCommand thesameCommand = new EncryptCommand();
-
-        // same value -> returns true
-        assertTrue(encryptCommand.equals(thesameCommand));
-
         // same object -> returns true
         assertTrue(encryptCommand.equals(encryptCommand));
 
@@ -46,7 +48,24 @@ public class EncryptCommandTest {
 
     @Test
     public void execute_exit_success() {
+        Network network = new Network() {
+            @Override
+            public CompletableFuture<ReadOnlyBookShelf> searchBooks(String parameters) {
+                return null;
+            }
+
+            @Override
+            public CompletableFuture<Book> getBookDetails(String bookId) {
+                return null;
+            }
+
+            @Override
+            public void stop() {
+
+            }
+        };
         EncryptCommand encryptCommand = new EncryptCommand();
+        encryptCommand.setData(model, network, new CommandHistory(), new UndoStack());
         CommandResult result = encryptCommand.execute();
         String successMessage = EncryptCommand.MESSAGE_SUCCESS;
 

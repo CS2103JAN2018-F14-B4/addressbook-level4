@@ -125,6 +125,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void setKey(String key) {
         bookShelf.setKey(key);
         indicateKeyChanged();
+        indicateBookShelfChanged();
     }
 
     @Override

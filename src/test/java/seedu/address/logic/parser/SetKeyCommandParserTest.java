@@ -21,24 +21,24 @@ public class SetKeyCommandParserTest {
         String expectedmissingMessage = String.format(MESSAGE_NO_PARAMETERS, SetKeyCommand.MESSAGE_USAGE);
 
         // no parameters
-        assertParseFailure(parser, SetKeyCommand.COMMAND_WORD + " 1", expectedinvalidMessage);
+        assertParseFailure(parser, " 1", expectedinvalidMessage);
 
         // no parameters
-        assertParseFailure(parser, SetKeyCommand.COMMAND_WORD, expectedmissingMessage);
+        assertParseFailure(parser, SetKeyCommand.COMMAND_WORD, expectedinvalidMessage);
 
         // no one of the key
         assertParseFailure(parser, SetKeyCommand.COMMAND_WORD + " " + PREFIX_OLD_KEY + "onekey",
-                expectedmissingMessage);
+                expectedinvalidMessage);
 
         // no one of the key
         assertParseFailure(parser, SetKeyCommand.COMMAND_WORD + " " + PREFIX_NEW_KEY + "newkey",
-                expectedmissingMessage);
+                expectedinvalidMessage);
     }
 
     @Test
     public void parse_validCompulsoryField_success() throws Exception {
-        assertParseSuccess(parser, SetKeyCommand.COMMAND_WORD + " " + PREFIX_OLD_KEY + "oldkey"
-                        + " " + PREFIX_NEW_KEY + "newkey",
+        assertParseSuccess(parser, SetKeyCommand.COMMAND_WORD + " " + PREFIX_OLD_KEY + " " + "oldkey"
+                        + " " + PREFIX_NEW_KEY + " " + "newkey",
                 new SetKeyCommand("oldkey", "newkey"));
     }
 

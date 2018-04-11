@@ -54,6 +54,19 @@ public class LogicManager extends ComponentManager implements Logic {
         }
     }
 
+    /**
+     * Constructor for test use.
+     */
+    public LogicManager(Model model, Network network, boolean isEncrypt) {
+        this.model = model;
+        this.network = network;
+        history = new CommandHistory();
+        bookShelfParser = new BookShelfParser();
+        undoStack = new UndoStack();
+        key = model.getKey();
+        this.isEncrypt = isEncrypt;
+    }
+
     @Override
     public CommandResult execute(String commandText) throws CommandException, ParseException {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
