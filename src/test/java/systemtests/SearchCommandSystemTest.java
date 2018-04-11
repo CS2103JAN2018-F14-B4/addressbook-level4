@@ -13,6 +13,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.SearchCommand;
+import seedu.address.model.ActiveListType;
 import seedu.address.model.BookShelf;
 import seedu.address.model.Model;
 
@@ -22,10 +23,10 @@ public class SearchCommandSystemTest extends BibliotekSystemTest {
     public void search() throws Exception {
         /* ----------------------------------- Perform invalid search operations ------------------------------------ */
 
-        /* Case: no search term or parameters -> rejected */
+        /* Case: no key words or named parameters -> rejected */
         assertCommandFailure(SearchCommand.COMMAND_WORD, SearchCommand.MESSAGE_EMPTY_QUERY);
 
-        /* Case: no search term or parameters -> rejected */
+        /* Case: no key words or named parameters -> rejected */
         assertCommandFailure("   " + SearchCommand.COMMAND_WORD + "             ", SearchCommand.MESSAGE_EMPTY_QUERY);
 
         /* Case: mixed case command word -> rejected */
@@ -38,10 +39,10 @@ public class SearchCommandSystemTest extends BibliotekSystemTest {
 
         // Note: these tests require network connection.
 
-        /* Case: search for books given search term -> success */
+        /* Case: search for books given key word -> success */
         assertSearchSuccess(SearchCommand.COMMAND_WORD + " hello");
 
-        /* Case: search for books given search parameters -> success */
+        /* Case: search for books given named parameters -> success */
         assertSearchSuccess(SearchCommand.COMMAND_WORD + TITLE_DESC_ARTEMIS + CATEGORY_DESC_ARTEMIS
                 + AUTHOR_DESC_ARTEMIS);
 
@@ -71,6 +72,7 @@ public class SearchCommandSystemTest extends BibliotekSystemTest {
      */
     private void assertSearchSuccess(String command) throws Exception {
         Model expectedModel = getModel();
+        expectedModel.setActiveListType(ActiveListType.SEARCH_RESULTS);
 
         executeCommand(command);
         assertCommandBoxShowsDefaultStyle();
