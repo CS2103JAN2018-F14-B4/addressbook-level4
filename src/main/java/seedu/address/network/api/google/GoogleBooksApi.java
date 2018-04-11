@@ -20,7 +20,7 @@ import seedu.address.network.HttpResponse;
 public class GoogleBooksApi {
 
     protected static final String URL_SEARCH_BOOKS =
-            "https://www.googleapis.com/books/v1/volumes?maxResults=30&printType=books&q=%s";
+            "https://www.googleapis.com/books/v1/volumes?maxResults=40&printType=books&q=%s";
     protected static final String URL_BOOK_DETAILS = "https://www.googleapis.com/books/v1/volumes/%s";
     private static final String CONTENT_TYPE_JSON = "application/json";
     private static final int HTTP_STATUS_OK = 200;

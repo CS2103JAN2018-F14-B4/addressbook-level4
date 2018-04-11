@@ -25,6 +25,7 @@ import seedu.address.model.util.BookDataUtil;
 public class JsonSearchResults {
 
     private static final Logger logger = LogsCenter.getLogger(JsonSearchResults.class);
+    private static final int MAXIMUM_BOOK_COUNT = 30;
 
     private int error = 0;
     private int totalItems = 0;
@@ -49,10 +50,15 @@ public class JsonSearchResults {
     public ReadOnlyBookShelf toModelType() {
         BookShelf bookShelf = new BookShelf();
 
+        int bookCount = 0;
         for (JsonVolume volume : items) {
             try {
                 Book book = convertToBook(volume);
                 bookShelf.addBook(book);
+                ++bookCount;
+                if (bookCount >= MAXIMUM_BOOK_COUNT) {
+                    break;
+                }
             } catch (InvalidBookException | DuplicateBookException e) {
                 logger.warning(e.getMessage());
             }
