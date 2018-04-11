@@ -650,19 +650,40 @@ Think the font size is too small or large for your liking? You can customize the
 font size to your own needs. +
 Format: `fontsize FONT_SIZE`
 
-[[setpassword-command]]
-=== Setting a password : `setpassword` _(coming in v2.0)_
+[[setKey-command]]
+=== Setting a key to bibliotek : `setKey` _(coming in v1.5)_
 
-If you want to keep your data secure, you can opt to set a password for the application. +
-Format: `setpassword p/PASSWORD`
+If you want to keep your data secure, you can opt to set a key for bibliotek. +
+Format: `setKey old/OLDKEY new/NEWKEY`
 
 [NOTE]
 ====
-You will be prompted for the password upon starting up the application. You will
-not need to enter it again thereafter (ie. when using commands).
+You will be given a default key: admin, when you open bibliotek for the first time.
 ====
 
-TIP: Remove your password using `setpassword p/`
+TIP: You should remember your key after setting a new one.
+
+[[Decrypt-command]]
+=== Decrypt the bibliotek : `decrypt` _(coming in v1.5)_
+
+If you want to decrypt your bibliotek if your bibliotek is encrypted, you can decrypt it using DecryptCommand. +
+Format: `decrypt YOUR_KEY`
+
+[NOTE]
+====
+You will be given a default key: admin, when you open bibliotek for the first time.
+====
+
+[[Encrypt-command]]
+=== Decrypt the bibliotek : `encrypt` _(coming in v1.5)_
+
+If you want to encrypt your bibliotek, you can encrypt it using EncryptCommand. +
+Format: `encrypt`
+
+[NOTE]
+====
+You should remember your key before you do this command.
+====
 
 [[settings-command]]
 === Changing settings: `settings` _(coming in v2.0)_
@@ -725,11 +746,13 @@ e.g. `add 1`
 e.g. `addalias read cmd/edit s/read p/none`
 |*Aliases* |`aliases`
 |*Clear* |`clear`
+|*Decrypt* |`decrypt YOUR_KEY`
 |*Delete* |`delete INDEX`
 |*Delete Alias* |`deletealias ALIAS_NAME`
 |*Edit* |`edit INDEX [s/STATUS] [p/PRIORITY] [r/RATING]`
 
 e.g. `edit 2 s/READ r/5`
+|*Encrypt* |`encrypt`
 |*Exit* |`exit`
 |*Help* |`help`
 |*History* |`history`
@@ -740,6 +763,9 @@ e.g. `edit 2 s/READ r/5`
 |*Search* |`search [SEARCH_TERM] [i/ISBN] [t/TITLE] [a/AUTHOR] [c/CATEGORY]`
 
 e.g. `search t/Babylon's Ashes c/Science Fiction`
+|*SetKey* |`setKey [old/OLDKEY] [new/NEWKEY]`
+
+e.g. `setkey old/admin new/haha`
 |*Select* |`select INDEX`
 |*Theme* |`theme THEME_NAME`
 |*Undo* |`undo`
