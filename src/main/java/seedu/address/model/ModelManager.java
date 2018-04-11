@@ -287,7 +287,7 @@ public class ModelManager extends ComponentManager implements Model {
                 && recentBooks.equals(other.recentBooks)
                 && aliases.equals(other.aliases);
     }
-
+    //@@author 592363789
     /**
      * Use defaultkey to encrypt
      * @param mykey

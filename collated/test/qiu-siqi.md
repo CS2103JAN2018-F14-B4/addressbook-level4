@@ -30,6 +30,24 @@ public class BookDescriptionViewHandle extends NodeHandle<Node> {
     }
 }
 ```
+###### \java\guitests\guihandles\BookInLibraryPanelHandle.java
+``` java
+/**
+ * Provides a handle for the {@code BookInLibraryPanel} of the UI.
+ */
+public class BookInLibraryPanelHandle extends NodeHandle<Node> {
+    public static final String BOOK_IN_LIBRARY_PANEL_ID = "#bookInLibraryPanel";
+
+    public BookInLibraryPanelHandle(Node bookInLibraryPanelNode) {
+        super(bookInLibraryPanelNode);
+    }
+
+    public boolean isVisible() {
+        return getRootNode().isVisible();
+    }
+
+}
+```
 ###### \java\guitests\guihandles\BookReviewsPanelHandle.java
 ``` java
 /**
@@ -37,8 +55,6 @@ public class BookDescriptionViewHandle extends NodeHandle<Node> {
  */
 public class BookReviewsPanelHandle extends NodeHandle<Node> {
     public static final String BOOK_REVIEWS_PANE_ID = "#bookReviewsPane";
-
-    private static final String BOOK_REVIEWS_BROWSER_ID = "#browser";
 
     public BookReviewsPanelHandle(Node bookReviewsPanelNode) {
         super(bookReviewsPanelNode);
@@ -52,7 +68,7 @@ public class BookReviewsPanelHandle extends NodeHandle<Node> {
      * Returns the {@code URL} of the currently loaded page.
      */
     public URL getLoadedUrl() {
-        return WebViewUtil.getLoadedUrl(getChildNode(BOOK_REVIEWS_BROWSER_ID));
+        return WebViewUtil.getLoadedUrl(WebViewManager.getInstance().getWebView());
     }
 }
 ```
@@ -204,6 +220,32 @@ public class RecentBooksPanelHandle extends NodeHandle<ListView<Book>> {
         return getRootNode().getItems().size();
     }
 
+}
+```
+###### \java\seedu\address\commons\util\StringUtilTest.java
+``` java
+    @Test
+    public void isValidUrl_nullGiven_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        StringUtil.isValidUrl(null);
+    }
+
+    @Test
+    public void isValidUrl_emptyString() {
+        assertFalse(StringUtil.isValidUrl(""));
+    }
+
+    @Test
+    public void isValidUrl_validUrl_success() {
+        assertTrue(StringUtil.isValidUrl(
+                "https://catalogue.nlb.gov.sg/cgi-bin/spydus.exe/FULL/EXPNOS/BIBENQ/6689797/241229563,1"));
+    }
+
+    @Test
+    public void isValidUrl_invalidUrl_failure() {
+        assertFalse(StringUtil.isValidUrl(
+                "https:///catalogue.nlb.gov.sg/cgi-bin/spydus.exe/FULL/EXPNOS/BIBENQ/6689797/241229563,1"));
+    }
 }
 ```
 ###### \java\seedu\address\logic\commands\AddCommandTest.java
@@ -392,14 +434,148 @@ public class AddCommandTest {
 
 }
 ```
+###### \java\seedu\address\logic\commands\LibraryCommandTest.java
+``` java
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for {@code LibraryCommand}.
+ */
+public class LibraryCommandTest {
+
+    @Rule
+    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    private Model model;
+
+    /**
+     * Default active list is book shelf.
+     */
+    @Before
+    public void setUp() {
+        model = new ModelManager(TypicalBooks.getTypicalBookShelf(), new UserPrefs());
+        model.updateSearchResults(TypicalBooks.getTypicalBookShelf());
+        model.addRecentBook(TypicalBooks.ARTEMIS);
+    }
+
+    @Test
+    public void constructor_nullIndex_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        new LibraryCommand(null);
+    }
+
+    @Test
+    public void execute_validIndexBookShelf_success() {
+        assertExecutionSuccess(INDEX_FIRST_BOOK, model.getDisplayBookList().get(0), model);
+    }
+
+    @Test
+    public void execute_invalidIndexBookShelf_failure() {
+        LibraryCommand libraryCommand = prepareCommand(Index.fromOneBased(model.getDisplayBookList().size() + 1));
+
+        assertCommandFailure(libraryCommand, model, Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_validIndexSearchResults_success() {
+        model.setActiveListType(ActiveListType.SEARCH_RESULTS);
+        assertExecutionSuccess(INDEX_FIRST_BOOK, model.getSearchResultsList().get(0), model);
+    }
+
+    @Test
+    public void execute_invalidIndexSearchResults_failure() {
+        model.setActiveListType(ActiveListType.SEARCH_RESULTS);
+        LibraryCommand libraryCommand = prepareCommand(Index.fromOneBased(model.getSearchResultsList().size() + 1));
+
+        assertCommandFailure(libraryCommand, model, Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_validIndexRecentBooks_success() {
+        model.setActiveListType(ActiveListType.RECENT_BOOKS);
+        assertExecutionSuccess(INDEX_FIRST_BOOK, model.getRecentBooksList().get(0), model);
+    }
+
+    @Test
+    public void execute_invalidIndexRecentBooks_failure() {
+        model.setActiveListType(ActiveListType.RECENT_BOOKS);
+        LibraryCommand libraryCommand = prepareCommand(Index.fromOneBased(model.getRecentBooksList().size() + 1));
+
+        assertCommandFailure(libraryCommand, model, Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_networkError_raisesExpectedEvent() throws CommandException {
+        LibraryCommand command = new LibraryCommand(INDEX_FIRST_BOOK);
+
+        NetworkManager networkManagerMock = mock(NetworkManager.class);
+        when(networkManagerMock.searchLibraryForBook(
+                model.getDisplayBookList().get(INDEX_FIRST_BOOK.getZeroBased())))
+                .thenReturn(TestUtil.getFailedFuture());
+
+        command.setData(model, networkManagerMock, new CommandHistory(), new UndoStack());
+        command.execute();
+
+        NewResultAvailableEvent resultEvent = (NewResultAvailableEvent)
+                eventsCollectorRule.eventsCollector.getMostRecent(NewResultAvailableEvent.class);
+        assertEquals(LibraryCommand.MESSAGE_FAIL, resultEvent.message);
+    }
+
+    @Test
+    public void equals() {
+        LibraryCommand libraryFirstCommand = prepareCommand(INDEX_FIRST_BOOK);
+        LibraryCommand librarySecondCommand = prepareCommand(INDEX_SECOND_BOOK);
+
+        // same object -> returns true
+        assertTrue(libraryFirstCommand.equals(libraryFirstCommand));
+
+        // same values -> returns true
+        LibraryCommand libraryFirstCommandCopy = prepareCommand(INDEX_FIRST_BOOK);
+        assertTrue(libraryFirstCommand.equals(libraryFirstCommandCopy));
+
+        // different types -> returns false
+        assertFalse(libraryFirstCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(libraryFirstCommand.equals(null));
+
+        // different book -> returns false
+        assertFalse(libraryFirstCommand.equals(librarySecondCommand));
+    }
+
+    /**
+     * Executes a {@code LibraryCommand} with the given {@code index}, and checks that
+     * {@code network.searchLibraryForBook(book)} is being called with the correct book.
+     */
+    private void assertExecutionSuccess(Index index, Book expectedBook, Model expectedModel) {
+        LibraryCommand libraryCommand = new LibraryCommand(index);
+
+        NetworkManager networkManagerMock = mock(NetworkManager.class);
+        when(networkManagerMock.searchLibraryForBook(expectedBook))
+                .thenReturn(CompletableFuture.completedFuture(expectedBook.toString()));
+
+        libraryCommand.setData(model, networkManagerMock, new CommandHistory(), new UndoStack());
+
+        assertCommandSuccess(libraryCommand, model, LibraryCommand.MESSAGE_SEARCHING, expectedModel);
+        verify(networkManagerMock).searchLibraryForBook(expectedBook);
+    }
+
+    /**
+     * Returns a {@code LibraryCommand} with the parameter {@code index}.
+     */
+    private LibraryCommand prepareCommand(Index index) {
+        LibraryCommand command = new LibraryCommand(index);
+        command.setData(model, mock(NetworkManager.class), new CommandHistory(), new UndoStack());
+        return command;
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\RecentCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for RecentCommand.
  */
 public class RecentCommandTest {
-    @Rule
-    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
     private Model model;
     private Model expectedModel;
@@ -445,7 +621,7 @@ public class ReviewsCommandTest {
     }
 
     @Test
-    public void execute_validIndexBookShelf_success() throws Exception {
+    public void execute_validIndexBookShelf_success() {
         ReviewsCommand reviewsCommand = prepareCommand(INDEX_FIRST_BOOK);
         ModelManager expectedModel = new ModelManager(model.getBookShelf(), new UserPrefs());
 
@@ -462,7 +638,7 @@ public class ReviewsCommandTest {
     }
 
     @Test
-    public void execute_validIndexSearchResults_success() throws Exception {
+    public void execute_validIndexSearchResults_success() {
         prepareSearchResultListInModel(model);
 
         ReviewsCommand reviewsCommand = prepareCommand(INDEX_FIRST_BOOK);
@@ -484,7 +660,7 @@ public class ReviewsCommandTest {
     }
 
     @Test
-    public void execute_validIndexRecentBooks_success() throws Exception {
+    public void execute_validIndexRecentBooks_success() {
         prepareRecentBooksListInModel(model);
 
         ReviewsCommand reviewsCommand = prepareCommand(INDEX_FIRST_BOOK);
@@ -506,7 +682,7 @@ public class ReviewsCommandTest {
     }
 
     @Test
-    public void equals() throws Exception {
+    public void equals() {
         ReviewsCommand reviewsFirstCommand = prepareCommand(INDEX_FIRST_BOOK);
         ReviewsCommand reviewsSecondCommand = prepareCommand(INDEX_SECOND_BOOK);
 
@@ -584,6 +760,29 @@ public class AddCommandParserTest {
 
         // Multiple args
         assertParseFailure(parser, "1 2", String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+    }
+}
+```
+###### \java\seedu\address\logic\parser\LibraryCommandParserTest.java
+``` java
+public class LibraryCommandParserTest {
+    private LibraryCommandParser parser = new LibraryCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsLibraryCommand() {
+        assertParseSuccess(parser, "1", new LibraryCommand(INDEX_FIRST_BOOK));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        // No args
+        assertParseFailure(parser, "", String.format(MESSAGE_INVALID_COMMAND_FORMAT, LibraryCommand.MESSAGE_USAGE));
+
+        // Invalid arg
+        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, LibraryCommand.MESSAGE_USAGE));
+
+        // Multiple args
+        assertParseFailure(parser, "1 2", String.format(MESSAGE_INVALID_COMMAND_FORMAT, LibraryCommand.MESSAGE_USAGE));
     }
 }
 ```
@@ -715,6 +914,172 @@ public class UniqueBookCircularListTest {
         assertEquals(false, uniqueBookCircularList.equals(uniqueBookCircularList2));
     }
 
+}
+```
+###### \java\seedu\address\network\library\NlbCatalogueApiTest.java
+``` java
+public class NlbCatalogueApiTest {
+
+    private static final File VALID_RESPONSE_BRIEF_DISPLAY =
+            new File("src/test/data/NlbResultTest/ValidResponseBriefDisplay.html");
+    private static final String VALID_RESPONSE_BRIEF_DISPLAY_URL =
+            "https://catalogue.nlb.gov.sg/cgi-bin/spydus.exe/FULL/EXPNOS/BIBENQ/6585278/226559740,1";
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    private NlbCatalogueApi nlbCatalogueApi;
+    private HttpClient mockClient;
+
+    @Before
+    public void setUp() {
+        mockClient = mock(HttpClient.class);
+        nlbCatalogueApi = new NlbCatalogueApi(mockClient);
+    }
+
+    @Test
+    public void makeSearchUrl_validBook_success() {
+        assertEquals("https://catalogue.nlb.gov.sg/cgi-bin/spydus.exe/ENQ/EXPNOS/BIBENQ?ENTRY=Artemis+Andy+Weir"
+                + "&ENTRY_NAME=BS&ENTRY_TYPE=K&GQ=Artemis+Andy+Weir&SORTS=SQL_REL_TITLE",
+                NlbCatalogueApi.makeSearchUrl(TypicalBooks.ARTEMIS).replaceAll(" ", "+"));
+    }
+
+    @Test
+    public void searchForBooks_validParam_success() throws IOException {
+        when(mockClient.makeGetRequest(NlbCatalogueApi.makeSearchUrl(TypicalBooks.ARTEMIS)))
+                .thenReturn(makeFutureResponse(200, FileUtil.readFromFile(VALID_RESPONSE_BRIEF_DISPLAY)));
+
+        String result = nlbCatalogueApi.searchForBook(TypicalBooks.ARTEMIS).join();
+
+        verify(mockClient).makeGetRequest(NlbCatalogueApi.makeSearchUrl(TypicalBooks.ARTEMIS));
+        assertEquals(VALID_RESPONSE_BRIEF_DISPLAY_URL, result);
+    }
+
+    @Test
+    public void searchForBooks_badResponseType_throwsCompletionException() {
+        when(mockClient.makeGetRequest(NlbCatalogueApi.makeSearchUrl(TypicalBooks.ARTEMIS)))
+                .thenReturn(makeFutureResponse(503, ""));
+
+        thrown.expect(CompletionException.class);
+        nlbCatalogueApi.searchForBook(TypicalBooks.ARTEMIS).join();
+    }
+
+    @Test
+    public void searchForBooks_badReturnType_throwsCompletionException() throws IOException {
+        when(mockClient.makeGetRequest(NlbCatalogueApi.makeSearchUrl(TypicalBooks.ARTEMIS)))
+                .thenReturn(makeFutureResponse(200, "application/json",
+                        FileUtil.readFromFile(JsonDeserializerTest.VALID_SEARCH_RESPONSE_FILE)));
+
+        thrown.expect(CompletionException.class);
+        nlbCatalogueApi.searchForBook(TypicalBooks.ARTEMIS).join();
+    }
+
+    /**
+     * Returns a {@link CompletableFuture} that resolves to a {@link HttpResponse} of content type HTML.
+     */
+    private static CompletableFuture<HttpResponse> makeFutureResponse(int code, String response) {
+        return makeFutureResponse(code, "text/html;", response);
+    }
+
+    /**
+     * Returns a {@link CompletableFuture} that resolves to a {@link HttpResponse}.
+     */
+    private static CompletableFuture<HttpResponse> makeFutureResponse(int code, String contentType, String response) {
+        return CompletableFuture.completedFuture(new HttpResponse(code, contentType, response));
+    }
+}
+```
+###### \java\seedu\address\network\library\NlbResultHelperTest.java
+``` java
+public class NlbResultHelperTest {
+    private static final String TEST_DATA_FOLDER =
+            FileUtil.getPath("src/test/data/NlbResultTest/");
+    private static final File INVALID_RESPONSE_TOO_MANY_REQUESTS =
+            new File(TEST_DATA_FOLDER + "InvalidResponseTooManyRequests.html");
+    private static final File VALID_RESPONSE_BRIEF_DISPLAY =
+            new File(TEST_DATA_FOLDER + "ValidResponseBriefDisplay.html");
+    private static final File VALID_RESPONSE_FULL_DISPLAY =
+            new File(TEST_DATA_FOLDER + "ValidResponseFullDisplay.html");
+    private static final File VALID_RESPONSE_NO_RESULTS =
+            new File(TEST_DATA_FOLDER + "ValidResponseNoResults.html");
+
+    private static final String INVALID_RESPONSE_TOO_MANY_REQUESTS_URL = NlbResultHelper.NO_RESULTS_FOUND;
+    private static final String VALID_RESPONSE_BRIEF_DISPLAY_URL =
+            "https://catalogue.nlb.gov.sg/cgi-bin/spydus.exe/FULL/EXPNOS/BIBENQ/6585278/226559740,1";
+    private static final String VALID_RESPONSE_FULL_DISPLAY_URL = NlbResultHelper.URL_FULL_DISPLAY
+            .replaceAll("%s", "Harry Potter and the Classical World Richard A. Spencer");
+    private static final String VALID_RESPONSE_NO_RESULTS_URL = NlbResultHelper.NO_RESULTS_FOUND;
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void getUrl_nullString_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        NlbResultHelper.getUrl(null, TypicalBooks.ARTEMIS);
+    }
+
+    @Test
+    public void getUrl_nullBook_throwsNullPointerException() throws Exception {
+        String content = FileUtil.readFromFile(VALID_RESPONSE_BRIEF_DISPLAY);
+        thrown.expect(NullPointerException.class);
+        NlbResultHelper.getUrl(content, null);
+    }
+
+    @Test
+    public void getUrl_invalidResponseTooManyRequests_success() throws Exception {
+        String content = FileUtil.readFromFile(INVALID_RESPONSE_TOO_MANY_REQUESTS);
+        assertEquals(INVALID_RESPONSE_TOO_MANY_REQUESTS_URL, NlbResultHelper.getUrl(content, TypicalBooks.ARTEMIS));
+    }
+
+    @Test
+    public void getUrl_validResponseBriefDisplay_success() throws Exception {
+        String content = FileUtil.readFromFile(VALID_RESPONSE_BRIEF_DISPLAY);
+        assertEquals(VALID_RESPONSE_BRIEF_DISPLAY_URL, NlbResultHelper.getUrl(content, TypicalBooks.ARTEMIS));
+    }
+
+    @Test
+    public void getUrl_validResponseFullDisplay_success() throws Exception {
+        String content = FileUtil.readFromFile(VALID_RESPONSE_FULL_DISPLAY);
+        Book expectedBook = new BookBuilder()
+                .withTitle("Harry Potter and the Classical World").withAuthors("Richard A. Spencer").build();
+        assertEquals(VALID_RESPONSE_FULL_DISPLAY_URL, NlbResultHelper.getUrl(content, expectedBook));
+    }
+
+    @Test
+    public void getUrl_validResponseNoResults() throws Exception {
+        String content = FileUtil.readFromFile(VALID_RESPONSE_NO_RESULTS);
+        Book book = new BookBuilder()
+                .withTitle("xxxxxxxxxxxxxxxxxxxxxx").withAuthors("yyyyyyyyy").build();
+        assertEquals(VALID_RESPONSE_NO_RESULTS_URL, NlbResultHelper.getUrl(content, book));
+
+    }
+}
+```
+###### \java\seedu\address\network\NetworkManagerTest.java
+``` java
+    @Test
+    public void nlbCatalogueApiSearchForBooks_success() throws Exception {
+        when(mockNlbCatalogueApi.searchForBook(BOOK_SUCESS))
+                .thenReturn(CompletableFuture.completedFuture(BOOK_SUCCESS_RESULT));
+
+        String result = networkManager.searchLibraryForBook(BOOK_SUCESS).get();
+
+        verify(mockNlbCatalogueApi).searchForBook(BOOK_SUCESS);
+        assertEquals(BOOK_SUCCESS_RESULT, result);
+    }
+
+    @Test
+    public void nlbCatalogueApiSearchForBooks_failure() throws Exception {
+        when(mockNlbCatalogueApi.searchForBook(BOOK_FAILURE))
+                .thenReturn(TestUtil.getFailedFuture());
+
+        CompletableFuture<String> result = networkManager.searchLibraryForBook(BOOK_FAILURE);
+        verify(mockNlbCatalogueApi).searchForBook(BOOK_FAILURE);
+
+        thrown.expect(ExecutionException.class);
+        result.get();
+    }
 }
 ```
 ###### \java\seedu\address\storage\XmlRecentBooksStorageTest.java
@@ -1001,6 +1366,83 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
     }
 }
 ```
+###### \java\systemtests\LibraryCommandSystemTest.java
+``` java
+public class LibraryCommandSystemTest extends BibliotekSystemTest {
+
+    @Test
+    public void library() {
+
+        /* ---------- Test on book shelf ------------- */
+
+        ObservableList<Book> bookList = getModel().getDisplayBookList();
+
+        assertCommandSuccess(LibraryCommand.COMMAND_WORD + " 1", bookList.get(0));
+        assertCommandSuccess(LibraryCommand.COMMAND_WORD + " " + bookList.size(),
+                bookList.get(bookList.size() - 1));
+
+        assertCommandFailure(LibraryCommand.COMMAND_WORD + " " + (bookList.size() + 1),
+                Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
+
+        /* ---------- Test on search results list ------------- */
+
+        executeBackgroundCommand(SearchCommand.COMMAND_WORD + " hello", SearchCommand.MESSAGE_SEARCHING);
+
+        bookList = getModel().getSearchResultsList();
+
+        assertCommandSuccess(LibraryCommand.COMMAND_WORD + " 1", bookList.get(0));
+        assertCommandFailure(LibraryCommand.COMMAND_WORD + " " + (bookList.size() + 1),
+                Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
+
+        /* ---------- Test on recent books list ------------- */
+
+        executeCommand(SelectCommand.COMMAND_WORD + " 1");
+        executeCommand(RecentCommand.COMMAND_WORD);
+
+        bookList = getModel().getRecentBooksList();
+
+        assertCommandSuccess(LibraryCommand.COMMAND_WORD + " 1", bookList.get(0));
+        assertCommandFailure(LibraryCommand.COMMAND_WORD + " " + (bookList.size() + 1),
+                Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
+
+        /* ---------- Negative test cases ------------- */
+
+        assertCommandFailure(LibraryCommand.COMMAND_WORD + " 0",
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, LibraryCommand.MESSAGE_USAGE));
+    }
+
+    /**
+     * Executes {@code command} and verifies that, after the web API has returned a result,<br>
+     * 1. Command box displays an empty string.<br>
+     * 2. Command box has the default style class.<br>
+     * 3. Result display box displays the success message.<br>
+     * 4. {@code Model} and {@code Storage} remain unchanged.<br>
+     * 5. Selected book list card remain unchanged.<br>
+     * 6. {@code BookInLibraryPanel} is visible.
+     * 7. Status bar's sync status remains unchanged.<br>
+     * Verifications 1, 3 and 4 are performed by
+     * {@code BibliotekSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see BibliotekSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     * @see BibliotekSystemTest#assertSelectedBookListCardChanged(Index)
+     */
+    private void assertCommandSuccess(String command, Book bookToSearch) {
+        Model expectedModel = getModel();
+
+        executeCommand(command);
+        assertCommandBoxShowsDefaultStyle();
+
+        new GuiRobot().waitForEvent(() -> !getResultDisplay().getText().equals(LibraryCommand.MESSAGE_SEARCHING));
+
+        String expectedResultMessage = String.format(LibraryCommand.MESSAGE_SUCCESS, bookToSearch);
+
+        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+        assertSelectedBookListCardUnchanged();
+        assertCommandBoxShowsDefaultStyle();
+        assertBookInLibraryPanelVisible();
+        assertStatusBarUnchanged();
+    }
+}
+```
 ###### \java\systemtests\ReviewsCommandSystemTest.java
 ``` java
 public class ReviewsCommandSystemTest extends BibliotekSystemTest {
@@ -1047,15 +1489,14 @@ public class ReviewsCommandSystemTest extends BibliotekSystemTest {
      * 1. Command box displays an empty string.<br>
      * 2. Command box has the default style class.<br>
      * 3. Result display box displays the load successful message.<br>
-     * 4. {@code Model}, {@code Storage}, {@code BookListPanel}, {@code SearchResultsPanel},
-     * and {@code RecentBooksPanel} remain unchanged.<br>
-     * 5. Selected books card remain unchanged.<br>
-     * 6. {@code BookReviewsPanel} is visible and {@code BookDetailsPanel} is hidden.
+     * 4. {@code Model} and {@code Storage} remain unchanged.<br>
+     * 5. Any selections in {@code BookListPanel}, {@code SearchResultsPanel},
+     *    and {@code RecentBooksPanel} are all deselected.<br>
+     * 6. {@code BookReviewsPanel} is visible.
      * 7. Status bar remains unchanged.<br>
      * Verifications 1, 3 and 4 are performed by
      * {@code BibliotekSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * @see BibliotekSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-     * @see BibliotekSystemTest#assertSelectedBookListCardChanged(Index)
      */
     private void assertCommandSuccess(String command, Book toLoad) {
         Model expectedModel = getModel();
@@ -1066,21 +1507,11 @@ public class ReviewsCommandSystemTest extends BibliotekSystemTest {
         String expectedResultMessage = String.format(ReviewsCommand.MESSAGE_SUCCESS, toLoad);
 
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
-        assertSelectedBookListCardUnchanged();
-        assertSelectedSearchResultsCardUnchanged();
-        assertSelectedRecentBooksCardUnchanged();
-        assertCommandBoxShowsDefaultStyle();
+        assertSelectedBookListCardDeselected();
+        assertSelectedSearchResultsCardDeselected();
+        assertSelectedRecentBooksCardDeselected();
         assertBookReviewsPanelVisible();
         assertStatusBarUnchanged();
-    }
-
-    /**
-     * Checks that {@code BookReviewsPanel} is visible and {@code BookDetailsPanel}
-     * is not visible.
-     */
-    private void assertBookReviewsPanelVisible() {
-        assertTrue(getBookReviewsPanel().isVisible());
-        assertFalse(getBookDetailsPanel().isVisible());
     }
 }
 ```

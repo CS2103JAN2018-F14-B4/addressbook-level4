@@ -47,6 +47,107 @@ public enum Theme {
 
 }
 ```
+###### \java\seedu\address\logic\commands\AddAliasCommand.java
+``` java
+/**
+ * Adds a command alias to the alias list.
+ */
+public class AddAliasCommand extends Command {
+
+    public static final String COMMAND_WORD = "addalias";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a new alias for a command.\n"
+            + "Parameters: ALIAS_NAME "
+            + PREFIX_COMMAND + "COMMAND\n"
+            + "Example: " + COMMAND_WORD + "urd "
+            + PREFIX_COMMAND + "list s/unread";
+
+    public static final String MESSAGE_NEW = "Added a new alias: %1$s.";
+    public static final String MESSAGE_UPDATE = "Updated an existing alias: %1$s.";
+
+    private final Alias toAdd;
+
+    /**
+     * Creates an {@code AddAliasCommand}.
+     *
+     * @param toAdd the alias to be added.
+     */
+    public AddAliasCommand(Alias toAdd) {
+        requireNonNull(toAdd);
+        this.toAdd = toAdd;
+    }
+
+    @Override
+    public CommandResult execute() {
+        boolean isUpdating = model.getAlias(toAdd.getName()).isPresent();
+        model.addAlias(toAdd);
+
+        String message = isUpdating ? MESSAGE_UPDATE : MESSAGE_NEW;
+        return new CommandResult(String.format(message, toAdd));
+    }
+
+```
+###### \java\seedu\address\logic\commands\AliasesCommand.java
+``` java
+/**
+ * Shows a list of all command aliases.
+ */
+public class AliasesCommand extends Command {
+
+    public static final String COMMAND_WORD = "aliases";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows a listing of your command aliases.\n"
+            + "Example: " + COMMAND_WORD;
+
+    public static final String MESSAGE_SUCCESS = "Listed %s aliases.";
+
+    @Override
+    public CommandResult execute() {
+        EventsCenter.getInstance().post(new ShowAliasListRequestEvent());
+        return new CommandResult(String.format(MESSAGE_SUCCESS, model.getAliasList().size()));
+    }
+}
+```
+###### \java\seedu\address\logic\commands\DeleteAliasCommand.java
+``` java
+/**
+ * Deletes the alias identified by the alias name from the alias list.
+ */
+public class DeleteAliasCommand extends Command {
+
+    public static final String COMMAND_WORD = "deletealias";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deletes the alias identified by the alias name.\n"
+            + "Parameters: ALIAS_NAME\n"
+            + "Example: " + COMMAND_WORD + "urd";
+
+    public static final String MESSAGE_SUCCESS = "Deleted alias: %1$s.";
+    public static final String MESSAGE_NOT_FOUND = "Alias does not exist: %1$s.";
+
+    private final String toDelete;
+
+    /**
+     * Creates an {@code DeleteAliasCommand}.
+     *
+     * @param toDelete the name of the alias to be deleted.
+     */
+    public DeleteAliasCommand(String toDelete) {
+        requireNonNull(toDelete);
+        this.toDelete = toDelete.trim().toLowerCase();
+    }
+
+    @Override
+    public CommandResult execute() {
+        Optional<Alias> alias = model.getAlias(toDelete);
+        if (!alias.isPresent()) {
+            return new CommandResult(String.format(MESSAGE_NOT_FOUND, toDelete));
+        }
+
+        model.removeAlias(toDelete);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, alias.get()));
+    }
+
+```
 ###### \java\seedu\address\logic\commands\ListCommand.java
 ``` java
 /**
@@ -89,9 +190,9 @@ public class ListCommand extends Command {
 
     @Override
     public CommandResult execute() {
+        EventsCenter.getInstance().post(new SwitchToBookListRequestEvent());
         model.updateBookListFilter(filterDescriptor.buildCombinedFilter());
         model.updateBookListSorter(bookComparator);
-        EventsCenter.getInstance().post(new SwitchToBookListRequestEvent());
         return new CommandResult(String.format(MESSAGE_SUCCESS, model.getDisplayBookList().size()));
     }
 
@@ -386,6 +487,182 @@ public class SearchCommand extends Command {
     }
 }
 ```
+###### \java\seedu\address\logic\parser\AddAliasCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new {@code AddAliasCommand} object.
+ */
+public class AddAliasCommandParser implements Parser<AddAliasCommand> {
+
+    private static final Pattern ALIAS_FORMAT = Pattern.compile("^\\S+$");
+    private static final Pattern COMMAND_FORMAT = Pattern.compile("(?<prefix>((?! \\w+\\/.*)[\\S ])+)(?<arguments>.*)");
+
+    @Override
+    public AddAliasCommand parse(String args) throws ParseException {
+        requireNonNull(args);
+
+        ArgumentMultimap argMultimap = createArgumentMultimap(args);
+        String aliasName = getAliasName(argMultimap);
+        Matcher matcher = createCommandMatcher(argMultimap);
+
+        return new AddAliasCommand(createAlias(aliasName, matcher));
+    }
+
+    /**
+     * Tokenizes the given {@code args} and returns an {@code ArgumentMultimap} containing the results.
+     * @throws ParseException if {@code PREFIX_COMMAND} cannot be found.
+     */
+    private static ArgumentMultimap createArgumentMultimap(String args) throws ParseException {
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_COMMAND);
+        checkCommandFormat(argMultimap.getValue(PREFIX_COMMAND).isPresent());
+        return argMultimap;
+    }
+
+    /**
+     * Gets and returns the alias name from the {@code argMultimap}.
+     * @throws ParseException if the alias name is not in the expected format.
+     */
+    private static String getAliasName(ArgumentMultimap argMultimap) throws ParseException {
+        String aliasName = argMultimap.getPreamble().trim();
+        checkCommandFormat(ALIAS_FORMAT.matcher(aliasName).matches());
+        return aliasName;
+    }
+
+    /**
+     * Creates and returns a {@code Matcher} containing information about the command to be aliased.
+     * @throws ParseException if the command is not in the expected format.
+     */
+    private static Matcher createCommandMatcher(ArgumentMultimap argMultimap) throws ParseException {
+        Matcher matcher = COMMAND_FORMAT.matcher(argMultimap.getValue(PREFIX_COMMAND).get());
+        checkCommandFormat(matcher.matches());
+        return matcher;
+    }
+
+    private static Alias createAlias(String aliasName, Matcher commandMatcher) {
+        return new Alias(aliasName, commandMatcher.group("prefix"), commandMatcher.group("arguments"));
+    }
+
+    private static void checkCommandFormat(boolean condition) throws ParseException {
+        if (!condition) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddAliasCommand.MESSAGE_USAGE));
+        }
+    }
+}
+```
+###### \java\seedu\address\logic\parser\BookShelfParser.java
+``` java
+    /**
+     * Used for pre-processing the user input, before the application of a command alias.
+     */
+    private static final Pattern ALIASED_COMMAND_FORMAT =
+            Pattern.compile("(?<aliasName>\\S+)(?<unnamedArgs>((?! [\\w]+\\/.*)[\\S ])*)(?<namedArgs>.*)");
+
+    private final ReadOnlyAliasList aliases;
+
+    public BookShelfParser(ReadOnlyAliasList aliases) {
+        requireNonNull(aliases);
+        this.aliases = aliases;
+    }
+
+    /**
+     * Applies a command alias (if any) to the user input, and returns the result.
+     * If no command alias can be applied, the user input will be returned unchanged.
+     *
+     * @param userInput full user input string.
+     * @return the processed input after the application of command alias.
+     * @throws ParseException if the user input does not conform to the expected format.
+     */
+    public String applyCommandAlias(String userInput) throws ParseException {
+        final Matcher matcher = ALIASED_COMMAND_FORMAT.matcher(userInput.trim());
+        if (!matcher.matches()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
+        }
+
+        final String aliasName = matcher.group("aliasName");
+        if (!aliases.getAliasByName(aliasName).isPresent()) {
+            return userInput;
+        }
+
+        return buildCommand(aliases.getAliasByName(aliasName).get(),
+                matcher.group("unnamedArgs"), matcher.group("namedArgs"));
+    }
+
+    /**
+     * Builds and returns a command string from the given alias, unnamed arguments, and named arguments.
+     */
+    private static String buildCommand(Alias alias, String unnamedArgs, String namedArgs) {
+        String commandPrefix = alias.getPrefix() + " " + unnamedArgs.trim();
+        String commandNamedArgs = alias.getNamedArgs() + " " + namedArgs.trim();
+        String result = commandPrefix.trim() + " " + commandNamedArgs.trim();
+        return result.trim();
+    }
+
+```
+###### \java\seedu\address\model\alias\UniqueAliasList.java
+``` java
+/**
+ * Represents a unique collection of aliases. Does not allow nulls.
+ *
+ * Supports a minimal set of list operations.
+ */
+public class UniqueAliasList extends UniqueList<Alias> implements ReadOnlyAliasList {
+
+    /**
+     * Creates an empty {@code UniqueAliasList}.
+     */
+    public UniqueAliasList() {
+        super();
+    }
+
+    /**
+     * Creates a {@code UniqueAliasList} using the aliases in the {@code toBeCopied}.
+     */
+    public UniqueAliasList(ReadOnlyAliasList toBeCopied) {
+        super();
+        requireNonNull(toBeCopied);
+        toBeCopied.getAliasList().forEach(this::add);
+    }
+
+    /**
+     * Adds an alias to this list. If there is an existing alias
+     * with the same name, that alias will be replaced.
+     */
+    @Override
+    public void add(Alias toAdd) {
+        requireNonNull(toAdd);
+        getAliasByName(toAdd.getName()).ifPresent(internalList::remove);
+        internalList.add(toAdd);
+        assert CollectionUtil.elementsAreUnique(internalList);
+    }
+
+    /**
+     * Removes the alias with the specified {@code name}.
+     * Does nothing if no matching alias was found.
+     */
+    public void remove(String name) {
+        requireNonNull(name);
+        getAliasByName(name).ifPresent(internalList::remove);
+    }
+
+    @Override
+    public Optional<Alias> getAliasByName(String name) {
+        requireNonNull(name);
+        return internalList.stream()
+                .filter(alias -> name.trim().equalsIgnoreCase(alias.getName()))
+                .findFirst();
+    }
+
+    @Override
+    public ObservableList<Alias> getAliasList() {
+        return asObservableList();
+    }
+
+    @Override
+    public int size() {
+        return internalList.size();
+    }
+}
+```
 ###### \java\seedu\address\network\api\google\GoogleBooksApi.java
 ``` java
 /**
@@ -677,9 +954,9 @@ public class JsonSearchResults {
 public class HttpClient {
 
     private static final Logger logger = LogsCenter.getLogger(HttpClient.class);
-    private static final int CONNECTION_TIMEOUT_MILLIS = 1000 * 5; // 5 seconds
-    private static final int READ_TIMEOUT_MILLIS = 1000 * 5; // 5 seconds
-    private static final int REQUEST_TIMEOUT_MILLIS = 1000 * 5; // 5 seconds
+    private static final int CONNECTION_TIMEOUT_MILLIS = 1000 * 10; // 10 seconds
+    private static final int READ_TIMEOUT_MILLIS = 1000 * 10; // 10 seconds
+    private static final int REQUEST_TIMEOUT_MILLIS = 1000 * 10; // 10 seconds
 
     private final AsyncHttpClient asyncHttpClient;
 
@@ -767,6 +1044,14 @@ public interface Network {
     CompletableFuture<Book> getBookDetails(String bookId);
 
     /**
+     * Searches for a book in the library.
+     *
+     * @param book book to search for.
+     * @return CompletableFuture that resolves to a String with the search results.
+     */
+    CompletableFuture<String> searchLibraryForBook(Book book);
+
+    /**
      * Stops the Network component.
      */
     void stop();
@@ -786,18 +1071,21 @@ public class NetworkManager extends ComponentManager implements Network {
 
     private final HttpClient httpClient;
     private final GoogleBooksApi googleBooksApi;
+    private final NlbCatalogueApi nlbCatalogueApi;
 
     public NetworkManager() {
         super();
         httpClient = new HttpClient();
         googleBooksApi = new GoogleBooksApi(httpClient);
+        nlbCatalogueApi = new NlbCatalogueApi(httpClient);
     }
 
-    protected NetworkManager(HttpClient httpClient, GoogleBooksApi googleBooksApi) {
+    protected NetworkManager(HttpClient httpClient, GoogleBooksApi googleBooksApi, NlbCatalogueApi nlbCatalogueApi) {
         super();
-        requireAllNonNull(httpClient, googleBooksApi);
+        requireAllNonNull(httpClient, googleBooksApi, nlbCatalogueApi);
         this.httpClient = httpClient;
         this.googleBooksApi = googleBooksApi;
+        this.nlbCatalogueApi = nlbCatalogueApi;
     }
 
     @Override
@@ -827,6 +1115,19 @@ public class NetworkManager extends ComponentManager implements Network {
     }
 
     @Override
+    public CompletableFuture<String> searchLibraryForBook(Book book) {
+        return nlbCatalogueApi.searchForBook(book)
+                .thenApply(result -> {
+                    logger.info("Search books in library succeeded: " + book);
+                    return result;
+                })
+                .exceptionally(e -> {
+                    logger.warning("Search books in library failed: " + StringUtil.getDetails(e));
+                    throw new CompletionException(e);
+                });
+    }
+
+    @Override
     public void stop() {
         httpClient.close();
     }
@@ -835,7 +1136,7 @@ public class NetworkManager extends ComponentManager implements Network {
 ```
 ###### \resources\view\BookDetailsPanel.fxml
 ``` fxml
-<StackPane fx:id="bookDetailsPane" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="bookDetailsPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
   <padding>
     <Insets bottom="10" left="5" right="10" top="10"/>
   </padding>
@@ -904,5 +1205,49 @@ public class NetworkManager extends ComponentManager implements Network {
       <StackPane fx:id="descriptionPlaceholder" VBox.vgrow="NEVER"/>
     </VBox>
   </ScrollPane>
+</StackPane>
+```
+###### \resources\view\WelcomePanel.fxml
+``` fxml
+<StackPane fx:id="welcomePanel" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+  <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER">
+    <content>
+      <BorderPane fx:id="welcomeContainer">
+        <center>
+          <VBox alignment="CENTER" BorderPane.alignment="CENTER">
+            <ImageView fx:id="appLogo" fitHeight="128.0" fitWidth="128.0" pickOnBounds="true" preserveRatio="true">
+              <Image url="@/images/book_flat_128.png"/>
+              <VBox.margin>
+                <Insets bottom="10"/>
+              </VBox.margin>
+            </ImageView>
+            <Label styleClass="label-subheading" text="Bibliotek"/>
+          </VBox>
+        </center>
+        <bottom>
+          <GridPane>
+            <columnConstraints>
+              <ColumnConstraints minWidth="10.0" percentWidth="15.0"/>
+              <ColumnConstraints minWidth="10.0" percentWidth="70.0"/>
+              <ColumnConstraints minWidth="10.0" percentWidth="15.0"/>
+            </columnConstraints>
+            <rowConstraints>
+              <RowConstraints fillHeight="false" vgrow="ALWAYS"/>
+            </rowConstraints>
+            <Label fx:id="qotd" alignment="CENTER" maxWidth="400" styleClass="qotd" text="\$qotd" textAlignment="CENTER"
+                   wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
+                   GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+              <padding>
+                <Insets bottom="12.0"/>
+              </padding>
+            </Label>
+          </GridPane>
+        </bottom>
+      </BorderPane>
+    </content>
+  </ScrollPane>
+  <padding>
+    <Insets bottom="10" left="5" right="10" top="10"/>
+  </padding>
 </StackPane>
 ```

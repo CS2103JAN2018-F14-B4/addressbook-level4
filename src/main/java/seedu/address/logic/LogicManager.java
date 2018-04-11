@@ -52,7 +52,7 @@ public class LogicManager extends ComponentManager implements Logic {
             isEncrypt = true;
         }
     }
-
+    //@@author 592363789
     /**
      * Constructor for test use.
      */
@@ -65,7 +65,7 @@ public class LogicManager extends ComponentManager implements Logic {
         key = model.getKey();
         this.isEncrypt = isEncrypt;
     }
-
+    //@@author
     @Override
     public CommandResult execute(String commandText) throws CommandException, ParseException {
         String processedText = bookShelfParser.applyCommandAlias(commandText);
