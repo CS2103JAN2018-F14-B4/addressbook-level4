@@ -3,8 +3,11 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.io.IOException;
+import java.security.SecureRandom;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -19,9 +22,17 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.BookShelfChangedEvent;
 import seedu.address.commons.events.model.KeyChangedEvent;
 import seedu.address.model.book.Book;
+import seedu.address.model.book.Isbn;
 import seedu.address.model.book.UniqueBookCircularList;
 import seedu.address.model.book.exceptions.BookNotFoundException;
 import seedu.address.model.book.exceptions.DuplicateBookException;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
+
+import javax.crypto.Cipher;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.DESKeySpec;
 
 /**
  * Represents the in-memory model of the book shelf data.
@@ -37,6 +48,9 @@ public class ModelManager extends ComponentManager implements Model {
     private final ObservableList<Book> displayBookList;
     private final BookShelf searchResults;
     private final UniqueBookCircularList recentBooks;
+    private final static String DES = "DES";
+    private final static String ENCODE = "GBK";
+    private final static String defaultKey = "netwxactive";
 
     /**
      * Initializes a ModelManager with the given bookShelf, userPrefs and recentBooksList.
@@ -116,18 +130,6 @@ public class ModelManager extends ComponentManager implements Model {
         indicateBookShelfChanged();
     }
 
-    /**
-     * Adds the given password
-     *
-     * @param key
-     */
-    @Override
-    public void setKey(String key) {
-        bookShelf.setKey(key);
-        indicateKeyChanged();
-        indicateBookShelfChanged();
-    }
-
     @Override
     public void updateBook(Book target, Book editedBook) throws BookNotFoundException, DuplicateBookException {
         requireAllNonNull(target, editedBook);
@@ -155,14 +157,6 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public Comparator<? super Book> getBookListSorter() {
         return sortedBookList.getComparator();
-    }
-
-    /**
-     * Returns the comparator used for getting the password of the Bibliotek.
-     */
-    @Override
-    public String getKey() {
-        return bookShelf.getKey();
     }
 
     @Override
@@ -233,6 +227,83 @@ public class ModelManager extends ComponentManager implements Model {
                 && displayBookList.equals(other.displayBookList)
                 && searchResults.equals(other.searchResults)
                 && recentBooks.equals(other.recentBooks);
+    }
+
+    public static String encrypKey(String key) throws Exception{
+        byte[] byarray = encrypt(key.getBytes(ENCODE), defaultKey.getBytes(ENCODE));
+        String encryptkey = new BASE64Encoder().encode(byarray);
+        return encryptkey;
+    }
+
+    public static byte[] encrypt(byte[] mykey, byte[] key) throws Exception {
+        SecureRandom secureRandom = new SecureRandom();
+
+        DESKeySpec desKeySpec = new DESKeySpec(key);
+
+        SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance(DES);
+        SecretKey securekey = secretKeyFactory.generateSecret(desKeySpec);
+
+        Cipher cipher = Cipher.getInstance(DES);
+
+        cipher.init(Cipher.ENCRYPT_MODE, securekey, secureRandom);
+
+        return cipher.doFinal(mykey);
+    }
+
+    public static String decryptKey(String yourkey) throws IOException, Exception {
+        if (yourkey == null)
+            return null;
+        BASE64Decoder base64Decoder = new BASE64Decoder();
+        byte[] decodeBuffer = base64Decoder.decodeBuffer(yourkey);
+        byte[] bytes = decrypt(decodeBuffer, defaultKey.getBytes(ENCODE));
+        return new String(bytes, ENCODE);
+    }
+
+    private static byte[] decrypt(byte[] yourkey, byte[] key) throws Exception {
+
+        SecureRandom secureRandom = new SecureRandom();
+
+        DESKeySpec desKeySpec = new DESKeySpec(key);
+
+        SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance(DES);
+        SecretKey securekey = secretKeyFactory.generateSecret(desKeySpec);
+
+        Cipher cipher = Cipher.getInstance(DES);
+
+        cipher.init(Cipher.DECRYPT_MODE, securekey, secureRandom);
+
+        return cipher.doFinal(yourkey);
+    }
+
+    /**
+     * Returns the comparator used for getting the password of the Bibliotek.
+     */
+    @Override
+    public String getKey() {
+        String k = bookShelf.getKey();
+        try {
+            k = decryptKey(k);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return k;
+    }
+
+    /**
+     * Adds the given password
+     *
+     * @param key
+     */
+    public void setKey(String key) {
+        String k = null;
+        try {
+            k = encrypKey(key);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        bookShelf.setKey(k);
+        indicateKeyChanged();
+        indicateBookShelfChanged();
     }
 
 }
