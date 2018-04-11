@@ -494,10 +494,10 @@ When `edit` command is entered,
 
 ===== Aspect: Presentation of rating
 
-* **Alternative 1 (current choice):** Show users the rating as a number.
+* **Alternative 1:** Show users the rating as a number.
 ** Pros: Easy to implement.
 ** Cons: Not aesthetically appealing.
-* **Alternative 2:** Show users the rating as stars.
+* **Alternative 2 (current choice):** Show users the rating as stars.
 ** Pros: Difficult to implement.
 ** Cons: Improves the aesthetic appeal and clarity.
 
