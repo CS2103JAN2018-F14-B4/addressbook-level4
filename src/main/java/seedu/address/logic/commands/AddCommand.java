@@ -153,7 +153,7 @@ public class AddCommand extends UndoableCommand {
     }
 
     @Override
-    protected String undoLogic() {
+    protected String undo() {
         requireAllNonNull(model, toAdd);
 
         try {

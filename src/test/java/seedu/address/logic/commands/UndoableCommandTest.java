@@ -48,7 +48,7 @@ public class UndoableCommandTest {
         }
 
         @Override
-        protected String undoLogic() {
+        protected String undo() {
             try {
                 model.addBook(bookToDelete);
                 return "Success";

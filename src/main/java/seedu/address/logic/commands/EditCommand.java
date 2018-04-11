@@ -119,7 +119,7 @@ public class EditCommand extends UndoableCommand {
     }
 
     @Override
-    protected String undoLogic() {
+    protected String undo() {
         requireAllNonNull(model, editedBook, bookToEdit);
 
         try {

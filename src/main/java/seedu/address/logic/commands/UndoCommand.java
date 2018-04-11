@@ -29,6 +29,7 @@ public class UndoCommand extends Command {
         }
 
         String message = undoStack.popUndo().undo();
+        model.updateBookListFilter(Model.PREDICATE_SHOW_ALL_BOOKS);
         model.setActiveListType(ActiveListType.BOOK_SHELF);
         EventsCenter.getInstance().post(new ActiveListChangedEvent());
         return new CommandResult(message);

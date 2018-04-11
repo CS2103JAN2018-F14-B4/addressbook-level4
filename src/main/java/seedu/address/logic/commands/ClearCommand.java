@@ -50,7 +50,7 @@ public class ClearCommand extends UndoableCommand {
     }
 
     @Override
-    protected String undoLogic() {
+    protected String undo() {
         requireAllNonNull(model, previousBookShelf);
 
         model.resetData(previousBookShelf);

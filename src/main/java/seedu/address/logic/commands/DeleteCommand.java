@@ -84,7 +84,7 @@ public class DeleteCommand extends UndoableCommand {
     }
 
     @Override
-    protected String undoLogic() {
+    protected String undo() {
         requireAllNonNull(model, bookToDelete);
 
         try {

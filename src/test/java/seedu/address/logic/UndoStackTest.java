@@ -141,7 +141,7 @@ public class UndoStackTest {
 
     class DummyUndoableCommand extends UndoableCommand {
         @Override
-        protected String undoLogic() {
+        protected String undo() {
             return "";
         }
 
