@@ -142,7 +142,7 @@ public class BookShelfParserTest {
                 + PREFIX_OLD_KEY + "oldkey" + " " + PREFIX_NEW_KEY + "newkey");
         assertEquals(new SetKeyCommand("oldkey", "newkey"), command);
     }
-  
+
     @Test
     public void parseCommand_library() throws Exception {
         LibraryCommand command = (LibraryCommand) parser.parseCommand(LibraryCommand.COMMAND_WORD + " 1");

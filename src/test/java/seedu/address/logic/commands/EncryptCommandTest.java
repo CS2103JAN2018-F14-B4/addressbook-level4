@@ -60,6 +60,17 @@ public class EncryptCommandTest {
                 return null;
             }
 
+            /**
+             * Searches for a book in the library.
+             *
+             * @param book book to search for.
+             * @return CompletableFuture that resolves to a String with the search results.
+             */
+            @Override
+            public CompletableFuture<String> searchLibraryForBook(Book book) {
+                return null;
+            }
+
             @Override
             public void stop() {
 
