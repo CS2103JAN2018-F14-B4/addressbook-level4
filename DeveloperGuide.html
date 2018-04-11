@@ -1030,20 +1030,7 @@ If the <code>undoStack</code> is empty, then there are no other commands left to
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Alternative 1 (current choice):</strong> Saves the entire book shelf.</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Pros: Easy to implement.</p>
-</li>
-<li>
-<p>Cons: May have performance issues in terms of memory usage.</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p><strong>Alternative 2:</strong> Individual command knows how to undo by itself.</p>
+<p><strong>Alternative 1 (current choice):</strong> Individual command knows how to undo by itself.</p>
 <div class="ulist">
 <ul>
 <li>
@@ -1051,6 +1038,19 @@ If the <code>undoStack</code> is empty, then there are no other commands left to
 </li>
 <li>
 <p>Cons: We must ensure that the implementation of each individual command are correct.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2:</strong> Saves the entire book shelf.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Easy to implement.</p>
+</li>
+<li>
+<p>Cons: May have performance issues in terms of memory usage.</p>
 </li>
 </ul>
 </div>
@@ -3228,7 +3228,7 @@ Expected: Similar to previous.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-11 16:24:43 UTC
+Last updated 2018-04-11 20:35:18 UTC
 </div>
 </div>
 </body>
