@@ -28,6 +28,8 @@ import seedu.address.network.Network;
  * The main LogicManager of the app.
  */
 public class LogicManager extends ComponentManager implements Logic {
+    private static String key;
+    private static boolean isEncrypt = false;
     private final Logger logger = LogsCenter.getLogger(LogicManager.class);
 
     private final Model model;
@@ -35,8 +37,6 @@ public class LogicManager extends ComponentManager implements Logic {
     private final CommandHistory history;
     private final BookShelfParser bookShelfParser;
     private final UndoStack undoStack;
-    private static String key;
-    private static boolean isEncrypt = false;
 
     public LogicManager(Model model, Network network) {
         this.model = model;

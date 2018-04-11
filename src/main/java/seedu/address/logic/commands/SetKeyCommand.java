@@ -8,8 +8,6 @@ import seedu.address.logic.commands.exceptions.CommandException;
  */
 public class SetKeyCommand extends Command {
 
-    private String oldKey, newKey;
-    private boolean isTesting;
     public static final String COMMAND_WORD = "setKey";
 
     public static final String MESSAGE_NO_PARAMETERS = "Error, You must provide the keys";
@@ -19,7 +17,9 @@ public class SetKeyCommand extends Command {
             + "Example: " + COMMAND_WORD + " old/123456 new/abcde ";
     public static final String WRONG_OLDKEY = "Input the wrong oldkey, please check again!";
 
-
+    private String oldKey;
+    private String newKey;
+    private boolean isTesting;
     public SetKeyCommand(String key1, String key2) {
         isTesting = false;
         oldKey = key1;

@@ -35,6 +35,9 @@ import sun.misc.BASE64Encoder;
  */
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
+    private static final String defaultKey = "netwxactive";
+    private static final String DES = "DES";
+    private static final String ENCODE = "GBK";
 
     private ActiveListType activeListType;
     private final BookShelf bookShelf;
@@ -43,9 +46,6 @@ public class ModelManager extends ComponentManager implements Model {
     private final ObservableList<Book> displayBookList;
     private final BookShelf searchResults;
     private final UniqueBookCircularList recentBooks;
-    private static final String defaultKey = "netwxactive";
-    private static final String DES = "DES";
-    private static final String ENCODE = "GBK";
 
     /**
      * Initializes a ModelManager with the given bookShelf, userPrefs and recentBooksList.
