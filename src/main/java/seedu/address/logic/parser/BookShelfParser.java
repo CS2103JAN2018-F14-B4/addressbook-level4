@@ -5,10 +5,8 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
 import java.util.Optional;
-import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.IntStream;
 
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.commands.AddAliasCommand;
@@ -50,6 +48,8 @@ public class BookShelfParser {
      */
     private static final Pattern ALIASED_COMMAND_FORMAT =
             Pattern.compile("(?<aliasName>\\S+)(?<unnamedArgs>((?! [\\w]+\\/.*)[\\S ])*)(?<namedArgs>.*)");
+
+    private static final int MAX_COMMAND_WORD_LENGTH = 12;
 
     private final ReadOnlyAliasList aliases;
 
@@ -185,6 +185,7 @@ public class BookShelfParser {
 
     /**
      * Assumes: {@code commandText} represents an invalid command.
+     * Checks: {@code commandText} is within the length of possible commands.
      * Attempts to find a closely matching command that the user might have meant to type.
      * @param commandText Text as entered by the user.
      * @return String representation of the closely matching command.
@@ -195,6 +196,10 @@ public class BookShelfParser {
 
         final String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
+
+        if (commandWord.length() > MAX_COMMAND_WORD_LENGTH) {
+            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+        }
 
         Optional<String> result = testAllAlphabets(commandWord, arguments, -1);
         if (result.isPresent()) {
