@@ -124,7 +124,7 @@ public class BookShelfParser {
 
         case DecryptCommand.COMMAND_WORD:
             return new DecryptCommandParser().parse(arguments);
-            
+
         case DeleteAliasCommand.COMMAND_WORD:
             return new DeleteAliasCommand(arguments);
 

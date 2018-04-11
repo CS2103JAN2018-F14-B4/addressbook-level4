@@ -60,7 +60,7 @@ public class LogicManager extends ComponentManager implements Logic {
         this.model = model;
         this.network = network;
         history = new CommandHistory();
-        bookShelfParser = new BookShelfParser();
+        bookShelfParser = new BookShelfParser(model.getAliasList());
         undoStack = new UndoStack();
         key = model.getKey();
         this.isEncrypt = isEncrypt;
