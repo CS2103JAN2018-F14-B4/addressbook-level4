@@ -9,8 +9,7 @@ public class DecryptCommand extends Command {
 
     public static final String COMMAND_WORD = "decrypt";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Decrypted the Bibliotek.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD  + ": Decrypted the Bibliotek. "
             + "Parameters: PASSWORD\n"
             + "Example: " + COMMAND_WORD + " 123456";
 

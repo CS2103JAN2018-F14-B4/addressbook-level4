@@ -13,7 +13,7 @@ public class SetKeyCommand extends Command {
     public static final String MESSAGE_NO_PARAMETERS = "Error, You must provide the keys";
     public static final String MESSAGE_SUCCESS = "Set success";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Set the encrypt key of the bibliotek:"
-            + "Parameters: [old/OLDKEY] [new/NEWKEY] "
+            + "Parameters: [old/OLDKEY] [new/NEWKEY]\n"
             + "Example: " + COMMAND_WORD + " old/123456 new/abcde ";
     public static final String WRONG_OLDKEY = "Input the wrong oldkey, please check again!";
 
