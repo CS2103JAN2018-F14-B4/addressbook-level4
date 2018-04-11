@@ -24,6 +24,7 @@ public class GoogleBooksApi {
     protected static final String URL_BOOK_DETAILS = "https://www.googleapis.com/books/v1/volumes/%s";
     private static final String CONTENT_TYPE_JSON = "application/json";
     private static final int HTTP_STATUS_OK = 200;
+    private static final int MAX_SEARCH_RESULTS_COUNT = 30;
 
     private final HttpClient httpClient;
     private final JsonDeserializer deserializer;
@@ -42,7 +43,8 @@ public class GoogleBooksApi {
      */
     public CompletableFuture<ReadOnlyBookShelf> searchBooks(String parameters) {
         String requestUrl = String.format(URL_SEARCH_BOOKS, StringUtil.urlEncode(parameters));
-        return executeGetAndApply(requestUrl, deserializer::convertJsonStringToBookShelf);
+        return executeGetAndApply(requestUrl, json ->
+                deserializer.convertJsonStringToBookShelf(json, MAX_SEARCH_RESULTS_COUNT));
     }
 
     /**
