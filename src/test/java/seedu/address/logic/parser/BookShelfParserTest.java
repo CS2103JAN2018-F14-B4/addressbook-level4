@@ -5,6 +5,8 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NEW_KEY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_OLD_KEY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_RATING;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
@@ -16,11 +18,13 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DecryptCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ReviewsCommand;
+import seedu.address.logic.commands.SetKeyCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.book.Priority;
@@ -65,6 +69,20 @@ public class BookShelfParserTest {
     public void parseCommand_help() throws Exception {
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD) instanceof HelpCommand);
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD + " 3") instanceof HelpCommand);
+    }
+
+    @Test
+    public void parseCommand_decrypt() throws Exception {
+        DecryptCommand command = (DecryptCommand) parser.parseCommand(DecryptCommand.COMMAND_WORD + " "
+                + "key");
+        assertEquals(new DecryptCommand("key"), command);
+    }
+
+    @Test
+    public void parseCommand_setkey() throws Exception {
+        SetKeyCommand command = (SetKeyCommand) parser.parseCommand(SetKeyCommand.COMMAND_WORD + " "
+                + PREFIX_OLD_KEY + "oldkey" + " " + PREFIX_NEW_KEY + "newkey");
+        assertEquals(new SetKeyCommand("oldkey", "newkey"), command);
     }
 
     @Test
