@@ -183,6 +183,7 @@ public class BookShelfParser {
         return matcher;
     }
 
+    //@@author qiu-siqi
     /**
      * Assumes: {@code commandText} represents an invalid command.
      * Checks: {@code commandText} is within the length of possible commands.
@@ -267,7 +268,7 @@ public class BookShelfParser {
     private Optional<String> testCommand(String commandWord, String arguments) {
         try {
             getCommand(commandWord, arguments);
-            return Optional.of(commandWord + " " + arguments);
+            return Optional.of((commandWord.trim() + " " + arguments.trim()).trim());
         } catch (ParseException e) {
             return Optional.empty();
         }
