@@ -224,13 +224,8 @@ public abstract class BibliotekSystemTest {
             Model expectedModel) {
         assertEquals(expectedCommandInput, getCommandBox().getInput());
         assertEquals(expectedResultMessage, getResultDisplay().getText());
-        System.out.println("Expected");
-        expectedModel.getRecentBooksList().forEach(System.out::println);
-        System.out.println("Actual");
-        getModel().getRecentBooksList().forEach(System.out::println);
         assertEquals(expectedModel, getModel());
         assertEquals(expectedModel.getBookShelf(), testApp.readStorageBookShelf());
-        System.out.println(expectedModel.getActiveListType().toString());
         assertListMatching(getBookListPanel(), expectedModel.getActiveList());
     }
 

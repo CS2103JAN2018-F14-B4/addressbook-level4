@@ -48,7 +48,6 @@ public class BookListPanel extends UiPart<Region> {
         bookListView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
-                        System.out.println("Selection in book list panel changed to : '" + newValue + "'");
                         logger.fine("Selection in book list panel changed to : '" + newValue + "'");
                         raise(new BookListSelectionChangedEvent(newValue));
                     }

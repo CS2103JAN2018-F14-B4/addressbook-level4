@@ -65,10 +65,10 @@ public class ListCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        model.updateBookListFilter(filterDescriptor.buildCombinedFilter());
-        model.updateBookListSorter(bookComparator);
         model.setActiveListType(ActiveListType.BOOK_SHELF);
         EventsCenter.getInstance().post(new ActiveListChangedEvent());
+        model.updateBookListFilter(filterDescriptor.buildCombinedFilter());
+        model.updateBookListSorter(bookComparator);
         return new CommandResult(String.format(MESSAGE_SUCCESS, model.getDisplayBookList().size()));
     }
 
