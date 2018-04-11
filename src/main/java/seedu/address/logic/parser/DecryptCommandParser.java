@@ -17,7 +17,7 @@ public class DecryptCommandParser implements Parser<DecryptCommand> {
      */
     public DecryptCommand parse(String args) throws ParseException {
         if (args == null || args.isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DecryptCommand.COMMAND_WORD));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DecryptCommand.MESSAGE_USAGE));
         }
         String key = ParserUtil.parseKey(args);
         return new DecryptCommand(key);
