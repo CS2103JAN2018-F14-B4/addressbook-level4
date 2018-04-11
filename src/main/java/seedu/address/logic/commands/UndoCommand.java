@@ -27,9 +27,9 @@ public class UndoCommand extends Command {
             throw new CommandException(MESSAGE_FAILURE);
         }
 
-        undoStack.popUndo().undo();
+        String message = undoStack.popUndo().undo();
         EventsCenter.getInstance().post(new SwitchToBookListRequestEvent());
-        return new CommandResult(MESSAGE_SUCCESS);
+        return new CommandResult(message);
     }
 
     @Override
