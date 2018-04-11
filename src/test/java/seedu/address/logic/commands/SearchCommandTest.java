@@ -56,7 +56,7 @@ public class SearchCommandTest {
     @Test
     public void execute_allFieldsSpecifiedWithSearchTerm_success() {
         SearchDescriptor searchDescriptor = new SearchDescriptorBuilder().withTitle("1")
-                .withCategory("1").withIsbn("1").withAuthor("1").withSearchTerm("searchterm").build();
+                .withCategory("1").withIsbn("1").withAuthor("1").withKeyWords("searchterm").build();
         assertExecutionSuccess(searchDescriptor);
     }
 
@@ -81,7 +81,7 @@ public class SearchCommandTest {
 
     @Test
     public void execute_networkError_raisesExpectedEvent() {
-        SearchDescriptor searchDescriptor = new SearchDescriptorBuilder().withSearchTerm("error").build();
+        SearchDescriptor searchDescriptor = new SearchDescriptorBuilder().withKeyWords("error").build();
         SearchCommand searchCommand = new SearchCommand(searchDescriptor, false);
 
         NetworkManager networkManagerMock = mock(NetworkManager.class);

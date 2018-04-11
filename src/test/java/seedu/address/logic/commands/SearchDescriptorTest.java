@@ -23,7 +23,7 @@ public class SearchDescriptorTest {
         assertTrue(descriptor.isValid());
         descriptor = new SearchDescriptorBuilder().withIsbn("12345").build();
         assertTrue(descriptor.isValid());
-        descriptor = new SearchDescriptorBuilder().withSearchTerm("12345").build();
+        descriptor = new SearchDescriptorBuilder().withKeyWords("12345").build();
         assertTrue(descriptor.isValid());
         descriptor = new SearchDescriptorBuilder().withTitle("12345").build();
         assertTrue(descriptor.isValid());
@@ -90,7 +90,7 @@ public class SearchDescriptorTest {
 
         // different search term -> returns false
         editedDescriptor = new SearchDescriptorBuilder()
-                .withAuthor("author1").withIsbn("12345").withSearchTerm("search").build();
+                .withAuthor("author1").withIsbn("12345").withKeyWords("search").build();
         assertFalse(descriptorA.equals(editedDescriptor));
     }
 }

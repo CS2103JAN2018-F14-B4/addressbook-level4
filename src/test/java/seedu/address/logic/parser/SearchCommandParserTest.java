@@ -39,7 +39,7 @@ public class SearchCommandParserTest {
                 + ISBN_DESC_ARTEMIS + AUTHOR_DESC_ARTEMIS;
         SearchDescriptor searchDescriptor = new SearchDescriptorBuilder().withTitle(VALID_TITLE_ARTEMIS)
                 .withCategory(VALID_CATEGORY_ARTEMIS).withIsbn(VALID_ISBN_ARTEMIS)
-                .withAuthor(VALID_AUTHOR_ARTEMIS).withSearchTerm(DEFAULT_SEARCH_TERM).build();
+                .withAuthor(VALID_AUTHOR_ARTEMIS).withKeyWords(DEFAULT_SEARCH_TERM).build();
         SearchCommand expectedCommand = new SearchCommand(searchDescriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -49,7 +49,7 @@ public class SearchCommandParserTest {
     public void parse_someFieldsSpecified_success() {
         String userInput = DEFAULT_SEARCH_TERM + TITLE_DESC_ARTEMIS + AUTHOR_DESC_ARTEMIS;
         SearchDescriptor searchDescriptor = new SearchDescriptorBuilder().withTitle(VALID_TITLE_ARTEMIS)
-                .withAuthor(VALID_AUTHOR_ARTEMIS).withSearchTerm(DEFAULT_SEARCH_TERM).build();
+                .withAuthor(VALID_AUTHOR_ARTEMIS).withKeyWords(DEFAULT_SEARCH_TERM).build();
         SearchCommand expectedCommand = new SearchCommand(searchDescriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -58,7 +58,7 @@ public class SearchCommandParserTest {
     @Test
     public void parse_oneFieldSpecified_success() {
         String userInput = DEFAULT_SEARCH_TERM;
-        SearchDescriptor searchDescriptor = new SearchDescriptorBuilder().withSearchTerm(DEFAULT_SEARCH_TERM).build();
+        SearchDescriptor searchDescriptor = new SearchDescriptorBuilder().withKeyWords(DEFAULT_SEARCH_TERM).build();
         SearchCommand expectedCommand = new SearchCommand(searchDescriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
@@ -88,7 +88,7 @@ public class SearchCommandParserTest {
         String userInput = DEFAULT_SEARCH_TERM + TITLE_DESC_ARTEMIS + TITLE_DESC_ARTEMIS + AUTHOR_DESC_ARTEMIS
                 + AUTHOR_DESC_ARTEMIS + TITLE_DESC_BABYLON + AUTHOR_DESC_BABYLON;
         SearchDescriptor searchDescriptor = new SearchDescriptorBuilder().withTitle(VALID_TITLE_BABYLON)
-                .withAuthor(VALID_AUTHOR_BABYLON).withSearchTerm(DEFAULT_SEARCH_TERM).build();
+                .withAuthor(VALID_AUTHOR_BABYLON).withKeyWords(DEFAULT_SEARCH_TERM).build();
         SearchCommand expectedCommand = new SearchCommand(searchDescriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
