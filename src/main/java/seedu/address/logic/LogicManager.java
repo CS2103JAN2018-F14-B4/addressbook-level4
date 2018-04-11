@@ -21,6 +21,7 @@ import seedu.address.logic.parser.BookShelfParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.ActiveListType;
 import seedu.address.model.Model;
+import seedu.address.model.alias.Alias;
 import seedu.address.model.book.Book;
 import seedu.address.network.Network;
 
@@ -42,7 +43,7 @@ public class LogicManager extends ComponentManager implements Logic {
         this.model = model;
         this.network = network;
         history = new CommandHistory();
-        bookShelfParser = new BookShelfParser();
+        bookShelfParser = new BookShelfParser(model.getAliasList());
         undoStack = new UndoStack();
         key = model.getKey();
         if (key == null) {
@@ -67,7 +68,9 @@ public class LogicManager extends ComponentManager implements Logic {
 
     @Override
     public CommandResult execute(String commandText) throws CommandException, ParseException {
-        logger.info("----------------[USER COMMAND][" + commandText + "]");
+        String processedText = bookShelfParser.applyCommandAlias(commandText);
+        logger.info("----------------[USER COMMAND][" + processedText + "]");
+
         try {
             Command command = bookShelfParser.parseCommand(commandText);
             CommandResult result;
@@ -123,6 +126,11 @@ public class LogicManager extends ComponentManager implements Logic {
     @Override
     public ObservableList<Book> getRecentBooksList() {
         return model.getRecentBooksList();
+    }
+
+    @Override
+    public ObservableList<Alias> getDisplayAliasList() {
+        return model.getDisplayAliasList();
     }
 
     @Override
