@@ -1,7 +1,15 @@
 package seedu.address.logic.commands;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static seedu.address.testutil.TypicalBooks.getTypicalBookShelf;
+
+import java.util.concurrent.CompletableFuture;
+
 import org.junit.Before;
 import org.junit.Test;
+
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoStack;
 import seedu.address.model.Model;
@@ -10,13 +18,6 @@ import seedu.address.model.ReadOnlyBookShelf;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.book.Book;
 import seedu.address.network.Network;
-
-import java.util.concurrent.CompletableFuture;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static seedu.address.testutil.TypicalBooks.getTypicalBookShelf;
 
 public class EncryptCommandTest {
 
