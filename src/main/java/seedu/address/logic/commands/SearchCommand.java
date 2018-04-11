@@ -72,7 +72,10 @@ public class SearchCommand extends Command {
      * Makes an asynchronous request to search for books.
      */
     private void makeAsyncSearchRequest() {
-        network.searchBooks(searchDescriptor.toSearchString())
+        String searchString = searchDescriptor.toSearchString();
+        assert !searchString.trim().isEmpty();
+
+        network.searchBooks(searchString)
                 .thenAccept(this::onSuccessfulRequest)
                 .exceptionally(e -> {
                     EventsCenter.getInstance().post(new NewResultAvailableEvent(SearchCommand.MESSAGE_SEARCH_FAIL));
@@ -85,6 +88,7 @@ public class SearchCommand extends Command {
      * Handles the result of a successful request to search for books.
      */
     private void onSuccessfulRequest(ReadOnlyBookShelf bookShelf) {
+        requireNonNull(bookShelf);
         if (useJavafxThread) {
             Platform.runLater(() -> displaySearchResults(bookShelf));
         } else {
