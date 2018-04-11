@@ -173,7 +173,7 @@ public class BookShelfParserTest {
     public void attemptCommandAutoCorrection_add() throws Exception {
         assertEquals("list by/title", parser.attemptCommandAutoCorrection("lst by/title"));
         assertEquals("add 1", parser.attemptCommandAutoCorrection("dd 1"));
-        assertEquals("deletealias r", parser.attemptCommandAutoCorrection("deletealias r"));
+        assertEquals("deletealias r", parser.attemptCommandAutoCorrection("deletealia r"));
     }
 
     @Test

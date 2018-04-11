@@ -217,23 +217,23 @@ public class BookShelfParser {
     }
 
     /**
-     * If {@code i == -1}, test for addition only, else tests all possibilities with all alphabets.
+     * If {@code index == -1}, test for addition only, else tests all possibilities with all alphabets.
      * @return corrected command, if any.
      */
-    private Optional<String> testAllAlphabets(String commandWord, String arguments, int i) {
+    private Optional<String> testAllAlphabets(String commandWord, String arguments, int index) {
         char[] alphabets = "abcdefghijklmnopqrstuvwxyz".toCharArray();
 
         Optional<String> result;
-        for (char c : alphabets) {
-            if (i == -1) {
-                result = testCommand(StringUtil.addAfter(commandWord, c, i), arguments);
+        for (char character : alphabets) {
+            if (index == -1) {
+                result = testCommand(StringUtil.addAfter(commandWord, character, index), arguments);
                 if (result.isPresent()) {
                     return result;
                 }
                 continue;
             }
 
-            result = testAllPossibilities(commandWord, arguments, i, c);
+            result = testAllPossibilities(commandWord, arguments, index, character);
             if (result.isPresent()) {
                 return result;
             }
@@ -242,22 +242,23 @@ public class BookShelfParser {
     }
 
     /**
-     * Tests all possibilities: removing at index {@code i}, replacing with {@code c} at index {@code i},
-     * and adding {@code c} after index {@code i}.
+     * Tests all possibilities: removing at index {@code index}, replacing with {@code character}
+     * at index {@code index}, and adding {@code character} after index {@code index}.
      * @return corrected command, if any.
      */
-    private Optional<String> testAllPossibilities(String commandWord, String arguments, int i, char c) {
-        Optional<String> result = testCommand(StringUtil.removeAt(commandWord, i), arguments);
+    private Optional<String> testAllPossibilities(String commandWord, String arguments,
+                                                  int index, char character) {
+        Optional<String> result = testCommand(StringUtil.removeAt(commandWord, index), arguments);
         if (result.isPresent()) {
             return result;
         }
 
-        result = testCommand(StringUtil.replace(commandWord, c, i), arguments);
+        result = testCommand(StringUtil.replace(commandWord, character, index), arguments);
         if (result.isPresent()) {
             return result;
         }
 
-        result = testCommand(StringUtil.addAfter(commandWord, c, i), arguments);
+        result = testCommand(StringUtil.addAfter(commandWord, character, index), arguments);
         return result;
     }
 
