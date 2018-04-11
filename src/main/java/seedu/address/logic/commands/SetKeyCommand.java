@@ -1,27 +1,24 @@
 package seedu.address.logic.commands;
 
-import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.model.KeyChangedEvent;
 import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.ModelManager;
 
-import java.util.Objects;
-
-public class SetKeyCommand extends Command{
-
-    public static final String COMMAND_WORD = "setKey";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Set the encrypt key of the bibliotek:"
-            + "Parameters: [old/OLDKEY] [new/NEWKEY] "
-            + "Example: " + COMMAND_WORD + " old/123456 new/abcde ";
-
-    public static final String MESSAGE_SUCCESS = "Set success";
-    public static final String WRONG_OLDKEY = "Input the wrong oldkey, please check again!";
-    public static final String MESSAGE_NO_PARAMETERS = "Error, You must provide the keys";
+/**
+ * Set the key of the BiBliotek with a new key.
+ */
+public class SetKeyCommand extends Command {
 
     private String oldKey, newKey;
     private boolean isTesting;
+    public static final String COMMAND_WORD = "setKey";
+
+    public static final String MESSAGE_NO_PARAMETERS = "Error, You must provide the keys";
+    public static final String MESSAGE_SUCCESS = "Set success";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Set the encrypt key of the bibliotek:"
+            + "Parameters: [old/OLDKEY] [new/NEWKEY] "
+            + "Example: " + COMMAND_WORD + " old/123456 new/abcde ";
+    public static final String WRONG_OLDKEY = "Input the wrong oldkey, please check again!";
+
 
     public SetKeyCommand(String key1, String key2) {
         isTesting = false;

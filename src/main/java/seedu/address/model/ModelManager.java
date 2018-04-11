@@ -7,32 +7,27 @@ import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+import javax.crypto.Cipher;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.DESKeySpec;
 
-import com.google.common.eventbus.Subscribe;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import seedu.address.commons.core.ComponentManager;
-import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.BookShelfChangedEvent;
 import seedu.address.commons.events.model.KeyChangedEvent;
 import seedu.address.model.book.Book;
-import seedu.address.model.book.Isbn;
 import seedu.address.model.book.UniqueBookCircularList;
 import seedu.address.model.book.exceptions.BookNotFoundException;
 import seedu.address.model.book.exceptions.DuplicateBookException;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
-
-import javax.crypto.Cipher;
-import javax.crypto.SecretKey;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.DESKeySpec;
 
 /**
  * Represents the in-memory model of the book shelf data.
@@ -48,9 +43,9 @@ public class ModelManager extends ComponentManager implements Model {
     private final ObservableList<Book> displayBookList;
     private final BookShelf searchResults;
     private final UniqueBookCircularList recentBooks;
-    private final static String DES = "DES";
-    private final static String ENCODE = "GBK";
-    private final static String defaultKey = "netwxactive";
+    private static final String defaultKey = "netwxactive";
+    private static final String DES = "DES";
+    private static final String ENCODE = "GBK";
 
     /**
      * Initializes a ModelManager with the given bookShelf, userPrefs and recentBooksList.
@@ -229,12 +224,27 @@ public class ModelManager extends ComponentManager implements Model {
                 && recentBooks.equals(other.recentBooks);
     }
 
-    public static String encrypKey(String key) throws Exception{
-        byte[] byarray = encrypt(key.getBytes(ENCODE), defaultKey.getBytes(ENCODE));
+    /**
+     * Use defaultkey to encrypt
+     * @param mykey
+     * @return
+     * @throws Exception
+     */
+    public static String encrypKey(String mykey) throws Exception {
+        byte[] byarray = encrypt(mykey.getBytes(ENCODE), defaultKey.getBytes(ENCODE));
         String encryptkey = new BASE64Encoder().encode(byarray);
         return encryptkey;
     }
 
+    /**
+     * Convert the bytearray of string into encrypt key.
+     *
+     * @param mykey
+     * @param key
+     *
+     * @return
+     * @throws Exception
+     */
     public static byte[] encrypt(byte[] mykey, byte[] key) throws Exception {
         SecureRandom secureRandom = new SecureRandom();
 
@@ -250,15 +260,32 @@ public class ModelManager extends ComponentManager implements Model {
         return cipher.doFinal(mykey);
     }
 
+    /**
+     * Use defaultkey to decrypt
+     * @param yourkey
+     * @return
+     * @throws Exception
+     * @throws IOException
+     */
     public static String decryptKey(String yourkey) throws IOException, Exception {
-        if (yourkey == null)
+        if (yourkey == null) {
             return null;
+        }
         BASE64Decoder base64Decoder = new BASE64Decoder();
         byte[] decodeBuffer = base64Decoder.decodeBuffer(yourkey);
         byte[] bytes = decrypt(decodeBuffer, defaultKey.getBytes(ENCODE));
         return new String(bytes, ENCODE);
     }
 
+    /**
+     * Convert the bytearray of string into decrypt key.
+     *
+     * @param yourkey
+     * @param key
+     *
+     * @return
+     * @throws Exception
+     */
     private static byte[] decrypt(byte[] yourkey, byte[] key) throws Exception {
 
         SecureRandom secureRandom = new SecureRandom();

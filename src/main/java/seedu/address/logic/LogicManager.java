@@ -6,9 +6,7 @@ import com.google.common.eventbus.Subscribe;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.ComponentManager;
-import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.model.KeyChangedEvent;
 import seedu.address.commons.events.ui.BookListSelectionChangedEvent;
 import seedu.address.commons.events.ui.SearchResultsSelectionChangedEvent;
 import seedu.address.commons.events.ui.SwitchToBookListRequestEvent;
@@ -37,8 +35,8 @@ public class LogicManager extends ComponentManager implements Logic {
     private final CommandHistory history;
     private final BookShelfParser bookShelfParser;
     private final UndoStack undoStack;
-    private static boolean isEncrypt = false;
     private static String key;
+    private static boolean isEncrypt = false;
 
     public LogicManager(Model model, Network network) {
         this.model = model;
@@ -78,8 +76,8 @@ public class LogicManager extends ComponentManager implements Logic {
                     DecryptCommand decryptCommand = (DecryptCommand) command;
                     result = decryptCommand.execute();
                 } else {
-                    result = new CommandResult("Bibliotek is encrypted," +
-                            " please decrypt it first!");
+                    result = new CommandResult("Bibliotek is encrypted,"
+                            + " please decrypt it first!");
                 }
             } else {
                 command.setData(model, network, history, undoStack);

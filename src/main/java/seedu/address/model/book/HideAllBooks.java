@@ -2,7 +2,12 @@ package seedu.address.model.book;
 
 import java.util.function.Predicate;
 
+/**
+ * Set a predicate that all books are not available when encrypting
+ */
 public class HideAllBooks implements Predicate<Book> {
+
+    public  HideAllBooks() {}
 
     /**
      * Evaluates this predicate on the given argument.
@@ -15,8 +20,6 @@ public class HideAllBooks implements Predicate<Book> {
     public boolean test(Book book) {
         return false;
     }
-
-    public  HideAllBooks() {}
 
     /**
      * Returns a composed predicate that represents a short-circuiting logical

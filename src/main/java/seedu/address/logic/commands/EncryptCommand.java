@@ -4,7 +4,10 @@ import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.book.HideAllBooks;
 
-public class EncryptCommand extends Command{
+/**
+ * Encrypt the bibliotek with a setted key.
+ */
+public class EncryptCommand extends Command {
 
     public static final String COMMAND_WORD = "encrypt";
 

@@ -1,7 +1,6 @@
 package seedu.address.storage;
 
 import javax.xml.bind.annotation.XmlValue;
-import java.security.Key;
 
 /**
  * JAXB-friendly adapted version of the Key.

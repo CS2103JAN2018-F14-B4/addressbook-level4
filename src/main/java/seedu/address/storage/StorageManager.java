@@ -12,7 +12,6 @@ import seedu.address.commons.events.model.BookShelfChangedEvent;
 import seedu.address.commons.events.model.KeyChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
-import seedu.address.model.BookShelf;
 import seedu.address.model.ReadOnlyBookShelf;
 import seedu.address.model.UserPrefs;
 

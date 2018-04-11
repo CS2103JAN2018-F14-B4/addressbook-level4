@@ -14,8 +14,8 @@ import seedu.address.model.UniqueList;
 public class UniqueBookCircularList extends UniqueList<Book> {
 
     private final int size;
-    private final String key;
     private final static String ORIGINAL_KEY = "111111";
+    private final String key;
 
     public UniqueBookCircularList() {
         this.size = 50;

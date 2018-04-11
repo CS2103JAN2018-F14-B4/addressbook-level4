@@ -1,14 +1,14 @@
 package seedu.address.storage;
 
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.BookShelf;
-import seedu.address.model.ReadOnlyBookShelf;
-
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.BookShelf;
+import seedu.address.model.ReadOnlyBookShelf;
 
 /**
  * An Immutable BookShelf that is serializable to XML format
