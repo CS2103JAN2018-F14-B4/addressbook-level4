@@ -74,8 +74,9 @@ public class SearchCommandTest {
     }
 
     @Test
-    public void execute_noFieldSpecifiedNoKeyWord_success() {
+    public void execute_noFieldSpecifiedNoKeyWord_throwsAssertionError() {
         SearchDescriptor searchDescriptor = new SearchDescriptorBuilder().build();
+        thrown.expect(AssertionError.class);
         assertExecutionSuccess(searchDescriptor);
     }
 
