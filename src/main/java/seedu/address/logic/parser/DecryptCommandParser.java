@@ -6,14 +6,14 @@ import seedu.address.logic.commands.DecryptCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
- * Parses input arguments and creates a new DecryptCommand object
+ * Parses input arguments and creates a new DecryptCommand object.
  */
 public class DecryptCommandParser implements Parser<DecryptCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the DecryptCommand
+     * Parses the given {@code String} of arguments in the context of the DecryptCommand.
      * and returns an DecryptCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
+     * @throws ParseException if the user input does not conform the expected format.
      */
     public DecryptCommand parse(String args) throws ParseException {
         if (args == null || args.isEmpty()) {

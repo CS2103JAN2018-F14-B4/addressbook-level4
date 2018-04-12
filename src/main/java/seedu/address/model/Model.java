@@ -55,7 +55,7 @@ public interface Model {
     /** Adds the given book */
     void addBook(Book book) throws DuplicateBookException;
 
-    /** Adds the given password*/
+    /** Sets the key to {@code key}.*/
     void setKey(String key);
 
     /**
@@ -84,7 +84,7 @@ public interface Model {
     Comparator<? super Book> getBookListSorter();
 
     /**
-     * Returns the comparator used for getting the password of the Bibliotek.
+     * Returns the key.
      */
     String getKey();
 

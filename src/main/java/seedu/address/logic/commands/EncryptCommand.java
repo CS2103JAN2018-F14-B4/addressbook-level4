@@ -5,16 +5,16 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.book.HideAllBooks;
 
 /**
- * Encrypt the bibliotek with a setted key.
+ * Encrypts the book shelf.
  */
 public class EncryptCommand extends Command {
 
     public static final String COMMAND_WORD = "encrypt";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Encrypt the Bibliotek.\n";
+            + ": Encrypt book shelf.\n";
 
-    public static final String MESSAGE_SUCCESS = "Bibliotek is encrypted!";
+    public static final String MESSAGE_SUCCESS = "Book shelf is encrypted.";
 
     private final HideAllBooks predicate = new HideAllBooks();
 

@@ -1,7 +1,6 @@
 package seedu.address.logic.parser;
 //@@author 592363789
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.SetKeyCommand.MESSAGE_NO_PARAMETERS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NEW_KEY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_OLD_KEY;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
@@ -19,7 +18,6 @@ public class SetKeyCommandParserTest {
     public void parse_missingCompulsoryField_failure() throws Exception {
 
         String expectedinvalidMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, SetKeyCommand.MESSAGE_USAGE);
-        String expectedmissingMessage = String.format(MESSAGE_NO_PARAMETERS, SetKeyCommand.MESSAGE_USAGE);
 
         // no parameters
         assertParseFailure(parser, " 1", expectedinvalidMessage);

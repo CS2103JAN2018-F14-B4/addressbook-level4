@@ -3,19 +3,19 @@ package seedu.address.logic.commands;
 import seedu.address.logic.LogicManager;
 
 /**
- * Decrypt the BiBliotek with key.
+ * Decrypts the Book shelf.
  */
 public class DecryptCommand extends Command {
 
     public static final String COMMAND_WORD = "decrypt";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD  + ": Decrypted the Bibliotek. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD  + ": Decrypt book shelf.\n"
             + "Parameters: PASSWORD\n"
             + "Example: " + COMMAND_WORD + " 123456";
 
-    public static final String MESSAGE_SUCCESS = "Bibliotek is decrypted!";
+    public static final String MESSAGE_SUCCESS = "Book shelf is decrypted";
 
-    public static final String MESSAGE_WRONG_PASSWORD = "You have input wrong password, please check again!";
+    public static final String MESSAGE_WRONG_PASSWORD = "Incorrect key. Please try again.";
 
     private String key;
     private boolean isTesting;
@@ -34,7 +34,7 @@ public class DecryptCommand extends Command {
             return new CommandResult(MESSAGE_SUCCESS);
         }
 
-        if (this.key.compareTo(LogicManager.getKey()) == 0) {
+        if (key.equals(LogicManager.getKey())) {
             LogicManager.decrypt();
             return new CommandResult(MESSAGE_SUCCESS);
         } else {

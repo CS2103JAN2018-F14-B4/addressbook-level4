@@ -4,18 +4,17 @@ import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.exceptions.CommandException;
 
 /**
- * Set the key of the BiBliotek with a new key.
+ * Changes the key for encryption and decryption.
  */
 public class SetKeyCommand extends Command {
 
-    public static final String COMMAND_WORD = "setKey";
+    public static final String COMMAND_WORD = "setkey";
 
-    public static final String MESSAGE_NO_PARAMETERS = "Error, You must provide the keys";
-    public static final String MESSAGE_SUCCESS = "Set success";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Set the encrypt key of the bibliotek:"
+    public static final String MESSAGE_SUCCESS = "Successfully changed encryption key.";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Change the encryption key.\n"
             + "Parameters: [old/OLDKEY] [new/NEWKEY]\n"
             + "Example: " + COMMAND_WORD + " old/123456 new/abcde ";
-    public static final String WRONG_OLDKEY = "Input the wrong oldkey, please check again!";
+    public static final String WRONG_OLDKEY = "Incorrect current key. Please try again.";
 
     private String oldKey;
     private String newKey;
