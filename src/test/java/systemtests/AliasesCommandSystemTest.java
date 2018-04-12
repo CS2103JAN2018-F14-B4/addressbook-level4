@@ -6,15 +6,49 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_BOOK;
 
 import org.junit.Test;
 
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoStack;
 import seedu.address.logic.commands.AliasesCommand;
+import seedu.address.logic.commands.DecryptCommand;
 import seedu.address.logic.commands.ReviewsCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.Model;
+import seedu.address.model.ReadOnlyBookShelf;
+import seedu.address.model.book.Book;
+import seedu.address.network.Network;
+
+import java.util.concurrent.CompletableFuture;
 
 public class AliasesCommandSystemTest extends BibliotekSystemTest {
 
     @Test
     public void aliases() {
+        Model model = getModel();
+        String key = model.getKey();
+        Network network = new Network() {
+            @Override
+            public CompletableFuture<ReadOnlyBookShelf> searchBooks(String parameters) {
+                return null;
+            }
+
+            @Override
+            public CompletableFuture<Book> getBookDetails(String bookId) {
+                return null;
+            }
+
+            @Override
+            public CompletableFuture<String> searchLibraryForBook(Book book) {
+                return null;
+            }
+
+            @Override
+            public void stop() {
+
+            }
+        };
+        DecryptCommand decryptCommand = new DecryptCommand(key);
+        decryptCommand.setData(model, network, new CommandHistory(), new UndoStack());
+        decryptCommand.execute();
         assertAliasCommandSuccess();
 
         /* selecting a book should hide the alias list panel */

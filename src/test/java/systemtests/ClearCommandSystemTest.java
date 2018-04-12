@@ -5,18 +5,47 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoStack;
 import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.DecryptCommand;
 import seedu.address.logic.commands.UndoCommand;
-import seedu.address.model.BookShelf;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
+import seedu.address.model.*;
+import seedu.address.model.book.Book;
+import seedu.address.network.Network;
+
+import java.util.concurrent.CompletableFuture;
 
 public class ClearCommandSystemTest extends BibliotekSystemTest {
 
     @Test
     public void clear() {
         Model model = getModel();
+        String key = model.getKey();
+        Network network = new Network() {
+            @Override
+            public CompletableFuture<ReadOnlyBookShelf> searchBooks(String parameters) {
+                return null;
+            }
+
+            @Override
+            public CompletableFuture<Book> getBookDetails(String bookId) {
+                return null;
+            }
+
+            @Override
+            public CompletableFuture<String> searchLibraryForBook(Book book) {
+                return null;
+            }
+
+            @Override
+            public void stop() {
+
+            }
+        };
+        DecryptCommand decryptCommand = new DecryptCommand(key);
+        decryptCommand.setData(model, network, new CommandHistory(), new UndoStack());
+        decryptCommand.execute();
 
         /* Case: clear non-empty book shelf, command with leading spaces and trailing alphanumeric characters and
          * spaces -> cleared */

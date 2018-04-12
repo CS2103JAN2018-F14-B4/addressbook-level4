@@ -9,20 +9,52 @@ import static seedu.address.testutil.TypicalBooks.WAKING_GODS;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoStack;
+import seedu.address.logic.commands.DecryptCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RecentCommand;
 import seedu.address.model.Model;
+import seedu.address.model.ReadOnlyBookShelf;
 import seedu.address.model.book.Book;
+import seedu.address.network.Network;
 
 //@@author takuyakanbr
 public class ListCommandSystemTest extends BibliotekSystemTest {
 
     @Test
     public void list() {
+        Model model = getModel();
+        String key = model.getKey();
+        Network network = new Network() {
+            @Override
+            public CompletableFuture<ReadOnlyBookShelf> searchBooks(String parameters) {
+                return null;
+            }
+
+            @Override
+            public CompletableFuture<Book> getBookDetails(String bookId) {
+                return null;
+            }
+
+            @Override
+            public CompletableFuture<String> searchLibraryForBook(Book book) {
+                return null;
+            }
+
+            @Override
+            public void stop() {
+
+            }
+        };
+        DecryptCommand decryptCommand = new DecryptCommand(key);
+        decryptCommand.setData(model, network, new CommandHistory(), new UndoStack());
+        decryptCommand.execute();
         /* ----------------------------------- Perform valid list operations ---------------------------------------- */
 
         /* Case: valid filters mode -> 1 book listed */

@@ -11,21 +11,54 @@ import org.junit.Test;
 import guitests.GuiRobot;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoStack;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.DecryptCommand;
 import seedu.address.logic.commands.SearchCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.BookShelf;
 import seedu.address.model.Model;
+import seedu.address.model.ReadOnlyBookShelf;
 import seedu.address.model.book.Book;
+import seedu.address.network.Network;
+
+import java.util.concurrent.CompletableFuture;
 
 //@@author qiu-siqi
 public class AddCommandSystemTest extends BibliotekSystemTest {
 
     @Test
     public void add() throws Exception {
+        Model model = getModel();
+        String key = model.getKey();
+        Network network = new Network() {
+            @Override
+            public CompletableFuture<ReadOnlyBookShelf> searchBooks(String parameters) {
+                return null;
+            }
+
+            @Override
+            public CompletableFuture<Book> getBookDetails(String bookId) {
+                return null;
+            }
+
+            @Override
+            public CompletableFuture<String> searchLibraryForBook(Book book) {
+                return null;
+            }
+
+            @Override
+            public void stop() {
+
+            }
+        };
+        DecryptCommand decryptCommand = new DecryptCommand(key);
+        decryptCommand.setData(model, network, new CommandHistory(), new UndoStack());
+        decryptCommand.execute();
         executeBackgroundCommand(SearchCommand.COMMAND_WORD + " hello", SearchCommand.MESSAGE_SEARCHING);
 
-        Model model = getModel();
+
         ObservableList<Book> searchResultsList = model.getSearchResultsList();
 
         /* --------------------- Perform add operations on the search results list -------------------------- */

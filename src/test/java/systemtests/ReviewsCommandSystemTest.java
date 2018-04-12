@@ -8,19 +8,47 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_BOOK;
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.RecentCommand;
-import seedu.address.logic.commands.ReviewsCommand;
-import seedu.address.logic.commands.SearchCommand;
-import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoStack;
+import seedu.address.logic.commands.*;
 import seedu.address.model.Model;
+import seedu.address.model.ReadOnlyBookShelf;
 import seedu.address.model.book.Book;
+import seedu.address.network.Network;
+
+import java.util.concurrent.CompletableFuture;
 
 //@@author qiu-siqi
 public class ReviewsCommandSystemTest extends BibliotekSystemTest {
 
     @Test
     public void reviews() {
+        Model model = getModel();
+        String key = model.getKey();
+        Network network = new Network() {
+            @Override
+            public CompletableFuture<ReadOnlyBookShelf> searchBooks(String parameters) {
+                return null;
+            }
+
+            @Override
+            public CompletableFuture<Book> getBookDetails(String bookId) {
+                return null;
+            }
+
+            @Override
+            public CompletableFuture<String> searchLibraryForBook(Book book) {
+                return null;
+            }
+
+            @Override
+            public void stop() {
+
+            }
+        };
+        DecryptCommand decryptCommand = new DecryptCommand(key);
+        decryptCommand.setData(model, network, new CommandHistory(), new UndoStack());
+        decryptCommand.execute();
         /* ------------ Perform reviews operations on the shown book list ------------ */
         String command = "   " + ReviewsCommand.COMMAND_WORD + " " + INDEX_FIRST_BOOK.getOneBased() + "   ";
         assertCommandSuccess(command, getModel().getDisplayBookList().get(INDEX_FIRST_BOOK.getZeroBased()));

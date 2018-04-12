@@ -8,19 +8,49 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_BOOK;
 
 import org.junit.Test;
 
-import seedu.address.logic.commands.AddAliasCommand;
-import seedu.address.logic.commands.AliasesCommand;
-import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoStack;
+import seedu.address.logic.commands.*;
 import seedu.address.model.Model;
+import seedu.address.model.ReadOnlyBookShelf;
 import seedu.address.model.alias.Alias;
+import seedu.address.model.book.Book;
 import seedu.address.model.book.Status;
+import seedu.address.network.Network;
+
+import java.util.concurrent.CompletableFuture;
 
 //@@author takuyakanbr
 public class AddAliasCommandSystemTest extends BibliotekSystemTest {
 
     @Test
     public void addAlias() {
+        Model model = getModel();
+        String key = model.getKey();
+        Network network = new Network() {
+            @Override
+            public CompletableFuture<ReadOnlyBookShelf> searchBooks(String parameters) {
+                return null;
+            }
+
+            @Override
+            public CompletableFuture<Book> getBookDetails(String bookId) {
+                return null;
+            }
+
+            @Override
+            public CompletableFuture<String> searchLibraryForBook(Book book) {
+                return null;
+            }
+
+            @Override
+            public void stop() {
+
+            }
+        };
+        DecryptCommand decryptCommand = new DecryptCommand(key);
+        decryptCommand.setData(model, network, new CommandHistory(), new UndoStack());
+        decryptCommand.execute();
         /* --------------------------------- Performing valid add operation ----------------------------------------- */
 
         /* case: add a new alias without named args -> added */
@@ -61,7 +91,6 @@ public class AddAliasCommandSystemTest extends BibliotekSystemTest {
 
         /* --------------------------------- Performing commands using aliases -------------------------------------- */
 
-        Model model = getModel();
 
         /* case: perform select command using alias */
         executeCommand("s " + INDEX_FIRST_BOOK.getOneBased());

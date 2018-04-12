@@ -4,17 +4,51 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoStack;
 import seedu.address.logic.commands.AddAliasCommand;
 import seedu.address.logic.commands.AliasesCommand;
+import seedu.address.logic.commands.DecryptCommand;
 import seedu.address.logic.commands.DeleteAliasCommand;
 import seedu.address.model.Model;
+import seedu.address.model.ReadOnlyBookShelf;
 import seedu.address.model.alias.Alias;
+import seedu.address.model.book.Book;
+import seedu.address.network.Network;
+
+import java.util.concurrent.CompletableFuture;
 
 //@@author takuyakanbr
 public class DeleteAliasCommandSystemTest extends BibliotekSystemTest {
 
     @Test
     public void deleteAlias() {
+        Model model = getModel();
+        String key = model.getKey();
+        Network network = new Network() {
+            @Override
+            public CompletableFuture<ReadOnlyBookShelf> searchBooks(String parameters) {
+                return null;
+            }
+
+            @Override
+            public CompletableFuture<Book> getBookDetails(String bookId) {
+                return null;
+            }
+
+            @Override
+            public CompletableFuture<String> searchLibraryForBook(Book book) {
+                return null;
+            }
+
+            @Override
+            public void stop() {
+
+            }
+        };
+        DecryptCommand decryptCommand = new DecryptCommand(key);
+        decryptCommand.setData(model, network, new CommandHistory(), new UndoStack());
+        decryptCommand.execute();
         executeCommand(AddAliasCommand.COMMAND_WORD + " s cmd/select");
         executeCommand(AddAliasCommand.COMMAND_WORD + " read cmd/list s/read by/title");
 
