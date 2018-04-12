@@ -2,21 +2,13 @@ package systemtests;
 
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
-
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.UndoStack;
 import seedu.address.logic.commands.AddAliasCommand;
 import seedu.address.logic.commands.AliasesCommand;
-import seedu.address.logic.commands.DecryptCommand;
 import seedu.address.logic.commands.DeleteAliasCommand;
 import seedu.address.model.Model;
-import seedu.address.model.ReadOnlyBookShelf;
 import seedu.address.model.alias.Alias;
-import seedu.address.model.book.Book;
-import seedu.address.network.Network;
 
-import java.util.concurrent.CompletableFuture;
+import org.junit.Test;
 
 //@@author takuyakanbr
 public class DeleteAliasCommandSystemTest extends BibliotekSystemTest {

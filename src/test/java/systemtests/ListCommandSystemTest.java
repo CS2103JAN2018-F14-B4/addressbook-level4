@@ -9,20 +9,14 @@ import static seedu.address.testutil.TypicalBooks.WAKING_GODS;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-
-import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.UndoStack;
-import seedu.address.logic.commands.DecryptCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RecentCommand;
 import seedu.address.model.Model;
-import seedu.address.model.ReadOnlyBookShelf;
 import seedu.address.model.book.Book;
-import seedu.address.network.Network;
+
+import org.junit.Test;
 
 //@@author takuyakanbr
 public class ListCommandSystemTest extends BibliotekSystemTest {

@@ -7,23 +7,15 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_BOOK;
 import static seedu.address.ui.testutil.GuiTestAssert.assertDetailsPanelDisplaysBook;
 import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
 
-import org.junit.Test;
-
 import guitests.GuiRobot;
 import guitests.guihandles.HelpWindowHandle;
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.UndoStack;
-import seedu.address.logic.commands.DecryptCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.Model;
-import seedu.address.model.ReadOnlyBookShelf;
-import seedu.address.model.book.Book;
-import seedu.address.network.Network;
 import seedu.address.ui.StatusBarFooter;
 
-import java.util.concurrent.CompletableFuture;
+import org.junit.Test;
 
 /**
  * A system test class for the help window, which contains interaction with other UI components.
@@ -39,32 +31,10 @@ public class HelpCommandSystemTest extends BibliotekSystemTest {
 
     @Test
     public void openHelpWindow() {
+
         Model model = getModel();
-        String key = model.getKey();
-        Network network = new Network() {
-            @Override
-            public CompletableFuture<ReadOnlyBookShelf> searchBooks(String parameters) {
-                return null;
-            }
+        decryptModel(model);
 
-            @Override
-            public CompletableFuture<Book> getBookDetails(String bookId) {
-                return null;
-            }
-
-            @Override
-            public CompletableFuture<String> searchLibraryForBook(Book book) {
-                return null;
-            }
-
-            @Override
-            public void stop() {
-
-            }
-        };
-        DecryptCommand decryptCommand = new DecryptCommand(key);
-        decryptCommand.setData(model, network, new CommandHistory(), new UndoStack());
-        decryptCommand.execute();
         // use accelerator
         getCommandBox().click();
         getMainMenu().openHelpWindowUsingAccelerator();

@@ -5,18 +5,16 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_BOOK;
 
-import org.junit.Test;
-
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.UndoStack;
-import seedu.address.logic.commands.*;
+import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.ReviewsCommand;
+import seedu.address.logic.commands.RecentCommand;
+import seedu.address.logic.commands.SearchCommand;
+import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.Model;
-import seedu.address.model.ReadOnlyBookShelf;
 import seedu.address.model.book.Book;
-import seedu.address.network.Network;
 
-import java.util.concurrent.CompletableFuture;
+import org.junit.Test;
 
 //@@author qiu-siqi
 public class ReviewsCommandSystemTest extends BibliotekSystemTest {

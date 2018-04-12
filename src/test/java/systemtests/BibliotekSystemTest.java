@@ -81,6 +81,9 @@ public abstract class BibliotekSystemTest {
         assertApplicationStartingStateIsCorrect();
     }
 
+    /**
+     * Decrypt the model before test.
+     */
     public void decryptModel(Model model) {
         String key = model.getKey();
         Network network = new Network() {

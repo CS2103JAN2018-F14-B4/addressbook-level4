@@ -6,23 +6,15 @@ import static seedu.address.logic.commands.CommandTestUtil.CATEGORY_DESC_ARTEMIS
 import static seedu.address.logic.commands.CommandTestUtil.ISBN_DESC_ARTEMIS;
 import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_ARTEMIS;
 
-import org.junit.Test;
-
 import guitests.GuiRobot;
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.UndoStack;
 import seedu.address.logic.commands.ClearCommand;
-import seedu.address.logic.commands.DecryptCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.SearchCommand;
 import seedu.address.model.BookShelf;
 import seedu.address.model.Model;
-import seedu.address.model.ReadOnlyBookShelf;
-import seedu.address.model.book.Book;
-import seedu.address.network.Network;
 
-import java.util.concurrent.CompletableFuture;
+import org.junit.Test;
 
 //@@author takuyakanbr
 public class SearchCommandSystemTest extends BibliotekSystemTest {

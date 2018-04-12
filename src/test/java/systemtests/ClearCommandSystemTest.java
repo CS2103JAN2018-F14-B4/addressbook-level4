@@ -2,19 +2,15 @@ package systemtests;
 
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
-import org.junit.Test;
-
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.UndoStack;
 import seedu.address.logic.commands.ClearCommand;
-import seedu.address.logic.commands.DecryptCommand;
 import seedu.address.logic.commands.UndoCommand;
-import seedu.address.model.*;
-import seedu.address.model.book.Book;
-import seedu.address.network.Network;
+import seedu.address.model.BookShelf;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
 
-import java.util.concurrent.CompletableFuture;
+import org.junit.Test;
 
 public class ClearCommandSystemTest extends BibliotekSystemTest {
 
