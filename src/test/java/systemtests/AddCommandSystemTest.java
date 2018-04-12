@@ -30,6 +30,7 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
         Model model = getModel();
         decryptModel(model);
         executeBackgroundCommand(SearchCommand.COMMAND_WORD + " hello", SearchCommand.MESSAGE_SEARCHING);
+        model = getModel();
         ObservableList<Book> searchResultsList = model.getSearchResultsList();
 
         /* --------------------- Perform add operations on the search results list -------------------------- */
