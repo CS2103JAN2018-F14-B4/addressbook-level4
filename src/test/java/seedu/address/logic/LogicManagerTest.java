@@ -9,6 +9,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.TestApp;
 import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.HistoryCommand;
@@ -26,7 +27,7 @@ public class LogicManagerTest {
     public ExpectedException thrown = ExpectedException.none();
 
     private Model model = new ModelManager();
-    private Logic logic = new LogicManager(model, mock(NetworkManager.class), false);
+    private Logic logic = TestApp.getLogicManager(model);
 
     @Test
     public void execute_invalidCommandFormat_throwsParseException() {

@@ -51,20 +51,7 @@ public class LogicManager extends ComponentManager implements Logic {
             isEncrypt = true;
         }
     }
-    //@@author 592363789
-    /**
-     * Constructor for test use.
-     */
-    public LogicManager(Model model, Network network, boolean isEncrypt) {
-        this.model = model;
-        this.network = network;
-        history = new CommandHistory();
-        bookShelfParser = new BookShelfParser(model.getAliasList());
-        undoStack = new UndoStack();
-        key = model.getKey();
-        this.isEncrypt = isEncrypt;
-    }
-    //@@author
+
     @Override
     public CommandResult execute(String commandText) throws CommandException, ParseException {
         String processedText = bookShelfParser.applyCommandAlias(commandText);

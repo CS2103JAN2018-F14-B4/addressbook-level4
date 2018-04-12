@@ -11,15 +11,19 @@ import seedu.address.commons.core.WindowSettings;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.XmlUtil;
+import seedu.address.logic.LogicManager;
 import seedu.address.model.BookShelf;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyBookShelf;
 import seedu.address.model.UserPrefs;
+import seedu.address.network.NetworkManager;
 import seedu.address.storage.UserPrefsStorage;
 import seedu.address.storage.XmlSerializableBookShelf;
 import seedu.address.testutil.TestUtil;
 import systemtests.ModelHelper;
+
+import static org.mockito.Mockito.mock;
 
 /**
  * This class is meant to override some properties of MainApp so that it will be suited for
@@ -101,6 +105,16 @@ public class TestApp extends MainApp {
         copy.setActiveListType(model.getActiveListType());
         ModelHelper.setSearchResults(copy, model.getSearchResultsList());
         ModelHelper.setRecentBooks(copy, model.getRecentBooksList());
+        return copy;
+    }
+
+    /**
+     * Returns a defensive copy of the logicManager.
+     */
+    public static LogicManager getLogicManager(Model model) {
+        model.setKey("admin");
+        LogicManager copy = new LogicManager(model, mock(NetworkManager.class));
+
         return copy;
     }
 
