@@ -2,13 +2,13 @@ package systemtests;
 
 import static org.junit.Assert.assertTrue;
 
+import org.junit.Test;
+
 import seedu.address.logic.commands.AddAliasCommand;
 import seedu.address.logic.commands.AliasesCommand;
 import seedu.address.logic.commands.DeleteAliasCommand;
 import seedu.address.model.Model;
 import seedu.address.model.alias.Alias;
-
-import org.junit.Test;
 
 //@@author takuyakanbr
 public class DeleteAliasCommandSystemTest extends BibliotekSystemTest {

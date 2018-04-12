@@ -7,15 +7,16 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_BOOK;
 import static seedu.address.ui.testutil.GuiTestAssert.assertDetailsPanelDisplaysBook;
 import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
 
+import org.junit.Test;
+
 import guitests.GuiRobot;
 import guitests.guihandles.HelpWindowHandle;
+
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.Model;
 import seedu.address.ui.StatusBarFooter;
-
-import org.junit.Test;
 
 /**
  * A system test class for the help window, which contains interaction with other UI components.

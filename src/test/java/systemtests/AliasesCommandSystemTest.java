@@ -4,12 +4,12 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_BOOK;
 
+import org.junit.Test;
+
 import seedu.address.logic.commands.AliasesCommand;
 import seedu.address.logic.commands.ReviewsCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.Model;
-
-import org.junit.Test;
 
 public class AliasesCommandSystemTest extends BibliotekSystemTest {
 

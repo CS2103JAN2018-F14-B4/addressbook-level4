@@ -6,17 +6,18 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_BOOK;
 
+import org.junit.Test;
+
 import guitests.GuiRobot;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.index.Index;
+
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.SearchCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.BookShelf;
 import seedu.address.model.Model;
 import seedu.address.model.book.Book;
-
-import org.junit.Test;
 
 //@@author qiu-siqi
 public class AddCommandSystemTest extends BibliotekSystemTest {

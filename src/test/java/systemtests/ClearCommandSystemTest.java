@@ -2,15 +2,16 @@ package systemtests;
 
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
+import org.junit.Test;
+
 import seedu.address.commons.core.index.Index;
+
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.BookShelf;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-
-import org.junit.Test;
 
 public class ClearCommandSystemTest extends BibliotekSystemTest {
 

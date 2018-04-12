@@ -8,15 +8,16 @@ import static seedu.address.testutil.TestUtil.getLastIndex;
 import static seedu.address.testutil.TestUtil.getMidIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_BOOK;
 
+import org.junit.Test;
+
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.book.Book;
 import seedu.address.model.book.exceptions.BookNotFoundException;
-
-import org.junit.Test;
 
 public class DeleteCommandSystemTest extends BibliotekSystemTest {
 

@@ -6,8 +6,11 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_RATING;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_BOOK;
 
+import org.junit.Test;
+
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -18,8 +21,6 @@ import seedu.address.model.book.Book;
 import seedu.address.model.book.Priority;
 import seedu.address.model.book.Status;
 import seedu.address.testutil.BookBuilder;
-
-import org.junit.Test;
 
 public class EditCommandSystemTest extends BibliotekSystemTest {
 

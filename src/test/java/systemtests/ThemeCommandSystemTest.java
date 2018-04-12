@@ -3,11 +3,12 @@ package systemtests;
 import static org.junit.Assert.assertEquals;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
+import org.junit.Test;
+
 import seedu.address.commons.core.Theme;
+
 import seedu.address.logic.commands.ThemeCommand;
 import seedu.address.model.Model;
-
-import org.junit.Test;
 
 //@@author takuyakanbr
 public class ThemeCommandSystemTest extends BibliotekSystemTest {

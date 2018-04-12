@@ -6,13 +6,15 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMAND;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_BOOK;
 
+import org.junit.Test;
 
-import seedu.address.logic.commands.*;
+import seedu.address.logic.commands.AddAliasCommand;
+import seedu.address.logic.commands.AliasesCommand;
+import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.Model;
 import seedu.address.model.alias.Alias;
 import seedu.address.model.book.Status;
-
-import org.junit.Test;
 
 //@@author takuyakanbr
 public class AddAliasCommandSystemTest extends BibliotekSystemTest {

@@ -6,7 +6,10 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.SelectCommand.MESSAGE_SELECT_BOOK_SUCCESS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_BOOK;
 
+import org.junit.Test;
+
 import seedu.address.commons.core.index.Index;
+
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RecentCommand;
 import seedu.address.logic.commands.SearchCommand;
@@ -14,8 +17,6 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 import seedu.address.testutil.TypicalBooks;
-
-import org.junit.Test;
 
 public class SelectCommandSystemTest extends BibliotekSystemTest {
     @Test
