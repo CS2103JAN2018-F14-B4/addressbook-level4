@@ -46,7 +46,7 @@ public class LogicManager extends ComponentManager implements Logic {
         bookShelfParser = new BookShelfParser(model.getAliasList());
         undoStack = new UndoStack();
         key = model.getKey();
-        if (key == null) {
+        if (key == "admin") {
             isEncrypt = false;
         } else {
             isEncrypt = true;
