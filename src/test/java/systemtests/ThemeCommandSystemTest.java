@@ -57,7 +57,6 @@ public class ThemeCommandSystemTest extends BibliotekSystemTest {
         assertApplicationDisplaysExpected("",
                 String.format(ThemeCommand.MESSAGE_SUCCESS, theme.getThemeName()), expectedModel);
         assertSelectedBookListCardUnchanged();
-        assertSelectedSearchResultsCardUnchanged();
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarUnchanged();
         assertEquals(theme.getCssFile(), getMainWindowHandle().getActiveStylesheet());
