@@ -490,6 +490,19 @@ When `edit` command is entered,
 . The `Book` to edit (`bookToEdit`) is identified by the index. Another `Book` (`editedBook`) is created based on the specified parameters.
 . `editedBook` replaces `bookToEdit` in `BookShelf`.
 
+
+Sequence Diagram
+
+image::editseq.png[width="550"]
+
+Default value of the book.
+
+image::defaultbook.png[width="550"]
+
+The book after you edit (r/4, s/r, p/h).
+
+image::newbook.png[width="550"]
+
 ==== Design considerations
 
 ===== Aspect: Presentation of rating
@@ -651,6 +664,26 @@ image::setsuccess.png[width="650"]
 * If you entered old key is incorrect.
 
 image::wrongkey(set).png[width="650"]
+
+* The encode and decode key are implement in this way:
+[source,java]
+----
+public abstract class UndoableCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... undo logic ...
+
+        executeUndoableCommand();
+    }
+}
+
+public class DeleteCommand extends UndoableCommand {
+    @Override
+    public CommandResult executeUndoableCommand() {
+        // ... delete logic ...
+    }
+}
+----
 
 ==== Design considerations
 
