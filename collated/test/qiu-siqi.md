@@ -72,156 +72,6 @@ public class BookReviewsPanelHandle extends NodeHandle<Node> {
     }
 }
 ```
-###### \java\guitests\guihandles\RecentBooksPanelHandle.java
-``` java
-/**
- * Provides a handle for {@code RecentBooksPanel} containing the list of {@code Book}.
- */
-public class RecentBooksPanelHandle extends NodeHandle<ListView<Book>> {
-    public static final String RECENT_BOOKS_LIST_VIEW_ID = "#recentBooksListView";
-
-    private static final String CARD_PANE_ID = "#cardPane";
-
-    private Optional<Book> lastRememberedSelectedBookCard;
-
-    public RecentBooksPanelHandle(ListView<Book> recentBooksPanelNode) {
-        super(recentBooksPanelNode);
-    }
-
-    /**
-     * Returns a handle to the selected {@code BookCardHandle}.
-     * A maximum of 1 item can be selected at any time.
-     * @throws AssertionError if no card is selected, or more than 1 card is selected.
-     */
-    public BookCardHandle getHandleToSelectedCard() {
-        List<Book> bookList = getRootNode().getSelectionModel().getSelectedItems();
-
-        if (bookList.size() != 1) {
-            throw new AssertionError("Recent books list size expected 1.");
-        }
-
-        return getAllCardNodes().stream()
-                .map(BookCardHandle::new)
-                .filter(handle -> handle.equals(bookList.get(0)))
-                .findFirst()
-                .orElseThrow(IllegalStateException::new);
-    }
-
-    /**
-     * Returns the index of the selected card.
-     */
-    public int getSelectedCardIndex() {
-        return getRootNode().getSelectionModel().getSelectedIndex();
-    }
-
-    /**
-     * Returns true if a card is currently selected.
-     */
-    public boolean isAnyCardSelected() {
-        List<Book> selectedCardsList = getRootNode().getSelectionModel().getSelectedItems();
-
-        if (selectedCardsList.size() > 1) {
-            throw new AssertionError("Card list size expected 0 or 1.");
-        }
-
-        return !selectedCardsList.isEmpty();
-    }
-
-    /**
-     * Navigates the listview to display and select {@code book}.
-     */
-    public void navigateToCard(Book book) {
-        if (!getRootNode().getItems().contains(book)) {
-            throw new IllegalArgumentException("Book does not exist.");
-        }
-
-        guiRobot.interact(() -> getRootNode().scrollTo(book));
-        guiRobot.pauseForHuman();
-    }
-
-    /**
-     * Navigates the listview to {@code index}.
-     */
-    public void navigateToCard(int index) {
-        if (index < 0 || index >= getRootNode().getItems().size()) {
-            throw new IllegalArgumentException("Index is out of bounds.");
-        }
-
-        guiRobot.interact(() -> getRootNode().scrollTo(index));
-        guiRobot.pauseForHuman();
-    }
-
-    /**
-     * Returns the book card handle of a book associated with the {@code index} in the list.
-     */
-    public Optional<BookCardHandle> getBookCardHandle(int index) {
-        return getAllCardNodes().stream()
-                .map(BookCardHandle::new)
-                .filter(handle -> handle.equals(getBook(index)))
-                .findFirst();
-    }
-
-    private Book getBook(int index) {
-        return getRootNode().getItems().get(index);
-    }
-
-    /**
-     * Returns all card nodes in the scene graph.
-     * Card nodes that are visible in the listview are definitely in the scene graph, while some nodes that are not
-     * visible in the listview may also be in the scene graph.
-     */
-    private Set<Node> getAllCardNodes() {
-        return guiRobot.lookup(CARD_PANE_ID).queryAll();
-    }
-
-    /**
-     * Selects the {@code Book} at {@code index} in the list.
-     */
-    public void select(int index) {
-        getRootNode().getSelectionModel().select(index);
-    }
-
-    public boolean isVisible() {
-        return getRootNode().getParent().isVisible();
-    }
-
-    /**
-     * Remembers the selected {@code Book} in the list.
-     */
-    public void rememberSelectedBookCard() {
-        List<Book> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
-
-        if (selectedItems.size() == 0) {
-            lastRememberedSelectedBookCard = Optional.empty();
-        } else {
-            lastRememberedSelectedBookCard = Optional.of(selectedItems.get(0));
-        }
-    }
-
-    /**
-     * Returns true if the selected {@code Book} is different from the value remembered by the most recent
-     * {@code rememberSelectedBookCard()} call.
-     */
-    public boolean isSelectedBookCardChanged() {
-        List<Book> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
-
-        if (selectedItems.size() == 0) {
-            return lastRememberedSelectedBookCard.isPresent();
-        } else {
-            return !lastRememberedSelectedBookCard.isPresent()
-                    || !lastRememberedSelectedBookCard.get().equals(selectedItems.get(0));
-        }
-    }
-
-    /**
-     * Returns the size of the list.
-     */
-    public int getListSize() {
-        return getRootNode().getItems().size();
-    }
-
-}
-```
 ###### \java\seedu\address\commons\util\StringUtilTest.java
 ``` java
     @Test
@@ -331,8 +181,10 @@ public class AddCommandTest {
         UndoStack undoStack = new UndoStack();
         UndoCommand undoCommand = prepareUndoCommand(model, undoStack);
 
+        Book toAdd = model.getSearchResultsList().get(0);
+
         NetworkManager networkManagerMock = mock(NetworkManager.class);
-        when(networkManagerMock.getBookDetails(model.getSearchResultsList().get(0).getGid().gid))
+        when(networkManagerMock.getBookDetails(toAdd.getGid().gid))
                 .thenReturn(CompletableFuture.completedFuture(model.getSearchResultsList().get(0)));
 
         AddCommand addCommand = new AddCommand(INDEX_FIRST_BOOK, false);
@@ -343,7 +195,7 @@ public class AddCommandTest {
         undoStack.push(addCommand);
 
         // undo -> reverts bookshelf back to previous state
-        assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(undoCommand, model, String.format(AddCommand.UNDO_SUCCESS, toAdd), expectedModel);
     }
 
     @Test
@@ -591,8 +443,15 @@ public class RecentCommandTest {
     }
 
     @Test
-    public void execute_showsRecent() {
-        assertCommandSuccess(recentCommand, model, RecentCommand.MESSAGE_SUCCESS, expectedModel);
+    public void execute_showsEmptyRecent() {
+        assertCommandSuccess(recentCommand, model, String.format(RecentCommand.MESSAGE_SUCCESS, 0), expectedModel);
+    }
+
+    @Test
+    public void execute_showsNonEmptyRecent() {
+        model.addRecentBook(TypicalBooks.ARTEMIS);
+        expectedModel.addRecentBook(TypicalBooks.ARTEMIS);
+        assertCommandSuccess(recentCommand, model, String.format(RecentCommand.MESSAGE_SUCCESS, 1), expectedModel);
     }
 }
 ```
@@ -1192,9 +1051,10 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
 
     @Test
     public void add() throws Exception {
-        executeBackgroundCommand(SearchCommand.COMMAND_WORD + " hello", SearchCommand.MESSAGE_SEARCHING);
-
         Model model = getModel();
+        decryptModel(model);
+        executeBackgroundCommand(SearchCommand.COMMAND_WORD + " hello", SearchCommand.MESSAGE_SEARCHING);
+        model = getModel();
         ObservableList<Book> searchResultsList = model.getSearchResultsList();
 
         /* --------------------- Perform add operations on the search results list -------------------------- */
@@ -1206,7 +1066,8 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
 
         /* Case: undo adding firstBook to the list -> firstBook deleted */
         command = UndoCommand.COMMAND_WORD;
-        String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
+        String expectedResultMessage = String.format(AddCommand.UNDO_SUCCESS, firstBook);
+        model.setActiveListType(ActiveListType.BOOK_SHELF);
         assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: add to empty book shelf -> added */
@@ -1225,31 +1086,15 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
         /* --------------------- Perform add operation while a book card is selected ------------------------ */
 
         /* Case: selects first card in the book list, add a book -> added, card selection remains unchanged */
-        selectSearchResult(Index.fromOneBased(1));
+        selectBook(Index.fromOneBased(1));
         command = AddCommand.COMMAND_WORD + " 2";
         assertCommandSuccess(command, searchResultsList.get(1));
 
         /* --------------------- Perform add operations on the recent books list -------------------------- */
 
-        /* Case: invalid index -> rejected */
-        model = getModel();
-        executeCommand("recent");
-        assertCommandFailure(AddCommand.COMMAND_WORD + " " + (model.getRecentBooksList().size() + 1),
-                MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
-
-        /* Case: add a duplicate book -> rejected */
-        executeCommand("list");
-        selectBook(INDEX_FIRST_BOOK);
-        executeCommand("recent");
-        model = getModel();
-
-        command = AddCommand.COMMAND_WORD + " 1";
-        executeBackgroundCommand(command, AddCommand.MESSAGE_ADDING);
-        assertApplicationDisplaysExpected("", AddCommand.MESSAGE_DUPLICATE_BOOK, model);
-
         /* Case: add a valid book -> added */
         executeBackgroundCommand(SearchCommand.COMMAND_WORD + " a/iain banks", SearchCommand.MESSAGE_SEARCHING);
-        selectSearchResult(INDEX_FIRST_BOOK);
+        selectBook(INDEX_FIRST_BOOK);
         executeCommand("recent");
         model = getModel();
 
@@ -1258,12 +1103,22 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
 
         assertCommandSuccess(command, firstBook);
 
+        /* Case: invalid index -> rejected */
+        model = getModel();
+        executeCommand("recent");
+        assertCommandFailure(AddCommand.COMMAND_WORD + " " + (model.getRecentBooksList().size() + 1),
+                MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
+
         /* ------------------------------- Perform invalid add operations ----------------------------------- */
+
+        /* Case: close keyword -> corrected */
+        executeCommand("adds 1");
+        assertApplicationDisplaysExpected("",
+                String.format(Messages.MESSAGE_CORRECTED_COMMAND, "add 1"), getModel());
 
         /* Case: add a duplicate book -> rejected */
         model = getModel();
-        executeBackgroundCommand(command, AddCommand.MESSAGE_ADDING);
-        assertApplicationDisplaysExpected("", AddCommand.MESSAGE_DUPLICATE_BOOK, model);
+        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_BOOK);
 
         /* Case: invalid index (0) -> rejected */
         assertCommandFailure(AddCommand.COMMAND_WORD + " " + 0,
@@ -1285,11 +1140,8 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
         assertCommandFailure(AddCommand.COMMAND_WORD + " 1 2",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
-        /* Case: invalid keyword -> rejected */
-        assertCommandFailure("adds 1", MESSAGE_UNKNOWN_COMMAND);
-
         /* Case: mixed case command word -> rejected */
-        assertCommandFailure("Add 1", MESSAGE_UNKNOWN_COMMAND);
+        assertCommandFailure("AdD 1", MESSAGE_UNKNOWN_COMMAND);
 
         /* Case: invalid active list type */
         executeCommand("list");
@@ -1311,8 +1163,7 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
      * 3. Result display box displays the search successful message.<br>
      * 4. {@code Model}, {@code Storage} and {@code BookListPanel} equal to the corresponding components in
      * the current model added with {@code toAdd}.<br>
-     * 5. Selected search results and recent books card remain unchanged.<br>
-     * 6. Status bar's sync status changes.<br>
+     * 5. Status bar's sync status changes.<br>
      * Verifications 1, 3 and 4 are performed by
      * {@code BibliotekSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * @see BibliotekSystemTest#assertApplicationDisplaysExpected(String, String, Model)
@@ -1333,8 +1184,6 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
         expectedModel.addBook(getModel().getBookShelf().getBookByIsbn(toAdd.getIsbn()).get());
 
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
-        assertSelectedSearchResultsCardUnchanged();
-        assertSelectedRecentBooksCardUnchanged();
         assertCommandBoxShowsDefaultStyle();
         assertCommandBoxEnabled();
         assertStatusBarUnchangedExceptSyncStatus();
@@ -1344,16 +1193,15 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
      * Performs the same verification as {@code assertCommandSuccess(String, Book)} except asserts that
      * the,<br>
      * 1. Result display box displays {@code expectedResultMessage}.<br>
-     * 2. {@code Model}, {@code Storage}, {@code BookListPanel}, and {@code SearchResultsPanel} equal to the
+     * 2. {@code Model}, {@code Storage} and {@code BookListPanel} equal to the
      * corresponding components in {@code expectedModel}.<br>
+     * 3. Selection in {@code BookListPanel} remains unchanged.<br>
      * @see AddCommandSystemTest#assertCommandSuccess(String, Book)
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertSelectedBookListCardUnchanged();
-        assertSelectedSearchResultsCardUnchanged();
-        assertSelectedRecentBooksCardUnchanged();
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarUnchangedExceptSyncStatus();
     }
@@ -1372,6 +1220,9 @@ public class LibraryCommandSystemTest extends BibliotekSystemTest {
 
     @Test
     public void library() {
+
+        Model model = getModel();
+        decryptModel(model);
 
         /* ---------- Test on book shelf ------------- */
 
@@ -1449,15 +1300,20 @@ public class ReviewsCommandSystemTest extends BibliotekSystemTest {
 
     @Test
     public void reviews() {
+
+        Model model = getModel();
+        decryptModel(model);
+
         /* ------------ Perform reviews operations on the shown book list ------------ */
         String command = "   " + ReviewsCommand.COMMAND_WORD + " " + INDEX_FIRST_BOOK.getOneBased() + "   ";
-        assertCommandSuccess(command, getModel().getDisplayBookList().get(INDEX_FIRST_BOOK.getZeroBased()));
+
+        assertCommandSuccess(command, getModel().getDisplayBookList().get(INDEX_FIRST_BOOK.getZeroBased()), getModel());
 
         /* ------------ Perform reviews operations on the filtered book list ------------ */
         executeCommand(ListCommand.COMMAND_WORD + " s/unread");
         Index bookCount = Index.fromOneBased(getModel().getDisplayBookList().size());
         command = ReviewsCommand.COMMAND_WORD + " " + bookCount.getOneBased();
-        assertCommandSuccess(command, getModel().getDisplayBookList().get(bookCount.getZeroBased()));
+        assertCommandSuccess(command, getModel().getDisplayBookList().get(bookCount.getZeroBased()), getModel());
 
         /* ------------ Perform invalid reviews operations ------------ */
         /* Case: invalid index (0) -> rejected */
@@ -1474,13 +1330,19 @@ public class ReviewsCommandSystemTest extends BibliotekSystemTest {
 
         /* ------------ Perform reviews operations on the shown search results list ------------ */
         executeBackgroundCommand(SearchCommand.COMMAND_WORD + " hello", SearchCommand.MESSAGE_SEARCHING);
-        assertCommandSuccess(ReviewsCommand.COMMAND_WORD + " 1", getModel().getSearchResultsList().get(0));
+
+        Model expectedModel = getModel();
+        assertCommandSuccess(ReviewsCommand.COMMAND_WORD + " 1",
+                getModel().getSearchResultsList().get(0), expectedModel);
         assertCommandFailure(ReviewsCommand.COMMAND_WORD + " 39", MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
 
         /* ------------ Perform reviews operations on the shown recent books list ------------ */
         executeCommand(SelectCommand.COMMAND_WORD + " 1");
         executeCommand(RecentCommand.COMMAND_WORD);
-        assertCommandSuccess(ReviewsCommand.COMMAND_WORD + " 1", getModel().getRecentBooksList().get(0));
+
+        expectedModel = getModel();
+        assertCommandSuccess(ReviewsCommand.COMMAND_WORD + " 1",
+                getModel().getRecentBooksList().get(0), expectedModel);
         assertCommandFailure(ReviewsCommand.COMMAND_WORD + " 51", MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
     }
 
@@ -1490,17 +1352,14 @@ public class ReviewsCommandSystemTest extends BibliotekSystemTest {
      * 2. Command box has the default style class.<br>
      * 3. Result display box displays the load successful message.<br>
      * 4. {@code Model} and {@code Storage} remain unchanged.<br>
-     * 5. Any selections in {@code BookListPanel}, {@code SearchResultsPanel},
-     *    and {@code RecentBooksPanel} are all deselected.<br>
+     * 5. Selection in {@code BookListPanel} is deselected.<br>
      * 6. {@code BookReviewsPanel} is visible.
      * 7. Status bar remains unchanged.<br>
      * Verifications 1, 3 and 4 are performed by
      * {@code BibliotekSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * @see BibliotekSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
-    private void assertCommandSuccess(String command, Book toLoad) {
-        Model expectedModel = getModel();
-
+    private void assertCommandSuccess(String command, Book toLoad, Model expectedModel) {
         executeCommand(command);
         assertCommandBoxShowsDefaultStyle();
 
@@ -1508,8 +1367,6 @@ public class ReviewsCommandSystemTest extends BibliotekSystemTest {
 
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertSelectedBookListCardDeselected();
-        assertSelectedSearchResultsCardDeselected();
-        assertSelectedRecentBooksCardDeselected();
         assertBookReviewsPanelVisible();
         assertStatusBarUnchanged();
     }

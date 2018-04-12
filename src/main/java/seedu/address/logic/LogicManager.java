@@ -27,6 +27,7 @@ import seedu.address.network.Network;
  */
 public class LogicManager extends ComponentManager implements Logic {
 
+    private static KeyControl keyControl;
     private final Logger logger = LogsCenter.getLogger(LogicManager.class);
 
     private final Model model;
@@ -34,7 +35,6 @@ public class LogicManager extends ComponentManager implements Logic {
     private final CommandHistory history;
     private final BookShelfParser bookShelfParser;
     private final UndoStack undoStack;
-    private static KeyControl keyControl;
 
     private String correctedCommand;
 

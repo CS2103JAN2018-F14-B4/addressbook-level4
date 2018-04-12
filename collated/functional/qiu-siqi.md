@@ -20,6 +20,9 @@ public class AddCommand extends UndoableCommand {
     public static final String MESSAGE_DUPLICATE_BOOK = "This book already exists in the book shelf";
     public static final String MESSAGE_WRONG_ACTIVE_LIST = "Items from the current list cannot be added.";
 
+    public static final String UNDO_SUCCESS = "Successfully undone adding of %s.";
+    public static final String UNDO_FAILURE = "Failed to undo adding of %s.";
+
     private final Index targetIndex;
 
     private Book toAdd;
@@ -81,6 +84,7 @@ public class AddCommand extends UndoableCommand {
             EventsCenter.getInstance().post(new NewResultAvailableEvent(
                     String.format(AddCommand.MESSAGE_SUCCESS, book)));
         } catch (DuplicateBookException e) {
+            // Should never end up here
             EventsCenter.getInstance().post(new NewResultAvailableEvent(AddCommand.MESSAGE_DUPLICATE_BOOK));
         }
         EventsCenter.getInstance().post(new EnableCommandBoxRequestEvent());
@@ -94,12 +98,15 @@ public class AddCommand extends UndoableCommand {
         checkValidIndex();
 
         toAdd = model.getActiveList().get(targetIndex.getZeroBased());
+        checkDuplicate();
     }
 
     /**
      * Throws a {@link CommandException} if the active list type is not supported by this command.
      */
     private void checkActiveListType() throws CommandException {
+        requireNonNull(model);
+
         if (model.getActiveListType() == ActiveListType.BOOK_SHELF) {
             throw new CommandException(MESSAGE_WRONG_ACTIVE_LIST);
         }
@@ -109,8 +116,34 @@ public class AddCommand extends UndoableCommand {
      * Throws a {@link CommandException} if the given index is not valid.
      */
     private void checkValidIndex() throws CommandException {
+        requireAllNonNull(model, targetIndex);
+
         if (targetIndex.getZeroBased() >= model.getActiveList().size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
+        }
+    }
+
+    /**
+     * Throws a {@link CommandException} if the book to be added exists in the book shelf.
+     */
+    private void checkDuplicate() throws CommandException {
+        requireAllNonNull(model, toAdd);
+
+        if (model.getBookShelf().getBookByIsbn(toAdd.getIsbn()).isPresent()) {
+            throw new CommandException(AddCommand.MESSAGE_DUPLICATE_BOOK);
+        }
+    }
+
+    @Override
+    protected String undo() {
+        requireAllNonNull(model, toAdd);
+
+        try {
+            model.deleteBook(toAdd);
+            return String.format(UNDO_SUCCESS, toAdd);
+        } catch (BookNotFoundException e) {
+            // AddCommand failed due to network error -> Nothing to undo
+            return String.format(UNDO_FAILURE, toAdd);
         }
     }
 
@@ -215,13 +248,15 @@ public class LibraryCommand extends Command {
 public class RecentCommand extends Command {
 
     public static final String COMMAND_WORD = "recent";
-    public static final String MESSAGE_SUCCESS = "Listed all recently selected books.";
+    public static final String MESSAGE_SUCCESS = "Listed %s recently selected books.";
 
     @Override
     public CommandResult execute() {
         requireNonNull(model);
-        EventsCenter.getInstance().post(new SwitchToRecentBooksRequestEvent());
-        return new CommandResult(MESSAGE_SUCCESS);
+
+        model.setActiveListType(ActiveListType.RECENT_BOOKS);
+        EventsCenter.getInstance().post(new ActiveListChangedEvent());
+        return new CommandResult(String.format(MESSAGE_SUCCESS, model.getRecentBooksList().size()));
     }
 }
 ```
@@ -301,6 +336,101 @@ public class AddCommandParser implements Parser<AddCommand> {
     }
 }
 ```
+###### \java\seedu\address\logic\parser\BookShelfParser.java
+``` java
+    /**
+     * Assumes: {@code commandText} represents an invalid command.
+     * Checks: {@code commandText} is within the length of possible commands.
+     * Attempts to find a closely matching command that the user might have meant to type.
+     * @param commandText Text as entered by the user.
+     * @return String representation of the closely matching command.
+     * @throws ParseException If auto correction failed to find any closely matching command.
+     */
+    public String attemptCommandAutoCorrection(String commandText) throws ParseException {
+        final Matcher matcher = getMatcherForPattern(commandText, BASIC_COMMAND_FORMAT);
+
+        final String commandWord = matcher.group("commandWord");
+        final String arguments = matcher.group("arguments");
+
+        if (commandWord.length() > MAX_COMMAND_WORD_LENGTH) {
+            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+        }
+
+        Optional<String> result = testAllAlphabets(commandWord, arguments, -1);
+        if (result.isPresent()) {
+            return result.get();
+        }
+
+        for (int i = 0; i < commandWord.length(); i++) {
+            result = testAllAlphabets(commandWord, arguments, i);
+            if (result.isPresent()) {
+                return result.get();
+            }
+        }
+        throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+    }
+
+    /**
+     * If {@code index == -1}, test for addition only, else tests all possibilities with all alphabets.
+     * @return corrected command, if any.
+     */
+    private Optional<String> testAllAlphabets(String commandWord, String arguments, int index) {
+        char[] alphabets = "abcdefghijklmnopqrstuvwxyz".toCharArray();
+
+        Optional<String> result;
+        for (char character : alphabets) {
+            if (index == -1) {
+                result = testCommand(StringUtil.addAfter(commandWord, character, index), arguments);
+                if (result.isPresent()) {
+                    return result;
+                }
+                continue;
+            }
+
+            result = testAllPossibilities(commandWord, arguments, index, character);
+            if (result.isPresent()) {
+                return result;
+            }
+        }
+        return Optional.empty();
+    }
+
+    /**
+     * Tests all possibilities: removing at index {@code index}, replacing with {@code character}
+     * at index {@code index}, and adding {@code character} after index {@code index}.
+     * @return corrected command, if any.
+     */
+    private Optional<String> testAllPossibilities(String commandWord, String arguments,
+                                                  int index, char character) {
+        Optional<String> result = testCommand(StringUtil.removeAt(commandWord, index), arguments);
+        if (result.isPresent()) {
+            return result;
+        }
+
+        result = testCommand(StringUtil.replace(commandWord, character, index), arguments);
+        if (result.isPresent()) {
+            return result;
+        }
+
+        result = testCommand(StringUtil.addAfter(commandWord, character, index), arguments);
+        return result;
+    }
+
+    /**
+     * Tests whether {@code commandWord} and {@code arguments} form a valid command.
+     * @return the command if it is valid.
+     */
+    private Optional<String> testCommand(String commandWord, String arguments) {
+        try {
+            getCommand(commandWord, arguments);
+            return Optional.of((commandWord.trim() + " " + arguments.trim()).trim());
+        } catch (ParseException e) {
+            return Optional.empty();
+        }
+    }
+
+}
+```
 ###### \java\seedu\address\logic\parser\ReviewsCommandParser.java
 ``` java
 /**
@@ -335,13 +465,10 @@ public class ReviewsCommandParser implements Parser<ReviewsCommand> {
  */
 public class UniqueBookCircularList extends UniqueList<Book> {
 
-    private static final String ORIGINAL_KEY = "111111";
     private final int size;
-    private final String key;
 
     public UniqueBookCircularList() {
         this.size = 50;
-        this.key = ORIGINAL_KEY;
     }
 
     /**
@@ -349,7 +476,6 @@ public class UniqueBookCircularList extends UniqueList<Book> {
      */
     public UniqueBookCircularList(int size) {
         this.size = size;
-        this.key = ORIGINAL_KEY;
     }
 
     /**
@@ -542,21 +668,19 @@ public class NlbResultHelper {
  */
 public class XmlRecentBooksStorage implements RecentBooksStorage {
 
-    private static final Logger logger = LogsCenter.getLogger(XmlRecentBooksStorage.class);
-
-    private String filePath;
+    private XmlBookShelfStorage xmlBookShelfStorage;
 
     public XmlRecentBooksStorage(String filePath) {
-        this.filePath = filePath;
+        xmlBookShelfStorage = new XmlBookShelfStorage(filePath);
     }
 
     public String getRecentBooksFilePath() {
-        return filePath;
+        return xmlBookShelfStorage.getBookShelfFilePath();
     }
 
     @Override
     public Optional<ReadOnlyBookShelf> readRecentBooksList() throws DataConversionException, IOException {
-        return readRecentBooksList(filePath);
+        return xmlBookShelfStorage.readBookShelf();
     }
 
     /**
@@ -566,27 +690,12 @@ public class XmlRecentBooksStorage implements RecentBooksStorage {
      */
     public Optional<ReadOnlyBookShelf> readRecentBooksList(String filePath) throws DataConversionException,
             FileNotFoundException {
-        requireNonNull(filePath);
-
-        File file = new File(filePath);
-
-        if (!file.exists()) {
-            logger.info("Recent books file "  + file + " not found");
-            return Optional.empty();
-        }
-
-        XmlSerializableBookShelf xmlRecentBooksList = XmlFileStorage.loadBookShelfDataFromFile(new File(filePath));
-        try {
-            return Optional.of(xmlRecentBooksList.toModelType());
-        } catch (IllegalValueException ive) {
-            logger.info("Illegal values found in " + file + ": " + ive.getMessage());
-            throw new DataConversionException(ive);
-        }
+        return xmlBookShelfStorage.readBookShelf(filePath);
     }
 
     @Override
     public void saveRecentBooksList(ReadOnlyBookShelf recentBooksList) throws IOException {
-        saveRecentBooksList(recentBooksList, filePath);
+        xmlBookShelfStorage.saveBookShelf(recentBooksList);
     }
 
     /**
@@ -594,12 +703,7 @@ public class XmlRecentBooksStorage implements RecentBooksStorage {
      * @param filePath location of the data. Cannot be null
      */
     public void saveRecentBooksList(ReadOnlyBookShelf recentBooksList, String filePath) throws IOException {
-        requireNonNull(recentBooksList);
-        requireNonNull(filePath);
-
-        File file = new File(filePath);
-        FileUtil.createIfMissing(file);
-        XmlFileStorage.saveBookShelfDataToFile(file, new XmlSerializableBookShelf(recentBooksList));
+        xmlBookShelfStorage.saveBookShelf(recentBooksList, filePath);
     }
 }
 ```
@@ -685,12 +789,10 @@ public class BookInLibraryPanel extends UiPart<Region> {
 
     @FXML
     private StackPane browserPlaceholder;
-    private WebViewManager webViewManager;
 
-    public BookInLibraryPanel(WebViewManager webViewManager) {
+    public BookInLibraryPanel() {
         super(FXML);
 
-        this.webViewManager = webViewManager;
         registerAsAnEventHandler(this);
         getRoot().setVisible(false);
 
@@ -704,6 +806,7 @@ public class BookInLibraryPanel extends UiPart<Region> {
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
 
+        WebViewManager webViewManager = WebViewManager.getInstance();
         webViewManager.onLoadProgress(getRoot(), 0.59, () -> {
             webViewManager.executeScript(nlbResultScript);
             getRoot().setDisable(false);
@@ -711,11 +814,11 @@ public class BookInLibraryPanel extends UiPart<Region> {
     }
 
     private void loadPageWithResult(String result) {
-        webViewManager.load(browserPlaceholder, result);
+        WebViewManager.getInstance().load(browserPlaceholder, result);
     }
 
     private void clearPage() {
-        webViewManager.executeScript(clearPageScript);
+        WebViewManager.getInstance().executeScript(clearPageScript);
     }
 
     protected void hide() {
@@ -733,7 +836,7 @@ public class BookInLibraryPanel extends UiPart<Region> {
             clearPage();
             // Prevent browser from getting focus
             getRoot().setDisable(true);
-            getRoot().setVisible(true);
+            show();
             loadPageWithResult(event.getResult());
         });
     }

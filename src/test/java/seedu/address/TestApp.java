@@ -1,5 +1,7 @@
 package seedu.address;
 
+import static org.mockito.Mockito.mock;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.function.Supplier;
@@ -23,7 +25,6 @@ import seedu.address.storage.XmlSerializableBookShelf;
 import seedu.address.testutil.TestUtil;
 import systemtests.ModelHelper;
 
-import static org.mockito.Mockito.mock;
 
 /**
  * This class is meant to override some properties of MainApp so that it will be suited for

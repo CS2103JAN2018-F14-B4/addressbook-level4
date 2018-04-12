@@ -190,7 +190,8 @@ public class ListCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        EventsCenter.getInstance().post(new SwitchToBookListRequestEvent());
+        model.setActiveListType(ActiveListType.BOOK_SHELF);
+        EventsCenter.getInstance().post(new ActiveListChangedEvent());
         model.updateBookListFilter(filterDescriptor.buildCombinedFilter());
         model.updateBookListSorter(bookComparator);
         return new CommandResult(String.format(MESSAGE_SUCCESS, model.getDisplayBookList().size()));
@@ -283,7 +284,7 @@ public class SearchCommand extends Command {
     public static final String COMMAND_WORD = "search";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Searches for books online.\n"
-            + "Parameters: [SEARCH_TERM] "
+            + "Parameters: [KEY_WORDS] "
             + "[" + PREFIX_ISBN + "ISBN] "
             + "[" + PREFIX_TITLE + "TITLE] "
             + "[" + PREFIX_AUTHOR + "AUTHOR] "
@@ -293,8 +294,8 @@ public class SearchCommand extends Command {
             + PREFIX_AUTHOR + "Andy Weir";
 
     public static final String MESSAGE_SEARCHING = "Searching for matching books...";
-    public static final String MESSAGE_EMPTY_QUERY = "No search term or search parameter specified.";
-    public static final String MESSAGE_SEARCH_FAIL = "Failed to retrieve information from online.";
+    public static final String MESSAGE_EMPTY_QUERY = "No search parameter specified.";
+    public static final String MESSAGE_SEARCH_FAIL = "Failed to retrieve information from online service.";
     public static final String MESSAGE_SEARCH_SUCCESS = "Found %s matching books.";
 
     private final SearchDescriptor searchDescriptor;
@@ -329,7 +330,10 @@ public class SearchCommand extends Command {
      * Makes an asynchronous request to search for books.
      */
     private void makeAsyncSearchRequest() {
-        network.searchBooks(searchDescriptor.toSearchString())
+        String searchString = searchDescriptor.toSearchString();
+        assert !searchString.trim().isEmpty();
+
+        network.searchBooks(searchString)
                 .thenAccept(this::onSuccessfulRequest)
                 .exceptionally(e -> {
                     EventsCenter.getInstance().post(new NewResultAvailableEvent(SearchCommand.MESSAGE_SEARCH_FAIL));
@@ -342,6 +346,7 @@ public class SearchCommand extends Command {
      * Handles the result of a successful request to search for books.
      */
     private void onSuccessfulRequest(ReadOnlyBookShelf bookShelf) {
+        requireNonNull(bookShelf);
         if (useJavafxThread) {
             Platform.runLater(() -> displaySearchResults(bookShelf));
         } else {
@@ -354,7 +359,8 @@ public class SearchCommand extends Command {
      */
     private void displaySearchResults(ReadOnlyBookShelf bookShelf) {
         model.updateSearchResults(bookShelf);
-        EventsCenter.getInstance().post(new SwitchToSearchResultsRequestEvent());
+        model.setActiveListType(ActiveListType.SEARCH_RESULTS);
+        EventsCenter.getInstance().post(new ActiveListChangedEvent());
         EventsCenter.getInstance().post(new NewResultAvailableEvent(
                 String.format(SearchCommand.MESSAGE_SEARCH_SUCCESS, bookShelf.size())));
         EventsCenter.getInstance().post(new EnableCommandBoxRequestEvent());
@@ -381,7 +387,7 @@ public class SearchCommand extends Command {
      * Stores the parameters to search with.
      */
     public static class SearchDescriptor {
-        private String searchTerm;
+        private String keyWords;
         private String isbn;
         private String title;
         private String author;
@@ -393,7 +399,7 @@ public class SearchCommand extends Command {
          * Copy constructor.
          */
         public SearchDescriptor(SearchDescriptor toCopy) {
-            this.searchTerm = toCopy.searchTerm;
+            this.keyWords = toCopy.keyWords;
             this.isbn = toCopy.isbn;
             this.title = toCopy.title;
             this.author = toCopy.author;
@@ -404,15 +410,15 @@ public class SearchCommand extends Command {
          * Returns true if at least one field is not empty.
          */
         public boolean isValid() {
-            return CollectionUtil.isAnyNonNull(searchTerm, isbn, title, author, category);
+            return CollectionUtil.isAnyNonNull(keyWords, isbn, title, author, category);
         }
 
-        public Optional<String> getSearchTerm() {
-            return Optional.ofNullable(searchTerm);
+        public Optional<String> getKeyWords() {
+            return Optional.ofNullable(keyWords);
         }
 
-        public void setSearchTerm(String searchTerm) {
-            this.searchTerm = searchTerm;
+        public void setKeyWords(String keyWords) {
+            this.keyWords = keyWords;
         }
 
         public Optional<String> getIsbn() {
@@ -450,7 +456,7 @@ public class SearchCommand extends Command {
         /** Returns the search string to be used as part of the API url. */
         public String toSearchString() {
             StringBuilder builder = new StringBuilder();
-            getSearchTerm().ifPresent(searchTerm -> builder.append(searchTerm).append(" "));
+            getKeyWords().ifPresent(searchTerm -> builder.append(searchTerm).append(" "));
             getIsbn().ifPresent(isbn -> builder.append("isbn:").append(isbn).append(" "));
             getTitle().ifPresent(title -> builder.append("intitle:").append(title).append(" "));
             getAuthor().ifPresent(author -> builder.append("inauthor:").append(author).append(" "));
@@ -478,7 +484,7 @@ public class SearchCommand extends Command {
             // state check
             SearchDescriptor e = (SearchDescriptor) other;
 
-            return getSearchTerm().equals(e.getSearchTerm())
+            return getKeyWords().equals(e.getKeyWords())
                     && getIsbn().equals(e.getIsbn())
                     && getTitle().equals(e.getTitle())
                     && getAuthor().equals(e.getAuthor())
@@ -557,6 +563,8 @@ public class AddAliasCommandParser implements Parser<AddAliasCommand> {
     private static final Pattern ALIASED_COMMAND_FORMAT =
             Pattern.compile("(?<aliasName>\\S+)(?<unnamedArgs>((?! [\\w]+\\/.*)[\\S ])*)(?<namedArgs>.*)");
 
+    private static final int MAX_COMMAND_WORD_LENGTH = 12;
+
     private final ReadOnlyAliasList aliases;
 
     public BookShelfParser(ReadOnlyAliasList aliases) {
@@ -573,10 +581,7 @@ public class AddAliasCommandParser implements Parser<AddAliasCommand> {
      * @throws ParseException if the user input does not conform to the expected format.
      */
     public String applyCommandAlias(String userInput) throws ParseException {
-        final Matcher matcher = ALIASED_COMMAND_FORMAT.matcher(userInput.trim());
-        if (!matcher.matches()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
-        }
+        final Matcher matcher = getMatcherForPattern(userInput, ALIASED_COMMAND_FORMAT);
 
         final String aliasName = matcher.group("aliasName");
         if (!aliases.getAliasByName(aliasName).isPresent()) {
@@ -671,10 +676,11 @@ public class UniqueAliasList extends UniqueList<Alias> implements ReadOnlyAliasL
 public class GoogleBooksApi {
 
     protected static final String URL_SEARCH_BOOKS =
-            "https://www.googleapis.com/books/v1/volumes?maxResults=30&printType=books&q=%s";
+            "https://www.googleapis.com/books/v1/volumes?maxResults=40&printType=books&q=%s";
     protected static final String URL_BOOK_DETAILS = "https://www.googleapis.com/books/v1/volumes/%s";
     private static final String CONTENT_TYPE_JSON = "application/json";
     private static final int HTTP_STATUS_OK = 200;
+    private static final int MAX_SEARCH_RESULTS_COUNT = 30;
 
     private final HttpClient httpClient;
     private final JsonDeserializer deserializer;
@@ -693,7 +699,8 @@ public class GoogleBooksApi {
      */
     public CompletableFuture<ReadOnlyBookShelf> searchBooks(String parameters) {
         String requestUrl = String.format(URL_SEARCH_BOOKS, StringUtil.urlEncode(parameters));
-        return executeGetAndApply(requestUrl, deserializer::convertJsonStringToBookShelf);
+        return executeGetAndApply(requestUrl, json ->
+                deserializer.convertJsonStringToBookShelf(json, MAX_SEARCH_RESULTS_COUNT));
     }
 
     /**
@@ -844,12 +851,14 @@ public class JsonDeserializer {
     }
 
     /**
-     * Converts the JSON string from Google Books API into a book shelf.
+     * Converts the JSON string from Google Books API into a book shelf,
+     * with the specified limit on the number of books to populate the book shelf with.
      */
-    public ReadOnlyBookShelf convertJsonStringToBookShelf(String json) {
+    public ReadOnlyBookShelf convertJsonStringToBookShelf(String json, int maxBookCount) {
+        assert maxBookCount >= 0;
         try {
             JsonSearchResults jsonSearchResults = mapper.readValue(json, JsonSearchResults.class);
-            return jsonSearchResults.toModelType();
+            return jsonSearchResults.toModelType(maxBookCount);
         } catch (IOException e) {
             logger.warning("Failed to convert JSON to book shelf.");
             throw new CompletionException(e);
@@ -885,15 +894,21 @@ public class JsonSearchResults {
     }
 
     /**
-     * Converts this data holder object into the model's BookShelf object.
+     * Converts this data holder object into the model's BookShelf object,
+     * with the specified limit on the number of books to populate the book shelf with.
      */
-    public ReadOnlyBookShelf toModelType() {
+    public ReadOnlyBookShelf toModelType(int maxBookCount) {
         BookShelf bookShelf = new BookShelf();
 
+        int bookCount = 0;
         for (JsonVolume volume : items) {
             try {
                 Book book = convertToBook(volume);
                 bookShelf.addBook(book);
+                ++bookCount;
+                if (bookCount >= maxBookCount) {
+                    break;
+                }
             } catch (InvalidBookException | DuplicateBookException e) {
                 logger.warning(e.getMessage());
             }
@@ -1165,7 +1180,7 @@ public class NetworkManager extends ComponentManager implements Network {
             <GridPane BorderPane.alignment="BOTTOM_CENTER">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="160.0" minWidth="130.0" prefWidth="130.0"/>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="555.0" minWidth="10.0" prefWidth="280.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="350.0" minWidth="10.0" prefWidth="280.0"/>
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES"/>

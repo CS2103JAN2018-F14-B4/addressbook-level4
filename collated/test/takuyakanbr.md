@@ -281,34 +281,35 @@ public class SearchCommandTest {
     }
 
     @Test
-    public void execute_allFieldsSpecifiedWithSearchTerm_success() {
+    public void execute_allFieldsSpecifiedWithKeyWord_success() {
         SearchDescriptor searchDescriptor = new SearchDescriptorBuilder().withTitle("1")
-                .withCategory("1").withIsbn("1").withAuthor("1").withSearchTerm("searchterm").build();
+                .withCategory("1").withIsbn("1").withAuthor("1").withKeyWords("searchterm").build();
         assertExecutionSuccess(searchDescriptor);
     }
 
     @Test
-    public void execute_allFieldsSpecifiedNoSearchTerm_success() {
+    public void execute_allFieldsSpecifiedNoKeyWord_success() {
         SearchDescriptor searchDescriptor = new SearchDescriptorBuilder().withTitle("1")
                 .withCategory("1").withIsbn("1").withAuthor("1").build();
         assertExecutionSuccess(searchDescriptor);
     }
 
     @Test
-    public void execute_someFieldsSpecifiedNoSearchTerm_success() {
+    public void execute_someFieldsSpecifiedNoKeyWord_success() {
         SearchDescriptor searchDescriptor = new SearchDescriptorBuilder().withTitle("1").withIsbn("1").build();
         assertExecutionSuccess(searchDescriptor);
     }
 
     @Test
-    public void execute_noFieldSpecifiedNoSearchTerm_success() {
+    public void execute_noFieldSpecifiedNoKeyWord_throwsAssertionError() {
         SearchDescriptor searchDescriptor = new SearchDescriptorBuilder().build();
+        thrown.expect(AssertionError.class);
         assertExecutionSuccess(searchDescriptor);
     }
 
     @Test
     public void execute_networkError_raisesExpectedEvent() {
-        SearchDescriptor searchDescriptor = new SearchDescriptorBuilder().withSearchTerm("error").build();
+        SearchDescriptor searchDescriptor = new SearchDescriptorBuilder().withKeyWords("error").build();
         SearchCommand searchCommand = new SearchCommand(searchDescriptor, false);
 
         NetworkManager networkManagerMock = mock(NetworkManager.class);
@@ -547,23 +548,23 @@ public class ListCommandParserTest {
 ###### \java\seedu\address\logic\parser\SearchCommandParserTest.java
 ``` java
 public class SearchCommandParserTest {
-    private static final String DEFAULT_SEARCH_TERM = "search term";
+    private static final String DEFAULT_KEY_WORDS = "key words";
 
     private SearchCommandParser parser = new SearchCommandParser();
 
     @Test
     public void parse_noFieldSpecified_failure() {
-        // no search term and no parameters specified
+        // no key words and no named parameters specified
         assertParseFailure(parser, "", SearchCommand.MESSAGE_EMPTY_QUERY);
     }
 
     @Test
     public void parse_allFieldsSpecified_success() {
-        String userInput = DEFAULT_SEARCH_TERM + TITLE_DESC_ARTEMIS + CATEGORY_DESC_ARTEMIS
+        String userInput = DEFAULT_KEY_WORDS + TITLE_DESC_ARTEMIS + CATEGORY_DESC_ARTEMIS
                 + ISBN_DESC_ARTEMIS + AUTHOR_DESC_ARTEMIS;
         SearchDescriptor searchDescriptor = new SearchDescriptorBuilder().withTitle(VALID_TITLE_ARTEMIS)
                 .withCategory(VALID_CATEGORY_ARTEMIS).withIsbn(VALID_ISBN_ARTEMIS)
-                .withAuthor(VALID_AUTHOR_ARTEMIS).withSearchTerm(DEFAULT_SEARCH_TERM).build();
+                .withAuthor(VALID_AUTHOR_ARTEMIS).withKeyWords(DEFAULT_KEY_WORDS).build();
         SearchCommand expectedCommand = new SearchCommand(searchDescriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -571,9 +572,9 @@ public class SearchCommandParserTest {
 
     @Test
     public void parse_someFieldsSpecified_success() {
-        String userInput = DEFAULT_SEARCH_TERM + TITLE_DESC_ARTEMIS + AUTHOR_DESC_ARTEMIS;
+        String userInput = DEFAULT_KEY_WORDS + TITLE_DESC_ARTEMIS + AUTHOR_DESC_ARTEMIS;
         SearchDescriptor searchDescriptor = new SearchDescriptorBuilder().withTitle(VALID_TITLE_ARTEMIS)
-                .withAuthor(VALID_AUTHOR_ARTEMIS).withSearchTerm(DEFAULT_SEARCH_TERM).build();
+                .withAuthor(VALID_AUTHOR_ARTEMIS).withKeyWords(DEFAULT_KEY_WORDS).build();
         SearchCommand expectedCommand = new SearchCommand(searchDescriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -581,8 +582,8 @@ public class SearchCommandParserTest {
 
     @Test
     public void parse_oneFieldSpecified_success() {
-        String userInput = DEFAULT_SEARCH_TERM;
-        SearchDescriptor searchDescriptor = new SearchDescriptorBuilder().withSearchTerm(DEFAULT_SEARCH_TERM).build();
+        String userInput = DEFAULT_KEY_WORDS;
+        SearchDescriptor searchDescriptor = new SearchDescriptorBuilder().withKeyWords(DEFAULT_KEY_WORDS).build();
         SearchCommand expectedCommand = new SearchCommand(searchDescriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
@@ -609,10 +610,10 @@ public class SearchCommandParserTest {
 
     @Test
     public void parse_multipleRepeatedFields_acceptsLast() {
-        String userInput = DEFAULT_SEARCH_TERM + TITLE_DESC_ARTEMIS + TITLE_DESC_ARTEMIS + AUTHOR_DESC_ARTEMIS
+        String userInput = DEFAULT_KEY_WORDS + TITLE_DESC_ARTEMIS + TITLE_DESC_ARTEMIS + AUTHOR_DESC_ARTEMIS
                 + AUTHOR_DESC_ARTEMIS + TITLE_DESC_BABYLON + AUTHOR_DESC_BABYLON;
         SearchDescriptor searchDescriptor = new SearchDescriptorBuilder().withTitle(VALID_TITLE_BABYLON)
-                .withAuthor(VALID_AUTHOR_BABYLON).withSearchTerm(DEFAULT_SEARCH_TERM).build();
+                .withAuthor(VALID_AUTHOR_BABYLON).withKeyWords(DEFAULT_KEY_WORDS).build();
         SearchCommand expectedCommand = new SearchCommand(searchDescriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -751,6 +752,8 @@ public class JsonDeserializerTest {
             new File(TEST_DATA_SEARCH_FOLDER + "ValidResponseDuplicateBooks.json");
     public static final File VALID_SEARCH_RESPONSE_FILE = new File(TEST_DATA_SEARCH_FOLDER + "ValidResponse.json");
 
+    private static final int MAXIMUM_BOOK_COUNT = 30;
+
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
@@ -798,7 +801,7 @@ public class JsonDeserializerTest {
     @Test
     public void convertJsonStringToBookShelf_validResponse_success() throws Exception {
         String json = FileUtil.readFromFile(VALID_SEARCH_RESPONSE_FILE);
-        ReadOnlyBookShelf bookShelf = deserializer.convertJsonStringToBookShelf(json);
+        ReadOnlyBookShelf bookShelf = deserializer.convertJsonStringToBookShelf(json, MAXIMUM_BOOK_COUNT);
         Book book1 = bookShelf.getBookList().get(0);
         assertEquals(3, bookShelf.size());
         assertEquals("The Book Without a Title", book1.getTitle().title);
@@ -808,7 +811,7 @@ public class JsonDeserializerTest {
     @Test
     public void convertJsonStringToBookShelf_validResponseDuplicateBooks_success() throws Exception {
         String json = FileUtil.readFromFile(VALID_SEARCH_RESPONSE_DUPLICATE_BOOKS);
-        ReadOnlyBookShelf bookShelf = deserializer.convertJsonStringToBookShelf(json);
+        ReadOnlyBookShelf bookShelf = deserializer.convertJsonStringToBookShelf(json, MAXIMUM_BOOK_COUNT);
         Book book1 = bookShelf.getBookList().get(0);
         assertEquals(1, bookShelf.size());
         assertEquals("The Book Without a Title", book1.getTitle().title);
@@ -818,7 +821,7 @@ public class JsonDeserializerTest {
     @Test
     public void convertJsonStringToBookShelf_validResponseNoId_success() throws Exception {
         String json = FileUtil.readFromFile(VALID_SEARCH_RESPONSE_NO_ID_FILE);
-        ReadOnlyBookShelf bookShelf = deserializer.convertJsonStringToBookShelf(json);
+        ReadOnlyBookShelf bookShelf = deserializer.convertJsonStringToBookShelf(json, MAXIMUM_BOOK_COUNT);
         Book book1 = bookShelf.getBookList().get(0);
         assertEquals("The Book Without a Title", book1.getTitle().title);
         assertEquals("", book1.getDescription().description);
@@ -830,7 +833,7 @@ public class JsonDeserializerTest {
     @Test
     public void convertJsonStringToBookShelf_invalidResponseNoIsbn_ignoresBookWithoutIsbn() throws Exception {
         String json = FileUtil.readFromFile(INVALID_SEARCH_RESPONSE_NO_ISBN_FILE);
-        ReadOnlyBookShelf bookShelf = deserializer.convertJsonStringToBookShelf(json);
+        ReadOnlyBookShelf bookShelf = deserializer.convertJsonStringToBookShelf(json, MAXIMUM_BOOK_COUNT);
         Book book1 = bookShelf.getBookList().get(0);
         assertEquals("The Book Without a Title 2", book1.getTitle().title);
         Book book2 = bookShelf.getBookList().get(1);
@@ -841,14 +844,14 @@ public class JsonDeserializerTest {
     public void convertJsonStringToBookShelf_invalidResponseWrongType_throwsCompletionException() throws Exception {
         thrown.expect(CompletionException.class);
         String json = FileUtil.readFromFile(INVALID_SEARCH_RESPONSE_WRONG_TYPE_FILE);
-        deserializer.convertJsonStringToBookShelf(json);
+        deserializer.convertJsonStringToBookShelf(json, MAXIMUM_BOOK_COUNT);
     }
 
     @Test
     public void convertJsonStringToBookShelf_errorResponse_throwsCompletionException() throws Exception {
         thrown.expect(CompletionException.class);
         String json = FileUtil.readFromFile(ERROR_SEARCH_RESPONSE_FILE);
-        deserializer.convertJsonStringToBookShelf(json);
+        deserializer.convertJsonStringToBookShelf(json, MAXIMUM_BOOK_COUNT);
     }
 
 }
@@ -965,6 +968,9 @@ public class AddAliasCommandSystemTest extends BibliotekSystemTest {
 
     @Test
     public void addAlias() {
+
+        Model model = getModel();
+        decryptModel(model);
         /* --------------------------------- Performing valid add operation ----------------------------------------- */
 
         /* case: add a new alias without named args -> added */
@@ -1004,8 +1010,7 @@ public class AddAliasCommandSystemTest extends BibliotekSystemTest {
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddAliasCommand.MESSAGE_USAGE));
 
         /* --------------------------------- Performing commands using aliases -------------------------------------- */
-
-        Model model = getModel();
+        model = getModel();
 
         /* case: perform select command using alias */
         executeCommand("s " + INDEX_FIRST_BOOK.getOneBased());
@@ -1060,6 +1065,10 @@ public class DeleteAliasCommandSystemTest extends BibliotekSystemTest {
 
     @Test
     public void deleteAlias() {
+
+        Model model = getModel();
+        decryptModel(model);
+
         executeCommand(AddAliasCommand.COMMAND_WORD + " s cmd/select");
         executeCommand(AddAliasCommand.COMMAND_WORD + " read cmd/list s/read by/title");
 
@@ -1118,6 +1127,10 @@ public class ListCommandSystemTest extends BibliotekSystemTest {
 
     @Test
     public void list() {
+
+        Model model = getModel();
+        decryptModel(model);
+
         /* ----------------------------------- Perform valid list operations ---------------------------------------- */
 
         /* Case: valid filters mode -> 1 book listed */
@@ -1156,28 +1169,37 @@ public class ListCommandSystemTest extends BibliotekSystemTest {
 public class SearchCommandSystemTest extends BibliotekSystemTest {
     @Test
     public void search() throws Exception {
+
+        Model model = getModel();
+        decryptModel(model);
+
         /* ----------------------------------- Perform invalid search operations ------------------------------------ */
 
-        /* Case: no search term or parameters -> rejected */
+        /* Case: close command word -> corrected */
+        executeCommand("searchh hello");
+        assertApplicationDisplaysExpected("",
+                String.format(Messages.MESSAGE_CORRECTED_COMMAND, "search hello"), getModel());
+
+        /* Case: no key words or named parameters -> rejected */
         assertCommandFailure(SearchCommand.COMMAND_WORD, SearchCommand.MESSAGE_EMPTY_QUERY);
 
-        /* Case: no search term or parameters -> rejected */
+        /* Case: no key words or named parameters -> rejected */
         assertCommandFailure("   " + SearchCommand.COMMAND_WORD + "             ", SearchCommand.MESSAGE_EMPTY_QUERY);
 
         /* Case: mixed case command word -> rejected */
         assertCommandFailure("SeaRcH hello", MESSAGE_UNKNOWN_COMMAND);
 
         /* Case: misspelled command word -> rejected */
-        assertCommandFailure("searchh hello", MESSAGE_UNKNOWN_COMMAND);
+        assertCommandFailure("saerch hello", MESSAGE_UNKNOWN_COMMAND);
 
         /* ----------------------------------- Perform valid search operations -------------------------------------- */
 
         // Note: these tests require network connection.
 
-        /* Case: search for books given search term -> success */
+        /* Case: search for books given key word -> success */
         assertSearchSuccess(SearchCommand.COMMAND_WORD + " hello");
 
-        /* Case: search for books given search parameters -> success */
+        /* Case: search for books given named parameters -> success */
         assertSearchSuccess(SearchCommand.COMMAND_WORD + TITLE_DESC_ARTEMIS + CATEGORY_DESC_ARTEMIS
                 + AUTHOR_DESC_ARTEMIS);
 
@@ -1199,6 +1221,10 @@ public class ThemeCommandSystemTest extends BibliotekSystemTest {
 
     @Test
     public void theme() {
+
+        Model model = getModel();
+        decryptModel(model);
+
         /* ----------------------------------- Perform invalid theme operations ------------------------------------- */
 
         /* Case: no theme name -> rejected */
