@@ -637,7 +637,7 @@ This eliminates the need to manually enter search information into the NLB catal
 
 ===== Aspect: Whether to load in `WebView` directly or pre-process through `Network` component
 
-* **Alternative 1 (current choice):** Pre-process HTTP request response in `Network` component, then send inteded URL to `WebView`.
+* **Alternative 1 (current choice):** Pre-process HTTP request response in `Network` component, then send intended URL to `WebView`.
 ** Pros: Processing happens behind the scene, and does not distract user.
 ** Cons: User is subject to waiting times without feedback on progress. Furthermore the control flow becomes more complicated since an URL still needs to be passed to and loaded on the `WebView` eventually.
 * **Alternative 2:** Load search URL in `WebView` and navigate to intended page using script.
