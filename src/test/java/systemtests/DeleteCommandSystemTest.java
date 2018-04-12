@@ -32,32 +32,9 @@ public class DeleteCommandSystemTest extends BibliotekSystemTest {
 
     @Test
     public void delete() {
+
         Model model = getModel();
-        String key = model.getKey();
-        Network network = new Network() {
-            @Override
-            public CompletableFuture<ReadOnlyBookShelf> searchBooks(String parameters) {
-                return null;
-            }
-
-            @Override
-            public CompletableFuture<Book> getBookDetails(String bookId) {
-                return null;
-            }
-
-            @Override
-            public CompletableFuture<String> searchLibraryForBook(Book book) {
-                return null;
-            }
-
-            @Override
-            public void stop() {
-
-            }
-        };
-        DecryptCommand decryptCommand = new DecryptCommand(key);
-        decryptCommand.setData(model, network, new CommandHistory(), new UndoStack());
-        decryptCommand.execute();
+        decryptModel(model);
         /* ----------------- Performing delete operation while an unfiltered list is being shown -------------------- */
 
         /* Case: delete the first book in the list, command with leading spaces and trailing spaces -> deleted */

@@ -22,32 +22,10 @@ public class ThemeCommandSystemTest extends BibliotekSystemTest {
 
     @Test
     public void theme() {
+
         Model model = getModel();
-        String key = model.getKey();
-        Network network = new Network() {
-            @Override
-            public CompletableFuture<ReadOnlyBookShelf> searchBooks(String parameters) {
-                return null;
-            }
+        decryptModel(model);
 
-            @Override
-            public CompletableFuture<Book> getBookDetails(String bookId) {
-                return null;
-            }
-
-            @Override
-            public CompletableFuture<String> searchLibraryForBook(Book book) {
-                return null;
-            }
-
-            @Override
-            public void stop() {
-
-            }
-        };
-        DecryptCommand decryptCommand = new DecryptCommand(key);
-        decryptCommand.setData(model, network, new CommandHistory(), new UndoStack());
-        decryptCommand.execute();
         /* ----------------------------------- Perform invalid theme operations ------------------------------------- */
 
         /* Case: no theme name -> rejected */

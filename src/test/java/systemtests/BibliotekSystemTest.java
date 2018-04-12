@@ -11,6 +11,7 @@ import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import org.junit.After;
 import org.junit.Before;
@@ -34,12 +35,17 @@ import guitests.guihandles.WelcomePanelHandle;
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoStack;
 import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.DecryptCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.BookShelf;
 import seedu.address.model.Model;
+import seedu.address.model.ReadOnlyBookShelf;
 import seedu.address.model.book.Book;
+import seedu.address.network.Network;
 import seedu.address.testutil.TestUtil;
 import seedu.address.testutil.TypicalBooks;
 import seedu.address.ui.CommandBox;
@@ -73,6 +79,34 @@ public abstract class BibliotekSystemTest {
         mainWindowHandle = setupHelper.setupMainWindowHandle();
 
         assertApplicationStartingStateIsCorrect();
+    }
+
+    public void decryptModel(Model model) {
+        String key = model.getKey();
+        Network network = new Network() {
+            @Override
+            public CompletableFuture<ReadOnlyBookShelf> searchBooks(String parameters) {
+                return null;
+            }
+
+            @Override
+            public CompletableFuture<Book> getBookDetails(String bookId) {
+                return null;
+            }
+
+            @Override
+            public CompletableFuture<String> searchLibraryForBook(Book book) {
+                return null;
+            }
+
+            @Override
+            public void stop() {
+
+            }
+        };
+        DecryptCommand decryptCommand = new DecryptCommand(key);
+        decryptCommand.setData(model, network, new CommandHistory(), new UndoStack());
+        decryptCommand.execute();
     }
 
     @After

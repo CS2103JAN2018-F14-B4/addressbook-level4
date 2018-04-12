@@ -20,32 +20,9 @@ public class ClearCommandSystemTest extends BibliotekSystemTest {
 
     @Test
     public void clear() {
+
         Model model = getModel();
-        String key = model.getKey();
-        Network network = new Network() {
-            @Override
-            public CompletableFuture<ReadOnlyBookShelf> searchBooks(String parameters) {
-                return null;
-            }
-
-            @Override
-            public CompletableFuture<Book> getBookDetails(String bookId) {
-                return null;
-            }
-
-            @Override
-            public CompletableFuture<String> searchLibraryForBook(Book book) {
-                return null;
-            }
-
-            @Override
-            public void stop() {
-
-            }
-        };
-        DecryptCommand decryptCommand = new DecryptCommand(key);
-        decryptCommand.setData(model, network, new CommandHistory(), new UndoStack());
-        decryptCommand.execute();
+        decryptModel(model);
 
         /* Case: clear non-empty book shelf, command with leading spaces and trailing alphanumeric characters and
          * spaces -> cleared */

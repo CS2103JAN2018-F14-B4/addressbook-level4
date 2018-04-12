@@ -23,33 +23,9 @@ public class AliasesCommandSystemTest extends BibliotekSystemTest {
 
     @Test
     public void aliases() {
+
         Model model = getModel();
-        String key = model.getKey();
-        Network network = new Network() {
-            @Override
-            public CompletableFuture<ReadOnlyBookShelf> searchBooks(String parameters) {
-                return null;
-            }
-
-            @Override
-            public CompletableFuture<Book> getBookDetails(String bookId) {
-                return null;
-            }
-
-            @Override
-            public CompletableFuture<String> searchLibraryForBook(Book book) {
-                return null;
-            }
-
-            @Override
-            public void stop() {
-
-            }
-        };
-        DecryptCommand decryptCommand = new DecryptCommand(key);
-        decryptCommand.setData(model, network, new CommandHistory(), new UndoStack());
-        decryptCommand.execute();
-        assertAliasCommandSuccess();
+        decryptModel(model);
 
         /* selecting a book should hide the alias list panel */
         executeCommand(SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_BOOK.getOneBased());

@@ -32,32 +32,10 @@ public class EditCommandSystemTest extends BibliotekSystemTest {
 
     @Test
     public void edit() throws Exception {
+
         Model model = getModel();
-        String key = model.getKey();
-        Network network = new Network() {
-            @Override
-            public CompletableFuture<ReadOnlyBookShelf> searchBooks(String parameters) {
-                return null;
-            }
+        decryptModel(model);
 
-            @Override
-            public CompletableFuture<Book> getBookDetails(String bookId) {
-                return null;
-            }
-
-            @Override
-            public CompletableFuture<String> searchLibraryForBook(Book book) {
-                return null;
-            }
-
-            @Override
-            public void stop() {
-
-            }
-        };
-        DecryptCommand decryptCommand = new DecryptCommand(key);
-        decryptCommand.setData(model, network, new CommandHistory(), new UndoStack());
-        decryptCommand.execute();
         /* ----------------- Performing edit operation while an unfiltered list is being shown ---------------------- */
 
         /* Case: edit all fields -> edited */
