@@ -113,7 +113,7 @@ public class LogicManager extends ComponentManager implements Logic {
     public static void decrypt() {
         isEncrypt = false;
     }
-  
+
     /**
      * Attempts command auto-correction if {@code e} is a {@code ParseException} due to the user input
      * being unable to be matched to any valid command word.
