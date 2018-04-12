@@ -30,12 +30,12 @@ public class DecryptCommand extends Command {
             key = "testing";
         }
 
-        if (!LogicManager.getEncrypt()) {
+        if (!LogicManager.getkeyControl().getEncrypt()) {
             return new CommandResult(MESSAGE_SUCCESS);
         }
 
-        if (key.equals(LogicManager.getKey())) {
-            LogicManager.decrypt();
+        if (key.equals(LogicManager.getkeyControl().getKey())) {
+            LogicManager.getkeyControl().decrypt();
             return new CommandResult(MESSAGE_SUCCESS);
         } else {
             return new CommandResult(MESSAGE_WRONG_PASSWORD);

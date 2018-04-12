@@ -10,6 +10,7 @@ import java.util.concurrent.CompletableFuture;
 import org.junit.Before;
 import org.junit.Test;
 
+import seedu.address.TestApp;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoStack;
 import seedu.address.model.Model;
@@ -76,6 +77,7 @@ public class EncryptCommandTest {
 
             }
         };
+        TestApp.getLogicManager(model);
         EncryptCommand encryptCommand = new EncryptCommand();
         encryptCommand.setData(model, network, new CommandHistory(), new UndoStack());
         CommandResult result = encryptCommand.execute();

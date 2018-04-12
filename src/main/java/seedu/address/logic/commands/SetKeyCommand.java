@@ -49,8 +49,8 @@ public class SetKeyCommand extends Command {
             oldKey = "testing";
             newKey = "newkey";
         }
-        if (oldKey.equals(LogicManager.getKey())) {
-            LogicManager.setKey(newKey);
+        if (oldKey.equals(LogicManager.getkeyControl().getKey())) {
+            LogicManager.getkeyControl().setKey(newKey);
             model.setKey(newKey);
             return new CommandResult(MESSAGE_SUCCESS);
         } else {

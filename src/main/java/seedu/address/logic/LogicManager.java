@@ -26,8 +26,7 @@ import seedu.address.network.Network;
  * The main LogicManager of the app.
  */
 public class LogicManager extends ComponentManager implements Logic {
-    private static String key;
-    private static boolean isEncrypt = false;
+
     private final Logger logger = LogsCenter.getLogger(LogicManager.class);
 
     private final Model model;
@@ -35,6 +34,7 @@ public class LogicManager extends ComponentManager implements Logic {
     private final CommandHistory history;
     private final BookShelfParser bookShelfParser;
     private final UndoStack undoStack;
+    private static KeyControl keyControl;
 
     private String correctedCommand;
 
@@ -44,11 +44,11 @@ public class LogicManager extends ComponentManager implements Logic {
         history = new CommandHistory();
         bookShelfParser = new BookShelfParser(model.getAliasList());
         undoStack = new UndoStack();
-        key = model.getKey();
-        if (key == "admin") {
-            isEncrypt = false;
+        keyControl = new KeyControl(model.getKey());
+        if (keyControl.getKey() == "admin") {
+            keyControl.setIsEncrypt(false);
         } else {
-            isEncrypt = true;
+            keyControl.setIsEncrypt(true);
         }
     }
 
@@ -60,7 +60,7 @@ public class LogicManager extends ComponentManager implements Logic {
         try {
             Command command = getCommand(processedText);
             CommandResult result;
-            if (isEncrypt == true && !(command instanceof HelpCommand)) {
+            if (keyControl.getEncrypt() == true && !(command instanceof HelpCommand)) {
                 if (command instanceof DecryptCommand) {
                     DecryptCommand decryptCommand = (DecryptCommand) command;
                     result = decryptCommand.execute();
@@ -81,24 +81,8 @@ public class LogicManager extends ComponentManager implements Logic {
         }
     }
 
-    public static String getKey() {
-        return key;
-    }
-
-    public static boolean getEncrypt() {
-        return isEncrypt;
-    }
-
-    public static void setKey(String word) {
-        key = word;
-    }
-
-    public static void encrypt() {
-        isEncrypt = true;
-    }
-
-    public static void decrypt() {
-        isEncrypt = false;
+    public static KeyControl getkeyControl() {
+        return keyControl;
     }
 
     /**
