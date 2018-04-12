@@ -363,7 +363,7 @@ public abstract class BibliotekSystemTest {
         try {
             assertEquals("", getCommandBox().getInput());
             assertEquals("", getResultDisplay().getText());
-            assertListMatching(getBookListPanel(), getModel().getActiveList());
+            assertListMatching(getBookListPanel(), getModel().getDisplayBookList());
             assertTrue(getWelcomePanel().isVisible());
             assertFalse(getBookDetailsPanel().isVisible());
             assertFalse(getBookReviewsPanel().isVisible());

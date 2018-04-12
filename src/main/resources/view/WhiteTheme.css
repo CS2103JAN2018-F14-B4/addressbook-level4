@@ -542,7 +542,7 @@ body {
 }
 
 .label.qotd {
-    -fx-font-family: "Segoe UI", "Helvetica Neue", "HelveticaNeue";
+    -fx-font-family: "Segoe UI";
     -fx-font-size: 12px;
     -fx-font-style: italic;
     -fx-text-fill: #616161;
