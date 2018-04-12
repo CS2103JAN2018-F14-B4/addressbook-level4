@@ -64,7 +64,7 @@ public class AddAliasCommandSystemTest extends BibliotekSystemTest {
 
         /* --------------------------------- Performing commands using aliases -------------------------------------- */
         model = getModel();
-        
+
         /* case: perform select command using alias */
         executeCommand("s " + INDEX_FIRST_BOOK.getOneBased());
         model.addRecentBook(model.getDisplayBookList().get(INDEX_FIRST_BOOK.getZeroBased()));
