@@ -15,6 +15,7 @@ import org.junit.rules.TemporaryFolder;
 
 import seedu.address.commons.events.model.AliasListChangedEvent;
 import seedu.address.commons.events.model.BookShelfChangedEvent;
+import seedu.address.commons.events.model.KeyChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.model.BookShelf;
 import seedu.address.model.ReadOnlyBookShelf;
@@ -84,6 +85,16 @@ public class StorageManagerTest {
                 new XmlBookShelfStorageExceptionThrowingStub("dummy"), new JsonUserPrefsStorage("dummy"),
                 new XmlRecentBooksStorage("dummy"), new XmlAliasListStorage("dummy"));
         storage.handleBookShelfChangedEvent(new BookShelfChangedEvent(new BookShelf()));
+        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
+    }
+
+    @Test
+    public void handleKeyChangedEvent_exceptionThrown_eventRaised() {
+        // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
+        Storage storage = new StorageManager(
+                new XmlBookShelfStorageExceptionThrowingStub("dummy"), new JsonUserPrefsStorage("dummy"),
+                new XmlRecentBooksStorage("dummy"), new XmlAliasListStorage("dummy"));
+        storage.handleKeyChangedEvent(new KeyChangedEvent(new BookShelf()));
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
     }
 
