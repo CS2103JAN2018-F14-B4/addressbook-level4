@@ -63,7 +63,7 @@ public class AddAliasCommandSystemTest extends BibliotekSystemTest {
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddAliasCommand.MESSAGE_USAGE));
 
         /* --------------------------------- Performing commands using aliases -------------------------------------- */
-
+        model = getModel();
         
         /* case: perform select command using alias */
         executeCommand("s " + INDEX_FIRST_BOOK.getOneBased());
