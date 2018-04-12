@@ -665,24 +665,59 @@ image::setsuccess.png[width="650"]
 
 image::wrongkey(set).png[width="650"]
 
-* The encode and decode key are implement in this way:
+* The encode key are implement in this way:
 [source,java]
 ----
-public abstract class UndoableCommand extends Command {
-    @Override
-    public CommandResult execute() {
-        // ... undo logic ...
-
-        executeUndoableCommand();
+    public static String encrypKey(String mykey) throws Exception {
+        byte[] byarray = encrypt(mykey.getBytes(ENCODE), defaultKey.getBytes(ENCODE));
+        String encryptkey = new BASE64Encoder().encode(byarray);
+        return encryptkey;
     }
-}
 
-public class DeleteCommand extends UndoableCommand {
-    @Override
-    public CommandResult executeUndoableCommand() {
-        // ... delete logic ...
+    public static byte[] encrypt(byte[] mykey, byte[] key) throws Exception {
+        SecureRandom secureRandom = new SecureRandom();
+
+        DESKeySpec desKeySpec = new DESKeySpec(key);
+
+        SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance(DES);
+        SecretKey securekey = secretKeyFactory.generateSecret(desKeySpec);
+
+        Cipher cipher = Cipher.getInstance(DES);
+
+        cipher.init(Cipher.ENCRYPT_MODE, securekey, secureRandom);
+
+        return cipher.doFinal(mykey);
     }
-}
+----
+
+* The encode key are implement in this way:
+[source,java]
+----
+    public static String decryptKey(String yourkey) throws IOException, Exception {
+        if (yourkey == null) {
+            return null;
+        }
+        BASE64Decoder base64Decoder = new BASE64Decoder();
+        byte[] decodeBuffer = base64Decoder.decodeBuffer(yourkey);
+        byte[] bytes = decrypt(decodeBuffer, defaultKey.getBytes(ENCODE));
+        return new String(bytes, ENCODE);
+    }
+
+    private static byte[] decrypt(byte[] yourkey, byte[] key) throws Exception {
+
+        SecureRandom secureRandom = new SecureRandom();
+
+        DESKeySpec desKeySpec = new DESKeySpec(key);
+
+        SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance(DES);
+        SecretKey securekey = secretKeyFactory.generateSecret(desKeySpec);
+
+        Cipher cipher = Cipher.getInstance(DES);
+
+        cipher.init(Cipher.DECRYPT_MODE, securekey, secureRandom);
+
+        return cipher.doFinal(yourkey);
+    }
 ----
 
 ==== Design considerations
