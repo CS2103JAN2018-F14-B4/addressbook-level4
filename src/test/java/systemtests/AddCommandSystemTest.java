@@ -29,7 +29,6 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
     public void add() throws Exception {
         Model model = getModel();
         decryptModel(model);
-
         executeBackgroundCommand(SearchCommand.COMMAND_WORD + " hello", SearchCommand.MESSAGE_SEARCHING);
         ObservableList<Book> searchResultsList = model.getSearchResultsList();
 
