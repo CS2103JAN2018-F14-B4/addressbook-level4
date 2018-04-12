@@ -606,27 +606,51 @@ by only showing these books.
 
 ==== Current implementation
 
-When `encrypt` command is entered,
+* **When `encrypt` command is entered**
 
 . `EncryptCommand` is processed to set isEncrypt to be true.
+
 . The `Bibliotek` cannot be run any command except `decrypt` and `help` command.
 
-When the `Bibliotek` is encrypted and `decrypt` command is entered,
+* If you enter a wrong key.
+
+image::shouldbedecryptfirst.png[width="650"]
+
+* **When the `Bibliotek` is encrypted and `decrypt` command is entered**
 
 . `DecryptCommandParser` will extract key from the user input.
 . `DecryptCommandParser` creates an `DecryptCommand` the key.
-. `DecryptCommand` is preprocessed to check that key is correct.
+. `DecryptCommand` is preprocessed to check that key is correct(decode the key from the storage).
 . `DecryptCommand` is processed to set isEncrypt to be false.
 
-When `setKey` command is entered,
+* If your entered key is correct
+
+image::correctkey.png[width="650"]
+
+* If your entered key is wrong
+
+image::wrongkey.png[width="650"]
+
+
+* **When `setKey` command is entered**
 
 . `setKeyCommandParser` will extract the old key and new key from the user input.
 . `setKeyCommandParser` checks that  two parameters are present, and that the parameters are valid.
 . `setKeyCommandParser` creates an `setKeyCommand` with the parameters.
 . `setKeyCommand` is preprocessed to check that oldKey is correct.
-. `setKeyCommand` is processed to post an keyChangedEvent to the eventcenter.
-. Modelmanager indicate the keyChangedevent and handle it, and set the bookshelf's key to be new key.
-. StorageManager handle the event by update the bibliotek with the new key.
+. If the oldKye is correct, `setKeyCommand` will send a setKey command to LogicManager.
+. LogicManager will send set_new_key request to ModelManger.
+. ModelManager indicate the keyChangedevent and handle it, and set the bookshelf's key to be new key.
+. ModelManager will encode the key, before indicate the keyChangedevent.
+. StorageManager handle the event by update the bibliotek with the new key(encoded key).
+
+* If you entered old key is correct.
+
+image::setsuccess.png[width="650"]
+
+* If you entered old key is incorrect.
+
+image::wrongkey(set).png[width="650"]
 
 ==== Design considerations
 
@@ -638,6 +662,15 @@ When `setKey` command is entered,
 * **Alternative 2:** Use only one setKey command to solve all three features.
 ** Pros: Seem that users can eliminate the typing.
 ** Cons: Users will feel confuse, not so clear about the command.
+
+===== Aspect: Whether to encode the key before store it
+
+* **Alternative 1 (current choice):** Stores the encoded key.
+** Pros: Others cannot know users' key easily.
+** Cons: Difficult to implement.
+* **Alternative 2:** Store the text form key.
+** Pros: Easy to implement.
+** Cons: Others can know users' key easily.
 
 === Logging
 
