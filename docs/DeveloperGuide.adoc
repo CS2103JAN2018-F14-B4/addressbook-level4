@@ -477,6 +477,7 @@ image::UndoRedoActivityDiagram.png[width="550"]
 **Additional Info:** See the discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
 // end::undoredo[]
 
+// tag::edit[]
 === Edit status, priority, and rating of books: `edit` command
 
 ==== Current implementation
@@ -509,6 +510,7 @@ When `edit` command is entered,
 * **Alternative 2:** Unspecified parameters are set to default value.
 ** Pros: Easy to implement.
 ** Cons: Users need to specify all parameters to change one.
+// end::edit[]
 
 === View recently selected books: `recent` command
 

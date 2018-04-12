@@ -249,7 +249,7 @@ Lists books in your book shelf that contains `Andy Weir` in one of the authors' 
 * `list t/Babylon's Ashes c/Science Fiction` +
 Lists `Science Fiction` books in your book shelf that contains `Babylon's Ashes` in the title.
 
-[[edit-command]]
+// tag::edit[]
 === Editing a book : `edit` _(since v1.4)_
 
 After reading a book, you may want to give the book a rating or set the book as read. Or, you may want
@@ -273,8 +273,8 @@ Examples:
 Changes the priority of the 1st book to `HIGH`.
 * `edit 2 s/read r/5` +
 Marks the 2nd book as `READ` and changes its rating to `5`.
+// end::edit[]
 
-[[delete-command]]
 === Deleting a book : `delete`
 
 No longer want a book in your book shelf? Remove it using `delete`. +
@@ -650,7 +650,7 @@ Think the font size is too small or large for your liking? You can customize the
 font size to your own needs. +
 Format: `fontsize FONT_SIZE`
 
-[[setpassword-command]]
+// tag::setpassword[]
 === Setting a password : `setpassword` _(coming in v2.0)_
 
 If you want to keep your data secure, you can opt to set a password for the application. +
@@ -663,8 +663,8 @@ not need to enter it again thereafter (ie. when using commands).
 ====
 
 TIP: Remove your password using `setpassword p/`
+// end::setpassword[]
 
-[[settings-command]]
 === Changing settings: `settings` _(coming in v2.0)_
 
 [[settings-library]]
