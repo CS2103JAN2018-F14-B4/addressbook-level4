@@ -613,7 +613,7 @@ This eliminates the need to manually enter search information into the NLB catal
 
 ==== Current implementation
 
-
+image::LibraryCommandActivityDiagram.png[width="650"]
 
 ==== Design considerations
 
