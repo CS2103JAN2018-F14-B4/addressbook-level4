@@ -719,6 +719,10 @@ image::wrongkey(set).png[width="650"]
         return cipher.doFinal(yourkey);
     }
 ----
+The default key "admin" will be stored as:
+
+image::password_admin.png[width="650"]
+
 
 ==== Design considerations
 
