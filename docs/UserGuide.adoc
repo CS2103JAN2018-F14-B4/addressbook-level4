@@ -249,6 +249,7 @@ Lists books in your book shelf that contains `Andy Weir` in one of the authors' 
 * `list t/Babylon's Ashes c/Science Fiction` +
 Lists `Science Fiction` books in your book shelf that contains `Babylon's Ashes` in the title.
 
+// tag::edit[]
 [[edit-command]]
 === Editing a book : `edit` _(since v1.4)_
 
@@ -273,6 +274,7 @@ Examples:
 Changes the priority of the 1st book to `HIGH`.
 * `edit 2 s/read r/5` +
 Marks the 2nd book as `READ` and changes its rating to `5`.
+// end::edit[]
 
 [[delete-command]]
 === Deleting a book : `delete`
@@ -663,6 +665,7 @@ You will be given a default key: admin, when you open bibliotek for the first ti
 
 TIP: You should remember your key after setting a new one.
 
+// tag::encrypt[]
 [[Decrypt-command]]
 === Decrypt the bibliotek : `decrypt` _(coming in v1.5)_
 
@@ -684,6 +687,7 @@ Format: `encrypt`
 ====
 You should remember your key before you do this command.
 ====
+// end::encrypt[]
 
 [[settings-command]]
 === Changing settings: `settings` _(coming in v2.0)_

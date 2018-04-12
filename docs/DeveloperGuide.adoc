@@ -477,6 +477,7 @@ image::UndoRedoActivityDiagram.png[width="550"]
 **Additional Info:** See the discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
 // end::undoredo[]
 
+// tag::edit[]
 === Edit status, priority, and rating of books: `edit` command
 
 ==== Current implementation
@@ -522,6 +523,7 @@ image::newbook.png[width="550"]
 * **Alternative 2:** Unspecified parameters are set to default value.
 ** Pros: Easy to implement.
 ** Cons: Users need to specify all parameters to change one.
+// end::edit[]
 
 === View recently selected books: `recent` command
 
@@ -615,6 +617,7 @@ by only showing these books.
 ** Pros: Re-use of existing data structure.
 ** Cons: BookShelf supports functionalities that are not needed to store recently selected books.
 
+// tag::encrypt[]
 === Data Encryption
 
 ==== Current implementation
@@ -722,7 +725,7 @@ image::wrongkey(set).png[width="650"]
 The default key "admin" will be stored as:
 
 image::password_admin.png[width="650"]
-
+// end::encrypt[]
 
 ==== Design considerations
 
