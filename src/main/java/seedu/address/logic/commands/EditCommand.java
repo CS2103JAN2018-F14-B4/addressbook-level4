@@ -100,11 +100,8 @@ public class EditCommand extends UndoableCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
         }
     }
-<<<<<<< HEAD
-    
-=======
+
     //@@author
->>>>>>> 2902859a7fec03d3d16f2598613f6499348bb466
     /**
      * Creates and returns a {@code Book} with the details of {@code bookToEdit}
      * edited with {@code editDescriptor}.
