@@ -13,7 +13,7 @@ Bibliotek is a desktop address book application used for teaching Software Engin
 == Summary of contributions
 
 * **Mark a book as read, change the priority of a book and rate books** (major)
-** Added attributes rating, status, priority.
+** Added attributes rating
 ** Added `edit` command that allows user to rate, set status and change priority of
 some books.
 ** This allows the user to keep track of what to read and what have been read and give recommendations to others.
