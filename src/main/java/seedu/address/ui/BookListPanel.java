@@ -88,13 +88,18 @@ public class BookListPanel extends UiPart<Region> {
      * @return whether the previous book selection is reselected.
      */
     protected boolean reselectBook() {
-        int index;
-        if (deselectedBook == null || (index = bookListView.getItems().indexOf(deselectedBook)) == -1) {
-            deselectedBook = null;
+        if (deselectedBook == null) {
             return false;
         }
-        scrollTo(index);
+
+        int index = bookListView.getItems().indexOf(deselectedBook);
         deselectedBook = null;
+
+        if (index == -1) {
+            return false;
+        }
+
+        scrollTo(index);
         return true;
     }
 
