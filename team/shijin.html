@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.6.1">
+<title>SHI JIN - Project Portfolio</title>
+<link rel="stylesheet" href="../stylesheets/gh-pages.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<link rel="stylesheet" href="../stylesheets/coderay-asciidoctor.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>SHI JIN - Project Portfolio</h1>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="project-bibliotek"><a class="anchor" href="#project-bibliotek"></a>PROJECT: Bibliotek</h2>
+<div class="sectionbody">
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="overview"><a class="anchor" href="#overview"></a>Overview</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Bibliotek is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="summary-of-contributions"><a class="anchor" href="#summary-of-contributions"></a>Summary of contributions</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Mark a book as read, change the priority of a book and rate books</strong> (major)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Added attributes rating</p>
+</li>
+<li>
+<p>Added <code>edit</code> command that allows user to rate, set status and change priority of
+some books.</p>
+</li>
+<li>
+<p>This allows the user to keep track of what to read and what have been read and give recommendations to others.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Encrypt data with a password</strong> (minor)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Add an <code>encrypt</code> command to encrypt data with a password.</p>
+</li>
+<li>
+<p>This allows users to keep their data private and safe.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Code contributed</strong>: [<a href="https://github.com/CS2103JAN2018-F14-B4/main/tree/master/collated/functional.592363789.md">Functional code</a>] [<a href="https://github.com/CS2103JAN2018-F14-B4/main/tree/master/collated/test.592363789.md">Test code</a>] <em>{give links to collated code files}</em></p>
+</li>
+<li>
+<p><strong>Other contributions</strong>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Project management:</p>
+</li>
+<li>
+<p>Enhancements to existing features:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Add the rating book command.</p>
+</li>
+<li>
+<p>Add in Edit book command (Pull requests <a href="https://github.com/CS2103JAN2018-F14-B4/main/pull/111">#111</a>).</p>
+</li>
+<li>
+<p>Add in encrypt command.</p>
+</li>
+<li>
+<p>Add in decrypt and setkey command (Pull requests <a href="https://github.com/CS2103JAN2018-F14-B4/main/pull/134">#134</a>)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Documentation:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Did cosmetic tweaks to existing contents of the User Guide: <a href="https://github.com">#14</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Community:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>PRs reviewed : <a href="https://github.com">#12</a>, <a href="https://github.com/CS2103JAN2018-F14-B4/main/pull/84">#84</a>, <a href="https://github.com/CS2103JAN2018-F14-B4/main/pull/79">#79</a>, <a href="https://github.com/CS2103JAN2018-F14-B4/main/pull/68">#68</a>, <a href="https://github.com/CS2103JAN2018-F14-B4/main/pull/44">#44</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Tools:</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="contributions-to-the-user-guide"><a class="anchor" href="#contributions-to-the-user-guide"></a>Contributions to the User Guide</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users.</em></p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect2">
+<h3 id="edit-command"><a class="anchor" href="#edit-command"></a>Editing a book : <code>edit</code> <em>(since v1.4)</em></h3>
+<div class="paragraph">
+<p>When you using the Bibliotek to read books, you may want to rate on one book you read, set the status to remind you the reading situation,
+or set the priority of the book to remind yourself what to read next. These can be done using <code>edit</code>.<br>
+Format: <code>edit INDEX [s/STATUS] [p/PRIORITY] [r/RATING]</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>For the index, you should provide a integer which in the range of your list.</p>
+</li>
+<li>
+<p>You should provide at least one field to edit.</p>
+</li>
+<li>
+<p>Before you edit, every book has a default value for rating("-1"), status("none") and priority("unread").</p>
+</li>
+<li>
+<p>For the rating format, the range of the rating should be between -1 and 5. (-1 is for unrated books).</p>
+</li>
+<li>
+<p>For the status format, you should choose one of aliases(or full name) following: <code>read</code>(<code>r</code>), <code>unread</code>(<code>ur</code>), or <code>reading</code>(<code>rd</code>).</p>
+</li>
+<li>
+<p>For the priority format, you should choose one of aliases(or full name) following: <code>none</code>(<code>n</code>), <code>low</code>(<code>l</code>), <code>medium</code>(<code>m</code>) or <code>high</code>(<code>h</code>).</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+You can only edit books from the list using the index.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>edit 3 p/low</code><br>
+Changes the priority of the 3rd book to <code>LOW</code>.</p>
+</li>
+<li>
+<p><code>edit 1 s/read p/low r/4</code><br>
+Marks the 1nd book as <code>READ</code>, changes its priority to <code>LOW</code>, and changes its rating to <code>4</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="Decrypt-command"><a class="anchor" href="#Decrypt-command"></a>Decrypt the bibliotek : <code>decrypt</code> <em>(coming in v1.5)</em></h3>
+<div class="paragraph">
+<p>If you want to decrypt your bibliotek if your bibliotek is encrypted, you can decrypt it using DecryptCommand.<br>
+Format: <code>decrypt YOUR_KEY</code></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>You will be given a default key: admin, when you open bibliotek for the first time.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="Encrypt-command"><a class="anchor" href="#Encrypt-command"></a>Decrypt the bibliotek : <code>encrypt</code> <em>(coming in v1.5)</em></h3>
+<div class="paragraph">
+<p>If you want to encrypt your bibliotek, you can encrypt it using EncryptCommand.<br>
+Format: <code>encrypt</code></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>You should remember your key before you do this command.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="contributions-to-the-developer-guide"><a class="anchor" href="#contributions-to-the-developer-guide"></a>Contributions to the Developer Guide</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project.</em></p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect2">
+<h3 id="edit-status-priority-and-rating-of-books-code-edit-code-command"><a class="anchor" href="#edit-status-priority-and-rating-of-books-code-edit-code-command"></a>Edit status, priority, and rating of books: <code>edit</code> command</h3>
+<div class="sect3">
+<h4 id="current-implementation"><a class="anchor" href="#current-implementation"></a>Current implementation</h4>
+<div class="paragraph">
+<p>When <code>edit</code> command is entered,</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>EditCommandParser</code> will extract the index and the parameters from the user input.</p>
+</li>
+<li>
+<p><code>EditCommandParser</code> checks that at least one parameter is present, and that the parameter(s) are valid.</p>
+</li>
+<li>
+<p><code>EditCommandParser</code> creates an <code>EditCommand</code> with the index and parameter(s).</p>
+</li>
+<li>
+<p><code>EditCommand</code> is preprocessed to check that <code>ActiveListType</code> is correct and index is valid.</p>
+</li>
+<li>
+<p>The <code>Book</code> to edit (<code>bookToEdit</code>) is identified by the index. Another <code>Book</code> (<code>editedBook</code>) is created based on the specified parameters.</p>
+</li>
+<li>
+<p><code>editedBook</code> replaces <code>bookToEdit</code> in <code>BookShelf</code>.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Sequence Diagram</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/editseq.png" alt="editseq" width="550">
+</div>
+</div>
+<div class="paragraph">
+<p>Default value of the book.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/defaultbook.png" alt="defaultbook" width="550">
+</div>
+</div>
+<div class="paragraph">
+<p>The book after you edit (r/4, s/r, p/h).</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/newbook.png" alt="newbook" width="550">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations"><a class="anchor" href="#design-considerations"></a>Design considerations</h4>
+<div class="sect4">
+<h5 id="aspect-presentation-of-rating"><a class="anchor" href="#aspect-presentation-of-rating"></a>Aspect: Presentation of rating</h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1:</strong> Show users the rating as a number.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Easy to implement.</p>
+</li>
+<li>
+<p>Cons: Not aesthetically appealing.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2 (current choice):</strong> Show users the rating as stars.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Difficult to implement.</p>
+</li>
+<li>
+<p>Cons: Improves the aesthetic appeal and clarity.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="aspect-interpretation-of-unspecified-parameters"><a class="anchor" href="#aspect-interpretation-of-unspecified-parameters"></a>Aspect: Interpretation of unspecified parameters</h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice):</strong> Unspecified parameters are left unchanged.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Users can omit parameters that they do not wish to change.</p>
+</li>
+<li>
+<p>Cons: More difficult to implement.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2:</strong> Unspecified parameters are set to default value.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Easy to implement.</p>
+</li>
+<li>
+<p>Cons: Users need to specify all parameters to change one.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="data-encryption"><a class="anchor" href="#data-encryption"></a>Data Encryption</h3>
+<div class="sect3">
+<h4 id="current-implementation-2"><a class="anchor" href="#current-implementation-2"></a>Current implementation</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>When <code>encrypt</code> command is entered</strong></p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>EncryptCommand</code> is processed to set isEncrypt to be true.</p>
+</li>
+<li>
+<p>The <code>Bibliotek</code> cannot be run any command except <code>decrypt</code> and <code>help</code> command.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>If you enter a wrong key.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/shouldbedecryptfirst.png" alt="shouldbedecryptfirst" width="650">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>When the <code>Bibliotek</code> is encrypted and <code>decrypt</code> command is entered</strong></p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>DecryptCommandParser</code> will extract key from the user input.</p>
+</li>
+<li>
+<p><code>DecryptCommandParser</code> creates an <code>DecryptCommand</code> the key.</p>
+</li>
+<li>
+<p><code>DecryptCommand</code> is preprocessed to check that key is correct(decode the key from the storage).</p>
+</li>
+<li>
+<p><code>DecryptCommand</code> is processed to set isEncrypt to be false.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>If your entered key is correct</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/correctkey.png" alt="correctkey" width="650">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>If your entered key is wrong</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/wrongkey.png" alt="wrongkey" width="650">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>When <code>setKey</code> command is entered</strong></p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>setKeyCommandParser</code> will extract the old key and new key from the user input.</p>
+</li>
+<li>
+<p><code>setKeyCommandParser</code> checks that  two parameters are present, and that the parameters are valid.</p>
+</li>
+<li>
+<p><code>setKeyCommandParser</code> creates an <code>setKeyCommand</code> with the parameters.</p>
+</li>
+<li>
+<p><code>setKeyCommand</code> is preprocessed to check that oldKey is correct.</p>
+</li>
+<li>
+<p>If the oldKye is correct, <code>setKeyCommand</code> will send a setKey command to LogicManager.</p>
+</li>
+<li>
+<p>LogicManager will send set_new_key request to ModelManger.</p>
+</li>
+<li>
+<p>ModelManager indicate the keyChangedevent and handle it, and set the bookshelf&#8217;s key to be new key.</p>
+</li>
+<li>
+<p>ModelManager will encode the key, before indicate the keyChangedevent.</p>
+</li>
+<li>
+<p>StorageManager handle the event by update the bibliotek with the new key(encoded key).</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>If you entered old key is correct.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/setsuccess.png" alt="setsuccess" width="650">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>If you entered old key is incorrect.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/wrongkey(set).png" alt="wrongkey(set)" width="650">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The encode key are implement in this way:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>    public static String encrypKey(String mykey) throws Exception {
+        byte[] byarray = encrypt(mykey.getBytes(ENCODE), defaultKey.getBytes(ENCODE));
+        String encryptkey = new BASE64Encoder().encode(byarray);
+        return encryptkey;
+    }
+
+    public static byte[] encrypt(byte[] mykey, byte[] key) throws Exception {
+        SecureRandom secureRandom = new SecureRandom();
+
+        DESKeySpec desKeySpec = new DESKeySpec(key);
+
+        SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance(DES);
+        SecretKey securekey = secretKeyFactory.generateSecret(desKeySpec);
+
+        Cipher cipher = Cipher.getInstance(DES);
+
+        cipher.init(Cipher.ENCRYPT_MODE, securekey, secureRandom);
+
+        return cipher.doFinal(mykey);
+    }</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The encode key are implement in this way:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>    public static String decryptKey(String yourkey) throws IOException, Exception {
+        if (yourkey == null) {
+            return null;
+        }
+        BASE64Decoder base64Decoder = new BASE64Decoder();
+        byte[] decodeBuffer = base64Decoder.decodeBuffer(yourkey);
+        byte[] bytes = decrypt(decodeBuffer, defaultKey.getBytes(ENCODE));
+        return new String(bytes, ENCODE);
+    }
+
+    private static byte[] decrypt(byte[] yourkey, byte[] key) throws Exception {
+
+        SecureRandom secureRandom = new SecureRandom();
+
+        DESKeySpec desKeySpec = new DESKeySpec(key);
+
+        SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance(DES);
+        SecretKey securekey = secretKeyFactory.generateSecret(desKeySpec);
+
+        Cipher cipher = Cipher.getInstance(DES);
+
+        cipher.init(Cipher.DECRYPT_MODE, securekey, secureRandom);
+
+        return cipher.doFinal(yourkey);
+    }</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The default key "admin" will be stored as:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/password_admin.png" alt="password admin" width="650">
+</div>
+</div>
+<hr>
+<div class="paragraph">
+<p><em>{Optionally, you may include other projects in your portfolio.}</em></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2018-04-13 02:47:12 UTC
+</div>
+</div>
+</body>
+</html>

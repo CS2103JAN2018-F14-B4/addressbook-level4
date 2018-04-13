@@ -54,8 +54,10 @@
 <li><a href="#suggest-command">4.3. Getting book recommendations : <code>suggest</code> <em>(coming in v2.0)</em></a></li>
 <li><a href="#import-command">4.4. Importing books from other E-Readers : <code>import</code> <em>(coming in v2.0)</em></a></li>
 <li><a href="#fontsize-command">4.5. Changing font size : <code>fontsize</code> <em>(coming in v2.0)</em></a></li>
-<li><a href="#setpassword-command">4.6. Setting a password : <code>setpassword</code> <em>(coming in v2.0)</em></a></li>
-<li><a href="#settings-command">4.7. Changing settings: <code>settings</code> <em>(coming in v2.0)</em></a></li>
+<li><a href="#setKey-command">4.6. Setting a key to bibliotek : <code>setKey</code> <em>(coming in v1.5)</em></a></li>
+<li><a href="#Decrypt-command">4.7. Decrypt the bibliotek : <code>decrypt</code> <em>(coming in v1.5)</em></a></li>
+<li><a href="#Encrypt-command">4.8. Decrypt the bibliotek : <code>encrypt</code> <em>(coming in v1.5)</em></a></li>
+<li><a href="#settings-command">4.9. Changing settings: <code>settings</code> <em>(coming in v2.0)</em></a></li>
 </ul>
 </li>
 <li><a href="#faq">5. FAQ</a></li>
@@ -601,8 +603,8 @@ Lists <code>Science Fiction</code> books in your book shelf that contains <code>
 <div class="sect2">
 <h3 id="edit-command"><a class="anchor" href="#edit-command"></a>3.6. Editing a book : <code>edit</code> <em>(since v1.4)</em></h3>
 <div class="paragraph">
-<p>After reading a book, you may want to give the book a rating or set the book as read. Or, you may want
-to change the priority of books to remind yourself what you should read next. These can be done using <code>edit</code>.<br>
+<p>When you using the Bibliotek to read books, you may want to rate on one book you read, set the status to remind you the reading situation,
+or set the priority of the book to remind yourself what to read next. These can be done using <code>edit</code>.<br>
 Format: <code>edit INDEX [s/STATUS] [p/PRIORITY] [r/RATING]</code></p>
 </div>
 <div class="sidebarblock">
@@ -610,22 +612,22 @@ Format: <code>edit INDEX [s/STATUS] [p/PRIORITY] [r/RATING]</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p>Edits the book at the specified <code>INDEX</code>. The index refers to the index number shown in the most recent listing. The index <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
+<p>For the index, you should provide a integer which in the range of your list.</p>
 </li>
 <li>
-<p>At least one of the optional fields must be provided.</p>
+<p>You should provide at least one field to edit.</p>
 </li>
 <li>
-<p>Existing values will be updated to the input values.</p>
+<p>Before you edit, every book has a default value for rating("-1"), status("none") and priority("unread").</p>
 </li>
 <li>
-<p><code>STATUS</code> must be one of the following (items in parenthesis are aliases): <code>read</code> (<code>r</code>), <code>unread</code> (<code>u</code>), or <code>reading</code> (<code>rd</code>).</p>
+<p>For the rating format, the range of the rating should be between -1 and 5. (-1 is for unrated books).</p>
 </li>
 <li>
-<p><code>PRIORITY</code> must be one of the following (items in parenthesis are aliases): <code>none</code> (<code>n</code>), <code>low</code> (<code>l</code>), <code>medium</code> (<code>m</code>), or <code>high</code> (<code>h</code>).</p>
+<p>For the status format, you should choose one of aliases(or full name) following: <code>read</code>(<code>r</code>), <code>unread</code>(<code>ur</code>), or <code>reading</code>(<code>rd</code>).</p>
 </li>
 <li>
-<p><code>RATING</code> must be a valid rating from 0 to 5, or -1, to select unrated books.</p>
+<p>For the priority format, you should choose one of aliases(or full name) following: <code>none</code>(<code>n</code>), <code>low</code>(<code>l</code>), <code>medium</code>(<code>m</code>) or <code>high</code>(<code>h</code>).</p>
 </li>
 </ul>
 </div>
@@ -638,7 +640,7 @@ Format: <code>edit INDEX [s/STATUS] [p/PRIORITY] [r/RATING]</code></p>
 <i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-You can only perform <code>edit</code> when the list shown is from your book shelf.
+You can only edit books from the list using the index.
 </td>
 </tr>
 </table>
@@ -649,12 +651,12 @@ You can only perform <code>edit</code> when the list shown is from your book she
 <div class="ulist">
 <ul>
 <li>
-<p><code>edit 1 p/high</code><br>
-Changes the priority of the 1st book to <code>HIGH</code>.</p>
+<p><code>edit 3 p/low</code><br>
+Changes the priority of the 3rd book to <code>LOW</code>.</p>
 </li>
 <li>
-<p><code>edit 2 s/read r/5</code><br>
-Marks the 2nd book as <code>READ</code> and changes its rating to <code>5</code>.</p>
+<p><code>edit 1 s/read p/low r/4</code><br>
+Marks the 1nd book as <code>READ</code>, changes its priority to <code>LOW</code>, and changes its rating to <code>4</code>.</p>
 </li>
 </ul>
 </div>
@@ -1443,10 +1445,10 @@ Format: <code>fontsize FONT_SIZE</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="setpassword-command"><a class="anchor" href="#setpassword-command"></a>4.6. Setting a password : <code>setpassword</code> <em>(coming in v2.0)</em></h3>
+<h3 id="setKey-command"><a class="anchor" href="#setKey-command"></a>4.6. Setting a key to bibliotek : <code>setKey</code> <em>(coming in v1.5)</em></h3>
 <div class="paragraph">
-<p>If you want to keep your data secure, you can opt to set a password for the application.<br>
-Format: <code>setpassword p/PASSWORD</code></p>
+<p>If you want to keep your data secure, you can opt to set a key for bibliotek.<br>
+Format: <code>setKey old/OLDKEY new/NEWKEY</code></p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1456,8 +1458,7 @@ Format: <code>setpassword p/PASSWORD</code></p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>You will be prompted for the password upon starting up the application. You will
-not need to enter it again thereafter (ie. when using commands).</p>
+<p>You will be given a default key: admin, when you open bibliotek for the first time.</p>
 </div>
 </td>
 </tr>
@@ -1470,16 +1471,58 @@ not need to enter it again thereafter (ie. when using commands).</p>
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-Remove your password using <code>setpassword p/</code>
+You should remember your key after setting a new one.
 </td>
 </tr>
 </table>
 </div>
 </div>
 <div class="sect2">
-<h3 id="settings-command"><a class="anchor" href="#settings-command"></a>4.7. Changing settings: <code>settings</code> <em>(coming in v2.0)</em></h3>
+<h3 id="Decrypt-command"><a class="anchor" href="#Decrypt-command"></a>4.7. Decrypt the bibliotek : <code>decrypt</code> <em>(coming in v1.5)</em></h3>
+<div class="paragraph">
+<p>If you want to decrypt your bibliotek if your bibliotek is encrypted, you can decrypt it using DecryptCommand.<br>
+Format: <code>decrypt YOUR_KEY</code></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>You will be given a default key: admin, when you open bibliotek for the first time.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="Encrypt-command"><a class="anchor" href="#Encrypt-command"></a>4.8. Decrypt the bibliotek : <code>encrypt</code> <em>(coming in v1.5)</em></h3>
+<div class="paragraph">
+<p>If you want to encrypt your bibliotek, you can encrypt it using EncryptCommand.<br>
+Format: <code>encrypt</code></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>You should remember your key before you do this command.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="settings-command"><a class="anchor" href="#settings-command"></a>4.9. Changing settings: <code>settings</code> <em>(coming in v2.0)</em></h3>
 <div class="sect3">
-<h4 id="settings-library"><a class="anchor" href="#settings-library"></a>4.7.1. Library <em>(coming in v2.0)</em></h4>
+<h4 id="settings-library"><a class="anchor" href="#settings-library"></a>4.9.1. Library <em>(coming in v2.0)</em></h4>
 <div class="paragraph">
 <p>If you want to search for books in other libraries, you can change your settings.<br>
 Format: <code>settings lib/LIBRARY</code></p>
@@ -1515,7 +1558,7 @@ if there are other libraries you wish are supported.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="settings-order"><a class="anchor" href="#settings-order"></a>4.7.2. Online shopping site <em>(coming in v2.0)</em></h4>
+<h4 id="settings-order"><a class="anchor" href="#settings-order"></a>4.9.2. Online shopping site <em>(coming in v2.0)</em></h4>
 <div class="paragraph">
 <p>If you want to purchase books on other online booksellers, you can change your settings.<br>
 Format: <code>settings order/SITE</code></p>
@@ -1604,6 +1647,10 @@ if there are other sites you wish are supported.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>clear</code></p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Decrypt</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>decrypt YOUR_KEY</code></p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Delete</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>delete INDEX</code></p></td>
 </tr>
@@ -1615,6 +1662,10 @@ if there are other sites you wish are supported.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Edit</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>edit INDEX [s/STATUS] [p/PRIORITY] [r/RATING]</code></p>
 <p class="tableblock">e.g. <code>edit 2 s/READ r/5</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Encrypt</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>encrypt</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Exit</strong></p></td>
@@ -1650,6 +1701,11 @@ if there are other sites you wish are supported.</p>
 <p class="tableblock">e.g. <code>search t/Babylon&#8217;s Ashes c/Science Fiction</code></p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>SetKey</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>setKey [old/OLDKEY] [new/NEWKEY]</code></p>
+<p class="tableblock">e.g. <code>setkey old/admin new/haha</code></p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Select</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>select INDEX</code></p></td>
 </tr>
@@ -1682,7 +1738,7 @@ The 13-digit ISBN, which is used by Bibliotek to identify books, has been in use
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-12 19:20:41 UTC
+Last updated 2018-04-13 02:47:12 UTC
 </div>
 </div>
 </body>

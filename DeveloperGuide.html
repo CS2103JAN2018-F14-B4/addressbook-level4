@@ -49,7 +49,7 @@
 <li><a href="#edit-status-priority-and-rating-of-books-code-edit-code-command">4.3. Edit status, priority, and rating of books: <code>edit</code> command</a></li>
 <li><a href="#view-recently-selected-books-code-recent-code-command">4.4. View recently selected books: <code>recent</code> command</a></li>
 <li><a href="#find-a-book-in-nlb-library-code-library-code-command">4.5. Find a book in NLB library: <code>library</code> command</a></li>
-<li><a href="#proposed-data-encryption">4.6. [Proposed] Data Encryption</a></li>
+<li><a href="#data-encryption">4.6. Data Encryption</a></li>
 <li><a href="#logging">4.7. Logging</a></li>
 <li><a href="#Implementation-Configuration">4.8. Configuration</a></li>
 </ul>
@@ -1124,6 +1124,30 @@ If the <code>undoStack</code> is empty, then there are no other commands left to
 </li>
 </ol>
 </div>
+<div class="paragraph">
+<p>Sequence Diagram</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/editseq.png" alt="editseq" width="550">
+</div>
+</div>
+<div class="paragraph">
+<p>Default value of the book.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/defaultbook.png" alt="defaultbook" width="550">
+</div>
+</div>
+<div class="paragraph">
+<p>The book after you edit (r/4, s/r, p/h).</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/newbook.png" alt="newbook" width="550">
+</div>
+</div>
 </div>
 <div class="sect3">
 <h4 id="design-considerations-3"><a class="anchor" href="#design-considerations-3"></a>4.3.2. Design considerations</h4>
@@ -1132,7 +1156,7 @@ If the <code>undoStack</code> is empty, then there are no other commands left to
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Alternative 1 (current choice):</strong> Show users the rating as a number.</p>
+<p><strong>Alternative 1:</strong> Show users the rating as a number.</p>
 <div class="ulist">
 <ul>
 <li>
@@ -1145,7 +1169,7 @@ If the <code>undoStack</code> is empty, then there are no other commands left to
 </div>
 </li>
 <li>
-<p><strong>Alternative 2:</strong> Show users the rating as stars.</p>
+<p><strong>Alternative 2 (current choice):</strong> Show users the rating as stars.</p>
 <div class="ulist">
 <ul>
 <li>
@@ -1561,9 +1585,279 @@ This eliminates the need to manually enter search information into the NLB catal
 </div>
 </div>
 <div class="sect2">
-<h3 id="proposed-data-encryption"><a class="anchor" href="#proposed-data-encryption"></a>4.6. [Proposed] Data Encryption</h3>
+<h3 id="data-encryption"><a class="anchor" href="#data-encryption"></a>4.6. Data Encryption</h3>
+<div class="sect3">
+<h4 id="current-implementation-6"><a class="anchor" href="#current-implementation-6"></a>4.6.1. Current implementation</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>When <code>encrypt</code> command is entered</strong></p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>EncryptCommand</code> is processed to set isEncrypt to be true.</p>
+</li>
+<li>
+<p>The <code>Bibliotek</code> cannot be run any command except <code>decrypt</code> and <code>help</code> command.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>If you enter a wrong key.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/shouldbedecryptfirst.png" alt="shouldbedecryptfirst" width="650">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>When the <code>Bibliotek</code> is encrypted and <code>decrypt</code> command is entered</strong></p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>DecryptCommandParser</code> will extract key from the user input.</p>
+</li>
+<li>
+<p><code>DecryptCommandParser</code> creates an <code>DecryptCommand</code> the key.</p>
+</li>
+<li>
+<p><code>DecryptCommand</code> is preprocessed to check that key is correct(decode the key from the storage).</p>
+</li>
+<li>
+<p><code>DecryptCommand</code> is processed to set isEncrypt to be false.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>If your entered key is correct</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/correctkey.png" alt="correctkey" width="650">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>If your entered key is wrong</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/wrongkey.png" alt="wrongkey" width="650">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>When <code>setKey</code> command is entered</strong></p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>setKeyCommandParser</code> will extract the old key and new key from the user input.</p>
+</li>
+<li>
+<p><code>setKeyCommandParser</code> checks that  two parameters are present, and that the parameters are valid.</p>
+</li>
+<li>
+<p><code>setKeyCommandParser</code> creates an <code>setKeyCommand</code> with the parameters.</p>
+</li>
+<li>
+<p><code>setKeyCommand</code> is preprocessed to check that oldKey is correct.</p>
+</li>
+<li>
+<p>If the oldKye is correct, <code>setKeyCommand</code> will send a setKey command to LogicManager.</p>
+</li>
+<li>
+<p>LogicManager will send set_new_key request to ModelManger.</p>
+</li>
+<li>
+<p>ModelManager indicate the keyChangedevent and handle it, and set the bookshelf&#8217;s key to be new key.</p>
+</li>
+<li>
+<p>ModelManager will encode the key, before indicate the keyChangedevent.</p>
+</li>
+<li>
+<p>StorageManager handle the event by update the bibliotek with the new key(encoded key).</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>If you entered old key is correct.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/setsuccess.png" alt="setsuccess" width="650">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>If you entered old key is incorrect.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/wrongkey(set).png" alt="wrongkey(set)" width="650">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The encode key are implement in this way:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>    public static String encrypKey(String mykey) throws Exception {
+        byte[] byarray = encrypt(mykey.getBytes(ENCODE), defaultKey.getBytes(ENCODE));
+        String encryptkey = new BASE64Encoder().encode(byarray);
+        return encryptkey;
+    }
+
+    public static byte[] encrypt(byte[] mykey, byte[] key) throws Exception {
+        SecureRandom secureRandom = new SecureRandom();
+
+        DESKeySpec desKeySpec = new DESKeySpec(key);
+
+        SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance(DES);
+        SecretKey securekey = secretKeyFactory.generateSecret(desKeySpec);
+
+        Cipher cipher = Cipher.getInstance(DES);
+
+        cipher.init(Cipher.ENCRYPT_MODE, securekey, secureRandom);
+
+        return cipher.doFinal(mykey);
+    }</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The encode key are implement in this way:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>    public static String decryptKey(String yourkey) throws IOException, Exception {
+        if (yourkey == null) {
+            return null;
+        }
+        BASE64Decoder base64Decoder = new BASE64Decoder();
+        byte[] decodeBuffer = base64Decoder.decodeBuffer(yourkey);
+        byte[] bytes = decrypt(decodeBuffer, defaultKey.getBytes(ENCODE));
+        return new String(bytes, ENCODE);
+    }
+
+    private static byte[] decrypt(byte[] yourkey, byte[] key) throws Exception {
+
+        SecureRandom secureRandom = new SecureRandom();
+
+        DESKeySpec desKeySpec = new DESKeySpec(key);
+
+        SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance(DES);
+        SecretKey securekey = secretKeyFactory.generateSecret(desKeySpec);
+
+        Cipher cipher = Cipher.getInstance(DES);
+
+        cipher.init(Cipher.DECRYPT_MODE, securekey, secureRandom);
+
+        return cipher.doFinal(yourkey);
+    }</pre>
+</div>
+</div>
 <div class="paragraph">
-<p><em>{Explain here how the data encryption feature will be implemented}</em></p>
+<p>The default key "admin" will be stored as:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/password_admin.png" alt="password admin" width="650">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-6"><a class="anchor" href="#design-considerations-6"></a>4.6.2. Design considerations</h4>
+<div class="sect4">
+<h5 id="aspect-whether-to-use-three-commands-instead-of-only-one"><a class="anchor" href="#aspect-whether-to-use-three-commands-instead-of-only-one"></a>Aspect: Whether to use three commands instead of only one</h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice):</strong> Use three commands to do the encrypt, decrypt and setkey actions</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Users can clearly know what they can do about the key.</p>
+</li>
+<li>
+<p>Cons: Users should learn two more commands</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2:</strong> Use only one setKey command to solve all three features.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Seem that users can eliminate the typing.</p>
+</li>
+<li>
+<p>Cons: Users will feel confuse, not so clear about the command.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="aspect-whether-to-encode-the-key-before-store-it"><a class="anchor" href="#aspect-whether-to-encode-the-key-before-store-it"></a>Aspect: Whether to encode the key before store it</h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice):</strong> Stores the encoded key.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Others cannot know users' key easily.</p>
+</li>
+<li>
+<p>Cons: Difficult to implement.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2:</strong> Store the text form key.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Easy to implement.</p>
+</li>
+<li>
+<p>Cons: Others can know users' key easily.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -3355,7 +3649,7 @@ Expected: Similar to previous.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-12 19:20:41 UTC
+Last updated 2018-04-13 02:47:12 UTC
 </div>
 </div>
 </body>
