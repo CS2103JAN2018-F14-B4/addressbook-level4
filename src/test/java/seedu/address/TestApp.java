@@ -113,7 +113,6 @@ public class TestApp extends MainApp {
      * Returns a defensive copy of the logicManager.
      */
     public static LogicManager getLogicManager(Model model) {
-        model.setKey("admin");
         LogicManager copy = new LogicManager(model, mock(NetworkManager.class));
 
         return copy;

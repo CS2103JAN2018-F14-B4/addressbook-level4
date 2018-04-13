@@ -17,6 +17,7 @@ import seedu.address.model.book.exceptions.DuplicateBookException;
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Book> PREDICATE_SHOW_ALL_BOOKS = unused -> true;
+    Predicate<Book> PREDICATE_HIDE_ALL_BOOKS = unused -> false;
 
     /**
      * Default book {@code Comparator} that sorts by status (in descending order: Reading, Unread, Read),
@@ -55,9 +56,6 @@ public interface Model {
     /** Adds the given book */
     void addBook(Book book) throws DuplicateBookException;
 
-    /** Sets the key to {@code key}.*/
-    void setKey(String key);
-
     /**
      * Replaces the given book {@code target} with {@code editedBook}.
      *
@@ -82,11 +80,6 @@ public interface Model {
      * Returns the comparator used for sorting the book list.
      */
     Comparator<? super Book> getBookListSorter();
-
-    /**
-     * Returns the key.
-     */
-    String getKey();
 
     /**
      * Updates the filter of the filtered book list to filter by the given {@code predicate}.

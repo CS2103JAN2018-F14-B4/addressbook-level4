@@ -14,6 +14,7 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Version;
+import seedu.address.commons.events.model.KeyChangedEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.ConfigUtil;
@@ -236,6 +237,17 @@ public class MainApp extends Application {
     public void handleExitAppRequestEvent(ExitAppRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         this.stop();
+    }
+
+    @Subscribe
+    public void handleKeyChangedEvent(KeyChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        userPrefs.setKey(event.key);
+        try {
+            storage.saveUserPrefs(userPrefs);
+        } catch (IOException e) {
+            logger.severe("Failed to save preferences " + StringUtil.getDetails(e));
+        }
     }
 
     public static void main(String[] args) {

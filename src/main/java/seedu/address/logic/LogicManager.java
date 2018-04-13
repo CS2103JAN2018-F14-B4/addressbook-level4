@@ -27,7 +27,6 @@ import seedu.address.network.Network;
  */
 public class LogicManager extends ComponentManager implements Logic {
 
-    private static KeyControl keyControl;
     private final Logger logger = LogsCenter.getLogger(LogicManager.class);
 
     private final Model model;
@@ -44,12 +43,6 @@ public class LogicManager extends ComponentManager implements Logic {
         history = new CommandHistory();
         bookShelfParser = new BookShelfParser(model.getAliasList());
         undoStack = new UndoStack();
-        keyControl = new KeyControl(model.getKey());
-        if (keyControl.getKey() == "admin") {
-            keyControl.setIsEncrypt(false);
-        } else {
-            keyControl.setIsEncrypt(true);
-        }
     }
 
     /*
@@ -61,8 +54,6 @@ public class LogicManager extends ComponentManager implements Logic {
         history = new CommandHistory();
         bookShelfParser = new BookShelfParser(model.getAliasList());
         undoStack = new UndoStack();
-        keyControl = new KeyControl(model.getKey());
-        keyControl.setIsEncrypt(encrypt);
     }
 
     @Override
@@ -73,7 +64,7 @@ public class LogicManager extends ComponentManager implements Logic {
         try {
             Command command = getCommand(processedText);
             CommandResult result;
-            if (keyControl.getEncrypt() == true && !(command instanceof HelpCommand)) {
+            if (KeyControl.getInstance().isEncrypted() && !(command instanceof HelpCommand)) {
                 if (command instanceof DecryptCommand) {
                     DecryptCommand decryptCommand = (DecryptCommand) command;
                     result = decryptCommand.execute();
@@ -92,10 +83,6 @@ public class LogicManager extends ComponentManager implements Logic {
         } finally {
             history.add(commandText);
         }
-    }
-
-    public static KeyControl getkeyControl() {
-        return keyControl;
     }
 
     /**

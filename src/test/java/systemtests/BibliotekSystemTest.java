@@ -3,6 +3,7 @@ package systemtests;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 import static seedu.address.ui.testutil.GuiTestAssert.assertDetailsPanelDisplaysBook;
@@ -34,6 +35,7 @@ import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.KeyControl;
 import seedu.address.logic.UndoStack;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DecryptCommand;
@@ -83,30 +85,10 @@ public abstract class BibliotekSystemTest {
      * Decrypt the model before test.
      */
     public void decryptModel(Model model) {
-        String key = model.getKey();
-        Network network = new Network() {
-            @Override
-            public CompletableFuture<ReadOnlyBookShelf> searchBooks(String parameters) {
-                return null;
-            }
+        String key = KeyControl.getInstance().getKey();
 
-            @Override
-            public CompletableFuture<Book> getBookDetails(String bookId) {
-                return null;
-            }
-
-            @Override
-            public CompletableFuture<String> searchLibraryForBook(Book book) {
-                return null;
-            }
-
-            @Override
-            public void stop() {
-
-            }
-        };
         DecryptCommand decryptCommand = new DecryptCommand(key);
-        decryptCommand.setData(model, network, new CommandHistory(), new UndoStack());
+        decryptCommand.setData(model, mock(Network.class), new CommandHistory(), new UndoStack());
         decryptCommand.execute();
     }
 

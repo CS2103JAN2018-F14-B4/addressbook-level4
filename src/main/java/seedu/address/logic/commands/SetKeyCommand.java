@@ -1,5 +1,8 @@
 package seedu.address.logic.commands;
 //@@author 592363789
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.model.KeyChangedEvent;
+import seedu.address.logic.KeyControl;
 import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.exceptions.CommandException;
 
@@ -18,9 +21,8 @@ public class SetKeyCommand extends Command {
 
     private String oldKey;
     private String newKey;
-    private boolean isTesting;
+
     public SetKeyCommand(String key1, String key2) {
-        isTesting = false;
         oldKey = key1;
         newKey = key2;
     }
@@ -33,9 +35,6 @@ public class SetKeyCommand extends Command {
         return newKey;
     }
 
-    public void setTesting() {
-        isTesting = true;
-    }
 
     /**
      * Executes the command and returns the result message.
@@ -45,13 +44,14 @@ public class SetKeyCommand extends Command {
      */
     @Override
     public CommandResult execute() {
-        if (isTesting == true) {
-            oldKey = "testing";
-            newKey = "newkey";
-        }
-        if (oldKey.equals(LogicManager.getkeyControl().getKey())) {
-            LogicManager.getkeyControl().setKey(newKey);
-            model.setKey(newKey);
+        if (oldKey.equals(KeyControl.getInstance().getKey())) {
+            KeyControl.getInstance().setKey(newKey);
+            EventsCenter.getInstance().post(new KeyChangedEvent(newKey));
+            if (newKey.equals("")) {
+                KeyControl.getInstance().decrypt();
+            } else {
+                KeyControl.getInstance().encrypt();
+            }
             return new CommandResult(MESSAGE_SUCCESS);
         } else {
             return new CommandResult(WRONG_OLDKEY);

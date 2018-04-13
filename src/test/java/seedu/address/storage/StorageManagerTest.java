@@ -94,7 +94,6 @@ public class StorageManagerTest {
         Storage storage = new StorageManager(
                 new XmlBookShelfStorageExceptionThrowingStub("dummy"), new JsonUserPrefsStorage("dummy"),
                 new XmlRecentBooksStorage("dummy"), new XmlAliasListStorage("dummy"));
-        storage.handleKeyChangedEvent(new KeyChangedEvent(new BookShelf()));
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
     }
 

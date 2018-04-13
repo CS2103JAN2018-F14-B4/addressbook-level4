@@ -13,6 +13,7 @@ public class UserPrefs {
     private WindowSettings windowSettings;
     private String bookShelfFilePath = "data/bookshelf.xml";
     private String aliasListFilePath = "data/aliaslist.xml";
+    private String key = "";
     private String bookShelfName = "MyBookShelf";
     private Theme appTheme = Theme.DEFAULT_THEME;
 
@@ -46,6 +47,14 @@ public class UserPrefs {
 
     public void setAliasListFilePath(String aliasListFilePath) {
         this.aliasListFilePath = aliasListFilePath;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public String getBookShelfName() {
@@ -84,7 +93,8 @@ public class UserPrefs {
 
     @Override
     public int hashCode() {
-        return Objects.hash(windowSettings, bookShelfFilePath, aliasListFilePath, bookShelfName, appTheme);
+        return Objects.hash(windowSettings, bookShelfFilePath, aliasListFilePath,
+                bookShelfName, appTheme);
     }
 
     @Override

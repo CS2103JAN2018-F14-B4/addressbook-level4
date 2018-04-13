@@ -1,23 +1,33 @@
 package seedu.address.logic;
 //@@author 592363789
+
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.model.KeyChangedEvent;
+
 /**
  * Stores the key information.
  */
 public class KeyControl {
 
-    private static String key;
-    private Boolean isEncrypt = false;
+    private static KeyControl keyControl;
 
-    public KeyControl(String key) {
-        this.key = key;
+    private static String key;
+    private static boolean isEncrypted;
+
+    private KeyControl() {
+        key = "";
+        isEncrypted = false;
+    }
+
+    public static KeyControl getInstance() {
+        if (keyControl == null) {
+            keyControl = new KeyControl();
+        }
+        return keyControl;
     }
 
     public String getKey() {
         return key;
-    }
-
-    public boolean getEncrypt() {
-        return isEncrypt;
     }
 
     public void setKey(String word) {
@@ -25,15 +35,15 @@ public class KeyControl {
     }
 
     public void encrypt() {
-        isEncrypt = true;
+        isEncrypted = true;
     }
 
     public void decrypt() {
-        isEncrypt = false;
+        isEncrypted = false;
     }
 
-    public void setIsEncrypt(boolean isEncrypt) {
-        this.isEncrypt = isEncrypt;
+    public boolean isEncrypted() {
+        return isEncrypted;
     }
 
 }

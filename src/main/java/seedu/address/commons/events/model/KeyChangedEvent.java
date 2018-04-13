@@ -6,10 +6,10 @@ import seedu.address.model.ReadOnlyBookShelf;
 /** Indicates the KEY in the model has changed */
 public class KeyChangedEvent extends BaseEvent {
 
-    public final ReadOnlyBookShelf bs;
+    public final String key;
 
-    public KeyChangedEvent(ReadOnlyBookShelf bookShelf) {
-        bs = bookShelf;
+    public KeyChangedEvent(String key) {
+        this.key = key;
     }
 
     @Override

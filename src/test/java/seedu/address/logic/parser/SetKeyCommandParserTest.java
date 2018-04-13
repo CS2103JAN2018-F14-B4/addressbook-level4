@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 //@@author 592363789
+import static seedu.address.commons.core.Messages.MESSAGE_CORRECTED_COMMAND;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NEW_KEY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_OLD_KEY;
@@ -20,18 +21,12 @@ public class SetKeyCommandParserTest {
         String expectedinvalidMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, SetKeyCommand.MESSAGE_USAGE);
 
         // no parameters
-        assertParseFailure(parser, " 1", expectedinvalidMessage);
-
-        // no parameters
-        assertParseFailure(parser, SetKeyCommand.COMMAND_WORD, expectedinvalidMessage);
+        assertParseFailure(parser, "", expectedinvalidMessage);
 
         // no one of the key
-        assertParseFailure(parser, SetKeyCommand.COMMAND_WORD + " " + PREFIX_OLD_KEY + "onekey",
+        assertParseFailure(parser, " ",
                 expectedinvalidMessage);
 
-        // no one of the key
-        assertParseFailure(parser, SetKeyCommand.COMMAND_WORD + " " + PREFIX_NEW_KEY + "newkey",
-                expectedinvalidMessage);
     }
 
     @Test
@@ -39,6 +34,9 @@ public class SetKeyCommandParserTest {
         assertParseSuccess(parser, SetKeyCommand.COMMAND_WORD + " " + PREFIX_OLD_KEY + " " + "oldkey"
                         + " " + PREFIX_NEW_KEY + " " + "newkey",
                 new SetKeyCommand("oldkey", "newkey"));
+        // no one of the key
+        assertParseSuccess(parser, SetKeyCommand.COMMAND_WORD + " " + PREFIX_NEW_KEY + "newkey",
+                new SetKeyCommand("", "newkey"));
     }
 
 }

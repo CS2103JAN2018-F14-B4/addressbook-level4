@@ -1,6 +1,8 @@
 package seedu.address.logic.commands;
 //@@author 592363789
+import seedu.address.logic.KeyControl;
 import seedu.address.logic.LogicManager;
+import seedu.address.model.Model;
 
 /**
  * Decrypts the Book shelf.
@@ -18,7 +20,6 @@ public class DecryptCommand extends Command {
     public static final String MESSAGE_WRONG_PASSWORD = "Incorrect key. Please try again.";
 
     private String key;
-    private boolean isTesting;
 
     public DecryptCommand(String key) {
         this.key = key;
@@ -26,16 +27,13 @@ public class DecryptCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        if (isTesting == true) {
-            key = "testing";
-        }
 
-        if (!LogicManager.getkeyControl().getEncrypt()) {
+        if (!KeyControl.getInstance().isEncrypted()) {
             return new CommandResult(MESSAGE_SUCCESS);
         }
 
-        if (key.equals(LogicManager.getkeyControl().getKey())) {
-            LogicManager.getkeyControl().decrypt();
+        if (key.equals(KeyControl.getInstance().getKey())) {
+            KeyControl.getInstance().decrypt();
             return new CommandResult(MESSAGE_SUCCESS);
         } else {
             return new CommandResult(MESSAGE_WRONG_PASSWORD);
@@ -44,10 +42,6 @@ public class DecryptCommand extends Command {
 
     public String getKey() {
         return key;
-    }
-
-    public void setTesting() {
-        isTesting = true;
     }
 
     @Override

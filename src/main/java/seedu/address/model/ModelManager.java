@@ -21,10 +21,12 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import seedu.address.commons.core.ComponentManager;
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AliasListChangedEvent;
 import seedu.address.commons.events.model.BookShelfChangedEvent;
 import seedu.address.commons.events.model.KeyChangedEvent;
+import seedu.address.logic.KeyControl;
 import seedu.address.model.alias.Alias;
 import seedu.address.model.alias.ReadOnlyAliasList;
 import seedu.address.model.alias.UniqueAliasList;
@@ -54,7 +56,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final UniqueBookCircularList recentBooks;
     private final UniqueAliasList aliases;
     private final ObservableList<Alias> displayAliasList;
-
+    private final UserPrefs userPrefs;
     /**
      * Initializes a ModelManager with the given bookShelf, userPrefs, recentBooksList, and aliasList.
      */
@@ -72,6 +74,14 @@ public class ModelManager extends ComponentManager implements Model {
         this.sortedBookList = new SortedList<>(this.filteredBookList, DEFAULT_BOOK_COMPARATOR);
         this.displayBookList = sortedBookList;
         this.searchResults = new BookShelf();
+        this.userPrefs = userPrefs;
+
+        if(!userPrefs.getKey().equals("")) {
+            KeyControl.getInstance().encrypt();
+            updateBookListFilter(PREDICATE_HIDE_ALL_BOOKS);
+        }
+        KeyControl.getInstance().setKey(userPrefs.getKey());
+
 
         this.recentBooks = new UniqueBookCircularList();
         List<Book> list = recentBooksList.getBookList();
@@ -133,11 +143,6 @@ public class ModelManager extends ComponentManager implements Model {
     /** Raises an event to indicate the book shelf has changed */
     private void indicateBookShelfChanged() {
         raise(new BookShelfChangedEvent(bookShelf));
-    }
-
-    /** Raises an event to indicate the key has changed */
-    private void indicateKeyChanged() {
-        raise(new KeyChangedEvent(bookShelf));
     }
 
     @Override
@@ -364,37 +369,6 @@ public class ModelManager extends ComponentManager implements Model {
         cipher.init(Cipher.DECRYPT_MODE, securekey, secureRandom);
 
         return cipher.doFinal(yourkey);
-    }
-
-    /**
-     * Returns the comparator used for getting the password of the Bibliotek.
-     */
-    @Override
-    public String getKey() {
-        String k = bookShelf.getKey();
-        try {
-            k = decryptKey(k);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return k;
-    }
-
-    /**
-     * Adds the given password
-     *
-     * @param key
-     */
-    public void setKey(String key) {
-        String k = null;
-        try {
-            k = encrypKey(key);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        bookShelf.setKey(k);
-        indicateKeyChanged();
-        indicateBookShelfChanged();
     }
 
 }

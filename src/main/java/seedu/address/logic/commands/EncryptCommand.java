@@ -1,7 +1,9 @@
 package seedu.address.logic.commands;
 //@@author 592363789
+import seedu.address.logic.KeyControl;
 import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Model;
 import seedu.address.model.book.HideAllBooks;
 
 /**
@@ -16,8 +18,6 @@ public class EncryptCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Book shelf is encrypted.";
 
-    private final HideAllBooks predicate = new HideAllBooks();
-
     /**
      * Executes the command and returns the result message.
      *
@@ -26,8 +26,8 @@ public class EncryptCommand extends Command {
      */
     @Override
     public CommandResult execute() {
-        model.updateBookListFilter(predicate);
-        LogicManager.getkeyControl().encrypt();
+        model.updateBookListFilter(Model.PREDICATE_HIDE_ALL_BOOKS);
+        KeyControl.getInstance().encrypt();
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

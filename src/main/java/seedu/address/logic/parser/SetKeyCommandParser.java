@@ -25,17 +25,17 @@ public class SetKeyCommandParser implements Parser<SetKeyCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_OLD_KEY, PREFIX_NEW_KEY);
 
-        String oldKey = null;
+        String oldKey = "";
         if (argMultimap.getValue(PREFIX_OLD_KEY).isPresent()) {
             oldKey = String.valueOf(ParserUtil.parseKey(argMultimap.getValue(PREFIX_OLD_KEY).get()));
         }
 
-        String newKey = null;
+        String newKey = "";
         if (argMultimap.getValue(PREFIX_NEW_KEY).isPresent()) {
             newKey = String.valueOf(ParserUtil.parseKey(argMultimap.getValue(PREFIX_NEW_KEY).get()));
         }
 
-        boolean isValid = CollectionUtil.isAnyNonNull(oldKey) && CollectionUtil.isAnyNonNull(newKey);
+        boolean isValid = CollectionUtil.isAnyNonNull(oldKey) || CollectionUtil.isAnyNonNull(newKey);
 
         if (args.trim().isEmpty() || !isValid) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SetKeyCommand.MESSAGE_USAGE));

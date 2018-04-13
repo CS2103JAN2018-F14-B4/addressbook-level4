@@ -3,25 +3,29 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 import static seedu.address.testutil.TypicalBooks.getTypicalBookShelf;
 
-import java.util.concurrent.CompletableFuture;
-
+import org.junit.Before;
 import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
-import seedu.address.logic.LogicManager;
+import seedu.address.logic.KeyControl;
 import seedu.address.logic.UndoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
-import seedu.address.model.ReadOnlyBookShelf;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.book.Book;
 import seedu.address.network.Network;
 
 public class SetKeyCommandTest {
 
     private Model model;
+
+    @Before
+    public void setUp() {
+        model = new ModelManager(getTypicalBookShelf(), new UserPrefs());
+        KeyControl.getInstance().setKey("testing");
+    }
 
     @Test
     public void equals() {
@@ -49,39 +53,8 @@ public class SetKeyCommandTest {
 
     @Test
     public void sameKeyTest() {
-        model = new ModelManager(getTypicalBookShelf(), new UserPrefs());
-        model.setKey("testing");
-        Network network = new Network() {
-            @Override
-            public CompletableFuture<ReadOnlyBookShelf> searchBooks(String parameters) {
-                return null;
-            }
-
-            @Override
-            public CompletableFuture<Book> getBookDetails(String bookId) {
-                return null;
-            }
-
-            /**
-             * Searches for a book in the library.
-             *
-             * @param book book to search for.
-             * @return CompletableFuture that resolves to a String with the search results.
-             */
-            @Override
-            public CompletableFuture<String> searchLibraryForBook(Book book) {
-                return null;
-            }
-
-            @Override
-            public void stop() {
-
-            }
-        };
         SetKeyCommand skc = new SetKeyCommand("testing", "newkey");
-        LogicManager lm = new LogicManager(model, network);
-        skc.setTesting();
-        skc.setData(model, network, new CommandHistory(), new UndoStack());
+        skc.setData(model, mock(Network.class), new CommandHistory(), new UndoStack());
         String expect = SetKeyCommand.MESSAGE_SUCCESS;
         CommandResult commandResult = skc.execute();
 
@@ -90,39 +63,8 @@ public class SetKeyCommandTest {
 
     @Test
     public void differentKeyTest() {
-        model = new ModelManager(getTypicalBookShelf(), new UserPrefs());
-        model.setKey("wrongtesting");
-        Network network = new Network() {
-            @Override
-            public CompletableFuture<ReadOnlyBookShelf> searchBooks(String parameters) {
-                return null;
-            }
-
-            @Override
-            public CompletableFuture<Book> getBookDetails(String bookId) {
-                return null;
-            }
-
-            /**
-             * Searches for a book in the library.
-             *
-             * @param book book to search for.
-             * @return CompletableFuture that resolves to a String with the search results.
-             */
-            @Override
-            public CompletableFuture<String> searchLibraryForBook(Book book) {
-                return null;
-            }
-
-            @Override
-            public void stop() {
-
-            }
-        };
         SetKeyCommand skc = new SetKeyCommand("wrongtesting", "newkey");
-        LogicManager lm = new LogicManager(model, network);
-        skc.setTesting();
-        skc.setData(model, network, new CommandHistory(), new UndoStack());
+        skc.setData(model, mock(Network.class), new CommandHistory(), new UndoStack());
         String expect = SetKeyCommand.WRONG_OLDKEY;
         CommandResult commandResult = skc.execute();
 
