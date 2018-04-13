@@ -253,27 +253,27 @@ Lists `Science Fiction` books in your book shelf that contains `Babylon's Ashes`
 [[edit-command]]
 === Editing a book : `edit` _(since v1.4)_
 
-After reading a book, you may want to give the book a rating or set the book as read. Or, you may want
-to change the priority of books to remind yourself what you should read next. These can be done using `edit`. +
+When you using the Bibliotek to read books, you may want to rate on one book you read, set the status to remind you the reading situation,
+or set the priority of the book to remind yourself what to read next. These can be done using `edit`. +
 Format: `edit INDEX [s/STATUS] [p/PRIORITY] [r/RATING]`
 
 ****
-* Edits the book at the specified `INDEX`. The index refers to the index number shown in the most recent listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* `STATUS` must be one of the following (items in parenthesis are aliases): `read` (`r`), `unread` (`u`), or `reading` (`rd`).
-* `PRIORITY` must be one of the following (items in parenthesis are aliases): `none` (`n`), `low` (`l`), `medium` (`m`), or `high` (`h`).
-* `RATING` must be a valid rating from 0 to 5, or -1, to select unrated books.
+* For the index, you should provide a integer which in the range of your list.
+* You should provide at least one field to edit.
+* Before you edit, every book has a default value for rating("-1"), status("none") and priority("unread").
+* For the rating format, the range of the rating should be between -1 and 5. (-1 is for unrated books).
+* For the status format, you should choose one of aliases(or full name) following: `read`(`r`), `unread`(`ur`), or `reading`(`rd`).
+* For the priority format, you should choose one of aliases(or full name) following: `none`(`n`), `low`(`l`), `medium`(`m`) or `high`(`h`).
 ****
 
-WARNING: You can only perform `edit` when the list shown is from your book shelf.
+WARNING: You can only edit books from the list using the index.
 
 Examples:
 
-* `edit 1 p/high` +
-Changes the priority of the 1st book to `HIGH`.
-* `edit 2 s/read r/5` +
-Marks the 2nd book as `READ` and changes its rating to `5`.
+* `edit 3 p/low` +
+Changes the priority of the 3rd book to `LOW`.
+* `edit 1 s/read p/low r/4` +
+Marks the 1nd book as `READ`, changes its priority to `LOW`, and changes its rating to `4`.
 // end::edit[]
 
 [[delete-command]]

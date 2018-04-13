@@ -26,10 +26,8 @@ some books.
 * *Other contributions*:
 
 ** Project management:
-*** Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub
 ** Enhancements to existing features:
 *** Add the rating book command.
-*** Add the status and priority attributes.
 *** Add in Edit book command (Pull requests https://github.com/CS2103JAN2018-F14-B4/main/pull/111[#111]).
 *** Add in encrypt command.
 *** Add in decrypt and setkey command (Pull requests https://github.com/CS2103JAN2018-F14-B4/main/pull/134[#134])
@@ -38,10 +36,6 @@ some books.
 ** Community:
 *** PRs reviewed : https://github.com[#12], https://github.com/CS2103JAN2018-F14-B4/main/pull/84[#84], https://github.com/CS2103JAN2018-F14-B4/main/pull/79[#79], https://github.com/CS2103JAN2018-F14-B4/main/pull/68[#68], https://github.com/CS2103JAN2018-F14-B4/main/pull/44[#44]
 ** Tools:
-*** Integrated a third party library (Natty) to the project (https://github.com[#42])
-*** Integrated a new Github plugin (CircleCI) to the team repo
-
-_{you can add/remove categories in the list above}_
 
 == Contributions to the User Guide
 
@@ -65,7 +59,6 @@ include::../DeveloperGuide.adoc[tag=edit]
 include::../DeveloperGuide.adoc[tag=encrypt]
 
 
-== PROJECT: PowerPointLabs
 
 ---
 
