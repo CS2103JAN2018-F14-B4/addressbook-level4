@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.6.1">
+<title>Qiu Siyu - Project Portfolio</title>
+<link rel="stylesheet" href="../stylesheets/gh-pages.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<link rel="stylesheet" href="../stylesheets/coderay-asciidoctor.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>Qiu Siyu - Project Portfolio</h1>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="project-a-href-https-github-com-cs2103jan2018-f14-b4-main-bibliotek-a"><a class="anchor" href="#project-a-href-https-github-com-cs2103jan2018-f14-b4-main-bibliotek-a"></a>PROJECT: <a href="https://github.com/CS2103JAN2018-F14-B4/main">Bibliotek</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This portfolio page showcases my contributions to the project, Bibliotek.
+To view my full portfolio, please visit <a href="https://danielteo.me/work" target="_blank" rel="noopener">danielteo.me</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="overview"><a class="anchor" href="#overview"></a>Overview</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Bibliotek is a free book cataloguing application. It is targeted at heavy readers who require a hassle-free way of managing and keeping track of their read and unread books.</p>
+</div>
+<div class="paragraph">
+<p>The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="summary-of-contributions"><a class="anchor" href="#summary-of-contributions"></a>Summary of contributions</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Major enhancement</strong>: added the ability to <strong>search for books online</strong>: [<a href="https://github.com/CS2103JAN2018-F14-B4/main/pull/58">#58</a>], [<a href="https://github.com/CS2103JAN2018-F14-B4/main/pull/62">#62</a>]</p>
+<div class="ulist">
+<ul>
+<li>
+<p>What it does: Allows the user to search for books on Google Books.</p>
+</li>
+<li>
+<p>Justification: This feature improves the product because it provides the user an easy way to look up details about a book, or to find new books.
+It also lays the groundwork for the updated <code>add</code> command, which no longer requires the user to enter all the fields manually.</p>
+</li>
+<li>
+<p>Highlights: This enhancement required the addition of a new component (network component) that supports making HTTP requests to Google Book API endpoints, as well as parsing the JSON responses from these endpoints.
+Thus it required an in-depth analysis of design alternatives. The implementation also required the use of multi-threading to ensure that the UI remains responsive to the user.
+Lastly, this enhancement adds a new command <code>search</code> to allow the user to search for books.</p>
+</li>
+<li>
+<p>Credits: the HTTP request is made using the <a href="https://github.com/AsyncHttpClient/async-http-client" target="_blank" rel="noopener">AsyncHttpClient</a> library,
+and parsing of JSON results are accomplished with the help of the <a href="https://github.com/FasterXML/jackson" target="_blank" rel="noopener">Jackson</a> library.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Minor enhancement</strong>: added the ability to <strong>add, view, and delete custom command aliases</strong>: [<a href="https://github.com/CS2103JAN2018-F14-B4/main/pull/150">#150</a>]</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Highlights: This enhancement adds three new commands <code>addalias</code>, <code>aliases</code>, and <code>deletealias</code> to add, view, and delete custom command aliases.
+It also updates the command parser to support the use of command aliases, and the storage component to enable saving the command aliases in XML format.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Code contributed</strong>: [<a href="https://github.com/CS2103JAN2018-F14-B4/main/blob/master/collated/functional/takuyakanbr.md">Functional code</a>] [<a href="https://github.com/CS2103JAN2018-F14-B4/main/blob/master/collated/test/takuyakanbr.md">Test code</a>]</p>
+</li>
+<li>
+<p><strong>Other contributions</strong>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Project management:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Managed releases <code>v1.1</code> - <code>v1.5rc</code> (5 releases) on GitHub</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Product enhancements:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Morphed the original contact management app into a book management app: [<a href="https://github.com/CS2103JAN2018-F14-B4/main/pull/45">#45</a>], [<a href="https://github.com/CS2103JAN2018-F14-B4/main/pull/49">#49</a>], [<a href="https://github.com/CS2103JAN2018-F14-B4/main/pull/59">#59</a>]</p>
+</li>
+<li>
+<p>Replaced the default browser panel with a panel to display book details [<a href="https://github.com/CS2103JAN2018-F14-B4/main/pull/73">#73</a>]</p>
+</li>
+<li>
+<p>Added two new themes, and a <code>theme</code> command to allow changing themes: [<a href="https://github.com/CS2103JAN2018-F14-B4/main/pull/74">#74</a>], [<a href="https://github.com/CS2103JAN2018-F14-B4/main/pull/80">#80</a>]</p>
+</li>
+<li>
+<p>Improved <code>list</code> command to allow filtering and sorting: [<a href="https://github.com/CS2103JAN2018-F14-B4/main/pull/100">#100</a>]</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Documentation:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Added instructions for setting up CircleCI: [<a href="https://github.com/CS2103JAN2018-F14-B4/main/pull/117">#117</a>]</p>
+</li>
+<li>
+<p>Changed the stylesheet used by asciidoc to generate documentation: [<a href="https://github.com/CS2103JAN2018-F14-B4/main/pull/55">#55</a>]</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Community:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>PRs reviewed (with non-trivial review comments): [<a href="https://github.com/CS2103JAN2018-F14-B4/main/pull/66">#66</a>], [<a href="https://github.com/CS2103JAN2018-F14-B4/main/pull/72">#72</a>], [<a href="https://github.com/CS2103JAN2018-F14-B4/main/pull/86">#86</a>], [<a href="https://github.com/CS2103JAN2018-F14-B4/main/pull/111">#111</a>], [<a href="https://github.com/CS2103JAN2018-F14-B4/main/pull/138">#138</a>], [<a href="https://github.com/CS2103JAN2018-F14-B4/main/pull/155">#155</a>]</p>
+</li>
+<li>
+<p>Reported bugs and suggestions for other teams in the class (issues <a href="https://github.com/CS2103JAN2018-W15-B2/main/issues/163">#163</a>,
+<a href="https://github.com/CS2103JAN2018-W15-B2/main/issues/170">#170</a>, <a href="https://github.com/CS2103JAN2018-W15-B2/main/issues/172">#172</a>, <a href="https://github.com/CS2103JAN2018-W15-B2/main/issues/175">#175</a>,
+<a href="https://github.com/CS2103JAN2018-W15-B2/main/issues/177">#177</a>, <a href="https://github.com/CS2103JAN2018-W15-B2/main/issues/179">#179</a>)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Tools:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Integrated a third party library (AsyncHttpClient) to the project: [<a href="https://github.com/CS2103JAN2018-F14-B4/main/pull/58">#58</a>]</p>
+</li>
+<li>
+<p>Integrated a third party testing framework (Mockito) to the project: [<a href="https://github.com/CS2103JAN2018-F14-B4/main/pull/88">#88</a>]</p>
+</li>
+<li>
+<p>Integrated TravisCI, AppVeyor, Coveralls, Codacy, and Netlify to the team repo</p>
+</li>
+<li>
+<p>Integrated a new Github plugin (CircleCI) to the team repo</p>
+</li>
+<li>
+<p>Changed build configuration to allow running JUnit tests in parallel: [<a href="https://github.com/CS2103JAN2018-F14-B4/main/pull/96">#96</a>]</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="contributions-to-the-user-guide"><a class="anchor" href="#contributions-to-the-user-guide"></a>Contributions to the User Guide</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users.</em></p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect2">
+<h3 id="addalias-command"><a class="anchor" href="#addalias-command"></a>Adding a command alias : <code>addalias</code> <em>(since v1.5)</em></h3>
+<div class="paragraph">
+<p>If there is a command that you use frequently, and you find typing out the entire command to be too tedious,
+you can add a command alias to reduce the amount of typing needed.<br>
+Format: <code>addalias ALIAS_NAME cmd/COMMAND</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Adds a command alias for the specified <code>COMMAND</code>.</p>
+</li>
+<li>
+<p><code>COMMAND</code> should refer to a default, built-in command, and can optionally include command parameters.</p>
+</li>
+<li>
+<p><code>ALIAS_NAME</code> is case-insensitive, and must not contain any spaces or tabs.</p>
+</li>
+<li>
+<p>If there is an existing alias with the same name as <code>ALIAS_NAME</code>, the existing alias will be overwritten.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+If <code>COMMAND</code> does not specify a valid built-in command, you will
+get an <code>Unknown command</code> message when you attempt to use the command alias.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+You can use command aliases to specify default named parameters (parameters with a prefix, such as <code>t/TITLE</code>).<br>
+For example, if you want a custom <code>list</code> command that sorts by rating by default,
+you can add a command alias using <code>addalias ls cmd/list by/rating</code>.<br>
+You can override this default sort mode by specifying a different sort mode, e.g. <code>ls by/status</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>addalias rm cmd/delete</code><br>
+Adds a command alias with the name <code>rm</code>.<br>
+You can then use <code>rm INDEX</code> in place of <code>delete INDEX</code>.</p>
+</li>
+<li>
+<p><code>addalias read cmd/edit s/read p/none</code><br>
+Adds a command alias with the name <code>read</code>.<br>
+You can then use <code>read INDEX</code> in place of <code>edit INDEX s/read p/none</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="aliases-command"><a class="anchor" href="#aliases-command"></a>Listing command aliases : <code>aliases</code> <em>(since v1.5)</em></h3>
+<div class="paragraph">
+<p>If you have forgotten some of your command aliases and need a quick refresher, you can use
+the <code>aliases</code> command to view them.<br>
+Format: <code>aliases</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Lists all command aliases.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>After entering the <code>aliases</code> command, Bibliotek shows <code>Listed xx aliases.</code> to indicate that the command was successful.
+The right panel will display a list of all your command aliases.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/AliasesCommand.png" alt="AliasesCommand" width="675">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="deletealias-command"><a class="anchor" href="#deletealias-command"></a>Delete a command alias : <code>deletealias</code> <em>(since v1.5)</em></h3>
+<div class="paragraph">
+<p>If you no longer require a command alias, you can remove it using <code>deletealias</code>.<br>
+Format: <code>deletealias ALIAS_NAME</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Deletes the command alias specified by the <code>ALIAS_NAME</code>.</p>
+</li>
+<li>
+<p><code>ALIAS_NAME</code> is case-insensitive, and must match the name of an existing alias.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>deletealias rm</code><br>
+Deletes the command alias with the name <code>rm</code>.</p>
+</li>
+<li>
+<p><code>deletealias read</code><br>
+Deletes the command alias with the name <code>read</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="contributions-to-the-developer-guide"><a class="anchor" href="#contributions-to-the-developer-guide"></a>Contributions to the Developer Guide</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project.</em></p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect2">
+<h3 id="search-feature"><a class="anchor" href="#search-feature"></a>Search feature</h3>
+<div class="paragraph">
+<p>The search feature allows the user to search for books on <a href="https://books.google.com/" target="_blank" rel="noopener">Google Books</a> that matches some user-specified parameters.
+This allows the user to easily search for particular books, and to add them without having to enter all the information manually (using the <code>add</code> command).</p>
+</div>
+<div class="sect3">
+<h4 id="current-implementation"><a class="anchor" href="#current-implementation"></a>Current Implementation</h4>
+<div class="sect4">
+<h5 id="Search-Network"><a class="anchor" href="#Search-Network"></a>Network component</h5>
+<div class="paragraph">
+<p>As part of the implementation of the search feature, the network component was added to allow for communicating with online services.
+An overview of the network component can be found in <a href="../DeveloperGuide.html#Design-Network">the Developer Guide</a>.</p>
+</div>
+<div class="paragraph">
+<p>The <code>Network</code> object is passed by <code>LogicManager</code> into each <code>Command</code>, and is available for use by default, without the need for the <code>Command</code> to override <code>setData</code>.</p>
+</div>
+<div class="paragraph">
+<p>The <code>Network</code> API exposes various methods for making web API calls to various endpoints.
+Apart from those, it also provides a <code>stop</code> method that allows for graceful shutdown of the internal asynchronous HTTP client.</p>
+</div>
+<div class="paragraph">
+<p>As an example, if a command needs to retrieve search results from <a href="https://developers.google.com/books/" target="_blank" rel="noopener">Google Books API</a>, it can make a call to the <code>searchBooks</code> method of the <code>Network</code> API.
+The following sequence diagram shows what happens when <code>searchBooks</code> is called:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/SearchBooksSequenceDiagram.png" alt="SearchBooksSequenceDiagram" width="700">
+</div>
+</div>
+<div class="paragraph">
+<p>The methods shown above are asynchronous - they will not wait for the completion of the HTTP request.
+In particular, note that when <code>Network#searchBooks</code> finishes execution, the HTTP request might not have completed yet.
+This is accomplished through the use of a chain of <code>CompletableFuture</code> objects, which holds the operations that the above methods wish to apply to the data.
+This is most evident in the <code>executeGetAndApply</code> method, as shown below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">    <span class="directive">private</span> &lt;T&gt; CompletableFuture&lt;T&gt; executeGetAndApply(<span class="predefined-type">String</span> url, Function&lt;<span class="predefined-type">String</span>, ? <span class="directive">extends</span> T&gt; fn) {
+        <span class="keyword">return</span> httpClient
+                .makeGetRequest(url)
+                .thenApply(GoogleBooksApi::requireJsonContentType)
+                .thenApply(GoogleBooksApi::requireHttpStatusOk)
+                .thenApply(HttpResponse::getResponseBody)
+                .thenApply(fn);
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once the HTTP request completes, the operations in the <code>CompletableFuture</code> objects will be executed. These operations are summarized by the following activity diagram:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/SearchBooksActivityDiagram.png" alt="SearchBooksActivityDiagram" width="600">
+</div>
+</div>
+<div class="paragraph">
+<p>If the HTTP request fails, the response is unexpected, or the conversion to <code>BookShelf</code> fails, then the proceeding operations
+added by the calls to <code>thenApply</code> will be skipped, and the <code>CompletableFuture</code> is considered to have completed exceptionally.
+If necessary, the caller can handle the failure by chaining an <code>exceptionally</code> call onto the <code>CompletableFuture</code> it receives.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="Search-Command"><a class="anchor" href="#Search-Command"></a>Search command</h5>
+<div class="paragraph">
+<p>With the network component in place, the <code>search</code> command can now be implemented.</p>
+</div>
+<div class="paragraph">
+<p>When a <code>search</code> command is entered, a <code>SearchCommand</code> object will be created if the parsing of the command was successful,
+which will make a call to <code>searchBooks</code> on the <code>Network</code> API, as shown in the sequence diagram below:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/SearchCommandSequenceDiagram.png" alt="SearchCommandSequenceDiagram" width="750">
+</div>
+</div>
+<div class="paragraph">
+<p>As described in <a href="#Search-Network">Network component</a>, when the event is handled by <code>NetworkManager</code>, this will result in an asynchronous HTTP request being made to <a href="https://developers.google.com/books/" target="_blank" rel="noopener">Google Books API</a>.
+Once the request and the parsing of the response completes successfully, the operation added by the <code>thenAccept</code> call in <code>SearchCommand</code> will be executed.
+This results in the execution of the following method in <code>SearchCommand</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">    <span class="directive">private</span> <span class="type">void</span> displaySearchResults(ReadOnlyBookShelf bookShelf) {
+        model.updateSearchResults(bookShelf);
+        model.setActiveListType(ActiveListType.SEARCH_RESULTS);
+        EventsCenter.getInstance().post(<span class="keyword">new</span> ActiveListChangedEvent());
+        EventsCenter.getInstance().post(<span class="keyword">new</span> NewResultAvailableEvent(
+                <span class="predefined-type">String</span>.format(SearchCommand.MESSAGE_SEARCH_SUCCESS, bookShelf.size())));
+        EventsCenter.getInstance().post(<span class="keyword">new</span> EnableCommandBoxRequestEvent());
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that this method is run on the JavaFX thread (using <code>Platform#runLater</code>) because it will result in updates to the book list panel.
+If such updates are not done on the JavaFX thread, JavaFX will throw an <code>IllegalStateException</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations"><a class="anchor" href="#design-considerations"></a>Design Considerations</h4>
+<div class="sect4">
+<h5 id="aspect-asynchronous-vs-synchronous"><a class="anchor" href="#aspect-asynchronous-vs-synchronous"></a>Aspect: Asynchronous vs synchronous</h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice):</strong> HTTP requests are made asynchronously.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: The application will be more responsive, as potentially long-running HTTP requests will not block the application thread.</p>
+</li>
+<li>
+<p>Cons: Not straightforward to implement, especially considering that changes to the UI have to be made on the JavaFX application thread.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2:</strong> HTTP requests are made synchronously (on the JavaFX application thread).</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: More straightforward to implement, as well as to understand the implementation.</p>
+</li>
+<li>
+<p>Cons: The UI will be unresponsive for the duration of the HTTP requests, and this can degrade the user experience.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="aspect-design-of-network-api"><a class="anchor" href="#aspect-design-of-network-api"></a>Aspect: Design of network API</h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice):</strong> Call methods on the <code>Network</code> API directly, which return <code>CompletableFuture</code> objects.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: More explicit flow of data, making it easier to understand and debug.</p>
+</li>
+<li>
+<p>Cons: Since web API calls are made by certain commands, the <code>NetworkManager</code> will have to be passed from <code>MainApp</code> all the way into each <code>Command</code>.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2:</strong> Use events to request for web API calls and retrieve the results.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Less coupling - no component will be directly depending on the network component.</p>
+</li>
+<li>
+<p>Cons: The flow of data can become less explicit and clear, and it becomes more complicated to use a single web API call for multiple purposes.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="aspect-converting-json-responses-to-model-types"><a class="anchor" href="#aspect-converting-json-responses-to-model-types"></a>Aspect: Converting JSON responses to model types</h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice):</strong> Convert to a temporary data holder before converting to model type.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Easier and more straightforward implementation - a large part of the conversion work is done by the Jackson library.</p>
+</li>
+<li>
+<p>Cons: Slower and less efficient - due to the double conversion and the use of the Reflection API (in the Jackson library).</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2:</strong> Convert parsed JSON directly to model type.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Faster and more efficient.</p>
+</li>
+<li>
+<p>Cons: Code will be more complicated and tedious - we will need to traverse through the JSON node tree manually.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2018-04-13 05:21:11 UTC
+</div>
+</div>
+</body>
+</html>

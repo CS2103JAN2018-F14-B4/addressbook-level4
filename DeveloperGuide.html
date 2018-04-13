@@ -685,7 +685,7 @@ The following sequence diagram shows what happens when <code>searchBooks</code> 
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/SearchBooksSequenceDiagram.png" alt="SearchBooksSequenceDiagram" width="750">
+<img src="images/SearchBooksSequenceDiagram.png" alt="SearchBooksSequenceDiagram" width="700">
 </div>
 </div>
 <div class="paragraph">
@@ -711,7 +711,7 @@ This is most evident in the <code>executeGetAndApply</code> method, as shown bel
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/SearchBooksActivityDiagram.png" alt="SearchBooksActivityDiagram" width="650">
+<img src="images/SearchBooksActivityDiagram.png" alt="SearchBooksActivityDiagram" width="600">
 </div>
 </div>
 <div class="paragraph">
@@ -731,7 +731,7 @@ which will make a call to <code>searchBooks</code> on the <code>Network</code> A
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/SearchCommandSequenceDiagram.png" alt="SearchCommandSequenceDiagram" width="800">
+<img src="images/SearchCommandSequenceDiagram.png" alt="SearchCommandSequenceDiagram" width="750">
 </div>
 </div>
 <div class="paragraph">
@@ -742,17 +742,18 @@ This results in the execution of the following method in <code>SearchCommand</co
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="java">    <span class="directive">private</span> <span class="type">void</span> displaySearchResults(ReadOnlyBookShelf bookShelf) {
-        Platform.runLater(() -&gt; {
-            model.updateSearchResults(bookShelf);
-            EventsCenter.getInstance().post(<span class="keyword">new</span> SwitchToSearchResultsRequestEvent());
-            EventsCenter.getInstance().post(<span class="keyword">new</span> NewResultAvailableEvent(...));
-        });
+        model.updateSearchResults(bookShelf);
+        model.setActiveListType(ActiveListType.SEARCH_RESULTS);
+        EventsCenter.getInstance().post(<span class="keyword">new</span> ActiveListChangedEvent());
+        EventsCenter.getInstance().post(<span class="keyword">new</span> NewResultAvailableEvent(
+                <span class="predefined-type">String</span>.format(SearchCommand.MESSAGE_SEARCH_SUCCESS, bookShelf.size())));
+        EventsCenter.getInstance().post(<span class="keyword">new</span> EnableCommandBoxRequestEvent());
     }</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Note that the update to the model must be done on the JavaFX thread (using <code>Platform#runLater</code>),
-since updating the search results will update its observable list, which will cause the UI to be updated.</p>
+<p>Note that this method is run on the JavaFX thread (using <code>Platform#runLater</code>) because it will result in updates to the book list panel.
+If such updates are not done on the JavaFX thread, JavaFX will throw an <code>IllegalStateException</code>.</p>
 </div>
 </div>
 </div>
@@ -2845,7 +2846,10 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Added the network component and a <code>search</code> command to allow the user to search for books on Google Books.</p>
+<p>Added network component to support making asychronous HTTP requests.</p>
+</li>
+<li>
+<p>Added <code>search</code> command to allow the user to search for books on Google Books.</p>
 </li>
 <li>
 <p>This allows the user to easily search for particular books, and add them without having to enter all the information manually (using the updated <code>add</code> command).</p>
@@ -2854,27 +2858,20 @@ for <code>RemarkCommandParser</code>.</p>
 </div>
 </li>
 <li>
-<p><strong>Customize aliases to use in place of full commands</strong> (major)</p>
+<p><strong>Customize command aliases to use in place of full commands</strong> (minor)</p>
 <div class="ulist">
 <ul>
 <li>
 <p>Added <code>addalias</code>, <code>aliases</code> and <code>deletealias</code> commands to allow adding, viewing and deleting of aliases.</p>
 </li>
 <li>
-<p>This allows users to reduce the typing needed.</p>
-</li>
-</ul>
-</div>
+<p>Updated command parser to support command aliases.</p>
 </li>
 <li>
-<p><strong>Change application theme</strong> (minor)</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Added a <code>theme</code> command that allows the user to switch between the various themes included with Bibliotek.</p>
+<p>Updated storage component to save command aliases in XML format.</p>
 </li>
 <li>
-<p>This allows the user to change the design of Bibliotek according to their own preferences.</p>
+<p>This allows users to reduce the amount of typing needed.</p>
 </li>
 </ul>
 </div>
@@ -2922,9 +2919,6 @@ for <code>RemarkCommandParser</code>.</p>
 <p><strong>Mark a book as read, change the priority of a book and rate books</strong> (major)</p>
 <div class="ulist">
 <ul>
-<li>
-<p>Added attributes rating, status, priority.</p>
-</li>
 <li>
 <p>Added <code>edit</code> command that allows user to rate, set status and change priority of
 some books.</p>
@@ -3649,7 +3643,7 @@ Expected: Similar to previous.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-13 05:07:06 UTC
+Last updated 2018-04-13 05:21:11 UTC
 </div>
 </div>
 </body>
