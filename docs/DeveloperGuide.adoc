@@ -39,7 +39,7 @@ Prior to setting up the project proper, make sure you have the following.
 [NOTE]
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8. +
-You can get the latest Java 8 JDK at http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html[link].
+You can get the latest Java 8 JDK at http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html[this link].
 +
 
 . *IntelliJ* IDE
@@ -140,7 +140,7 @@ Given below is a quick overview of each component.
 * `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design).
 * `LogsCenter` : Used by many classes to write log messages to the App's log file.
 
-The rest of the App consists of five components. These components and a brief summary of their responsibilties are given below.
+The rest of the App consists of five components. These components and a brief summary of their responsibilities are given below.
 
 * <<Design-Ui,*`UI`*>>: The UI of the App.
 * <<Design-Logic,*`Logic`*>>: The command executor.
@@ -209,12 +209,13 @@ The _Class Diagram_ in Figure 6 shows the interaction between different classes 
 .Structure of the Logic Component
 image::LogicClassDiagram.png[width="800"]
 
-The `Logic` component is home to various `Command` s, which may or may not be undoable. The structural relationship between `Command` and `UndoableCommand` is shown in Figure 7 below.
+The `Logic` component is home to various classes which extends `Command`. These classes represent supported commands that may or may not be undoable.
+The structural relationship between `Command` and `UndoableCommand` is shown in Figure 7 below.
 
 .Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in <<fig-LogicClassDiagram>>
 image::LogicCommandClassDiagram.png[width="800"]
 
-NOTE: `UndoableCommand` s are commands that cause change to the stored data.
+NOTE: An `UndoableCommand` is a command that makes changes to the book shelf data.
 
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
@@ -286,7 +287,7 @@ The `Network` component:
 [[Design-Commons]]
 === Common classes
 
-Classes used by multiple components are in the `seedu.address.commons` package. This includes Events and Util (utility) classes.
+Classes used by multiple components are in the `seedu.address.commons` package. This includes event and utility classes.
 
 == Implementation
 
@@ -859,7 +860,7 @@ Here are the steps to create a new release.
 === Managing Dependencies
 
 A project often depends on third-party libraries. For example, Bibliotek depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library, window="_blank"_] for XML parsing.
-Managing these _dependencies_ can be automated using Gradle. Gradle can download the dependencies automatically.
+We make use of Gradle to manage the project dependencies. Gradle can automate the downloading of these dependencies, saving us time and effort.
 
 While strongly discouraged by us, you can nevertheless opt for one of the following alternatives.
 
