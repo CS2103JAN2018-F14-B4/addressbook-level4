@@ -104,7 +104,7 @@ public class LogicManager extends ComponentManager implements Logic {
         if (!e.getMessage().equals(Messages.MESSAGE_UNKNOWN_COMMAND)) {
             throw e;
         }
-        correctedCommand = bookShelfParser.attemptCommandAutoCorrection(processedText);
+        correctedCommand = CommandAutocorrection.attemptCommandAutoCorrection(this, processedText);
         return new CommandResult(String.format(Messages.MESSAGE_CORRECTED_COMMAND, correctedCommand));
     }
 
@@ -130,11 +130,6 @@ public class LogicManager extends ComponentManager implements Logic {
     @Override
     public ObservableList<Book> getActiveList() {
         return model.getActiveList();
-    }
-
-    @Override
-    public ObservableList<Book> getDisplayBookList() {
-        return model.getDisplayBookList();
     }
 
     @Override
