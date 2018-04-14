@@ -857,7 +857,7 @@ e.g. `edit 2 s/READ r/5`
 |*View help* |`help`
 |*View previous commands* |`history`
 |*Search for book in library* |`library INDEX`
-|*List books in book shelf* |`list [t/TITLE] [a/AUTHOR] [c/CATEGORY] [s/STATUS]`
+|*List books in book shelf* |`list [t/TITLE] [a/AUTHOR] [c/CATEGORY] [s/STATUS]` +
 `[p/PRIORITY] [r/RATING] [by/SORT_BY]`
 |*Lock the app* |`lock`
 |*View recently selected books* |`recent`
