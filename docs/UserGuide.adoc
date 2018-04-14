@@ -664,6 +664,14 @@ You will be given a default key: admin, when you open bibliotek for the first ti
 ====
 
 TIP: You should remember your key after setting a new one.
+* If you entered old key is correct.
+
+image::setsuccess.png[width="650"]
+
+* If you entered old key is incorrect.
+
+image::wrongkey(set).png[width="650"]
+
 
 // tag::encrypt[]
 [[Decrypt-command]]
@@ -676,6 +684,13 @@ Format: `decrypt YOUR_KEY`
 ====
 You will be given a default key: admin, when you open bibliotek for the first time.
 ====
+* If your entered key is correct
+
+image::correctkey.png[width="650"]
+
+* If your entered key is wrong
+
+image::wrongkey.png[width="650"]
 
 [[Encrypt-command]]
 === Decrypt the bibliotek : `encrypt` _(coming in v1.5)_
@@ -687,6 +702,10 @@ Format: `encrypt`
 ====
 You should remember your key before you do this command.
 ====
+* If you enter a wrong key.
+
+image::shouldbedecryptfirst.png[width="650"]
+
 // end::encrypt[]
 
 [[settings-command]]
