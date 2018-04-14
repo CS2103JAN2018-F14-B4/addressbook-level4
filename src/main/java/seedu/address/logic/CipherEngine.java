@@ -27,7 +27,7 @@ public class CipherEngine {
     private static final String DES = "DES";
     private static final String ENCODE = "GBK";
     private static String file;
-
+//@@author 592363789-reused
     /**
      *  Encrypting files
      */
@@ -109,7 +109,7 @@ public class CipherEngine {
         return f0.renameTo(f1);
 
     }
-
+//@@author 592363789
     /**
      * Use defaultkey to encrypt
      * @param mykey

@@ -105,6 +105,9 @@ public class BookReviewsPanelHandle extends NodeHandle<Node> {
  * {@code AddCommand}.
  */
 public class AddCommandTest {
+
+    @Rule
+    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
@@ -209,6 +212,28 @@ public class AddCommandTest {
         assertCommandFailure(addCommand, model, Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
 
         // no commands in undoStack -> undoCommand fail
+        assertCommandFailure(undoCommand, model, UndoCommand.MESSAGE_FAILURE);
+    }
+
+    @Test
+    public void execute_networkError_raisesExpectedEvent() throws Exception {
+        AddCommand addCommand = new AddCommand(INDEX_FIRST_BOOK, false);
+
+        NetworkManager networkManagerMock = mock(NetworkManager.class);
+        Book toAdd = model.getSearchResultsList().get(INDEX_FIRST_BOOK.getZeroBased());
+        when(networkManagerMock.getBookDetails(toAdd.getGid().gid))
+                .thenReturn(TestUtil.getFailedFuture());
+
+        UndoStack undoStack = new UndoStack();
+        addCommand.setData(model, networkManagerMock, new CommandHistory(), undoStack);
+        addCommand.execute();
+
+        NewResultAvailableEvent resultEvent = (NewResultAvailableEvent)
+                eventsCollectorRule.eventsCollector.getMostRecent(NewResultAvailableEvent.class);
+        assertEquals(AddCommand.MESSAGE_ADD_FAIL, resultEvent.message);
+
+        // undo -> nothing to undo
+        UndoCommand undoCommand = prepareUndoCommand(model, undoStack);
         assertCommandFailure(undoCommand, model, UndoCommand.MESSAGE_FAILURE);
     }
 
@@ -445,6 +470,7 @@ public class RecentCommandTest {
     @Test
     public void execute_showsEmptyRecent() {
         assertCommandSuccess(recentCommand, model, String.format(RecentCommand.MESSAGE_SUCCESS, 0), expectedModel);
+        assertEquals(ActiveListType.RECENT_BOOKS, model.getActiveListType());
     }
 
     @Test
@@ -452,6 +478,16 @@ public class RecentCommandTest {
         model.addRecentBook(TypicalBooks.ARTEMIS);
         expectedModel.addRecentBook(TypicalBooks.ARTEMIS);
         assertCommandSuccess(recentCommand, model, String.format(RecentCommand.MESSAGE_SUCCESS, 1), expectedModel);
+        assertEquals(ActiveListType.RECENT_BOOKS, model.getActiveListType());
+    }
+
+    @Test
+    public void execute_repeatedRecentBook() {
+        model.addRecentBook(TypicalBooks.ARTEMIS);
+        model.addRecentBook(TypicalBooks.ARTEMIS);
+        expectedModel.addRecentBook(TypicalBooks.ARTEMIS);
+        assertCommandSuccess(recentCommand, model, String.format(RecentCommand.MESSAGE_SUCCESS, 1), expectedModel);
+        assertEquals(ActiveListType.RECENT_BOOKS, model.getActiveListType());
     }
 }
 ```
@@ -1140,8 +1176,6 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
         assertCommandFailure(AddCommand.COMMAND_WORD + " 1 2",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
-        /* Case: mixed case command word -> rejected */
-        assertCommandFailure("AdD 1", MESSAGE_UNKNOWN_COMMAND);
 
         /* Case: invalid active list type */
         executeCommand("list");
@@ -1294,6 +1328,73 @@ public class LibraryCommandSystemTest extends BibliotekSystemTest {
     }
 }
 ```
+###### \java\systemtests\RecentCommandSystemTest.java
+``` java
+public class RecentCommandSystemTest extends BibliotekSystemTest {
+
+    @Test
+    public void recent() {
+        /* -------------------------------- Perform valid recent operations ------------------------------------- */
+
+        Model expectedModel = getModel();
+        expectedModel.setActiveListType(ActiveListType.RECENT_BOOKS);
+
+        /* Case: Empty recent books list -> 0 book shown */
+        assertRecentCommandSuccess(expectedModel);
+
+        /* Case: New selection from book shelf -> 1 book in recent books list */
+        executeCommand(ListCommand.COMMAND_WORD);
+        executeCommand(SelectCommand.COMMAND_WORD + " 1");
+        expectedModel.addRecentBook(getModel().getDisplayBookList().get(0));
+        assertRecentCommandSuccess(expectedModel);
+
+        /* Case: New selection from search results -> 2 books in recent books list */
+        executeBackgroundCommand(SearchCommand.COMMAND_WORD + " Harry", SearchCommand.MESSAGE_SEARCHING);
+        executeCommand(SelectCommand.COMMAND_WORD + " 1");
+        expectedModel = getModel();
+        expectedModel.addRecentBook(expectedModel.getSearchResultsList().get(0));
+        expectedModel.setActiveListType(ActiveListType.RECENT_BOOKS);
+        assertRecentCommandSuccess(expectedModel);
+
+        /* Case: Selecting same book again -> selected book goes to first index of list */
+        executeCommand(ListCommand.COMMAND_WORD);
+        executeCommand(SelectCommand.COMMAND_WORD + " 1");
+        expectedModel.addRecentBook(getModel().getDisplayBookList().get(0));
+        assertRecentCommandSuccess(expectedModel);
+
+        /* Case: Selecting a book in recent book list should not change the list */
+        executeCommand(SelectCommand.COMMAND_WORD + " 2");
+        assertRecentCommandSuccess(expectedModel);
+
+    }
+
+    /**
+     * Executes the recent command and verifies that,<br>
+     * 1. Command box displays an empty string.<br>
+     * 2. Command box has the default style class.<br>
+     * 3. Result display box displays the expected message.<br>
+     * 4. {@code Model}, {@code Storage} remain unchanged.<br>
+     * 5. Any selection in {@code BookListPanel} is deselected.<br>
+     * 6. {@code WelcomePanel} is visible.<br>
+     * 7. Status bar remains unchanged.<br>
+     * Verifications 1, 3 and 4 are performed by
+     * {@code BibliotekSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see BibliotekSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertRecentCommandSuccess(Model expectedModel) {
+        executeCommand(RecentCommand.COMMAND_WORD);
+        assertCommandBoxShowsDefaultStyle();
+
+        assertApplicationDisplaysExpected("",
+                String.format(RecentCommand.MESSAGE_SUCCESS, expectedModel.getRecentBooksList().size()), expectedModel);
+
+        assertSelectedBookListCardDeselected();
+        assertWelcomePanelVisible();
+        assertStatusBarUnchanged();
+    }
+
+}
+```
 ###### \java\systemtests\ReviewsCommandSystemTest.java
 ``` java
 public class ReviewsCommandSystemTest extends BibliotekSystemTest {
@@ -1324,7 +1425,6 @@ public class ReviewsCommandSystemTest extends BibliotekSystemTest {
         int invalidIndex = getModel().getDisplayBookList().size() + 1;
         assertCommandFailure(ReviewsCommand.COMMAND_WORD + " " + invalidIndex,
                 MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
-
 
         /* ------------ Perform reviews operations on the shown search results list ------------ */
         Model expectedModel = getModel();

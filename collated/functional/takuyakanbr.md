@@ -190,10 +190,13 @@ public class ListCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        model.setActiveListType(ActiveListType.BOOK_SHELF);
-        EventsCenter.getInstance().post(new ActiveListChangedEvent());
+        // Clear to prevent invalid selections due to changes in observed list
+        EventsCenter.getInstance().post(new ClearMainContentRequestEvent());
+
         model.updateBookListFilter(filterDescriptor.buildCombinedFilter());
         model.updateBookListSorter(bookComparator);
+        model.setActiveListType(ActiveListType.BOOK_SHELF);
+        EventsCenter.getInstance().post(new ActiveListChangedEvent());
         return new CommandResult(String.format(MESSAGE_SUCCESS, model.getDisplayBookList().size()));
     }
 
@@ -972,6 +975,7 @@ public class HttpClient {
     private static final int CONNECTION_TIMEOUT_MILLIS = 1000 * 10; // 10 seconds
     private static final int READ_TIMEOUT_MILLIS = 1000 * 10; // 10 seconds
     private static final int REQUEST_TIMEOUT_MILLIS = 1000 * 10; // 10 seconds
+    private static final long DELAY_ON_EXCEPTION = 300L;
 
     private final AsyncHttpClient asyncHttpClient;
 
@@ -995,7 +999,24 @@ public class HttpClient {
                 .prepareGet(url)
                 .execute()
                 .toCompletableFuture()
-                .thenApply(HttpResponse::new);
+                .thenApply(HttpResponse::new)
+                .handleAsync(HttpClient::waitOnException);
+    }
+
+    /**
+     * Waits for a short period of time in the event of exception.
+     * Prevents API methods from completing before necessary pre-processing is completed.
+     */
+    private static <T> T waitOnException(T result, Throwable error) {
+        if (error != null) {
+            try {
+                Thread.sleep(DELAY_ON_EXCEPTION);
+            } catch (InterruptedException e1) {
+                e1.printStackTrace();
+            }
+            throw new CompletionException(error);
+        }
+        return result;
     }
 
     /**
