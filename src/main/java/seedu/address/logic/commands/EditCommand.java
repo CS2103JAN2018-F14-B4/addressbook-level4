@@ -9,8 +9,11 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 import java.util.Objects;
 import java.util.Optional;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.DeselectBookRequestEvent;
+import seedu.address.commons.events.ui.ReselectBookRequestEvent;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ActiveListType;
@@ -20,7 +23,7 @@ import seedu.address.model.book.Rating;
 import seedu.address.model.book.Status;
 import seedu.address.model.book.exceptions.BookNotFoundException;
 import seedu.address.model.book.exceptions.DuplicateBookException;
-
+//@@author 592363789
 /**
  * Edits the status, priority, and rating of an existing book.
  */
@@ -37,6 +40,9 @@ public class EditCommand extends UndoableCommand {
     public static final String MESSAGE_SUCCESS = "Edited Book: %1$s";
     public static final String MESSAGE_NO_PARAMETERS = "At least one field to edit must be provided.";
     public static final String MESSAGE_WRONG_ACTIVE_LIST = "Items from the current list cannot be edited.";
+
+    public static final String UNDO_SUCCESS = "Successfully undone editing of %s.";
+    public static final String UNDO_FAILURE = "Failed to undo editing of %s.";
 
     private final Index index;
     private final EditDescriptor editDescriptor;
@@ -60,7 +66,9 @@ public class EditCommand extends UndoableCommand {
         requireAllNonNull(bookToEdit, editedBook);
 
         try {
+            EventsCenter.getInstance().post(new DeselectBookRequestEvent());
             model.updateBook(bookToEdit, editedBook);
+            EventsCenter.getInstance().post(new ReselectBookRequestEvent());
         } catch (DuplicateBookException dpe) {
             throw new AssertionError("Editing target book should not result in a duplicate");
         } catch (BookNotFoundException pnfe) {
@@ -98,6 +106,7 @@ public class EditCommand extends UndoableCommand {
         }
     }
 
+    //@@author
     /**
      * Creates and returns a {@code Book} with the details of {@code bookToEdit}
      * edited with {@code editDescriptor}.
@@ -113,6 +122,19 @@ public class EditCommand extends UndoableCommand {
                 bookToEdit.getTitle(), bookToEdit.getCategories(), bookToEdit.getDescription(),
                 updatedStatus, updatedPriority, updatedRating,
                 bookToEdit.getPublisher(), bookToEdit.getPublicationDate());
+    }
+
+    @Override
+    protected String undo() {
+        requireAllNonNull(model, editedBook, bookToEdit);
+
+        try {
+            model.updateBook(editedBook, bookToEdit);
+            return String.format(UNDO_SUCCESS, editedBook);
+        } catch (DuplicateBookException | BookNotFoundException e) {
+            // Should never end up here
+            return String.format(UNDO_FAILURE, editedBook);
+        }
     }
 
     @Override
@@ -133,7 +155,7 @@ public class EditCommand extends UndoableCommand {
                 && editDescriptor.equals(e.editDescriptor)
                 && Objects.equals(bookToEdit, e.bookToEdit);
     }
-
+    //@@author 592363789
     /**
      * Stores the details to edit the book with. Each non-empty field value will replace the
      * corresponding field value of the book.

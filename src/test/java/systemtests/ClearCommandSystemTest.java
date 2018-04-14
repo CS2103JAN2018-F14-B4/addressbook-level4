@@ -1,7 +1,5 @@
 package systemtests;
 
-import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
@@ -25,7 +23,7 @@ public class ClearCommandSystemTest extends BibliotekSystemTest {
 
         /* Case: undo clearing book shelf -> original book shelf restored */
         String command = UndoCommand.COMMAND_WORD;
-        String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
+        String expectedResultMessage = ClearCommand.UNDO_SUCCESS;
         assertCommandSuccess(command,  expectedResultMessage, model);
         assertSelectedBookListCardUnchanged();
 
@@ -39,8 +37,6 @@ public class ClearCommandSystemTest extends BibliotekSystemTest {
         assertCommandSuccess(ClearCommand.COMMAND_WORD);
         assertSelectedBookListCardUnchanged();
 
-        /* Case: mixed case command word -> rejected */
-        assertCommandFailure("ClEaR", MESSAGE_UNKNOWN_COMMAND);
     }
 
     /**

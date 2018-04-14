@@ -1,19 +1,20 @@
 package seedu.address.logic;
 
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
 
 import com.google.common.eventbus.Subscribe;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.Messages;
 import seedu.address.commons.events.ui.BookListSelectionChangedEvent;
-import seedu.address.commons.events.ui.SearchResultsSelectionChangedEvent;
-import seedu.address.commons.events.ui.SwitchToBookListRequestEvent;
-import seedu.address.commons.events.ui.SwitchToRecentBooksRequestEvent;
-import seedu.address.commons.events.ui.SwitchToSearchResultsRequestEvent;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.BookShelfParser;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -35,6 +36,8 @@ public class LogicManager extends ComponentManager implements Logic {
     private final BookShelfParser bookShelfParser;
     private final UndoStack undoStack;
 
+    private String correctedCommand;
+
     public LogicManager(Model model, Network network) {
         this.model = model;
         this.network = network;
@@ -44,19 +47,89 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Override
-    public CommandResult execute(String commandText) throws CommandException, ParseException {
+    public boolean isValidCommand(String commandText) {
+        try {
+            String processedText = bookShelfParser.applyCommandAlias(commandText);
+            bookShelfParser.parseCommand(processedText);
+            return true;
+        } catch (ParseException e) {
+            return false;
+        }
+    }
+
+    @Override
+    public String[] parse(String commandText) throws ParseException {
         String processedText = bookShelfParser.applyCommandAlias(commandText);
-        logger.info("----------------[USER COMMAND][" + processedText + "]");
+        final Matcher matcher = BookShelfParser.BASIC_COMMAND_FORMAT.matcher(processedText);
+        if (!matcher.matches()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
+        }
+
+        String commandWord = matcher.group("commandWord");
+        final String arguments = matcher.group("arguments");
+
+        return new String[] {commandWord, arguments};
+    }
+
+    @Override
+    public CommandResult execute(String commandText) throws CommandException, ParseException {
+        if (correctedCommand == null && commandText.equals("")) {
+            return CommandResult.emptyResult();
+        }
+
+        logger.info("----------------[USER COMMAND][" + commandText + "]");
 
         try {
-            Command command = bookShelfParser.parseCommand(processedText);
+            Command command = getCommand(commandText);
             command.setData(model, network, history, undoStack);
             CommandResult result = command.execute();
             undoStack.push(command);
             return result;
+        } catch (ParseException e) {
+            return attemptCommandAutoCorrection(commandText, e);
         } finally {
             history.add(commandText);
         }
+    }
+
+    /**
+     * Attempts command auto-correction if {@code e} is a {@code ParseException} due to the user input
+     * being unable to be matched to any valid command word.
+     * @param processedText The command as entered by the user, after accounting for aliases.
+     * @param e The exception thrown by {@link BookShelfParser}.
+     * @return message asking user whether he meant the corrected command.
+     * @throws ParseException If auto correction failed to find any closely related command.
+     */
+    private CommandResult attemptCommandAutoCorrection(String processedText, ParseException e) throws ParseException {
+        if (!e.getMessage().equals(Messages.MESSAGE_UNKNOWN_COMMAND)) {
+            throw e;
+        }
+        correctedCommand = bookShelfParser.attemptCommandAutoCorrection(processedText);
+        return new CommandResult(String.format(Messages.MESSAGE_CORRECTED_COMMAND, correctedCommand));
+    }
+
+    /**
+     * Obtains the command represented by {@code processedText}. If user presses enter (empty String) following a
+     * command correction, that corrected command will be returned.
+     * @param commandText The command as entered by the user.
+     * @return the command obtained.
+     * @throws ParseException If {@code processedText} cannot be parsed.
+     */
+    private Command getCommand(String commandText) throws ParseException {
+        Command command;
+        if (correctedCommand != null && commandText.equals("")) {
+            command = bookShelfParser.parseCommand(correctedCommand);
+        } else {
+            String processedText = bookShelfParser.applyCommandAlias(commandText);
+            command = bookShelfParser.parseCommand(processedText);
+        }
+        correctedCommand = null;
+        return command;
+    }
+
+    @Override
+    public ObservableList<Book> getActiveList() {
+        return model.getActiveList();
     }
 
     @Override
@@ -85,32 +158,10 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Subscribe
-    private void handleShowBookListRequestEvent(SwitchToBookListRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        model.setActiveListType(ActiveListType.BOOK_SHELF);
-    }
-
-    @Subscribe
-    private void handleShowSearchResultsRequestEvent(SwitchToSearchResultsRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        model.setActiveListType(ActiveListType.SEARCH_RESULTS);
-    }
-
-    @Subscribe
-    private void handleSwitchToRecentBooksRequestEvent(SwitchToRecentBooksRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        model.setActiveListType(ActiveListType.RECENT_BOOKS);
-    }
-
-    @Subscribe
-    private void handleSearchResultsSelectionChangedEvent(SearchResultsSelectionChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        model.addRecentBook(event.getNewSelection());
-    }
-
-    @Subscribe
     private void handleBookListSelectionChangedEvent(BookListSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        model.addRecentBook(event.getNewSelection());
+        if (model.getActiveListType() != ActiveListType.RECENT_BOOKS) {
+            model.addRecentBook(event.getNewSelection());
+        }
     }
 }

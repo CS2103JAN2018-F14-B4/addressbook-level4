@@ -3,9 +3,9 @@ package seedu.address.commons.events.ui;
 import seedu.address.commons.events.BaseEvent;
 
 /**
- * An event requesting to view the user's book list.
+ * Indicates a request to reselect the book that was previously deselected using {@link DeselectBookRequestEvent}.
  */
-public class SwitchToBookListRequestEvent extends BaseEvent {
+public class ReselectBookRequestEvent extends BaseEvent {
 
     @Override
     public String toString() {

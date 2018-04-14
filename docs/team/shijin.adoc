@@ -15,6 +15,7 @@ Bibliotek is a desktop address book application used for teaching Software Engin
 
 == Summary of contributions
 
+
 * **Encrypt data with a password** (major)
 ** Add an `encrypt` command to encrypt data with a password.
 ** Add an ecrypt data function to let bookshelf.xml to be encrypted when user set a key.

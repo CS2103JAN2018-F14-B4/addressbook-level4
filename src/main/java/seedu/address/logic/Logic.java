@@ -11,6 +11,17 @@ import seedu.address.model.book.Book;
  * API of the Logic component
  */
 public interface Logic {
+
+    /**
+     * Returns true if the entered text can be parsed to a valid command.
+     */
+    boolean isValidCommand(String commandText);
+
+    /**
+     * Parses {@code String userInput} and returns an array of {commandWord, arguments} if valid.
+     */
+    String[] parse(String commandText) throws ParseException;
+
     /**
      * Executes the command and returns the result.
      * @param commandText The command as entered by the user.
@@ -19,6 +30,9 @@ public interface Logic {
      * @throws ParseException If an error occurs during parsing.
      */
     CommandResult execute(String commandText) throws CommandException, ParseException;
+
+    /** Returns an unmodifiable view of the list that is currently active. */
+    ObservableList<Book> getActiveList();
 
     /** Returns an unmodifiable view of the filtered and sorted list of books */
     ObservableList<Book> getDisplayBookList();

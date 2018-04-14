@@ -19,10 +19,13 @@ import seedu.address.model.book.Book;
  */
 public class BookListPanel extends UiPart<Region> {
     private static final String FXML = "BookListPanel.fxml";
+
     private final Logger logger = LogsCenter.getLogger(BookListPanel.class);
 
     @FXML
     private ListView<Book> bookListView;
+
+    private Book deselectedBook;
 
     public BookListPanel(ObservableList<Book> bookList) {
         super(FXML);
@@ -30,16 +33,23 @@ public class BookListPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
-    private void setConnections(ObservableList<Book> bookList) {
+    /**
+     * Set the currently displayed book list to {@code bookList}.
+     */
+    protected void setBookList(ObservableList<Book> bookList) {
         bookListView.setItems(bookList);
         bookListView.setCellFactory(listView -> new BookListViewCell());
+    }
+
+    private void setConnections(ObservableList<Book> bookList) {
+        setBookList(bookList);
         setEventHandlerForSelectionChangeEvent();
     }
 
     private void setEventHandlerForSelectionChangeEvent() {
         bookListView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
-                    if (newValue != null && this.getRoot().isVisible()) {
+                    if (newValue != null) {
                         logger.fine("Selection in book list panel changed to : '" + newValue + "'");
                         raise(new BookListSelectionChangedEvent(newValue));
                     }
@@ -48,6 +58,16 @@ public class BookListPanel extends UiPart<Region> {
 
     protected void clearSelection() {
         bookListView.getSelectionModel().clearSelection();
+    }
+
+    /**
+     * Clears selection and remembers the previous selection, if any.
+     * @return whether there was any selected book to clear.
+     */
+    protected boolean deselectBook() {
+        deselectedBook = bookListView.getSelectionModel().getSelectedItem();
+        clearSelection();
+        return deselectedBook != null;
     }
 
     protected void scrollToTop() {
@@ -60,6 +80,27 @@ public class BookListPanel extends UiPart<Region> {
     private void scrollTo(int index) {
         bookListView.scrollTo(index);
         bookListView.getSelectionModel().clearAndSelect(index);
+    }
+
+    /**
+     * Reselects the book that was previously deselected by {@code deselectBook()}, if any.
+     * The book also needs to be in the display book list.
+     * @return whether the previous book selection is reselected.
+     */
+    protected boolean reselectBook() {
+        if (deselectedBook == null) {
+            return false;
+        }
+
+        int index = bookListView.getItems().indexOf(deselectedBook);
+        deselectedBook = null;
+
+        if (index == -1) {
+            return false;
+        }
+
+        scrollTo(index);
+        return true;
     }
 
     @Subscribe

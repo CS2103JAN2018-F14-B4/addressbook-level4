@@ -3,9 +3,9 @@ package seedu.address.commons.events.ui;
 import seedu.address.commons.events.BaseEvent;
 
 /**
- * An event request to list recently selected books.
+ * Represents a change in the active list type.
  */
-public class SwitchToRecentBooksRequestEvent extends BaseEvent {
+public class ActiveListChangedEvent extends BaseEvent {
 
     @Override
     public String toString() {

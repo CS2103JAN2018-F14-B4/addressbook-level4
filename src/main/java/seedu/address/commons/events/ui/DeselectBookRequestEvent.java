@@ -3,9 +3,9 @@ package seedu.address.commons.events.ui;
 import seedu.address.commons.events.BaseEvent;
 
 /**
- * An event requesting to view the search results.
+ * Indicates a request to deselect the current book selection.
  */
-public class SwitchToSearchResultsRequestEvent extends BaseEvent {
+public class DeselectBookRequestEvent extends BaseEvent {
 
     @Override
     public String toString() {
