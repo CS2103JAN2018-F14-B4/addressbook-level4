@@ -26,7 +26,7 @@ public class LogicManagerTest {
     public ExpectedException thrown = ExpectedException.none();
 
     private Model model = new ModelManager();
-    private Logic logic = new LogicManager(model, mock(NetworkManager.class), false);
+    private Logic logic = new LogicManager(model, mock(NetworkManager.class));
 
     @Test
     public void execute_invalidCommandFormat_throwsParseException() {

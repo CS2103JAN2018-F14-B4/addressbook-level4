@@ -92,6 +92,7 @@ public class XmlBookShelfStorage implements BookShelfStorage {
     public void saveBookShelf(ReadOnlyBookShelf bookShelf, String filePath) throws IOException {
         requireNonNull(bookShelf);
         requireNonNull(filePath);
+
         File file = new File(filePath);
         FileUtil.createIfMissing(file);
         XmlFileStorage.saveBookShelfDataToFile(file, new XmlSerializableBookShelf(bookShelf));

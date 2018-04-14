@@ -7,7 +7,6 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_BOOK;
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
-
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RecentCommand;
 import seedu.address.logic.commands.ReviewsCommand;
@@ -21,7 +20,6 @@ public class ReviewsCommandSystemTest extends BibliotekSystemTest {
 
     @Test
     public void reviews() {
-
         /* ------------ Perform reviews operations on the shown book list ------------ */
         String command = "   " + ReviewsCommand.COMMAND_WORD + " " + INDEX_FIRST_BOOK.getOneBased() + "   ";
 
@@ -44,10 +42,9 @@ public class ReviewsCommandSystemTest extends BibliotekSystemTest {
                 MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
 
         /* ------------ Perform reviews operations on the shown search results list ------------ */
-        Model expectedModel = getModel();
-        decryptModel(expectedModel);
         executeBackgroundCommand(SearchCommand.COMMAND_WORD + " hello", SearchCommand.MESSAGE_SEARCHING);
-        expectedModel = getModel();
+
+        Model expectedModel = getModel();
         assertCommandSuccess(ReviewsCommand.COMMAND_WORD + " 1",
                 getModel().getSearchResultsList().get(0), expectedModel);
         assertCommandFailure(ReviewsCommand.COMMAND_WORD + " 39", MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);

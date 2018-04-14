@@ -15,6 +15,7 @@ public class AliasesCommandSystemTest extends BibliotekSystemTest {
 
     @Test
     public void aliases() {
+        assertAliasCommandSuccess();
 
         /* selecting a book should hide the alias list panel */
         executeCommand(SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_BOOK.getOneBased());

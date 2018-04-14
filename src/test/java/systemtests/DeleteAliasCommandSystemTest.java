@@ -15,7 +15,6 @@ public class DeleteAliasCommandSystemTest extends BibliotekSystemTest {
 
     @Test
     public void deleteAlias() {
-
         executeCommand(AddAliasCommand.COMMAND_WORD + " s cmd/select");
         executeCommand(AddAliasCommand.COMMAND_WORD + " read cmd/list s/read by/title");
 

@@ -3,7 +3,6 @@ package systemtests;
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
-
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.BookShelf;
@@ -15,7 +14,6 @@ public class ClearCommandSystemTest extends BibliotekSystemTest {
 
     @Test
     public void clear() {
-
         Model model = getModel();
 
         /* Case: clear non-empty book shelf, command with leading spaces and trailing alphanumeric characters and

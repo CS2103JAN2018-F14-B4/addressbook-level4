@@ -21,7 +21,6 @@ public class AddAliasCommandSystemTest extends BibliotekSystemTest {
 
     @Test
     public void addAlias() {
-
         /* --------------------------------- Performing valid add operation ----------------------------------------- */
 
         /* case: add a new alias without named args -> added */
@@ -61,6 +60,7 @@ public class AddAliasCommandSystemTest extends BibliotekSystemTest {
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddAliasCommand.MESSAGE_USAGE));
 
         /* --------------------------------- Performing commands using aliases -------------------------------------- */
+
         Model model = getModel();
 
         /* case: perform select command using alias */

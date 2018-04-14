@@ -11,7 +11,6 @@ import guitests.GuiRobot;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.SearchCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -25,7 +24,6 @@ public class AddCommandSystemTest extends BibliotekSystemTest {
 
     @Test
     public void add() throws Exception {
-
         executeBackgroundCommand(SearchCommand.COMMAND_WORD + " hello", SearchCommand.MESSAGE_SEARCHING);
         Model model = getModel();
         ObservableList<Book> searchResultsList = model.getSearchResultsList();

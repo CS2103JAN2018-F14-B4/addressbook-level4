@@ -12,7 +12,6 @@ import org.junit.Test;
 import guitests.GuiRobot;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.SearchCommand;
@@ -24,7 +23,6 @@ import seedu.address.model.Model;
 public class SearchCommandSystemTest extends BibliotekSystemTest {
     @Test
     public void search() throws Exception {
-
         /* ----------------------------------- Perform invalid search operations ------------------------------------ */
 
         /* Case: close command word -> corrected */

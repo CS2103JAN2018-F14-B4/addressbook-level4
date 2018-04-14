@@ -6,7 +6,6 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import org.junit.Test;
 
 import seedu.address.commons.core.Theme;
-
 import seedu.address.logic.commands.ThemeCommand;
 import seedu.address.model.Model;
 
@@ -15,7 +14,6 @@ public class ThemeCommandSystemTest extends BibliotekSystemTest {
 
     @Test
     public void theme() {
-
         /* ----------------------------------- Perform invalid theme operations ------------------------------------- */
 
         /* Case: no theme name -> rejected */

@@ -13,7 +13,6 @@ import java.util.List;
 import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
-
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RecentCommand;
 import seedu.address.model.Model;
@@ -24,7 +23,6 @@ public class ListCommandSystemTest extends BibliotekSystemTest {
 
     @Test
     public void list() {
-
         /* ----------------------------------- Perform valid list operations ---------------------------------------- */
 
         /* Case: valid filters -> 1 book listed */

@@ -11,7 +11,6 @@ import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
@@ -25,7 +24,6 @@ public class DeleteCommandSystemTest extends BibliotekSystemTest {
 
     @Test
     public void delete() {
-
         /* ----------------- Performing delete operation while an unfiltered list is being shown -------------------- */
 
         /* Case: delete the first book in the list, command with leading spaces and trailing spaces -> deleted */

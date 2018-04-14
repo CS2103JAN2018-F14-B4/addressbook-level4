@@ -8,7 +8,6 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_BOOK;
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
-
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RecentCommand;
 import seedu.address.logic.commands.SearchCommand;
@@ -21,7 +20,6 @@ import seedu.address.testutil.TypicalBooks;
 public class SelectCommandSystemTest extends BibliotekSystemTest {
     @Test
     public void select() {
-
         /* ------------------------ Perform select operations on the shown unfiltered list -------------------------- */
 
         /* Case: select the first card in the book list, command with leading spaces and trailing spaces

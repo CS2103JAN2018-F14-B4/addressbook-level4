@@ -30,7 +30,6 @@ import seedu.address.network.Network;
  * The main LogicManager of the app.
  */
 public class LogicManager extends ComponentManager implements Logic {
-
     private final Logger logger = LogsCenter.getLogger(LogicManager.class);
 
     private final Model model;
@@ -42,17 +41,6 @@ public class LogicManager extends ComponentManager implements Logic {
     private String correctedCommand;
 
     public LogicManager(Model model, Network network) {
-        this.model = model;
-        this.network = network;
-        history = new CommandHistory();
-        bookShelfParser = new BookShelfParser(model.getAliasList());
-        undoStack = new UndoStack();
-    }
-
-    /*
-    use for the testing
-     */
-    public LogicManager(Model model, Network network, boolean encrypt) {
         this.model = model;
         this.network = network;
         history = new CommandHistory();
@@ -182,6 +170,4 @@ public class LogicManager extends ComponentManager implements Logic {
             model.addRecentBook(event.getNewSelection());
         }
     }
-
-
 }

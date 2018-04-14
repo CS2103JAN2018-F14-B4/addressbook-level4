@@ -44,6 +44,7 @@ public class BookShelf implements ReadOnlyBookShelf {
      */
     public void resetData(ReadOnlyBookShelf newData) {
         requireNonNull(newData);
+
         try {
             setBooks(newData.getBookList());
         } catch (DuplicateBookException e) {

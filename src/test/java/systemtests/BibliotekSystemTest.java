@@ -33,17 +33,13 @@ import guitests.guihandles.WelcomePanelHandle;
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.CommandHistory;
 import seedu.address.logic.LockManager;
-import seedu.address.logic.UndoStack;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.SelectCommand;
-import seedu.address.logic.commands.UnlockCommand;
 import seedu.address.model.BookShelf;
 import seedu.address.model.Model;
 import seedu.address.model.book.Book;
-import seedu.address.network.Network;
 import seedu.address.testutil.TestUtil;
 import seedu.address.testutil.TypicalBooks;
 import seedu.address.ui.CommandBox;
@@ -78,17 +74,6 @@ public abstract class BibliotekSystemTest {
         LockManager.getInstance().unlock(LockManager.getInstance().getPassword());
 
         assertApplicationStartingStateIsCorrect();
-    }
-
-    /**
-     * Decrypt the model before test.
-     */
-    public void decryptModel(Model model) {
-        String key = LockManager.getInstance().getPassword();
-
-        UnlockCommand unlockCommand = new UnlockCommand(key);
-        unlockCommand.setData(model, mock(Network.class), new CommandHistory(), new UndoStack());
-        unlockCommand.execute();
     }
 
     @After

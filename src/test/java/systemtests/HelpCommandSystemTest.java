@@ -11,7 +11,6 @@ import org.junit.Test;
 
 import guitests.GuiRobot;
 import guitests.guihandles.HelpWindowHandle;
-
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -28,10 +27,8 @@ public class HelpCommandSystemTest extends BibliotekSystemTest {
 
     private final GuiRobot guiRobot = new GuiRobot();
 
-
     @Test
     public void openHelpWindow() {
-
         // use accelerator
         getCommandBox().click();
         getMainMenu().openHelpWindowUsingAccelerator();

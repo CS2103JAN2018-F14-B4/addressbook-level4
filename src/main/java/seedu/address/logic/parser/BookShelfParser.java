@@ -129,9 +129,6 @@ public class BookShelfParser {
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
 
-        case UnlockCommand.COMMAND_WORD:
-            return new UnlockCommandParser().parse(arguments);
-
         case DeleteAliasCommand.COMMAND_WORD:
             return new DeleteAliasCommand(arguments);
 
@@ -144,9 +141,6 @@ public class BookShelfParser {
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();
 
-        case LockCommand.COMMAND_WORD:
-            return new LockCommand();
-
         case HelpCommand.COMMAND_WORD:
             return new HelpCommand();
 
@@ -158,6 +152,9 @@ public class BookShelfParser {
 
         case ListCommand.COMMAND_WORD:
             return new ListCommandParser().parse(arguments);
+
+        case LockCommand.COMMAND_WORD:
+            return new LockCommand();
 
         case RecentCommand.COMMAND_WORD:
             return new RecentCommand();
@@ -179,6 +176,9 @@ public class BookShelfParser {
 
         case UndoCommand.COMMAND_WORD:
             return new UndoCommand();
+
+        case UnlockCommand.COMMAND_WORD:
+            return new UnlockCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

@@ -50,12 +50,6 @@ public interface Storage extends AliasListStorage, BookShelfStorage, UserPrefsSt
     void handleBookShelfChangedEvent(BookShelfChangedEvent bsce);
 
     /**
-     * Saves the current version of key to the hard disk. Creates a new file if it is missing.
-     * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
-     */
-    // void handleKeyChangedEvent(PasswordChangedEvent kce);
-
-    /**
      * Saves the current version of the alias list to the hard disk. Creates a new file if it is missing.
      * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
      */

@@ -1,5 +1,5 @@
 package seedu.address.logic.parser;
-//@@author 592363789
+
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NEW;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_OLD;
@@ -10,12 +10,13 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.SetPasswordCommand;
 
+//@@author 592363789
 public class SetPasswordCommandParserTest {
 
     private SetPasswordCommandParser parser = new SetPasswordCommandParser();
 
     @Test
-    public void parse_missingCompulsoryField_failure() throws Exception {
+    public void parse_missingCompulsoryField_failure() {
 
         String expectedinvalidMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, SetPasswordCommand.MESSAGE_USAGE);
 
@@ -29,7 +30,7 @@ public class SetPasswordCommandParserTest {
     }
 
     @Test
-    public void parse_validCompulsoryField_success() throws Exception {
+    public void parse_validCompulsoryField_success() {
         assertParseSuccess(parser, SetPasswordCommand.COMMAND_WORD + " " + PREFIX_OLD + " " + "oldkey"
                         + " " + PREFIX_NEW + " " + "newkey",
                 new SetPasswordCommand("oldkey", "newkey"));
