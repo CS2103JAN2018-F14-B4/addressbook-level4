@@ -27,13 +27,12 @@ public class XmlBookShelfStorageTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
-
     @Rule
     public TemporaryFolder testFolder = new TemporaryFolder();
 
     @After
     public void tearDown() {
-        LockManager.getInstance().setPassword(LockManager.getInstance().getPassword(), LockManager.NO_PASSWORD);
+        LockManager.getInstance().initialize(LockManager.NO_PASSWORD);
     }
 
     @Test
@@ -113,7 +112,8 @@ public class XmlBookShelfStorageTest {
         BookShelf original = getTypicalBookShelf();
         XmlBookShelfStorage xmlBookShelfStorage = new XmlBookShelfStorage(filePath);
 
-        LockManager.getInstance().setPassword(LockManager.getInstance().getPassword(), "newpw");
+        LockManager.getInstance().initialize(LockManager.NO_PASSWORD);
+        LockManager.getInstance().setPassword(LockManager.NO_PASSWORD, "newpw");
 
         //Save in new file and read back
         xmlBookShelfStorage.saveBookShelf(original, filePath);
@@ -123,7 +123,8 @@ public class XmlBookShelfStorageTest {
 
     @Test
     public void readBookShelf_differentPassword_throwDataConversionException() throws Exception {
-        LockManager.getInstance().setPassword(LockManager.getInstance().getPassword(), "newpw");
+        LockManager.getInstance().initialize(LockManager.NO_PASSWORD);
+        LockManager.getInstance().setPassword(LockManager.NO_PASSWORD, "newpw");
 
         String filePath = "./src/test/data/XmlUtilTest/validBookShelf.xml";
         String tempPath = testFolder.getRoot().getPath() + "TempBookShelf.xml";
