@@ -1,21 +1,18 @@
 package seedu.address.logic.commands;
 //@@author 592363789
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
 import static seedu.address.testutil.TypicalBooks.getTypicalBookShelf;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import seedu.address.logic.CommandHistory;
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.model.KeyChangedEvent;
 import seedu.address.logic.KeyControl;
-import seedu.address.logic.UndoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.network.Network;
 
 public class SetKeyCommandTest {
 
@@ -25,6 +22,7 @@ public class SetKeyCommandTest {
     public void setUp() {
         model = new ModelManager(getTypicalBookShelf(), new UserPrefs());
         KeyControl.getInstance().setKey("testing");
+        EventsCenter.getInstance().post(new KeyChangedEvent("testing"));
     }
 
     @Test
@@ -49,26 +47,6 @@ public class SetKeyCommandTest {
         // different types -> return false
         assertFalse(setKeyCommand.equals(0));
 
-    }
-
-    @Test
-    public void sameKeyTest() {
-        SetKeyCommand skc = new SetKeyCommand("testing", "newkey");
-        skc.setData(model, mock(Network.class), new CommandHistory(), new UndoStack());
-        String expect = SetKeyCommand.MESSAGE_SUCCESS;
-        CommandResult commandResult = skc.execute();
-
-        assertEquals(expect, commandResult.feedbackToUser);
-    }
-
-    @Test
-    public void differentKeyTest() {
-        SetKeyCommand skc = new SetKeyCommand("wrongtesting", "newkey");
-        skc.setData(model, mock(Network.class), new CommandHistory(), new UndoStack());
-        String expect = SetKeyCommand.WRONG_OLDKEY;
-        CommandResult commandResult = skc.execute();
-
-        assertEquals(expect, commandResult.feedbackToUser);
     }
 
 }

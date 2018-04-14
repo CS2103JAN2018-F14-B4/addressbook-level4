@@ -1,15 +1,26 @@
 package seedu.address.logic;
 //@@author 592363789
-import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.model.BookShelfChangedEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.security.SecureRandom;
+
+import javax.crypto.Cipher;
+import javax.crypto.CipherInputStream;
+import javax.crypto.CipherOutputStream;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.DESKeySpec;
+
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
-import javax.crypto.*;
-import javax.crypto.spec.DESKeySpec;
-import java.io.*;
-import java.security.SecureRandom;
-
+/**
+ *  Class for encrypt and decrypt file and key.
+ */
 public class CipherEngine {
 
     private static final String defaultKey = "abcdefgh";
@@ -25,7 +36,7 @@ public class CipherEngine {
             file = path;
             FileInputStream fis = new FileInputStream(path);
             FileOutputStream fos = new FileOutputStream("data/change.xml");
-            EnDecrypt(defaultKey, Cipher.ENCRYPT_MODE, fis, fos);
+            enDecrypt(defaultKey, Cipher.ENCRYPT_MODE, fis, fos);
             File temp = new File(file);
             temp.delete();
             changeName("data/change.xml");
@@ -42,7 +53,7 @@ public class CipherEngine {
             file = path;
             FileInputStream fis = new FileInputStream(path);
             FileOutputStream fos = new FileOutputStream("data/change.xml");
-            EnDecrypt(defaultKey, Cipher.DECRYPT_MODE, fis, fos);
+            enDecrypt(defaultKey, Cipher.DECRYPT_MODE, fis, fos);
             File temp = new File(file);
             temp.delete();
             changeName("data/change.xml");
@@ -54,7 +65,8 @@ public class CipherEngine {
     /**
      * Encrypt or Decrypt method
      */
-    public static void EnDecrypt(String key, int mode, InputStream inputStream, OutputStream outputStream) throws Throwable {
+    public static void enDecrypt(String key, int mode, InputStream inputStream, OutputStream outputStream)
+            throws Throwable {
 
         DESKeySpec desKeySpec = new DESKeySpec(key.getBytes());
         SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance("DES");
@@ -64,18 +76,18 @@ public class CipherEngine {
         if (mode == Cipher.ENCRYPT_MODE) {
             cipher.init(Cipher.ENCRYPT_MODE, desKey);
             CipherInputStream cipherInputStream = new CipherInputStream(inputStream, cipher);
-            Hiding(cipherInputStream, outputStream);
+            hiding(cipherInputStream, outputStream);
         } else if (mode == Cipher.DECRYPT_MODE) {
             cipher.init(Cipher.DECRYPT_MODE, desKey);
             CipherOutputStream cipherOutputStream = new CipherOutputStream(outputStream, cipher);
-            Hiding(inputStream, cipherOutputStream);
+            hiding(inputStream, cipherOutputStream);
         }
     }
 
     /**
      *  Cover the file (hiding the normal file)
      */
-    public static void Hiding(InputStream inputStream, OutputStream outputStream) throws IOException {
+    public static void hiding(InputStream inputStream, OutputStream outputStream) throws IOException {
         byte[] bytes = new byte[64];
         int num;
         while ((num = inputStream.read(bytes)) != -1) {

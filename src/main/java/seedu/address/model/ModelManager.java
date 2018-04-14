@@ -4,17 +4,13 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.model.alias.Alias.ALIAS_NAME_COMPARATOR;
 
-import java.io.IOException;
-import java.security.SecureRandom;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
-import javax.crypto.Cipher;
-import javax.crypto.SecretKey;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.DESKeySpec;
+
+import com.google.common.eventbus.Subscribe;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,9 +19,14 @@ import javafx.collections.transformation.SortedList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
+
 import seedu.address.commons.events.model.AliasListChangedEvent;
 import seedu.address.commons.events.model.BookShelfChangedEvent;
-import seedu.address.commons.events.model.KeyChangedEvent;
+import seedu.address.commons.events.model.FileDecryptEvent;
+import seedu.address.commons.events.model.FileEncryptEvent;
+import seedu.address.commons.events.model.XmlFileDecryptEvent;
+import seedu.address.commons.events.model.XmlFileEncryptEvent;
+import seedu.address.logic.CipherEngine;
 import seedu.address.logic.KeyControl;
 import seedu.address.model.alias.Alias;
 import seedu.address.model.alias.ReadOnlyAliasList;
@@ -34,8 +35,6 @@ import seedu.address.model.book.Book;
 import seedu.address.model.book.UniqueBookCircularList;
 import seedu.address.model.book.exceptions.BookNotFoundException;
 import seedu.address.model.book.exceptions.DuplicateBookException;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
 
 /**
  * Represents the in-memory model of the book shelf data.
@@ -43,9 +42,6 @@ import sun.misc.BASE64Encoder;
  */
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
-    private static final String defaultKey = "netwxactive";
-    private static final String DES = "DES";
-    private static final String ENCODE = "GBK";
 
     private ActiveListType activeListType;
     private final BookShelf bookShelf;
@@ -76,11 +72,18 @@ public class ModelManager extends ComponentManager implements Model {
         this.searchResults = new BookShelf();
         this.userPrefs = userPrefs;
 
-        if(!userPrefs.getKey().equals("")) {
-            KeyControl.getInstance().encrypt();
-            updateBookListFilter(PREDICATE_HIDE_ALL_BOOKS);
+        try {
+            if (!userPrefs.getKey().equals("")) {
+                KeyControl.getInstance().encrypt();
+                EventsCenter.getInstance().post(new FileEncryptEvent());
+                updateBookListFilter(PREDICATE_HIDE_ALL_BOOKS);
+                KeyControl.getInstance().setKey(CipherEngine.decryptKey(userPrefs.getKey()));
+            } else {
+                KeyControl.getInstance().setKey("");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        KeyControl.getInstance().setKey(userPrefs.getKey());
 
 
         this.recentBooks = new UniqueBookCircularList();
@@ -292,83 +295,17 @@ public class ModelManager extends ComponentManager implements Model {
                 && recentBooks.equals(other.recentBooks)
                 && aliases.equals(other.aliases);
     }
-    //@@author 592363789
-    /**
-     * Use defaultkey to encrypt
-     * @param mykey
-     * @return
-     * @throws Exception
-     */
-    public static String encrypKey(String mykey) throws Exception {
-        byte[] byarray = encrypt(mykey.getBytes(ENCODE), defaultKey.getBytes(ENCODE));
-        String encryptkey = new BASE64Encoder().encode(byarray);
-        return encryptkey;
+
+    @Subscribe
+    public void handleFileEncryptEvent(FileEncryptEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, "File encrypted; saving to file"));
+        raise(new XmlFileEncryptEvent(bookShelf));
     }
 
-    /**
-     * Convert the bytearray of string into encrypt key.
-     *
-     * @param mykey
-     * @param key
-     *
-     * @return
-     * @throws Exception
-     */
-    public static byte[] encrypt(byte[] mykey, byte[] key) throws Exception {
-        SecureRandom secureRandom = new SecureRandom();
-
-        DESKeySpec desKeySpec = new DESKeySpec(key);
-
-        SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance(DES);
-        SecretKey securekey = secretKeyFactory.generateSecret(desKeySpec);
-
-        Cipher cipher = Cipher.getInstance(DES);
-
-        cipher.init(Cipher.ENCRYPT_MODE, securekey, secureRandom);
-
-        return cipher.doFinal(mykey);
-    }
-
-    /**
-     * Use defaultkey to decrypt
-     * @param yourkey
-     * @return
-     * @throws Exception
-     * @throws IOException
-     */
-    public static String decryptKey(String yourkey) throws IOException, Exception {
-        if (yourkey == null) {
-            return null;
-        }
-        BASE64Decoder base64Decoder = new BASE64Decoder();
-        byte[] decodeBuffer = base64Decoder.decodeBuffer(yourkey);
-        byte[] bytes = decrypt(decodeBuffer, defaultKey.getBytes(ENCODE));
-        return new String(bytes, ENCODE);
-    }
-
-    /**
-     * Convert the bytearray of string into decrypt key.
-     *
-     * @param yourkey
-     * @param key
-     *
-     * @return
-     * @throws Exception
-     */
-    private static byte[] decrypt(byte[] yourkey, byte[] key) throws Exception {
-
-        SecureRandom secureRandom = new SecureRandom();
-
-        DESKeySpec desKeySpec = new DESKeySpec(key);
-
-        SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance(DES);
-        SecretKey securekey = secretKeyFactory.generateSecret(desKeySpec);
-
-        Cipher cipher = Cipher.getInstance(DES);
-
-        cipher.init(Cipher.DECRYPT_MODE, securekey, secureRandom);
-
-        return cipher.doFinal(yourkey);
+    @Subscribe
+    public void handleFileDecryptEvent(FileDecryptEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, "File decrypted; saving to file"));
+        raise(new XmlFileDecryptEvent(bookShelf));
     }
 
 }

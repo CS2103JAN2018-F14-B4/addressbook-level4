@@ -14,11 +14,13 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Version;
+import seedu.address.commons.events.model.FileEncryptEvent;
 import seedu.address.commons.events.model.KeyChangedEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.logic.CipherEngine;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
 import seedu.address.model.BookShelf;
@@ -236,13 +238,18 @@ public class MainApp extends Application {
     @Subscribe
     public void handleExitAppRequestEvent(ExitAppRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        EventsCenter.getInstance().post(new FileEncryptEvent());
         this.stop();
     }
 
     @Subscribe
-    public void handleKeyChangedEvent(KeyChangedEvent event) {
+    public void handleKeyChangedEvent(KeyChangedEvent event) throws Exception {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        userPrefs.setKey(event.key);
+        if (event.key.equals("")) {
+            userPrefs.setKey(event.key);
+        } else {
+            userPrefs.setKey(CipherEngine.encrypKey(event.key));
+        }
         try {
             storage.saveUserPrefs(userPrefs);
         } catch (IOException e) {

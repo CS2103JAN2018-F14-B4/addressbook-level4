@@ -2,7 +2,6 @@ package systemtests;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_BOOK;
 
 import org.junit.Test;
@@ -47,13 +46,12 @@ public class ReviewsCommandSystemTest extends BibliotekSystemTest {
         assertCommandFailure(ReviewsCommand.COMMAND_WORD + " " + invalidIndex,
                 MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
 
-        /* Case: mixed case command word -> rejected */
-        assertCommandFailure("ReViEwS 1", MESSAGE_UNKNOWN_COMMAND);
 
         /* ------------ Perform reviews operations on the shown search results list ------------ */
-        executeBackgroundCommand(SearchCommand.COMMAND_WORD + " hello", SearchCommand.MESSAGE_SEARCHING);
-
         Model expectedModel = getModel();
+        decryptModel(expectedModel);
+        executeBackgroundCommand(SearchCommand.COMMAND_WORD + " hello", SearchCommand.MESSAGE_SEARCHING);
+        expectedModel = getModel();
         assertCommandSuccess(ReviewsCommand.COMMAND_WORD + " 1",
                 getModel().getSearchResultsList().get(0), expectedModel);
         assertCommandFailure(ReviewsCommand.COMMAND_WORD + " 39", MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);

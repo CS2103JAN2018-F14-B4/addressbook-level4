@@ -1,9 +1,6 @@
 package seedu.address.logic;
 //@@author 592363789
 
-import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.model.KeyChangedEvent;
-
 /**
  * Stores the key information.
  */

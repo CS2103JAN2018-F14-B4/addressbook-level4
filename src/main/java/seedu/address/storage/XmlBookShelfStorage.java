@@ -8,7 +8,11 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.logging.Logger;
 
+import com.google.common.eventbus.Subscribe;
+
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.XmlFileDecryptEvent;
+import seedu.address.commons.events.model.XmlFileEncryptEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
@@ -73,10 +77,29 @@ public class XmlBookShelfStorage implements BookShelfStorage {
     public void saveBookShelf(ReadOnlyBookShelf bookShelf, String filePath) throws IOException {
         requireNonNull(bookShelf);
         requireNonNull(filePath);
-
-        File file = new File(filePath);
+        File file = new File(filePath);;
         FileUtil.createIfMissing(file);
         XmlFileStorage.saveBookShelfDataToFile(file, new XmlSerializableBookShelf(bookShelf));
+    }
+
+    @Subscribe
+    public void handlexmlFileEncryptEvent(XmlFileEncryptEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, "xml File encrypted; saving to file"));
+        try {
+            saveBookShelf(event.data, "data/bookshelf.xml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Subscribe
+    public void handlexmlFileDecryptEvent(XmlFileDecryptEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, "xml File decrypted; saving to file"));
+        try {
+            saveBookShelf(event.data, "data/bookshelf.xml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

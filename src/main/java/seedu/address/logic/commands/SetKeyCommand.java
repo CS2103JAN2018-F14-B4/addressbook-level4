@@ -1,9 +1,11 @@
 package seedu.address.logic.commands;
 //@@author 592363789
 import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.model.FileDecryptEvent;
+import seedu.address.commons.events.model.FileEncryptEvent;
 import seedu.address.commons.events.model.KeyChangedEvent;
+import seedu.address.logic.CipherEngine;
 import seedu.address.logic.KeyControl;
-import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.exceptions.CommandException;
 
 /**
@@ -48,8 +50,12 @@ public class SetKeyCommand extends Command {
             KeyControl.getInstance().setKey(newKey);
             EventsCenter.getInstance().post(new KeyChangedEvent(newKey));
             if (newKey.equals("")) {
+                CipherEngine.decryptFile("data/bookshelf.xml");
+                EventsCenter.getInstance().post(new FileDecryptEvent());
                 KeyControl.getInstance().decrypt();
             } else {
+                CipherEngine.encryptFile("data/bookshelf.xml");
+                EventsCenter.getInstance().post(new FileEncryptEvent());
                 KeyControl.getInstance().encrypt();
             }
             return new CommandResult(MESSAGE_SUCCESS);

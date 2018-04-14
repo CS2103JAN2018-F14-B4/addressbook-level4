@@ -1,8 +1,6 @@
 package seedu.address.logic.commands;
 //@@author 592363789
 import seedu.address.logic.KeyControl;
-import seedu.address.logic.LogicManager;
-import seedu.address.model.Model;
 
 /**
  * Decrypts the Book shelf.
@@ -34,6 +32,8 @@ public class DecryptCommand extends Command {
 
         if (key.equals(KeyControl.getInstance().getKey())) {
             KeyControl.getInstance().decrypt();
+            //CipherEngine.decryptFile("data/bookshelf.xml");
+            //EventsCenter.getInstance().post(new FileDecryptEvent());
             return new CommandResult(MESSAGE_SUCCESS);
         } else {
             return new CommandResult(MESSAGE_WRONG_PASSWORD);
