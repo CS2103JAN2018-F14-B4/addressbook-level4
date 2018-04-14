@@ -17,8 +17,8 @@ public class CliSyntax {
     protected static final String PREFIX_PRIORITY_STRING = "p/";
     protected static final String PREFIX_RATING_STRING = "r/";
     protected static final String PREFIX_SORT_BY_STRING = "by/";
-    public static final Prefix PREFIX_OLD_KEY = new Prefix("old/");
-    public static final Prefix PREFIX_NEW_KEY = new Prefix("new/");
+    public static final String PREFIX_OLD_KEY = "old/";
+    public static final String PREFIX_NEW_KEY = "new/";
     protected static final String PREFIX_COMMAND_STRING = "cmd/";
 
     // Prefix definitions
@@ -30,8 +30,6 @@ public class CliSyntax {
     public static final Prefix PREFIX_PRIORITY = new Prefix(PREFIX_PRIORITY_STRING);
     public static final Prefix PREFIX_RATING = new Prefix(PREFIX_RATING_STRING);
     public static final Prefix PREFIX_SORT_BY = new Prefix(PREFIX_SORT_BY_STRING);
-    public static final Prefix PREFIX_OLD_KEY = new Prefix(PREFIX_OLD_KEY);
-    public static final Prefix PREFIX_NEW_KEY = new Prefix(PREFIX_NEW_KEY);
     public static final Prefix PREFIX_COMMAND = new Prefix(PREFIX_COMMAND_STRING);
 
     protected static final List<Prefix> LIST_OF_PREFIXES = Arrays.asList(PREFIX_AUTHOR, PREFIX_CATEGORY,
