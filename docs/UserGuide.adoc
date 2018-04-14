@@ -725,18 +725,19 @@ Think the font size is too small or large for your liking? You can customize the
 font size to your own needs. +
 Format: `fontsize FONT_SIZE`
 
-[[setKey-command]]
-=== Setting a key to bibliotek : `setKey` _(coming in v1.5)_
+// tag::encrypt[]
+[[setPassword-command]]
+=== Setting a new password to bookshelf : `setpassword` _(coming in v1.5)_
 
 If you want to keep your data secure, you can opt to set a key for bibliotek. +
-Format: `setKey old/OLDKEY new/NEWKEY`
+Format: `setpassword old/OLDPASSWORD new/NEWPASSWORD`
 
-[NOTE]
-====
-You will be given a default key: admin, when you open bibliotek for the first time.
-====
-
+=====
+NOTE: You will be given a default password: "", when you open bookshelf for the first time.
+=====
+=====
 TIP: You should remember your key after setting a new one.
+=====
 * If you entered old key is correct.
 
 image::setsuccess.png[width="650"]
@@ -746,16 +747,15 @@ image::setsuccess.png[width="650"]
 image::wrongkey(set).png[width="650"]
 
 
-// tag::encrypt[]
-[[Decrypt-command]]
-=== Decrypt the bibliotek : `decrypt` _(coming in v1.5)_
+[[Unlock-command]]
+=== Unlock the bookshelf : `unlock` _(coming in v1.5)_
 
-If you want to decrypt your bibliotek if your bibliotek is encrypted, you can decrypt it using DecryptCommand. +
-Format: `decrypt YOUR_KEY`
+If you want to decrypt your bookshelf if your bookshelf is locked, you can lock it using UnlockCommand. +
+Format: `unlock YOUR_KEY`
 
 [NOTE]
 ====
-You will be given a default key: admin, when you open bibliotek for the first time.
+You will be given a default key: "", when you open bibliotek for the first time.
 ====
 * If your entered key is correct
 
@@ -765,15 +765,16 @@ image::correctkey.png[width="650"]
 
 image::wrongkey.png[width="650"]
 
-[[Encrypt-command]]
-=== Decrypt the bibliotek : `encrypt` _(coming in v1.5)_
+[[Lock-command]]
+=== Lock the bookshelf : `lock` _(coming in v1.5)_
 
-If you want to encrypt your bibliotek, you can encrypt it using EncryptCommand. +
-Format: `encrypt`
+If you want to lock your bookshelf, you can lock it using LockCommand. +
+Format: `lock `
 
 [NOTE]
 ====
-You should remember your key before you do this command.
+. You should remember your key before you do this command.
+. Your cannot lock the bookshelf if the key is default key "".
 ====
 * If you enter a wrong key.
 

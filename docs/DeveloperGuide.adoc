@@ -735,55 +735,67 @@ The loaded page is post-processed using a script to show only the relevant secti
 
 ==== Current implementation
 
-* **When `encrypt` command is entered**
+An addition class `CipherEngine` is added to the `Bookshelf` class. This class contatins some methods
+  to encrypt or decrypt file(`Bookshelf.xml`)and `password`. +
+  Note that when 'CipherEngine' encrypt the file, it will use the (encryped)`password`.
 
-. `EncryptCommand` is processed to set isEncrypt to be true.
+  ===== Encrypt the Bookshelf.xml
 
-. The `Bibliotek` cannot be run any command except `decrypt` and `help` command.
+  * ** Every time user make change in `Bookshelf` **
 
-* If you enter a wrong key.
+  . The `model manager` will post an `BookshelfChangedEvent`.
+  . Before saving the data into `Bookshelf.xml`, the system will check whether `Bookshelf` is protected by the `password`(checking
+  whether the `password` is `defaultpassword`: "").
+  . When the `password` is not default, the `Bookshelf.xml` will be encrypted.
 
-image::shouldbedecryptfirst.png[width="650"]
+  * ** Every time user set the new `password` **
 
-* **When the `Bibliotek` is encrypted and `decrypt` command is entered**
+  . The `Setpasswordcommand` will check the `password`.
+  . If the new `password` is equal to "", the `Lockmanager` will set `isProtected` to be false.
+  . The isProtect will be checked by `xmlBookshelfstorage` whether to  encrypt the "Bookshelf.xml" and save
+   the data into `Bookshelf.xml`.
 
-. `DecryptCommandParser` will extract key from the user input.
-. `DecryptCommandParser` creates an `DecryptCommand` the key.
-. `DecryptCommand` is preprocessed to check that key is correct(decode the key from the storage).
-. `DecryptCommand` is processed to set isEncrypt to be false.
+  * ** When the system need to be encrypt **
 
-* If your entered key is correct
+  . The `password` will be encode, and set it to be a key to encrypt the file(`Bookshelf.xml`).
 
-image::correctkey.png[width="650"]
+  ===== Lock the book shelf
 
-* If your entered key is wrong
+  An addition class `LockManager` is added to save the password and the situation of the locking system. +
+  The default `password` provided for the new user is defaultpassword(""), which means that the `Bookshelf` is not locked. +
 
-image::wrongkey.png[width="650"]
+  * ** When `Lock` command is entered **
 
+  . 'LockCommand' will check whether the `password` is `defaultpassword`: "".
+  . If the `password` is not `defaultpassword`, `LockCommand` is processed to set `isLock`(`LockManager`) to be true.
+  . If the `password` is `defaultpassword`, `LockCommand` will send a logging information to inform user that they cannot lock the `Bookshelf`.
+  =====
+  NOTE
 
-* **When `setKey` command is entered**
+  . The `Bookshelf` cannot be run any command except `unlock` and `help` command.
 
-. `setKeyCommandParser` will extract the old key and new key from the user input.
-. `setKeyCommandParser` checks that  two parameters are present, and that the parameters are valid.
-. `setKeyCommandParser` creates an `setKeyCommand` with the parameters.
-. `setKeyCommand` is preprocessed to check that oldKey is correct.
-. If the oldKey is correct, `setKeyCommand` will send a setKey command to LogicManager.
-. If the newKey is "", it means that you do not want to encrypt the data and book shelf, then bibliotek will decrypt your data file and your bookshelf.
-. If the newKy is not "", LogicManager will send set_new_key request to ModelManger.
-. ModelManager indicate the keyChangedevent and handle it, and set the bookshelf's key to be new key.
-. ModelManager will encode the key, before indicate the keyChangedevent.
-. StorageManager handle the event by update the bibliotek with the new key(encoded key).
+  . You cannot Lock the `Bookshelf` if the `password` is `defaultpassword`.
+  =====
 
-* If you entered old key is correct.
+  * **When the `Bookshelf` is locked and `unlock` command is entered**
 
-image::setsuccess.png[width="650"]
+  . `UnlockCommandParser` will extract `password` from the user input.
+  . `UnlockCommandParser` creates an `UnlockCommand` for the `password`.
+  . `UnlockCommand` is preprocessed to execute `LockManager`'s unlock(password).
+  . If the password is corrct, the unlock will be run successfully, otherwise it will send a WRONG_PASSWORD commandresult.
+  . `UnlockCommand` is processed to set isLock(LockManager) to be false.
 
-* If you entered old key is incorrect.
+  * **When `setPassword` command is entered**
 
-image::wrongkey(set).png[width="650"]
+  . `setPasswordCommandParser` will extract the old key and new key from the user input.
+  . `setPasswordCommandParser` checks that  two parameters are present, and that the parameters are valid.
+  . `setPasswordCommandParser` creates an `setPasswordCommand` with the parameters.
+  . `setPasswordCommand` is preprocessed to check that oldKey is correct.
+  . If the oldKey is correct, `setPasswordCommand` will post a `passwordChangedevent`.
+  . MainApp will handle it, and set `UserPrefs.password` to be new encoded `password`(using cipherEngine).
 
-* The encode key are implement in this way:
-[source,java]
+  * The encode key are implement in this way:
+  [source,java]
 ----
     public static String encrypKey(String mykey) throws Exception {
         byte[] byarray = encrypt(mykey.getBytes(ENCODE), defaultKey.getBytes(ENCODE));
@@ -836,9 +848,6 @@ image::wrongkey(set).png[width="650"]
         return cipher.doFinal(yourkey);
     }
 ----
-The default key "admin" will be stored as:
-
-image::password_admin.png[width="650"]
 // end::encrypt[]
 
 ==== Design considerations
