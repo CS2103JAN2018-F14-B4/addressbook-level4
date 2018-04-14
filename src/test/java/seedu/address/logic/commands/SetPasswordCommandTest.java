@@ -67,7 +67,6 @@ public class SetPasswordCommandTest {
 
     @Test
     public void equals() {
-
         SetPasswordCommand setPasswordCommand = new SetPasswordCommand("testing", "newkey");
 
         SetPasswordCommand thesameCommand = new SetPasswordCommand("testing", "newkey");
@@ -86,7 +85,6 @@ public class SetPasswordCommandTest {
 
         // different types -> return false
         assertFalse(setPasswordCommand.equals(0));
-
     }
 
     /**

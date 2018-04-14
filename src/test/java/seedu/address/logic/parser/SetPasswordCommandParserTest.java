@@ -24,8 +24,7 @@ public class SetPasswordCommandParserTest {
         assertParseFailure(parser, "", expectedinvalidMessage);
 
         // no one of the key
-        assertParseFailure(parser, " ",
-                expectedinvalidMessage);
+        assertParseFailure(parser, " ", expectedinvalidMessage);
 
     }
 

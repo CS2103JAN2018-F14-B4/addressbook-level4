@@ -132,8 +132,7 @@ public class BookShelfParserTest {
 
     @Test
     public void parseCommand_decrypt() throws Exception {
-        UnlockCommand command = (UnlockCommand) parser.parseCommand(UnlockCommand.COMMAND_WORD + " "
-                + "key");
+        UnlockCommand command = (UnlockCommand) parser.parseCommand(UnlockCommand.COMMAND_WORD + " " + "key");
         assertEquals(new UnlockCommand("key"), command);
     }
 

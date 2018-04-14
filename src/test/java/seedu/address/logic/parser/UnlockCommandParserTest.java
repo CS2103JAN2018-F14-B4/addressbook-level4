@@ -12,9 +12,8 @@ public class UnlockCommandParserTest {
     private UnlockCommandParser parser = new UnlockCommandParser();
 
     @Test
-    public void parse_validCompulsoryField_success() throws Exception {
-        assertParseSuccess(parser,  "oldkey",
-                new UnlockCommand("oldkey"));
+    public void parse_validCompulsoryField_success() {
+        assertParseSuccess(parser,  "oldkey", new UnlockCommand("oldkey"));
     }
 
 }

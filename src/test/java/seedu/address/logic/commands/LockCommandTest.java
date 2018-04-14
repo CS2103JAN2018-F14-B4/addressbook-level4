@@ -35,7 +35,6 @@ public class LockCommandTest {
 
     @Test
     public void equals() {
-
         LockCommand lockCommand = new LockCommand();
 
         // same object -> returns true
@@ -49,7 +48,6 @@ public class LockCommandTest {
 
         // different types -> return false
         assertFalse(lockCommand.equals(0));
-
     }
 
     @Test
