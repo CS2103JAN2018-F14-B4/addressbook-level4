@@ -8,6 +8,7 @@ import static seedu.address.testutil.TypicalBooks.getTypicalBookShelf;
 
 import java.io.IOException;
 
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -15,6 +16,7 @@ import org.junit.rules.TemporaryFolder;
 
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.FileUtil;
+import seedu.address.logic.LockManager;
 import seedu.address.model.BookShelf;
 import seedu.address.model.ReadOnlyBookShelf;
 
@@ -26,6 +28,11 @@ public class XmlBookShelfStorageTest {
 
     @Rule
     public TemporaryFolder testFolder = new TemporaryFolder();
+
+    @After
+    public void tearDown() {
+        LockManager.getInstance().setPassword(LockManager.getInstance().getPassword(), LockManager.NO_PASSWORD);
+    }
 
     @Test
     public void readBookShelf_nullFilePath_throwsNullPointerException() throws Exception {
@@ -96,6 +103,28 @@ public class XmlBookShelfStorageTest {
         readBack = xmlBookShelfStorage.readBookShelf().get(); //file path not specified
         assertEquals(original, new BookShelf(readBack));
 
+    }
+
+    @Test
+    public void readAndSaveBookShelf_withPassword_success() throws Exception {
+        String filePath = testFolder.getRoot().getPath() + "TempBookShelf.xml";
+        BookShelf original = getTypicalBookShelf();
+        XmlBookShelfStorage xmlBookShelfStorage = new XmlBookShelfStorage(filePath);
+
+        LockManager.getInstance().setPassword(LockManager.getInstance().getPassword(), "newpw");
+
+        //Save in new file and read back
+        xmlBookShelfStorage.saveBookShelf(original, filePath);
+        ReadOnlyBookShelf readBack = xmlBookShelfStorage.readBookShelf(filePath).get();
+        assertEquals(original, new BookShelf(readBack));
+    }
+
+    @Test
+    public void readBookShelf_differentPassword_throwDataConversionException() throws Exception {
+        LockManager.getInstance().setPassword(LockManager.getInstance().getPassword(), "newpw");
+        String filePath = "./src/test/data/XmlUtilTest/validBookShelf.xml";
+        thrown.expect(DataConversionException.class);
+        new XmlBookShelfStorage(filePath).readBookShelf(filePath);
     }
 
     @Test
