@@ -87,8 +87,7 @@ public class LogicManager extends ComponentManager implements Logic {
 
             if (LockManager.getInstance().isLocked()
                     && !(command instanceof HelpCommand || command instanceof UnlockCommand)) {
-                return new CommandResult("The app is locked,"
-                        + " please unlock it first!");
+                return new CommandResult("The app is locked, please unlock it first!");
             }
 
             if (command instanceof UnlockCommand || command instanceof SetPasswordCommand) {
