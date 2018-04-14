@@ -46,7 +46,6 @@ public class ReviewsCommandSystemTest extends BibliotekSystemTest {
         assertCommandFailure(ReviewsCommand.COMMAND_WORD + " " + invalidIndex,
                 MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);
 
-
         /* ------------ Perform reviews operations on the shown search results list ------------ */
         Model expectedModel = getModel();
         decryptModel(expectedModel);

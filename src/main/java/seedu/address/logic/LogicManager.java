@@ -58,11 +58,14 @@ public class LogicManager extends ComponentManager implements Logic {
 
     @Override
     public CommandResult execute(String commandText) throws CommandException, ParseException {
-        String processedText = bookShelfParser.applyCommandAlias(commandText);
-        logger.info("----------------[USER COMMAND][" + processedText + "]");
+        if (correctedCommand == null && commandText.equals("")) {
+            return CommandResult.emptyResult();
+        }
+
+        logger.info("----------------[USER COMMAND][" + commandText + "]");
 
         try {
-            Command command = getCommand(processedText);
+            Command command = getCommand(commandText);
             CommandResult result;
             if (KeyControl.getInstance().isEncrypted() && !(command instanceof HelpCommand)) {
                 if (command instanceof DecryptCommand) {
@@ -79,7 +82,7 @@ public class LogicManager extends ComponentManager implements Logic {
             }
             return result;
         } catch (ParseException e) {
-            return attemptCommandAutoCorrection(processedText, e);
+            return attemptCommandAutoCorrection(commandText, e);
         } finally {
             history.add(commandText);
         }
@@ -102,17 +105,18 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     /**
-     * Obtains the command represented by {@code processedText}. If user enters "y" following a
+     * Obtains the command represented by {@code processedText}. If user presses enter (empty String) following a
      * command correction, that corrected command will be returned.
-     * @param processedText The command as entered by the user, after accounting for aliases.
+     * @param commandText The command as entered by the user.
      * @return the command obtained.
      * @throws ParseException If {@code processedText} cannot be parsed.
      */
-    private Command getCommand(String processedText) throws ParseException {
+    private Command getCommand(String commandText) throws ParseException {
         Command command;
-        if (correctedCommand != null && processedText.equalsIgnoreCase("y")) {
+        if (correctedCommand != null && commandText.equals("")) {
             command = bookShelfParser.parseCommand(correctedCommand);
         } else {
+            String processedText = bookShelfParser.applyCommandAlias(commandText);
             command = bookShelfParser.parseCommand(processedText);
         }
         correctedCommand = null;
