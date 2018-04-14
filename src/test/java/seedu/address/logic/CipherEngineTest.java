@@ -18,9 +18,8 @@ import seedu.address.commons.util.FileUtil;
 //@@author qiu-siqi
 public class CipherEngineTest {
 
-    private static final String TEST_DATA_FOLDER = FileUtil.getPath("src/test/data/XmlUtilTest/");
+    private static final String TEST_DATA_FOLDER = FileUtil.getPath("./src/test/data/XmlUtilTest/");
     private static final String VALID_BOOK_SHELF = TEST_DATA_FOLDER + "validBookShelf.xml";
-    private static final String TEMP_FILE = "tempfile.xml";
 
     private static final String TEST_KEY_1 = "";
     private static final String TEST_KEY_2 = "Qg5gk20g%1~";
@@ -35,7 +34,7 @@ public class CipherEngineTest {
     @Test
     public void encryptDecryptFile() throws Exception {
         File validBookShelf = new File(VALID_BOOK_SHELF);
-        String tempFile = testFolder.getRoot().getPath() + TEMP_FILE;
+        String tempFile = testFolder.getRoot().getPath() + File.separator + "TempFile.xml";
         File copy = new File(tempFile);
 
         try {

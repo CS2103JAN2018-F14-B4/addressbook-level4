@@ -130,8 +130,7 @@ public class LogicManagerTest {
         LockManager.getInstance().lock();
         assertCommandSuccess("list", Messages.MESSAGE_APP_LOCKED, model);
         assertCommandSuccess("help", HelpCommand.SHOWING_HELP_MESSAGE, model);
-        assertCommandSuccess("unlock " + LockManager.getInstance().getPassword(),
-                UnlockCommand.MESSAGE_SUCCESS, model);
+        assertCommandSuccess("unlock", UnlockCommand.MESSAGE_SUCCESS, model);
     }
 
     @Test

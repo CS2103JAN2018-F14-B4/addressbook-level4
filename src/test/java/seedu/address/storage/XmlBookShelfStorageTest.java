@@ -80,7 +80,7 @@ public class XmlBookShelfStorageTest {
 
     @Test
     public void readAndSaveBookShelf_allInOrder_success() throws Exception {
-        String filePath = testFolder.getRoot().getPath() + "TempBookShelf.xml";
+        String filePath = testFolder.getRoot().getPath() + File.separator + "TempBookShelf.xml";
         BookShelf original = getTypicalBookShelf();
         XmlBookShelfStorage xmlBookShelfStorage = new XmlBookShelfStorage(filePath);
 
@@ -107,7 +107,7 @@ public class XmlBookShelfStorageTest {
 
     @Test
     public void readAndSaveBookShelf_withPassword_success() throws Exception {
-        String filePath = testFolder.getRoot().getPath() + "TempBookShelf.xml";
+        String filePath = testFolder.getRoot().getPath() + File.separator + "TempBookShelf.xml";
         BookShelf original = getTypicalBookShelf();
         XmlBookShelfStorage xmlBookShelfStorage = new XmlBookShelfStorage(filePath);
 
@@ -126,13 +126,13 @@ public class XmlBookShelfStorageTest {
         LockManager.getInstance().setPassword(LockManager.NO_PASSWORD, "newpw");
 
         String filePath = FileUtil.getPath("./src/test/data/XmlUtilTest/validBookShelf.xml");
-        String tempPath = testFolder.getRoot().getPath() + "TempBookShelf.xml";
+        String tempPath = testFolder.getRoot().getPath() + File.separator + "TempBookShelf.xml";
         File tempFile = new File(tempPath);
 
         try {
             FileUtil.copyFile(new File(filePath), tempFile);
             thrown.expect(DataConversionException.class);
-            new XmlBookShelfStorage(tempPath).readBookShelf(tempPath);
+            new XmlBookShelfStorage("TempBookShelf.xml").readBookShelf(tempPath);
         } finally {
             tempFile.delete();
         }
