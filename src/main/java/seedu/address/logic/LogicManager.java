@@ -1,6 +1,9 @@
 package seedu.address.logic;
 
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
 
 import com.google.common.eventbus.Subscribe;
 
@@ -11,6 +14,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.events.ui.BookListSelectionChangedEvent;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.BookShelfParser;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -43,18 +47,46 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Override
-    public CommandResult execute(String commandText) throws CommandException, ParseException {
+    public boolean isValidCommand(String commandText) {
+        try {
+            String processedText = bookShelfParser.applyCommandAlias(commandText);
+            bookShelfParser.parseCommand(processedText);
+            return true;
+        } catch (ParseException e) {
+            return false;
+        }
+    }
+
+    @Override
+    public String[] parse(String commandText) throws ParseException {
         String processedText = bookShelfParser.applyCommandAlias(commandText);
-        logger.info("----------------[USER COMMAND][" + processedText + "]");
+        final Matcher matcher = BookShelfParser.BASIC_COMMAND_FORMAT.matcher(processedText);
+        if (!matcher.matches()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
+        }
+
+        String commandWord = matcher.group("commandWord");
+        final String arguments = matcher.group("arguments");
+
+        return new String[] {commandWord, arguments};
+    }
+
+    @Override
+    public CommandResult execute(String commandText) throws CommandException, ParseException {
+        if (correctedCommand == null && commandText.equals("")) {
+            return CommandResult.emptyResult();
+        }
+
+        logger.info("----------------[USER COMMAND][" + commandText + "]");
 
         try {
-            Command command = getCommand(processedText);
+            Command command = getCommand(commandText);
             command.setData(model, network, history, undoStack);
             CommandResult result = command.execute();
             undoStack.push(command);
             return result;
         } catch (ParseException e) {
-            return attemptCommandAutoCorrection(processedText, e);
+            return attemptCommandAutoCorrection(commandText, e);
         } finally {
             history.add(commandText);
         }
@@ -77,17 +109,18 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     /**
-     * Obtains the command represented by {@code processedText}. If user enters "y" following a
+     * Obtains the command represented by {@code processedText}. If user presses enter (empty String) following a
      * command correction, that corrected command will be returned.
-     * @param processedText The command as entered by the user, after accounting for aliases.
+     * @param commandText The command as entered by the user.
      * @return the command obtained.
      * @throws ParseException If {@code processedText} cannot be parsed.
      */
-    private Command getCommand(String processedText) throws ParseException {
+    private Command getCommand(String commandText) throws ParseException {
         Command command;
-        if (correctedCommand != null && processedText.equalsIgnoreCase("y")) {
+        if (correctedCommand != null && commandText.equals("")) {
             command = bookShelfParser.parseCommand(correctedCommand);
         } else {
+            String processedText = bookShelfParser.applyCommandAlias(commandText);
             command = bookShelfParser.parseCommand(processedText);
         }
         correctedCommand = null;
@@ -102,16 +135,6 @@ public class LogicManager extends ComponentManager implements Logic {
     @Override
     public ObservableList<Book> getDisplayBookList() {
         return model.getDisplayBookList();
-    }
-
-    @Override
-    public ObservableList<Book> getSearchResultsList() {
-        return model.getSearchResultsList();
-    }
-
-    @Override
-    public ObservableList<Book> getRecentBooksList() {
-        return model.getRecentBooksList();
     }
 
     @Override
