@@ -70,7 +70,7 @@ public abstract class BibliotekSystemTest {
         setupHelper = new SystemTestSetupHelper();
         testApp = setupHelper.setupApplication(this::getInitialData, getDataFileLocation());
         mainWindowHandle = setupHelper.setupMainWindowHandle();
-        LockManager.getInstance().unlock(LockManager.getInstance().getPassword());
+        LockManager.getInstance().initialize(LockManager.NO_PASSWORD);
 
         assertApplicationStartingStateIsCorrect();
     }

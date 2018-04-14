@@ -8,6 +8,7 @@ import static org.mockito.Mockito.mock;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -35,6 +36,11 @@ public class LogicManagerTest {
 
     private Model model = new ModelManager();
     private Logic logic = new LogicManager(model, mock(NetworkManager.class));
+
+    @Before
+    public void setUp() {
+        LockManager.getInstance().initialize(LockManager.NO_PASSWORD);
+    }
 
     @Test
     public void isValidCommand_validCommand_true() {

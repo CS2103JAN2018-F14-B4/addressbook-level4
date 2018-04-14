@@ -9,12 +9,17 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Arrays;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
+
+import seedu.address.commons.util.FileUtil;
 
 //@@author qiu-siqi
 public class CipherEngineTest {
 
-    private static final String VALID_BOOK_SHELF = "./src/test/data/XmlUtilTest/validBookShelf.xml";
+    private static final String TEST_DATA_FOLDER = FileUtil.getPath("src/test/data/XmlUtilTest/");
+    private static final String VALID_BOOK_SHELF = TEST_DATA_FOLDER + "validBookShelf.xml";
     private static final String TEMP_FILE = "tempfile.xml";
 
     private static final String TEST_KEY_1 = "";
@@ -24,22 +29,26 @@ public class CipherEngineTest {
     private static final String PASSWORD_2 = "thisismypassword";
     private static final String PASSWORD_3 = "1RS#(`D #Q HT%";
 
+    @Rule
+    public TemporaryFolder testFolder = new TemporaryFolder();
+
     @Test
     public void encryptDecryptFile() throws Exception {
         File validBookShelf = new File(VALID_BOOK_SHELF);
-        File copy = new File(TEMP_FILE);
+        String tempFile = testFolder.getRoot().getPath() + TEMP_FILE;
+        File copy = new File(tempFile);
 
         try {
             Files.copy(validBookShelf.toPath(), copy.toPath());
 
-            CipherEngine.encryptFile(TEMP_FILE, TEST_KEY_1);
+            CipherEngine.encryptFile(tempFile, TEST_KEY_1);
             assertDifferentContent(validBookShelf, copy);
-            CipherEngine.decryptFile(TEMP_FILE, TEST_KEY_1);
+            CipherEngine.decryptFile(tempFile, TEST_KEY_1);
             assertSameContent(validBookShelf, copy);
 
-            CipherEngine.encryptFile(TEMP_FILE, TEST_KEY_2);
+            CipherEngine.encryptFile(tempFile, TEST_KEY_2);
             assertDifferentContent(validBookShelf, copy);
-            CipherEngine.decryptFile(TEMP_FILE, TEST_KEY_2);
+            CipherEngine.decryptFile(tempFile, TEST_KEY_2);
             assertSameContent(validBookShelf, copy);
         } finally {
             copy.delete();
