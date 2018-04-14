@@ -103,8 +103,6 @@ public class UserPrefs {
 
     @Override
     public int hashCode() {
-        return Objects.hash(windowSettings, bookShelfFilePath, aliasListFilePath,
-                bookShelfName, appTheme);
         return Objects.hash(windowSettings, bookShelfFilePath, recentBooksFilePath,
                 aliasListFilePath, bookShelfName, appTheme);
     }
