@@ -25,7 +25,7 @@ You can use Bibliotek to search for books, manage your reading list and track th
 If you *prefer to use a desktop app*, like *working with a Command Line Interface* (<<cli, CLI>>)
 while still having the benefits of a Graphical User Interface (<<gui, GUI>>) or can *type fast*, Bibliotek is just for you!
 
-Interested? Jump to <<Installing Bibliotek>> to get Bibliotek. Enjoy!
+Interested? Jump to <<Installing Bibliotek>> to get started. Enjoy!
 
 === Using this guide
 This document is a reference for installing and using Bibliotek.
@@ -62,26 +62,26 @@ image::Ui.png[width="790"]
 
 == Navigating Bibliotek
 
-The interface of Bibliotek can be broken down to 4 main components.
+The interface of Bibliotek can be broken down into 4 main components.
 
 . Just below the menu bar, there is a text box which says `Enter command here...`. This is where you type commands that you wish to execute. +
 +
-image::CommandBox.png[width="450"]
+image::CommandBox.png[width="700"]
 +
 To get started, try typing `search Harry Potter` in this text box and press kbd:[Enter].
 . Below this text box, there is a region which shows text. Responses to your commands can be found here. +
 +
-image::ResultBox.png[width="450"]
+image::ResultBox.png[width="700"]
 +
 If you performed the search, you will realise that this region currently displays some message indicating that your search is in progress, successful or unsuccessful.
-. The left panel displays a list of books, which is the result of your `search` command. These books are identified by their indexes (given beside the book title). +
+. The left panel displays a list of books, which is the result of your `search` command. These books are identified by their position in the list (given beside the book title). +
 +
-image::LeftPanel.png[width="90"]
+image::LeftPanel.png[width="250"]
 +
 Try interacting with the list by clicking on any book.
 . The right panel displays additional information about books which you ask for. +
 +
-image::RightPanel.png[width="450"]
+image::RightPanel.png[width="500"]
 +
 When you click on books, more detailed information is shown in the right panel, such as the book description.
 
@@ -94,7 +94,8 @@ To help you get accustomed to Bibliotek, here are some other commands you can tr
 
 Refer to <<Features>> for details of each command.
 
-== Features Format
+[[Command-Format]]
+== Command Format
 
 This section contains information about the general format of our commands and how they are represented in this documentation.
 If you are new to Bibliotek, do take some time to read this section so that <<Features>> will make sense to you.
@@ -289,27 +290,27 @@ Lists `Science Fiction` books in your book shelf that contains `Babylon's Ashes`
 [[edit-command]]
 === Editing a book : `edit` _(since v1.4)_
 
-When you using the Bibliotek to read books, you may want to rate on one book you read, set the status to remind you the reading situation,
-or set the priority of the book to remind yourself what to read next. These can be done using `edit`. +
+After reading a book, you may want to give the book a rating or set the book as read.
+Or, you may want to change the priority of books to remind yourself what you should read next. These can be done using `edit`. +
 Format: `edit INDEX [s/STATUS] [p/PRIORITY] [r/RATING]`
 
 ****
-* For the index, you should provide a integer which in the range of your list.
-* You should provide at least one field to edit.
-* Before you edit, every book has a default value for rating("-1"), status("none") and priority("unread").
-* For the rating format, the range of the rating should be between -1 and 5. (-1 is for unrated books).
-* For the status format, you should choose one of aliases(or full name) following: `read`(`r`), `unread`(`ur`), or `reading`(`rd`).
-* For the priority format, you should choose one of aliases(or full name) following: `none`(`n`), `low`(`l`), `medium`(`m`) or `high`(`h`).
+* Edits the book at the specified `INDEX`. The index refers to the index number shown in the most recent listing. The index *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+* `STATUS` must be one of the following (items in parenthesis are aliases): `read` (`r`), `unread` (`u`), or `reading` (`rd`).
+* `PRIORITY` must be one of the following (items in parenthesis are aliases): `none` (`n`), `low` (`l`), `medium` (`m`), or `high` (`h`).
+* `RATING` must be a valid rating from 0 to 5, or -1 to remove rating.
 ****
 
-WARNING: You can only edit books from the list using the index.
+WARNING: You can only perform `edit` when the list shown is from your book shelf.
 
 Examples:
 
-* `edit 3 p/low` +
-Changes the priority of the 3rd book to `LOW`.
-* `edit 1 s/read p/low r/4` +
-Marks the 1nd book as `READ`, changes its priority to `LOW`, and changes its rating to `4`.
+* `edit 1 p/high` +
+Changes the priority of the 1st book to `HIGH`.
+* `edit 2 s/read r/5` +
+Marks the 2nd book as `READ` and changes its rating to `5`.
 // end::edit[]
 
 [[delete-command]]
@@ -433,9 +434,9 @@ it means your search request has timed out. You should try again after some time
 // end::library[]
 
 [[exit-command]]
-=== Closing the program : `exit`
+=== Closing the app : `exit`
 
-Use `exit` to close the program. +
+If you want to close the app, use `exit`. +
 Format: `exit`
 
 === Saving the data
@@ -610,20 +611,19 @@ Deletes the command alias with the name `rm`.
 Deletes the command alias with the name `read`.
 // end::alias[]
 
-=== Command autocorrection system _(since v1.5)_
+=== Command autocorrection _(since v1.5)_
 
 It is common to mispell words when you are typing fast, and when this happens, it is always a hassle to have to correct it and try again.
-With the command autocorrection system, this may only be a press of kbd:[Enter] away.
+With the command autocorrection system, this may only be one keypress away.
 
 ****
-* Corrects inputed command word which is one letter away from an actual command word, and suggests the correction to you.
-** May not correct for additional space in the command word.
+* Corrects mispelled command words which are one letter away from an actual command word, and suggests the correction to you.
 * You can execute the corrected command by pressing kbd:[Enter].
 ****
 
 == Other Features
 
-This section documents features in Bibliotek which are neither book management nor convenience features.
+This section documents some additional features in Bibliotek that do not fall into the above categories.
 
 // tag::quoteOfTheDay[]
 === Displaying quote of the day
@@ -753,30 +753,30 @@ TIP: You should remember your password after setting a new one.
 
 // tag::encrypt[]
 [[Encrypt-command]]
-=== Lock Bibliotek : `lock` _(coming in v1.5)_
+=== Lock the app : `lock` _(coming in v1.5)_
 
 If you are going away for a moment and want to prevent others from messing with the application, you can perform `lock`. +
 Format: `lock`
 
 ****
-* Locks Bibliotek. No commands can be performed other than `help` and `unlock`.
-* Bibliotek is locked upon start up if you have a password.
+* Locks the app. No commands can be performed other than `help` and `unlock`.
+* The app is locked upon start up if you have a password.
 ****
 
 NOTE: If you perform `lock` without a password, anyone can `unlock` your application.
 
 [[Decrypt-command]]
-=== Unlock Bibliotek : `unlock` _(coming in v1.5)_
+=== Unlock the app : `unlock` _(coming in v1.5)_
 
-If you previously performed `lock`, use `unlock` to unlock Bibliotek. +
+If you previously performed `lock`, use `unlock` to unlock the app. +
 Format: `unlock PASSWORD`
 
 ****
-* Unlocks Bibliotek.
+* Unlocks the app.
 * `PASSWORD` is case sensitive.
 ****
 
-NOTE: If you did not set a password, simply use `unlock` to unlock Bibliotek.
+NOTE: If you did not set a password, simply type `unlock` to unlock the app.
 
 TIP: If you really forgot your password and cannot unlock the system, you can reset Bibliotek by deleting all your data files.
 
@@ -831,11 +831,11 @@ if there are other sites you wish are supported.
 *A*: Post in our https://github.com/CS2103JAN2018-F14-B4/main/issues[issues page] and we will try our best to answer your queries.
 
 *Q*: Can I build upon Bibliotek? +
-*A*: Yes, you are free to build upon Bibliotek. The source code for Bibliotek is available at https://github.com/CS2103JAN2018-F14-B4/main[our github page].
+*A*: Yes, you are free to build upon Bibliotek. The source code for Bibliotek is available on https://github.com/CS2103JAN2018-F14-B4/main[our GitHub page].
 
 == Command Summary
 
-If all you need is a quick reference on how to use certain commands, you can refer to this list below.
+If all you need is a quick reference on how to use certain commands, you can refer to the table below.
 
 [width="72%",options="header",]
 |=======================================================================
@@ -853,12 +853,13 @@ e.g. `addalias read cmd/edit s/read p/none`
 |*Edit book in book shelf* |`edit INDEX [s/STATUS] [p/PRIORITY] [r/RATING]`
 
 e.g. `edit 2 s/READ r/5`
-|*Close the App* |`exit`
+|*Close the pp* |`exit`
 |*View help* |`help`
 |*View previous commands* |`history`
 |*Search for book in library* |`library INDEX`
-|*List books in book shelf* |`list [t/TITLE] [a/AUTHOR] [c/CATEGORY] [s/STATUS] [p/PRIORITY] [r/RATING] [by/SORT_BY]`
-|*Lock Bibliotek* |`lock`
+|*List books in book shelf* |`list [t/TITLE] [a/AUTHOR] [c/CATEGORY] [s/STATUS]`
+`[p/PRIORITY] [r/RATING] [by/SORT_BY]`
+|*Lock the app* |`lock`
 |*View recently selected books* |`recent`
 |*View book reviews* |`reviews INDEX`
 |*Search for books* |`search [SEARCH_TERM] [i/ISBN] [t/TITLE] [a/AUTHOR] [c/CATEGORY]`
@@ -870,7 +871,7 @@ e.g. `setpw old/admin new/haha`
 |*Select a book* |`select INDEX`
 |*Change theme* |`theme THEME_NAME`
 |*Undo previous change* |`undo`
-|*Unlock Bibliotek* |`unlock PASSWORD`
+|*Unlock the app* |`unlock PASSWORD`
 |=======================================================================
 
 [appendix]
