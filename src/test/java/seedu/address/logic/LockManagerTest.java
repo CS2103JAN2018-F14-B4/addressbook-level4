@@ -16,11 +16,11 @@ public class LockManagerTest {
     }
 
     @Test
-    public void instantiate() {
-        LockManager.getInstance().initialize("testing");
+    public void instantiate() throws Exception {
+        LockManager.getInstance().initialize(CipherEngine.hashPassword("testing"));
         assertTrue(LockManager.getInstance().isLocked());
+        assertFalse(LockManager.getInstance().hasLoggedIn());
         assertTrue(LockManager.getInstance().isPasswordProtected());
-        assertEquals("testing", LockManager.getInstance().getPassword());
     }
 
     @Test
@@ -34,14 +34,19 @@ public class LockManagerTest {
     }
 
     @Test
-    public void unlock() {
-        LockManager.getInstance().initialize("testing");
+    public void unlock() throws Exception {
+        LockManager.getInstance().initialize(CipherEngine.hashPassword("testing"));
+        assertFalse(LockManager.getInstance().hasLoggedIn());
 
         // Cannot unlock if wrong password
         assertFalse(LockManager.getInstance().unlock("other password"));
 
         // Correct password -> Unlocked
+        assertEquals(LockManager.NO_PASSWORD, LockManager.getInstance().getPassword());
         assertTrue(LockManager.getInstance().unlock("testing"));
+        assertTrue(LockManager.getInstance().hasLoggedIn());
+        // password reflected after login
+        assertEquals("testing", LockManager.getInstance().getPassword());
 
         // Cannot unlock if not locked
         assertFalse(LockManager.getInstance().unlock("testing"));
