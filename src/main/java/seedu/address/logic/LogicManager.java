@@ -109,16 +109,6 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Override
-    public ObservableList<Book> getSearchResultsList() {
-        return model.getSearchResultsList();
-    }
-
-    @Override
-    public ObservableList<Book> getRecentBooksList() {
-        return model.getRecentBooksList();
-    }
-
-    @Override
     public ObservableList<Alias> getDisplayAliasList() {
         return model.getDisplayAliasList();
     }
