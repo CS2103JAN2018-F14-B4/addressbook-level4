@@ -6,7 +6,9 @@ import static seedu.address.testutil.TypicalBooks.ARTEMIS;
 import static seedu.address.testutil.TypicalBooks.BABYLON_ASHES;
 import static seedu.address.testutil.TypicalBooks.getTypicalBookShelf;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 
 import org.junit.After;
 import org.junit.Rule;
@@ -122,9 +124,18 @@ public class XmlBookShelfStorageTest {
     @Test
     public void readBookShelf_differentPassword_throwDataConversionException() throws Exception {
         LockManager.getInstance().setPassword(LockManager.getInstance().getPassword(), "newpw");
+
         String filePath = "./src/test/data/XmlUtilTest/validBookShelf.xml";
-        thrown.expect(DataConversionException.class);
-        new XmlBookShelfStorage(filePath).readBookShelf(filePath);
+        String tempPath = testFolder.getRoot().getPath() + "TempBookShelf.xml";
+        File tempFile = new File(tempPath);
+
+        try {
+            Files.copy(new File(filePath).toPath(), tempFile.toPath());
+            thrown.expect(DataConversionException.class);
+            new XmlBookShelfStorage(tempPath).readBookShelf(tempPath);
+        } finally {
+            tempFile.delete();
+        }
     }
 
     @Test
