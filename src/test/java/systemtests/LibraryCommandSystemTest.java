@@ -76,6 +76,7 @@ public class LibraryCommandSystemTest extends BibliotekSystemTest {
      * @see BibliotekSystemTest#assertSelectedBookListCardChanged(Index)
      */
     private void assertCommandSuccess(String command, Book bookToSearch) {
+        
         Model expectedModel = getModel();
 
         executeCommand(command);
