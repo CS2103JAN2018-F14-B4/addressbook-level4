@@ -139,8 +139,8 @@ some books.</p>
 <div class="sect2">
 <h3 id="edit-command"><a class="anchor" href="#edit-command"></a>Editing a book : <code>edit</code> <em>(since v1.4)</em></h3>
 <div class="paragraph">
-<p>When you using the Bibliotek to read books, you may want to rate on one book you read, set the status to remind you the reading situation,
-or set the priority of the book to remind yourself what to read next. These can be done using <code>edit</code>.<br>
+<p>After reading a book, you may want to give the book a rating or set the book as read.
+Or, you may want to change the priority of books to remind yourself what you should read next. These can be done using <code>edit</code>.<br>
 Format: <code>edit INDEX [s/STATUS] [p/PRIORITY] [r/RATING]</code></p>
 </div>
 <div class="sidebarblock">
@@ -148,22 +148,22 @@ Format: <code>edit INDEX [s/STATUS] [p/PRIORITY] [r/RATING]</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p>For the index, you should provide a integer which in the range of your list.</p>
+<p>Edits the book at the specified <code>INDEX</code>. The index refers to the index number shown in the most recent listing. The index <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
 </li>
 <li>
-<p>You should provide at least one field to edit.</p>
+<p>At least one of the optional fields must be provided.</p>
 </li>
 <li>
-<p>Before you edit, every book has a default value for rating("-1"), status("none") and priority("unread").</p>
+<p>Existing values will be updated to the input values.</p>
 </li>
 <li>
-<p>For the rating format, the range of the rating should be between -1 and 5. (-1 is for unrated books).</p>
+<p><code>STATUS</code> must be one of the following (items in parenthesis are aliases): <code>read</code> (<code>r</code>), <code>unread</code> (<code>u</code>), or <code>reading</code> (<code>rd</code>).</p>
 </li>
 <li>
-<p>For the status format, you should choose one of aliases(or full name) following: <code>read</code>(<code>r</code>), <code>unread</code>(<code>ur</code>), or <code>reading</code>(<code>rd</code>).</p>
+<p><code>PRIORITY</code> must be one of the following (items in parenthesis are aliases): <code>none</code> (<code>n</code>), <code>low</code> (<code>l</code>), <code>medium</code> (<code>m</code>), or <code>high</code> (<code>h</code>).</p>
 </li>
 <li>
-<p>For the priority format, you should choose one of aliases(or full name) following: <code>none</code>(<code>n</code>), <code>low</code>(<code>l</code>), <code>medium</code>(<code>m</code>) or <code>high</code>(<code>h</code>).</p>
+<p><code>RATING</code> must be a valid rating from 0 to 5, or -1 to remove rating.</p>
 </li>
 </ul>
 </div>
@@ -176,7 +176,7 @@ Format: <code>edit INDEX [s/STATUS] [p/PRIORITY] [r/RATING]</code></p>
 <i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-You can only edit books from the list using the index.
+You can only perform <code>edit</code> when the list shown is from your book shelf.
 </td>
 </tr>
 </table>
@@ -187,21 +187,35 @@ You can only edit books from the list using the index.
 <div class="ulist">
 <ul>
 <li>
-<p><code>edit 3 p/low</code><br>
-Changes the priority of the 3rd book to <code>LOW</code>.</p>
+<p><code>edit 1 p/high</code><br>
+Changes the priority of the 1st book to <code>HIGH</code>.</p>
 </li>
 <li>
-<p><code>edit 1 s/read p/low r/4</code><br>
-Marks the 1nd book as <code>READ</code>, changes its priority to <code>LOW</code>, and changes its rating to <code>4</code>.</p>
+<p><code>edit 2 s/read r/5</code><br>
+Marks the 2nd book as <code>READ</code> and changes its rating to <code>5</code>.</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Decrypt-command"><a class="anchor" href="#Decrypt-command"></a>Decrypt the bibliotek : <code>decrypt</code> <em>(coming in v1.5)</em></h3>
+<h3 id="Encrypt-command"><a class="anchor" href="#Encrypt-command"></a>Lock the app : <code>lock</code> <em>(coming in v1.5)</em></h3>
 <div class="paragraph">
-<p>If you want to decrypt your bibliotek if your bibliotek is encrypted, you can decrypt it using DecryptCommand.<br>
-Format: <code>decrypt YOUR_KEY</code></p>
+<p>If you are going away for a moment and want to prevent others from messing with the application, you can perform <code>lock</code>.<br>
+Format: <code>lock</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Locks the app. No commands can be performed other than <code>help</code> and <code>unlock</code>.</p>
+</li>
+<li>
+<p>The app is locked upon start up if you have a password.</p>
+</li>
+</ul>
+</div>
+</div>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -210,19 +224,31 @@ Format: <code>decrypt YOUR_KEY</code></p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-<div class="paragraph">
-<p>You will be given a default key: admin, when you open bibliotek for the first time.</p>
-</div>
+If you perform <code>lock</code> without a password, anyone can <code>unlock</code> your application.
 </td>
 </tr>
 </table>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Encrypt-command"><a class="anchor" href="#Encrypt-command"></a>Decrypt the bibliotek : <code>encrypt</code> <em>(coming in v1.5)</em></h3>
+<h3 id="Decrypt-command"><a class="anchor" href="#Decrypt-command"></a>Unlock the app : <code>unlock</code> <em>(coming in v1.5)</em></h3>
 <div class="paragraph">
-<p>If you want to encrypt your bibliotek, you can encrypt it using EncryptCommand.<br>
-Format: <code>encrypt</code></p>
+<p>If you previously performed <code>lock</code>, use <code>unlock</code> to unlock the app.<br>
+Format: <code>unlock PASSWORD</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Unlocks the app.</p>
+</li>
+<li>
+<p><code>PASSWORD</code> is case sensitive.</p>
+</li>
+</ul>
+</div>
+</div>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -231,9 +257,19 @@ Format: <code>encrypt</code></p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-<div class="paragraph">
-<p>You should remember your key before you do this command.</p>
+If you did not set a password, simply type <code>unlock</code> to unlock the app.
+</td>
+</tr>
+</table>
 </div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+If you really forgot your password and cannot unlock the system, you can reset Bibliotek by deleting all your data files.
 </td>
 </tr>
 </table>
@@ -594,7 +630,7 @@ Format: <code>encrypt</code></p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-14 05:03:24 UTC
+Last updated 2018-04-14 08:33:28 UTC
 </div>
 </div>
 </body>
