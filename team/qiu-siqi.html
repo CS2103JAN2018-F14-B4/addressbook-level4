@@ -313,7 +313,65 @@ This eliminates the need to manually enter search information into the NLB catal
 </div>
 <div class="sect3">
 <h4 id="current-implementation"><a class="anchor" href="#current-implementation"></a>Current implementation</h4>
-
+<div class="paragraph">
+<p>When a <code>library</code> command is entered, a <code>LibraryCommand</code> will be created if the parsing of the command was successful, which will
+make a call to <code>searchLibraryForBook(Book)</code> on the <code>Network</code> API. This will result in an asynchronous HTTP request being made to
+<a href="https://catalogue.nlb.gov.sg/cgi-bin/spydus.exe/MSGTRN/EXPNOS/NLBHOME?HOMEPRMS=NLBGENPARAMS">NLB Catalogue</a>.
+Once the HTTP request completes, the operations in the <code>.thenApply(&#8230;&#8203;)</code> s, as seen in the code block below, will execute.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">    <span class="directive">private</span> CompletableFuture&lt;<span class="predefined-type">String</span>&gt; execute(<span class="predefined-type">String</span> url, <span class="predefined-type">Book</span> book) {
+        <span class="keyword">return</span> httpClient
+                .makeGetRequest(url)
+                .thenApply(NlbCatalogueApi::requireHtmlContentType)
+                .thenApply(NlbCatalogueApi::requireHttpStatusOk)
+                .thenApply(HttpResponse::getResponseBody)
+                .thenApply(result -&gt; NlbResultHelper.getUrl(result, book));
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This is summarized by the following activity diagram:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/LibraryCommandActivityDiagram.png" alt="LibraryCommandActivityDiagram" width="650">
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>CompletableFuture</code> completes exceptionally if the content type or status code is wrong.
+Else, a URL of the page showing availability of the target book, if any, is obtained. This depends on the type of the response page, which can be categorized into the following:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Full display (the page we want): The URL which the HTTP GET request was made to is returned.</p>
+</li>
+<li>
+<p>Non-empty list of results: The URL of the top result is returned.</p>
+</li>
+<li>
+<p>Empty list of results: A custom message, reporting that no result is found, is returned.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Once the necessary result is obtained, the following method in <code>LibraryCommand</code> is executed:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>    private void onSuccessfulRequest(String result, Book book) {
+        EventsCenter.getInstance().post(new ShowLibraryResultRequestEvent(result));
+        EventsCenter.getInstance().post(new NewResultAvailableEvent(
+                String.format(MESSAGE_SUCCESS, book)));
+    }</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>ShowLibraryResultRequestEvent</code> is handled by <code>MainWindow</code> and <code>BookInLibraryPanel</code> to load the URL using a <code>WebView</code> and show it.
+The loaded page is post-processed using a script to show only the relevant section.</p>
+</div>
 </div>
 <div class="sect3">
 <h4 id="design-considerations"><a class="anchor" href="#design-considerations"></a>Design considerations</h4>
@@ -437,7 +495,7 @@ It then posts <code>ActiveListChangedEvent</code> to the <code>EventCenter</code
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="../images/SequenceDiagramRecentCommandLogic.png" alt="SequenceDiagramRecentCommandLogic" width="650">
+<img src="../images/SequenceDiagramRecentCommandLogic.png" alt="SequenceDiagramRecentCommandLogic" width="550">
 </div>
 </div>
 <div class="admonitionblock note">
@@ -457,7 +515,7 @@ The commands that users can perform on different <code>ActiveListType</code> dif
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="../images/SequenceDiagramRecentCommandEvent.png" alt="SequenceDiagramRecentCommandEvent" width="650">
+<img src="../images/SequenceDiagramRecentCommandEvent.png" alt="SequenceDiagramRecentCommandEvent" width="550">
 </div>
 </div>
 <div class="paragraph">
@@ -465,7 +523,7 @@ The commands that users can perform on different <code>ActiveListType</code> dif
 </div>
 <div class="paragraph">
 <p><code>UniqueBookCircularList</code> has size 50 by default. For illustration purposes, assume we have a
-<code>UniqueBookCircularList</code> of size 3 that is empty at the start. <code>ActiveListType</code> is <code>BOOK_SHELF</code>.</p>
+<code>UniqueBookCircularList</code> of size 2 that is empty at the start. <code>ActiveListType</code> is <code>BOOK_SHELF</code>.</p>
 </div>
 <div class="paragraph">
 <p>The user performs <code>select 1</code> to view information on the 1st book in the book shelf. The
@@ -473,7 +531,7 @@ selected book is added onto the <code>UniqueBookCircularList</code>.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="../images/RecentCommandListOne.png" alt="RecentCommandListOne" width="550">
+<img src="../images/RecentCommandListOne.png" alt="RecentCommandListOne" width="450">
 </div>
 </div>
 <div class="admonitionblock note">
@@ -493,7 +551,7 @@ If select fails to execute (eg. given index is invalid), the list will remain un
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="../images/RecentCommandListTwo.png" alt="RecentCommandListTwo" width="550">
+<img src="../images/RecentCommandListTwo.png" alt="RecentCommandListTwo" width="450">
 </div>
 </div>
 <div class="admonitionblock note">
@@ -514,25 +572,17 @@ from the list and added again so that it is in the first index of the list (most
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="../images/RecentCommandListThree.png" alt="RecentCommandListThree" width="550">
+<img src="../images/RecentCommandListThree.png" alt="RecentCommandListThree" width="450">
 </div>
 </div>
 <div class="paragraph">
-<p>The user continues to select books, and the same operations will apply.</p>
+<p>Note that the <code>UniqueBookCircularList</code> is currently full. When user performs <code>select 3</code>, since
+<code>Three</code> is not in the list, the book at the last index is removed to make space for <code>Three</code>.
+This is because the book at the last index (<code>Two</code> in this case) is the least recent selection.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="../images/RecentCommandListFour.png" alt="RecentCommandListFour" width="550">
-</div>
-</div>
-<div class="paragraph">
-<p>The <code>UniqueBookCircularList</code> is now full. When user performs <code>select 4</code>, since the book
-<code>Four</code> is not in the list, the book at the last index is removed to make space for book <code>Four</code>.
-This is because the book at the last index is the least recent selection.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="../images/RecentCommandListFive.png" alt="RecentCommandListFive" width="550">
+<img src="../images/RecentCommandListFour.png" alt="RecentCommandListFour" width="450">
 </div>
 </div>
 <div class="admonitionblock note">
@@ -558,7 +608,7 @@ of <code>BookShelf</code>. This data is read and converted to <code>UniqueBookCi
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Since <code>UniqueBookCircularList</code> only supports <code>addToFront(book)</code>, take note to add books in reverse
+Since <code>UniqueBookCircularList</code> only supports <code>addToFront(Book)</code>, take note to add books in reverse
 order when converting from other data structures such as <code>BookShelf</code>.
 </td>
 </tr>
@@ -675,7 +725,7 @@ by only showing these books.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-13 14:33:19 UTC
+Last updated 2018-04-14 05:03:24 UTC
 </div>
 </div>
 </body>

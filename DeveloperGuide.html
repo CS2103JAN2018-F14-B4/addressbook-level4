@@ -138,8 +138,14 @@
 <div class="sect1">
 <h2 id="Setting-Up"><a class="anchor" href="#Setting-Up"></a>2. Setting up</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>This section includes the instructions to set up your development environment.</p>
+</div>
 <div class="sect2">
 <h3 id="prerequisites"><a class="anchor" href="#prerequisites"></a>2.1. Prerequisites</h3>
+<div class="paragraph">
+<p>Prior to setting up the project proper, make sure you have the following.</p>
+</div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -152,7 +158,8 @@
 </td>
 <td class="content">
 Having any Java 8 version is not enough.<br>
-This app will not work with earlier versions of Java 8.
+This app will not work with earlier versions of Java 8.<br>
+You can get the latest Java 8 JDK at <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">this link</a>.
 </td>
 </tr>
 </table>
@@ -179,38 +186,41 @@ Do not disable them. If you have disabled them, go to <code>File</code> &gt; <co
 </div>
 <div class="sect2">
 <h3 id="setting-up-the-project-in-your-computer"><a class="anchor" href="#setting-up-the-project-in-your-computer"></a>2.2. Setting up the project in your computer</h3>
+<div class="paragraph">
+<p>To setup the project in IntelliJ, follow the steps below.</p>
+</div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Fork this repo, and clone the fork to your computer</p>
+<p>Fork this repo, and clone the fork to your computer.</p>
 </li>
 <li>
-<p>Open IntelliJ (if you are not in the welcome screen, click <code>File</code> &gt; <code>Close Project</code> to close the existing project dialog first)</p>
+<p>Open IntelliJ (if you are not in the welcome screen, click <code>File</code> &gt; <code>Close Project</code> to close the existing project dialog first).</p>
 </li>
 <li>
-<p>Set up the correct JDK version for Gradle</p>
+<p>Set up the correct JDK version for Gradle.</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>Click <code>Configure</code> &gt; <code>Project Defaults</code> &gt; <code>Project Structure</code></p>
+<p>Click <code>Configure</code> &gt; <code>Project Defaults</code> &gt; <code>Project Structure</code>.</p>
 </li>
 <li>
-<p>Click <code>New&#8230;&#8203;</code> and find the directory of the JDK</p>
+<p>Click <code>New&#8230;&#8203;</code> and find the directory of the JDK.</p>
 </li>
 </ol>
 </div>
 </li>
 <li>
-<p>Click <code>Import Project</code></p>
+<p>Click <code>Import Project</code>.</p>
 </li>
 <li>
-<p>Locate the <code>build.gradle</code> file and select it. Click <code>OK</code></p>
+<p>Locate the <code>build.gradle</code> file and select it. Click <code>OK</code>.</p>
 </li>
 <li>
-<p>Click <code>Open as Project</code></p>
+<p>Click <code>Open as Project</code>.</p>
 </li>
 <li>
-<p>Click <code>OK</code> to accept the default settings</p>
+<p>Click <code>OK</code> to accept the default settings.</p>
 </li>
 <li>
 <p>Open a console and run the command <code>gradlew processResources</code> (Mac/Linux: <code>./gradlew processResources</code>). It should finish with the <code>BUILD SUCCESSFUL</code> message.<br>
@@ -221,10 +231,13 @@ This will generate all resources required by the application and tests.</p>
 </div>
 <div class="sect2">
 <h3 id="verifying-the-setup"><a class="anchor" href="#verifying-the-setup"></a>2.3. Verifying the setup</h3>
+<div class="paragraph">
+<p>To verify that the setup is completed successfully, you should:</p>
+</div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Run the <code>seedu.address.MainApp</code> and try a few commands</p>
+<p>Run the <code>seedu.address.MainApp</code> and try a few commands.</p>
 </li>
 <li>
 <p><a href="#Testing">Run the tests</a> to ensure they all pass.</p>
@@ -234,28 +247,31 @@ This will generate all resources required by the application and tests.</p>
 </div>
 <div class="sect2">
 <h3 id="configurations-to-do-before-writing-code"><a class="anchor" href="#configurations-to-do-before-writing-code"></a>2.4. Configurations to do before writing code</h3>
+<div class="paragraph">
+<p>This subsection includes configurations that you may find necessary or useful as you work on this project. We recommend that you make these configuration changes and additions before you start writing code.</p>
+</div>
 <div class="sect3">
 <h4 id="configuring-the-coding-style"><a class="anchor" href="#configuring-the-coding-style"></a>2.4.1. Configuring the coding style</h4>
 <div class="paragraph">
-<p>This project follows <a href="https://github.com/oss-generic/process/blob/master/docs/CodingStandards.adoc">oss-generic coding standards</a>. IntelliJ&#8217;s default style is mostly compliant with ours but it uses a different import order from ours. To rectify,</p>
+<p>This project follows <a href="https://github.com/oss-generic/process/blob/master/docs/CodingStandards.adoc">oss-generic coding standards</a>. IntelliJ&#8217;s default style is mostly compliant with ours but it uses a different import order from ours. Follow the instructions below to rectify this.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Go to <code>File</code> &gt; <code>Settings&#8230;&#8203;</code> (Windows/Linux), or <code>IntelliJ IDEA</code> &gt; <code>Preferences&#8230;&#8203;</code> (macOS)</p>
+<p>Go to <code>File</code> &gt; <code>Settings&#8230;&#8203;</code> (Windows/Linux), or <code>IntelliJ IDEA</code> &gt; <code>Preferences&#8230;&#8203;</code> (macOS).</p>
 </li>
 <li>
-<p>Select <code>Editor</code> &gt; <code>Code Style</code> &gt; <code>Java</code></p>
+<p>Select <code>Editor</code> &gt; <code>Code Style</code> &gt; <code>Java</code>.</p>
 </li>
 <li>
-<p>Click on the <code>Imports</code> tab to set the order</p>
+<p>Click on the <code>Imports</code> tab to set the order.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>For <code>Class count to use import with '*'</code> and <code>Names count to use static import with '*'</code>: Set to <code>999</code> to prevent IntelliJ from contracting the import statements</p>
+<p>For <code>Class count to use import with '*'</code> and <code>Names count to use static import with '*'</code>: Set to <code>999</code> to prevent IntelliJ from contracting the import statements.</p>
 </li>
 <li>
-<p>For <code>Import Layout</code>: The order is <code>import static all other imports</code>, <code>import java.*</code>, <code>import javax.*</code>, <code>import org.*</code>, <code>import com.*</code>, <code>import all other imports</code>. Add a <code>&lt;blank line&gt;</code> between each <code>import</code></p>
+<p>For <code>Import Layout</code>: The order is <code>import static all other imports</code>, <code>import java.*</code>, <code>import javax.*</code>, <code>import org.*</code>, <code>import com.*</code>, <code>import all other imports</code>. Add a <code>&lt;blank line&gt;</code> between each <code>import</code>.</p>
 </li>
 </ul>
 </div>
@@ -302,7 +318,7 @@ Coverage reporting could be useful for a team repository that hosts the final ve
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based)
+Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based).
 </td>
 </tr>
 </table>
@@ -311,7 +327,7 @@ Having both Travis and AppVeyor ensures your App works on both Unix-based platfo
 <div class="sect3">
 <h4 id="getting-started-with-coding"><a class="anchor" href="#getting-started-with-coding"></a>2.4.4. Getting started with coding</h4>
 <div class="paragraph">
-<p>When you are ready to start coding,</p>
+<p>When you are ready to start coding:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -330,10 +346,13 @@ Having both Travis and AppVeyor ensures your App works on both Unix-based platfo
 <div class="sect1">
 <h2 id="design"><a class="anchor" href="#design"></a>3. Design</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>This section documents the design and interaction of components in Bibliotek. Please take a moment to understand the different components before making any code changes.</p>
+</div>
 <div class="sect2">
 <h3 id="Design-Architecture"><a class="anchor" href="#Design-Architecture"></a>3.1. Architecture</h3>
 <div class="paragraph">
-<p>The <strong><em>Architecture Diagram</em></strong> (Figure 1 below) explains the high-level design of the App.</p>
+<p>The <strong><em>Architecture Diagram</em></strong> in Figure 1 explains the high-level design of the App.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -357,7 +376,7 @@ The <code>.pptx</code> files used to create diagrams in this document can be fou
 <p>Given below is a quick overview of each component.</p>
 </div>
 <div class="paragraph">
-<p><code>Main</code> has only one class called <a href="https://github.com/CS2103JAN2018-F14-B4/main/tree/master/src/main/java/seedu/address/MainApp.java"><code>MainApp</code></a>. It is responsible for,</p>
+<p><code>Main</code> has only one class called <a href="https://github.com/CS2103JAN2018-F14-B4/main/tree/master/src/main/java/seedu/address/MainApp.java"><code>MainApp</code></a>. Its responsibilities are as follows.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -375,7 +394,7 @@ The <code>.pptx</code> files used to create diagrams in this document can be fou
 <div class="ulist">
 <ul>
 <li>
-<p><code>EventsCenter</code> : This class (written using <a href="https://github.com/google/guava/wiki/EventBusExplained">Google&#8217;s Event Bus library</a>) is used by components to communicate with other components using events (i.e. a form of <em>Event Driven</em> design)</p>
+<p><code>EventsCenter</code> : This class (written using <a href="https://github.com/google/guava/wiki/EventBusExplained">Google&#8217;s Event Bus library</a>) is used by components to communicate with other components using events (i.e. a form of <em>Event Driven</em> design).</p>
 </li>
 <li>
 <p><code>LogsCenter</code> : Used by many classes to write log messages to the App&#8217;s log file.</p>
@@ -383,7 +402,7 @@ The <code>.pptx</code> files used to create diagrams in this document can be fou
 </ul>
 </div>
 <div class="paragraph">
-<p>The rest of the App consists of five components.</p>
+<p>The rest of the App consists of five components. These components and a brief summary of their responsibilities are given below.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -405,7 +424,7 @@ The <code>.pptx</code> files used to create diagrams in this document can be fou
 </ul>
 </div>
 <div class="paragraph">
-<p>Each of the five components</p>
+<p>Each of the five components:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -418,7 +437,8 @@ The <code>.pptx</code> files used to create diagrams in this document can be fou
 </ul>
 </div>
 <div class="paragraph">
-<p>For example, the <code>Logic</code> component (Figure 2 below) defines it&#8217;s API in the <code>Logic.java</code> interface and exposes its functionality using the <code>LogicManager.java</code> class.</p>
+<p>For example, the <code>Logic</code> component defines it&#8217;s API in the <code>Logic.java</code> interface and exposes its functionality using the <code>LogicManager.java</code> class.
+The <em>Class Diagram</em> in Figure 2 shows the interaction between different classes in the <code>Logic</code> component.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -428,7 +448,7 @@ The <code>.pptx</code> files used to create diagrams in this document can be fou
 </div>
 <h4 id="events-driven-nature-of-the-design" class="discrete">Events-Driven nature of the design</h4>
 <div class="paragraph">
-<p>The <em>Sequence Diagram</em> (Figure 3 below) shows how the components interact for the scenario where the user issues the command <code>delete 1</code>.</p>
+<p>The <em>Sequence Diagram</em> in Figure 3 shows how the components interact for the scenario where the user issues the command <code>delete 1</code>.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -443,13 +463,13 @@ The <code>.pptx</code> files used to create diagrams in this document can be fou
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Note how the <code>Model</code> simply raises a <code>BookShelfChangedEvent</code> when the Book Shelf data are changed, instead of asking the <code>Storage</code> to save the updates to the hard disk.
+Note how the <code>Model</code> simply raises a <code>BookShelfChangedEvent</code> when the <code>BookShelf</code> data is changed, instead of asking <code>Storage</code> to save the updates to the hard disk.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Figure 4 below shows how the <code>EventsCenter</code> reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.</p>
+<p>Figure 4 shows how the <code>EventsCenter</code> reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -475,6 +495,9 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 </div>
 <div class="sect2">
 <h3 id="Design-Ui"><a class="anchor" href="#Design-Ui"></a>3.2. UI component</h3>
+<div class="paragraph">
+<p>The <em>Class Diagram</em> in Figure 5 shows the interaction between different classes in the <code>Ui</code> component.</p>
+</div>
 <div class="imageblock">
 <div class="content">
 <img src="images/UiClassDiagram.png" alt="UiClassDiagram" width="800">
@@ -485,35 +508,42 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 <p><strong>API</strong> : <a href="https://github.com/CS2103JAN2018-F14-B4/main/tree/master/src/main/java/seedu/address/ui/Ui.java"><code>Ui.java</code></a></p>
 </div>
 <div class="paragraph">
-<p>The UI consists of a <code>MainWindow</code> that is made up of parts e.g.<code>CommandBox</code>, <code>ResultDisplay</code>, <code>BookListPanel</code>, <code>StatusBarFooter</code>, <code>BookDetailsPanel</code> etc. All these, including the <code>MainWindow</code>, inherit from the abstract <code>UiPart</code> class.</p>
+<p>The UI consists of a <code>MainWindow</code> that is made up of parts, such as <code>CommandBox</code>, <code>ResultDisplay</code>, <code>BookListPanel</code>, <code>StatusBarFooter</code>, <code>BookDetailsPanel</code>, etc. All these, including the <code>MainWindow</code>, inherit from the abstract <code>UiPart</code> class.</p>
 </div>
 <div class="paragraph">
-<p>The <code>UI</code> component uses JavaFx UI framework. The layout of these UI parts are defined in matching <code>.fxml</code> files that are in the <code>src/main/resources/view</code> folder. For example, the layout of the <a href="https://github.com/CS2103JAN2018-F14-B4/main/tree/master/src/main/java/seedu/address/ui/MainWindow.java"><code>MainWindow</code></a> is specified in <a href="https://github.com/CS2103JAN2018-F14-B4/main/tree/master/src/main/resources/view/MainWindow.fxml"><code>MainWindow.fxml</code></a></p>
+<p>The <code>Ui</code> component uses JavaFx UI framework. The layout of these UI parts are defined in matching <code>.fxml</code> files that are in the <code>src/main/resources/view</code> folder. For example, the layout of the <a href="https://github.com/CS2103JAN2018-F14-B4/main/tree/master/src/main/java/seedu/address/ui/MainWindow.java"><code>MainWindow</code></a> is specified in <a href="https://github.com/CS2103JAN2018-F14-B4/main/tree/master/src/main/resources/view/MainWindow.fxml"><code>MainWindow.fxml</code></a>.</p>
 </div>
 <div class="paragraph">
-<p>The <code>UI</code> component,</p>
+<p>The key functionalities of the <code>Ui</code> component are:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Executes user commands using the <code>Logic</code> component.</p>
+<p>Executing user commands using the <code>Logic</code> component.</p>
 </li>
 <li>
-<p>Binds itself to some data in the <code>Model</code> so that the UI can auto-update when data in the <code>Model</code> change.</p>
+<p>Binding itself to some data in the <code>Model</code> so that the UI can auto-update when data in the <code>Model</code> change.</p>
 </li>
 <li>
-<p>Responds to events raised from various parts of the App and updates the UI accordingly.</p>
+<p>Responding to events raised from various parts of the App and updating the UI accordingly.</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect2">
 <h3 id="Design-Logic"><a class="anchor" href="#Design-Logic"></a>3.3. Logic component</h3>
+<div class="paragraph">
+<p>The <em>Class Diagram</em> in Figure 6 shows the interaction between different classes in the <code>Logic</code> component.</p>
+</div>
 <div id="fig-LogicClassDiagram" class="imageblock">
 <div class="content">
 <img src="images/LogicClassDiagram.png" alt="LogicClassDiagram" width="800">
 </div>
 <div class="title">Figure 6. Structure of the Logic Component</div>
+</div>
+<div class="paragraph">
+<p>The <code>Logic</code> component is home to various classes which extends <code>Command</code>. These classes represent supported commands that may or may not be undoable.
+The structural relationship between <code>Command</code> and <code>UndoableCommand</code> is shown in Figure 7 below.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -521,9 +551,24 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 </div>
 <div class="title">Figure 7. Structure of Commands in the Logic Component. This diagram shows finer details concerning <code>XYZCommand</code> and <code>Command</code> in <a href="#fig-LogicClassDiagram">Figure 6, &#8220;Structure of the Logic Component&#8221;</a></div>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+An <code>UndoableCommand</code> is a command that makes changes to the book shelf data.
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p><strong>API</strong> :
 <a href="https://github.com/CS2103JAN2018-F14-B4/main/tree/master/src/main/java/seedu/address/logic/Logic.java"><code>Logic.java</code></a></p>
+</div>
+<div class="paragraph">
+<p>The following is the general workflow when the user enters some input.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -542,7 +587,7 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 </ol>
 </div>
 <div class="paragraph">
-<p>Figure 8 below is the Sequence Diagram for interactions within the <code>Logic</code> component for the <code>execute("delete 1")</code> API call.</p>
+<p>The <em>Sequence Diagram</em> in Figure 8 shows the interactions within the <code>Logic</code> component for the <code>execute("delete 1")</code> API call.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -553,6 +598,9 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 </div>
 <div class="sect2">
 <h3 id="Design-Model"><a class="anchor" href="#Design-Model"></a>3.4. Model component</h3>
+<div class="paragraph">
+<p>The <em>Class Diagram</em> in Figure 9 shows the interaction between different classes in the <code>Model</code> component.</p>
+</div>
 <div class="imageblock">
 <div class="content">
 <img src="images/ModelClassDiagram.png" alt="ModelClassDiagram" width="800">
@@ -563,7 +611,7 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 <p><strong>API</strong> : <a href="https://github.com/CS2103JAN2018-F14-B4/main/tree/master/src/main/java/seedu/address/model/Model.java"><code>Model.java</code></a></p>
 </div>
 <div class="paragraph">
-<p>The <code>Model</code>,</p>
+<p>The <code>Model</code>:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -571,13 +619,13 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 <p>stores a <code>UserPref</code> object that represents the user&#8217;s preferences.</p>
 </li>
 <li>
-<p>stores the Book Shelf data.</p>
+<p>stores the <code>BookShelf</code> data.</p>
 </li>
 <li>
 <p>stores the user added aliases.</p>
 </li>
 <li>
-<p>exposes an unmodifiable <code>ObservableList&lt;Book&gt;</code> that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.</p>
+<p>exposes an unmodifiable <code>ObservableList&lt;Book&gt;</code> that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list changes.</p>
 </li>
 <li>
 <p>does not depend on any of the other components.</p>
@@ -587,6 +635,9 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 </div>
 <div class="sect2">
 <h3 id="Design-Storage"><a class="anchor" href="#Design-Storage"></a>3.5. Storage component</h3>
+<div class="paragraph">
+<p>The <em>Class Diagram</em> in Figure 10 shows the interaction between different classes in the <code>Storage</code> component.</p>
+</div>
 <div class="imageblock">
 <div class="content">
 <img src="images/StorageClassDiagram.png" alt="StorageClassDiagram" width="800">
@@ -597,7 +648,7 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 <p><strong>API</strong> : <a href="https://github.com/CS2103JAN2018-F14-B4/main/tree/master/src/main/java/seedu/address/storage/Storage.java"><code>Storage.java</code></a></p>
 </div>
 <div class="paragraph">
-<p>The <code>Storage</code> component,</p>
+<p>The <code>Storage</code> component:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -613,11 +664,17 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 <li>
 <p>can save the <code>UniqueAliasList</code> data in xml format and read it back.</p>
 </li>
+<li>
+<p>does not depend on any of the other four components.</p>
+</li>
 </ul>
 </div>
 </div>
 <div class="sect2">
 <h3 id="Design-Network"><a class="anchor" href="#Design-Network"></a>3.6. Network component</h3>
+<div class="paragraph">
+<p>The <em>Class Diagram</em> in Figure 11 shows the interaction between different classes in the <code>Network</code> component.</p>
+</div>
 <div class="imageblock">
 <div class="content">
 <img src="images/NetworkClassDiagram.png" alt="NetworkClassDiagram" width="800">
@@ -628,7 +685,7 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 <p><strong>API</strong>: <a href="https://github.com/CS2103JAN2018-F14-B4/main/tree/master/src/main/java/seedu/address/network/Network.java"><code>Network.java</code></a></p>
 </div>
 <div class="paragraph">
-<p>The <code>Network</code> component,</p>
+<p>The <code>Network</code> component:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -647,7 +704,7 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 <div class="sect2">
 <h3 id="Design-Commons"><a class="anchor" href="#Design-Commons"></a>3.7. Common classes</h3>
 <div class="paragraph">
-<p>Classes used by multiple components are in the <code>seedu.address.commons</code> package.</p>
+<p>Classes used by multiple components are in the <code>seedu.address.commons</code> package. This includes event and utility classes.</p>
 </div>
 </div>
 </div>
@@ -1239,7 +1296,7 @@ It then posts <code>ActiveListChangedEvent</code> to the <code>EventCenter</code
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/SequenceDiagramRecentCommandLogic.png" alt="SequenceDiagramRecentCommandLogic" width="650">
+<img src="images/SequenceDiagramRecentCommandLogic.png" alt="SequenceDiagramRecentCommandLogic" width="550">
 </div>
 </div>
 <div class="admonitionblock note">
@@ -1259,7 +1316,7 @@ The commands that users can perform on different <code>ActiveListType</code> dif
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/SequenceDiagramRecentCommandEvent.png" alt="SequenceDiagramRecentCommandEvent" width="650">
+<img src="images/SequenceDiagramRecentCommandEvent.png" alt="SequenceDiagramRecentCommandEvent" width="550">
 </div>
 </div>
 <div class="paragraph">
@@ -1267,7 +1324,7 @@ The commands that users can perform on different <code>ActiveListType</code> dif
 </div>
 <div class="paragraph">
 <p><code>UniqueBookCircularList</code> has size 50 by default. For illustration purposes, assume we have a
-<code>UniqueBookCircularList</code> of size 3 that is empty at the start. <code>ActiveListType</code> is <code>BOOK_SHELF</code>.</p>
+<code>UniqueBookCircularList</code> of size 2 that is empty at the start. <code>ActiveListType</code> is <code>BOOK_SHELF</code>.</p>
 </div>
 <div class="paragraph">
 <p>The user performs <code>select 1</code> to view information on the 1st book in the book shelf. The
@@ -1275,7 +1332,7 @@ selected book is added onto the <code>UniqueBookCircularList</code>.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/RecentCommandListOne.png" alt="RecentCommandListOne" width="550">
+<img src="images/RecentCommandListOne.png" alt="RecentCommandListOne" width="450">
 </div>
 </div>
 <div class="admonitionblock note">
@@ -1295,7 +1352,7 @@ If select fails to execute (eg. given index is invalid), the list will remain un
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/RecentCommandListTwo.png" alt="RecentCommandListTwo" width="550">
+<img src="images/RecentCommandListTwo.png" alt="RecentCommandListTwo" width="450">
 </div>
 </div>
 <div class="admonitionblock note">
@@ -1316,25 +1373,17 @@ from the list and added again so that it is in the first index of the list (most
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/RecentCommandListThree.png" alt="RecentCommandListThree" width="550">
+<img src="images/RecentCommandListThree.png" alt="RecentCommandListThree" width="450">
 </div>
 </div>
 <div class="paragraph">
-<p>The user continues to select books, and the same operations will apply.</p>
+<p>Note that the <code>UniqueBookCircularList</code> is currently full. When user performs <code>select 3</code>, since
+<code>Three</code> is not in the list, the book at the last index is removed to make space for <code>Three</code>.
+This is because the book at the last index (<code>Two</code> in this case) is the least recent selection.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/RecentCommandListFour.png" alt="RecentCommandListFour" width="550">
-</div>
-</div>
-<div class="paragraph">
-<p>The <code>UniqueBookCircularList</code> is now full. When user performs <code>select 4</code>, since the book
-<code>Four</code> is not in the list, the book at the last index is removed to make space for book <code>Four</code>.
-This is because the book at the last index is the least recent selection.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/RecentCommandListFive.png" alt="RecentCommandListFive" width="550">
+<img src="images/RecentCommandListFour.png" alt="RecentCommandListFour" width="450">
 </div>
 </div>
 <div class="admonitionblock note">
@@ -1360,7 +1409,7 @@ of <code>BookShelf</code>. This data is read and converted to <code>UniqueBookCi
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Since <code>UniqueBookCircularList</code> only supports <code>addToFront(book)</code>, take note to add books in reverse
+Since <code>UniqueBookCircularList</code> only supports <code>addToFront(Book)</code>, take note to add books in reverse
 order when converting from other data structures such as <code>BookShelf</code>.
 </td>
 </tr>
@@ -1480,7 +1529,65 @@ This eliminates the need to manually enter search information into the NLB catal
 </div>
 <div class="sect3">
 <h4 id="current-implementation-5"><a class="anchor" href="#current-implementation-5"></a>4.5.1. Current implementation</h4>
-
+<div class="paragraph">
+<p>When a <code>library</code> command is entered, a <code>LibraryCommand</code> will be created if the parsing of the command was successful, which will
+make a call to <code>searchLibraryForBook(Book)</code> on the <code>Network</code> API. This will result in an asynchronous HTTP request being made to
+<a href="https://catalogue.nlb.gov.sg/cgi-bin/spydus.exe/MSGTRN/EXPNOS/NLBHOME?HOMEPRMS=NLBGENPARAMS">NLB Catalogue</a>.
+Once the HTTP request completes, the operations in the <code>.thenApply(&#8230;&#8203;)</code> s, as seen in the code block below, will execute.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">    <span class="directive">private</span> CompletableFuture&lt;<span class="predefined-type">String</span>&gt; execute(<span class="predefined-type">String</span> url, <span class="predefined-type">Book</span> book) {
+        <span class="keyword">return</span> httpClient
+                .makeGetRequest(url)
+                .thenApply(NlbCatalogueApi::requireHtmlContentType)
+                .thenApply(NlbCatalogueApi::requireHttpStatusOk)
+                .thenApply(HttpResponse::getResponseBody)
+                .thenApply(result -&gt; NlbResultHelper.getUrl(result, book));
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This is summarized by the following activity diagram:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/LibraryCommandActivityDiagram.png" alt="LibraryCommandActivityDiagram" width="650">
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>CompletableFuture</code> completes exceptionally if the content type or status code is wrong.
+Else, a URL of the page showing availability of the target book, if any, is obtained. This depends on the type of the response page, which can be categorized into the following:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Full display (the page we want): The URL which the HTTP GET request was made to is returned.</p>
+</li>
+<li>
+<p>Non-empty list of results: The URL of the top result is returned.</p>
+</li>
+<li>
+<p>Empty list of results: A custom message, reporting that no result is found, is returned.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Once the necessary result is obtained, the following method in <code>LibraryCommand</code> is executed:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>    private void onSuccessfulRequest(String result, Book book) {
+        EventsCenter.getInstance().post(new ShowLibraryResultRequestEvent(result));
+        EventsCenter.getInstance().post(new NewResultAvailableEvent(
+                String.format(MESSAGE_SUCCESS, book)));
+    }</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>ShowLibraryResultRequestEvent</code> is handled by <code>MainWindow</code> and <code>BookInLibraryPanel</code> to load the URL using a <code>WebView</code> and show it.
+The loaded page is post-processed using a script to show only the relevant section.</p>
+</div>
 </div>
 <div class="sect3">
 <h4 id="design-considerations-5"><a class="anchor" href="#design-considerations-5"></a>4.5.2. Design considerations</h4>
@@ -1869,32 +1976,32 @@ This eliminates the need to manually enter search information into the NLB catal
 <div class="ulist">
 <ul>
 <li>
-<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 4.8, &#8220;Configuration&#8221;</a>)</p>
+<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 4.8, &#8220;Configuration&#8221;</a>).</p>
 </li>
 <li>
-<p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level</p>
+<p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level.</p>
 </li>
 <li>
-<p>Currently log messages are output through: <code>Console</code> and to a <code>.log</code> file.</p>
+<p>Currently log messages are output through <code>Console</code> and to a <code>.log</code> file.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p><strong>Logging Levels</strong></p>
+<p>Below are the different <strong>logging levels</strong> and descriptions of when each level should be used.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>SEVERE</code> : Critical problem detected which may possibly cause the termination of the application</p>
+<p><code>SEVERE</code> : Critical problem detected which may possibly cause the termination of the application.</p>
 </li>
 <li>
-<p><code>WARNING</code> : Can continue, but with caution</p>
+<p><code>WARNING</code> : Can continue, but with caution.</p>
 </li>
 <li>
-<p><code>INFO</code> : Information showing the noteworthy actions by the App</p>
+<p><code>INFO</code> : Information showing the noteworthy actions by the App.</p>
 </li>
 <li>
-<p><code>FINE</code> : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size</p>
+<p><code>FINE</code> : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size.</p>
 </li>
 </ul>
 </div>
@@ -1902,7 +2009,7 @@ This eliminates the need to manually enter search information into the NLB catal
 <div class="sect2">
 <h3 id="Implementation-Configuration"><a class="anchor" href="#Implementation-Configuration"></a>4.8. Configuration</h3>
 <div class="paragraph">
-<p>Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: <code>config.json</code>).</p>
+<p>Certain properties of the application (e.g App name, logging level) can be controlled through the configuration file (default: <code>config.json</code> which can be found in your project folder).</p>
 </div>
 </div>
 </div>
@@ -1955,10 +2062,10 @@ Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows y
 <p>Go to your generated HTML files in the <code>build/docs</code> folder, right click on them and select <code>Open with</code> &#8594; <code>Google Chrome</code>.</p>
 </li>
 <li>
-<p>Within Chrome, click on the <code>Print</code> option in Chrome&#8217;s menu.</p>
+<p>Within Chrome, click on the <code>Print</code> option in Chrome&#8217;s menu. You should see a pop-up similar to Figure 12 below.</p>
 </li>
 <li>
-<p>Set the destination to <code>Save as PDF</code>, then click <code>Save</code> to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.</p>
+<p>Set the destination to <code>Save as PDF</code>, then click <code>Save</code> to save a copy of the file in PDF format. For best results, follow the settings as indicated in Figure 12.</p>
 </li>
 </ol>
 </div>
@@ -1974,6 +2081,9 @@ Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows y
 <div class="sect1">
 <h2 id="Testing"><a class="anchor" href="#Testing"></a>6. Testing</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>This section includes some information that may be useful for testing the project.</p>
+</div>
 <div class="sect2">
 <h3 id="running-tests"><a class="anchor" href="#running-tests"></a>6.1. Running Tests</h3>
 <div class="paragraph">
@@ -1997,10 +2107,10 @@ The most reliable way to run tests is the 3rd one. The first two methods might f
 <div class="ulist">
 <ul>
 <li>
-<p>To run all tests, right-click on the <code>src/test/java</code> folder and choose <code>Run 'All Tests'</code></p>
+<p>To run all tests, right-click on the <code>src/test/java</code> folder and choose <code>Run 'All Tests'</code>.</p>
 </li>
 <li>
-<p>To run a subset of tests, you can right-click on a test package, test class, or a test and choose <code>Run 'ABC'</code></p>
+<p>To run a subset of tests, you can right-click on a test package, test class, or a test and choose <code>Run 'ABC'</code>.</p>
 </li>
 </ul>
 </div>
@@ -2010,7 +2120,7 @@ The most reliable way to run tests is the 3rd one. The first two methods might f
 <div class="ulist">
 <ul>
 <li>
-<p>Open a console and run the command <code>gradlew clean allTests</code> (Mac/Linux: <code>./gradlew clean allTests</code>)</p>
+<p>Open a console and run the command <code>gradlew clean allTests</code> (Mac/Linux: <code>./gradlew clean allTests</code>).</p>
 </li>
 </ul>
 </div>
@@ -2033,7 +2143,7 @@ See <a href="UsingGradle.html">UsingGradle.adoc</a> for more info on how to run 
 <p>Thanks to the <a href="https://github.com/TestFX/TestFX" target="<em>blank">TestFX</a> library we use, our GUI tests can be run in the <em>headless</em> mode. In the headless mode, GUI tests do not show up on the screen. That means the developer can do other things on the Computer while the tests are running.</p>
 </div>
 <div class="paragraph">
-<p>To run tests in headless mode, open a console and run the command <code>gradlew clean headless allTests</code> (Mac/Linux: <code>./gradlew clean headless allTests</code>)</p>
+<p>To run tests in headless mode, open a console and run the command <code>gradlew clean headless allTests</code> (Mac/Linux: <code>./gradlew clean headless allTests</code>).</p>
 </div>
 </div>
 <div class="sect2">
@@ -2044,7 +2154,7 @@ See <a href="UsingGradle.html">UsingGradle.adoc</a> for more info on how to run 
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><strong>GUI Tests</strong> - These are tests involving the GUI. They include,</p>
+<p><strong>GUI Tests</strong> - These are tests involving the GUI. They include:</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
@@ -2057,7 +2167,7 @@ See <a href="UsingGradle.html">UsingGradle.adoc</a> for more info on how to run 
 </div>
 </li>
 <li>
-<p><strong>Non-GUI Tests</strong> - These are tests not involving the GUI. They include,</p>
+<p><strong>Non-GUI Tests</strong> - These are tests not involving the GUI. They include:</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
@@ -2093,12 +2203,28 @@ e.g. <code>seedu.address.logic.LogicManagerTest</code></p>
 </li>
 </ul>
 </div>
+<div class="paragraph">
+<p><strong>Problem: <code>AddCommandSystemTest</code> or <code>SearchCommandSystemTest</code> fails with a <code>GuiRobot$EventTimeoutException</code>.</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Reason: The required data could not be fetched from the online service within 10s. The service could be down at the moment.</p>
+</li>
+<li>
+<p>Solution: Check that you are connected to the Internet, or if you are, try again later.</p>
+</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="dev-ops"><a class="anchor" href="#dev-ops"></a>7. Dev Ops</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>This section contains some information or tools that may be useful for managing the project.</p>
+</div>
 <div class="sect2">
 <h3 id="build-automation"><a class="anchor" href="#build-automation"></a>7.1. Build Automation</h3>
 <div class="paragraph">
@@ -2139,7 +2265,7 @@ HTML version of those asciidoc files will look like when the pull request is mer
 <p>Generate a JAR file <a href="UsingGradle.html#creating-the-jar-file">using Gradle</a>.</p>
 </li>
 <li>
-<p>Tag the repo with the version number. e.g. <code>v0.1</code></p>
+<p>Tag the repo with the version number, e.g. <code>v0.1</code>.</p>
 </li>
 <li>
 <p><a href="https://help.github.com/articles/creating-releases/" target="_blank" rel="noopener">Create a new release using GitHub</a> and upload the JAR file you created.</p>
@@ -2151,9 +2277,20 @@ HTML version of those asciidoc files will look like when the pull request is mer
 <h3 id="managing-dependencies"><a class="anchor" href="#managing-dependencies"></a>7.6. Managing Dependencies</h3>
 <div class="paragraph">
 <p>A project often depends on third-party libraries. For example, Bibliotek depends on the <a href="http://wiki.fasterxml.com/JacksonHome" target="<em>blank">Jackson library</a> for XML parsing.
-Managing these <em>dependencies</em> can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives.<br>
-a. Include those libraries in the repo (this bloats the repo size)<br>
-b. Require developers to download those libraries manually (this creates extra work for developers)</p>
+We make use of Gradle to manage the project dependencies. Gradle can automate the downloading of these dependencies, saving us time and effort.</p>
+</div>
+<div class="paragraph">
+<p>While strongly discouraged by us, you can nevertheless opt for one of the following alternatives.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Include those libraries in the repo (though this bloats the repo size).</p>
+</li>
+<li>
+<p>Download those libraries manually (though this creates extra work for you).</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
@@ -3643,7 +3780,7 @@ Expected: Similar to previous.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-13 14:33:19 UTC
+Last updated 2018-04-14 05:03:24 UTC
 </div>
 </div>
 </body>
