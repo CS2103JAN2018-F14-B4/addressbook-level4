@@ -267,15 +267,6 @@ public abstract class BibliotekSystemTest {
     }
 
     /**
-     * Asserts that the book details panel remains displaying the details of the previously selected book.
-     * @see BookDetailsPanelHandle#isIsbnChanged() and BookDetailsPanelHandle#isVisibilityChanged()
-     */
-    protected void assertBookDetailsPanelUnchanged() {
-        assertFalse(getBookDetailsPanel().isIsbnChanged()
-                || getBookDetailsPanel().isVisibilityChanged());
-    }
-
-    /**
      * Asserts that the previously selected book list card is now deselected.
      */
     protected void assertSelectedBookListCardDeselected() {
@@ -317,6 +308,16 @@ public abstract class BibliotekSystemTest {
     }
 
     /**
+     * Checks that {@code BookDetailsPanel} is visible, {@code BookReviewsPanel} and {@code BookInLibraryPanel}
+     * is not visible.
+     */
+    protected void assertBookDetailsPanelVisible() {
+        assertTrue(getBookDetailsPanel().isVisible());
+        assertFalse(getBookReviewsPanel().isVisible());
+        assertFalse(getBookInLibraryPanel().isVisible());
+    }
+
+    /**
      * Checks that {@code BookReviewsPanel} is visible, {@code BookDetailsPanel} and {@code BookInLibraryPanel}
      * is not visible.
      */
@@ -348,13 +349,6 @@ public abstract class BibliotekSystemTest {
      */
     protected void assertCommandBoxShowsErrorStyle() {
         assertEquals(COMMAND_BOX_ERROR_STYLE, getCommandBox().getStyleClass());
-    }
-
-    /**
-     * Asserts that the command box is disabled.
-     */
-    protected void assertCommandBoxDisabled() {
-        assertFalse(getCommandBox().isEnabled());
     }
 
     /**
