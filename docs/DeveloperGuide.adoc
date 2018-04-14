@@ -735,11 +735,10 @@ The loaded page is post-processed using a script to show only the relevant secti
 
 ==== Current implementation
 
+===== Encrypt the Bookshelf.xml
 An addition class `CipherEngine` is added to the `Bookshelf` class. This class contatins some methods
   to encrypt or decrypt file(`Bookshelf.xml`)and `password`. +
   Note that when 'CipherEngine' encrypt the file, it will use the (encryped)`password`.
-
-  ===== Encrypt the Bookshelf.xml
 
   * ** Every time user make change in `Bookshelf` **
 
@@ -759,23 +758,17 @@ An addition class `CipherEngine` is added to the `Bookshelf` class. This class c
 
   . The `password` will be encode, and set it to be a key to encrypt the file(`Bookshelf.xml`).
 
-  ===== Lock the book shelf
+===== Lock the book shelf
 
-  An addition class `LockManager` is added to save the password and the situation of the locking system. +
-  The default `password` provided for the new user is defaultpassword(""), which means that the `Bookshelf` is not locked. +
+An addition class `LockManager` is added to save the password and the situation of the locking system. +
+The default `password` provided for the new user is defaultpassword(""), which means that the `Bookshelf` is not locked.
 
   * ** When `Lock` command is entered **
+  . `LockCommand` is processed to set `isLock`(`LockManager`) to be true.
 
-  . 'LockCommand' will check whether the `password` is `defaultpassword`: "".
-  . If the `password` is not `defaultpassword`, `LockCommand` is processed to set `isLock`(`LockManager`) to be true.
-  . If the `password` is `defaultpassword`, `LockCommand` will send a logging information to inform user that they cannot lock the `Bookshelf`.
-  =====
-  NOTE
 
-  . The `Bookshelf` cannot be run any command except `unlock` and `help` command.
+NOTE:  . The `Bookshelf` cannot be run any command except `unlock` and `help` command.
 
-  . You cannot Lock the `Bookshelf` if the `password` is `defaultpassword`.
-  =====
 
   * **When the `Bookshelf` is locked and `unlock` command is entered**
 

@@ -774,7 +774,6 @@ Format: `lock `
 [NOTE]
 ====
 . You should remember your key before you do this command.
-. Your cannot lock the bookshelf if the key is default key "".
 ====
 * If you enter a wrong key.
 
