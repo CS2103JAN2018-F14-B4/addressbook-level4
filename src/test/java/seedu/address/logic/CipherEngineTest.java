@@ -39,7 +39,7 @@ public class CipherEngineTest {
         File copy = new File(tempFile);
 
         try {
-            Files.copy(validBookShelf.toPath(), copy.toPath());
+            FileUtil.copyFile(validBookShelf, copy);
 
             CipherEngine.encryptFile(tempFile, TEST_KEY_1);
             assertDifferentContent(validBookShelf, copy);

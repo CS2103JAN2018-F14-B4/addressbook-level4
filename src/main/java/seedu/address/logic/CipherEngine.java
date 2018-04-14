@@ -25,6 +25,7 @@ import javax.crypto.spec.DESKeySpec;
 import javax.crypto.spec.PBEKeySpec;
 
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.StringUtil;
 
 //@@author 592363789
@@ -139,29 +140,8 @@ public class CipherEngine {
         File dest = new File(toReplace);
         File src = new File(replacement);
 
-        copyFileUsingStream(src, dest);
+        FileUtil.copyFile(src, dest);
         src.delete();
-    }
-
-    // Reused from https://www.journaldev.com/861/java-copy-file
-    /**
-     * Copies the content of {@code source} into {@code dest}.
-     */
-    private static void copyFileUsingStream(File source, File dest) throws IOException {
-        InputStream is = null;
-        OutputStream os = null;
-        try {
-            is = new FileInputStream(source);
-            os = new FileOutputStream(dest);
-            byte[] buffer = new byte[1024];
-            int length;
-            while ((length = is.read(buffer)) > 0) {
-                os.write(buffer, 0, length);
-            }
-        } finally {
-            is.close();
-            os.close();
-        }
     }
 
     //@@author

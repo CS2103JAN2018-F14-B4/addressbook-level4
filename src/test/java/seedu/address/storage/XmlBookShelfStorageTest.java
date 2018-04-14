@@ -8,7 +8,6 @@ import static seedu.address.testutil.TypicalBooks.getTypicalBookShelf;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 
 import org.junit.After;
 import org.junit.Rule;
@@ -126,12 +125,12 @@ public class XmlBookShelfStorageTest {
         LockManager.getInstance().initialize(LockManager.NO_PASSWORD);
         LockManager.getInstance().setPassword(LockManager.NO_PASSWORD, "newpw");
 
-        String filePath = "./src/test/data/XmlUtilTest/validBookShelf.xml";
+        String filePath = FileUtil.getPath("./src/test/data/XmlUtilTest/validBookShelf.xml");
         String tempPath = testFolder.getRoot().getPath() + "TempBookShelf.xml";
         File tempFile = new File(tempPath);
 
         try {
-            Files.copy(new File(filePath).toPath(), tempFile.toPath());
+            FileUtil.copyFile(new File(filePath), tempFile);
             thrown.expect(DataConversionException.class);
             new XmlBookShelfStorage(tempPath).readBookShelf(tempPath);
         } finally {
@@ -157,10 +156,9 @@ public class XmlBookShelfStorageTest {
     }
 
     @Test
-    public void saveBookShelf_nullFilePath_throwsNullPointerException() throws IOException {
+    public void saveBookShelf_nullFilePath_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
         saveBookShelf(new BookShelf(), null);
     }
-
 
 }
