@@ -23,8 +23,6 @@ public interface ReadOnlyBookShelf {
      */
     ObservableList<Book> getBookList();
 
-    public String getKey();
-
     /**
      * Returns the number of books contained in this book shelf.
      */

@@ -20,11 +20,9 @@ import seedu.address.model.book.exceptions.DuplicateBookException;
 public class BookShelf implements ReadOnlyBookShelf {
 
     private final UniqueBookList books;
-    private String key;
 
     public BookShelf() {
         books = new UniqueBookList();
-        key = "";
     }
 
     /**
@@ -46,7 +44,6 @@ public class BookShelf implements ReadOnlyBookShelf {
      */
     public void resetData(ReadOnlyBookShelf newData) {
         requireNonNull(newData);
-        this.key = newData.getKey();
         try {
             setBooks(newData.getBookList());
         } catch (DuplicateBookException e) {
@@ -64,15 +61,6 @@ public class BookShelf implements ReadOnlyBookShelf {
             }
         }
         return Optional.empty();
-    }
-
-    @Override
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
     }
 
     /**

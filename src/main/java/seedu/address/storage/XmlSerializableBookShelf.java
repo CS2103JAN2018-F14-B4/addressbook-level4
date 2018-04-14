@@ -36,7 +36,6 @@ public class XmlSerializableBookShelf {
     public XmlSerializableBookShelf(ReadOnlyBookShelf src) {
         this();
         books.addAll(src.getBookList().stream().map(XmlAdaptedBook::new).collect(Collectors.toList()));
-        key = src.getKey();
     }
 
     /**
@@ -50,9 +49,6 @@ public class XmlSerializableBookShelf {
         for (XmlAdaptedBook b : books) {
             bookShelf.addBook(b.toModelType());
         }
-
-        bookShelf.setKey(key);
-
         return bookShelf;
     }
 
