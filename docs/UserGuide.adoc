@@ -853,12 +853,14 @@ e.g. `addalias read cmd/edit s/read p/none`
 |*Edit book in book shelf* |`edit INDEX [s/STATUS] [p/PRIORITY] [r/RATING]`
 
 e.g. `edit 2 s/READ r/5`
-|*Close the pp* |`exit`
+|*Close the app* |`exit`
 |*View help* |`help`
 |*View previous commands* |`history`
 |*Search for book in library* |`library INDEX`
 |*List books in book shelf* |`list [t/TITLE] [a/AUTHOR] [c/CATEGORY] [s/STATUS]` +
 `[p/PRIORITY] [r/RATING] [by/SORT_BY]`
+
+e.g. `list s/unread by/priorityd`
 |*Lock the app* |`lock`
 |*View recently selected books* |`recent`
 |*View book reviews* |`reviews INDEX`
