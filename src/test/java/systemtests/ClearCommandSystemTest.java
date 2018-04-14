@@ -17,7 +17,6 @@ public class ClearCommandSystemTest extends BibliotekSystemTest {
     public void clear() {
 
         Model model = getModel();
-        decryptModel(model);
 
         /* Case: clear non-empty book shelf, command with leading spaces and trailing alphanumeric characters and
          * spaces -> cleared */

@@ -16,9 +16,6 @@ public class ThemeCommandSystemTest extends BibliotekSystemTest {
     @Test
     public void theme() {
 
-        Model model = getModel();
-        decryptModel(model);
-
         /* ----------------------------------- Perform invalid theme operations ------------------------------------- */
 
         /* Case: no theme name -> rejected */

@@ -17,8 +17,8 @@ public class CliSyntax {
     protected static final String PREFIX_PRIORITY_STRING = "p/";
     protected static final String PREFIX_RATING_STRING = "r/";
     protected static final String PREFIX_SORT_BY_STRING = "by/";
-    public static final String PREFIX_OLD_KEY = "old/";
-    public static final String PREFIX_NEW_KEY = "new/";
+    public static final String PREFIX_OLD = "old/";
+    public static final String PREFIX_NEW = "new/";
     protected static final String PREFIX_COMMAND_STRING = "cmd/";
 
     // Prefix definitions

@@ -25,9 +25,6 @@ public class ListCommandSystemTest extends BibliotekSystemTest {
     @Test
     public void list() {
 
-        Model model = getModel();
-        decryptModel(model);
-
         /* ----------------------------------- Perform valid list operations ---------------------------------------- */
 
         /* Case: valid filters -> 1 book listed */

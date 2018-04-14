@@ -20,9 +20,6 @@ public class LibraryCommandSystemTest extends BibliotekSystemTest {
     @Test
     public void library() {
 
-        Model model = getModel();
-        decryptModel(model);
-
         /* ---------- Test on book shelf ------------- */
 
         ObservableList<Book> bookList = getModel().getDisplayBookList();

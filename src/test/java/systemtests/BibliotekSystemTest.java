@@ -34,12 +34,12 @@ import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
-import seedu.address.logic.KeyControl;
+import seedu.address.logic.LockManager;
 import seedu.address.logic.UndoStack;
 import seedu.address.logic.commands.ClearCommand;
-import seedu.address.logic.commands.DecryptCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.UnlockCommand;
 import seedu.address.model.BookShelf;
 import seedu.address.model.Model;
 import seedu.address.model.book.Book;
@@ -75,6 +75,7 @@ public abstract class BibliotekSystemTest {
         setupHelper = new SystemTestSetupHelper();
         testApp = setupHelper.setupApplication(this::getInitialData, getDataFileLocation());
         mainWindowHandle = setupHelper.setupMainWindowHandle();
+        LockManager.getInstance().unlock(LockManager.getInstance().getPassword());
 
         assertApplicationStartingStateIsCorrect();
     }
@@ -83,11 +84,11 @@ public abstract class BibliotekSystemTest {
      * Decrypt the model before test.
      */
     public void decryptModel(Model model) {
-        String key = KeyControl.getInstance().getKey();
+        String key = LockManager.getInstance().getPassword();
 
-        DecryptCommand decryptCommand = new DecryptCommand(key);
-        decryptCommand.setData(model, mock(Network.class), new CommandHistory(), new UndoStack());
-        decryptCommand.execute();
+        UnlockCommand unlockCommand = new UnlockCommand(key);
+        unlockCommand.setData(model, mock(Network.class), new CommandHistory(), new UndoStack());
+        unlockCommand.execute();
     }
 
     @After

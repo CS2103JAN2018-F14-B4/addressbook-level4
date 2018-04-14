@@ -22,9 +22,6 @@ public class ReviewsCommandSystemTest extends BibliotekSystemTest {
     @Test
     public void reviews() {
 
-        Model model = getModel();
-        decryptModel(model);
-
         /* ------------ Perform reviews operations on the shown book list ------------ */
         String command = "   " + ReviewsCommand.COMMAND_WORD + " " + INDEX_FIRST_BOOK.getOneBased() + "   ";
 

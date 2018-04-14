@@ -15,7 +15,6 @@ import guitests.guihandles.HelpWindowHandle;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.SelectCommand;
-import seedu.address.model.Model;
 import seedu.address.ui.StatusBarFooter;
 
 /**
@@ -32,9 +31,6 @@ public class HelpCommandSystemTest extends BibliotekSystemTest {
 
     @Test
     public void openHelpWindow() {
-
-        Model model = getModel();
-        decryptModel(model);
 
         // use accelerator
         getCommandBox().click();

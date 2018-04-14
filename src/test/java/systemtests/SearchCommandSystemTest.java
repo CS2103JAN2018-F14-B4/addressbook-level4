@@ -25,9 +25,6 @@ public class SearchCommandSystemTest extends BibliotekSystemTest {
     @Test
     public void search() throws Exception {
 
-        Model model = getModel();
-        decryptModel(model);
-
         /* ----------------------------------- Perform invalid search operations ------------------------------------ */
 
         /* Case: close command word -> corrected */

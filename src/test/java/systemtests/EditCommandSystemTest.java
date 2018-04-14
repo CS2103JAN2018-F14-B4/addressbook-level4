@@ -27,9 +27,6 @@ public class EditCommandSystemTest extends BibliotekSystemTest {
     @Test
     public void edit() throws Exception {
 
-        Model model = getModel();
-        decryptModel(model);
-
         /* ----------------- Performing edit operation while an unfiltered list is being shown ---------------------- */
 
         /* Case: edit all fields -> edited */

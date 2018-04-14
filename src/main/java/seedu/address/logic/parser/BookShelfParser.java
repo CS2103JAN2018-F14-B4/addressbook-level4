@@ -15,24 +15,23 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AliasesCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
-import seedu.address.logic.commands.DecryptCommand;
 import seedu.address.logic.commands.DeleteAliasCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
-import seedu.address.logic.commands.EncryptCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.LibraryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.LockCommand;
 import seedu.address.logic.commands.RecentCommand;
 import seedu.address.logic.commands.ReviewsCommand;
 import seedu.address.logic.commands.SearchCommand;
 import seedu.address.logic.commands.SelectCommand;
-import seedu.address.logic.commands.SetKeyCommand;
+import seedu.address.logic.commands.SetPasswordCommand;
 import seedu.address.logic.commands.ThemeCommand;
 import seedu.address.logic.commands.UndoCommand;
-
+import seedu.address.logic.commands.UnlockCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.alias.Alias;
 import seedu.address.model.alias.ReadOnlyAliasList;
@@ -130,8 +129,8 @@ public class BookShelfParser {
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
 
-        case DecryptCommand.COMMAND_WORD:
-            return new DecryptCommandParser().parse(arguments);
+        case UnlockCommand.COMMAND_WORD:
+            return new UnlockCommandParser().parse(arguments);
 
         case DeleteAliasCommand.COMMAND_WORD:
             return new DeleteAliasCommand(arguments);
@@ -145,8 +144,8 @@ public class BookShelfParser {
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();
 
-        case EncryptCommand.COMMAND_WORD:
-            return new EncryptCommand();
+        case LockCommand.COMMAND_WORD:
+            return new LockCommand();
 
         case HelpCommand.COMMAND_WORD:
             return new HelpCommand();
@@ -172,8 +171,8 @@ public class BookShelfParser {
         case SelectCommand.COMMAND_WORD:
             return new SelectCommandParser().parse(arguments);
 
-        case SetKeyCommand.COMMAND_WORD:
-            return new SetKeyCommandParser().parse(arguments);
+        case SetPasswordCommand.COMMAND_WORD:
+            return new SetPasswordCommandParser().parse(arguments);
 
         case ThemeCommand.COMMAND_WORD:
             return new ThemeCommandParser().parse(arguments);

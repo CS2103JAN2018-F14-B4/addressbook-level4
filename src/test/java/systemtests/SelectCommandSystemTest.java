@@ -22,9 +22,6 @@ public class SelectCommandSystemTest extends BibliotekSystemTest {
     @Test
     public void select() {
 
-        Model model = getModel();
-        decryptModel(model);
-
         /* ------------------------ Perform select operations on the shown unfiltered list -------------------------- */
 
         /* Case: select the first card in the book list, command with leading spaces and trailing spaces

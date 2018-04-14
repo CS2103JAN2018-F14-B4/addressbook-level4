@@ -26,8 +26,6 @@ public class DeleteCommandSystemTest extends BibliotekSystemTest {
     @Test
     public void delete() {
 
-        Model model = getModel();
-        decryptModel(model);
         /* ----------------- Performing delete operation while an unfiltered list is being shown -------------------- */
 
         /* Case: delete the first book in the list, command with leading spaces and trailing spaces -> deleted */

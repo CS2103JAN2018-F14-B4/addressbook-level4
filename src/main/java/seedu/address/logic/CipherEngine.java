@@ -1,137 +1,116 @@
 package seedu.address.logic;
-//@@author 592363789
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
+import java.util.logging.Logger;
 
 import javax.crypto.Cipher;
 import javax.crypto.CipherInputStream;
 import javax.crypto.CipherOutputStream;
+import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
 
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.util.StringUtil;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
+//@@author 592363789
 /**
  *  Class for encrypt and decrypt file and key.
  */
 public class CipherEngine {
+    private static final Logger logger = LogsCenter.getLogger(CipherEngine.class);
 
-    private static final String defaultKey = "abcdefgh";
+    private static final String TEMP_FILE = "data/change.xml";
+
+    private static final String defaultKey = "vsFA#%HZ1c93";
     private static final String DES = "DES";
     private static final String ENCODE = "GBK";
-    private static String file;
-    //@@author 592363789-reused
+
     /**
-     *  Encrypting files
+     *  Encrypts file at {@code fileName} using {@code key}.
      */
-    public static void encryptFile(String path) {
+    public static void encryptFile(String fileName, String key) {
         try {
-            file = path;
-            FileInputStream fis = new FileInputStream(path);
-            FileOutputStream fos = new FileOutputStream("data/change.xml");
-            enDecrypt(defaultKey, Cipher.ENCRYPT_MODE, fis, fos);
-            File temp = new File(file);
-            temp.delete();
-            changeName("data/change.xml");
-        } catch (Throwable e) {
-            e.printStackTrace();
+            FileInputStream fis = new FileInputStream(fileName);
+            FileOutputStream fos = new FileOutputStream(TEMP_FILE);
+            encrypt(key, fis, fos);
+            replaceFile(fileName, TEMP_FILE);
+        } catch (IOException ioe) {
+            logger.warning("Could not find file " + fileName);
+        } catch (InvalidKeyException | NoSuchAlgorithmException | InvalidKeySpecException | NoSuchPaddingException e) {
+            logger.warning("Could not encrypt file " + fileName);
         }
     }
 
     /**
-     *  Decrypting files
+     *  Decrypts file at {@code fileName} using {@code key}.
      */
-    public static void decryptFile(String path) {
+    public static void decryptFile(String fileName, String key) {
         try {
-            file = path;
-            FileInputStream fis = new FileInputStream(path);
-            FileOutputStream fos = new FileOutputStream("data/change.xml");
-            enDecrypt(defaultKey, Cipher.DECRYPT_MODE, fis, fos);
-            File temp = new File(file);
-            temp.delete();
-            changeName("data/change.xml");
-        } catch (Throwable e) {
-            e.printStackTrace();
+            FileInputStream fis = new FileInputStream(fileName);
+            FileOutputStream fos = new FileOutputStream(TEMP_FILE);
+            decrypt(key, fis, fos);
+            replaceFile(fileName, TEMP_FILE);
+        } catch (IOException ioe) {
+            logger.warning("Could not find file " + fileName);
+        } catch (InvalidKeyException | NoSuchAlgorithmException | InvalidKeySpecException | NoSuchPaddingException e) {
+            logger.warning("Could not decrypt file " + fileName);
         }
     }
 
     /**
-     * Encrypt or Decrypt method
+     * Encrypts {@code key}.
      */
-    public static void enDecrypt(String key, int mode, InputStream inputStream, OutputStream outputStream)
-            throws Throwable {
+    public static String encryptKey(String key) throws Exception {
+        byte[] byarray = encrypt(key.getBytes(ENCODE), defaultKey.getBytes(ENCODE));
+        return new BASE64Encoder().encode(byarray);
+    }
 
-        DESKeySpec desKeySpec = new DESKeySpec(key.getBytes());
-        SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance("DES");
-        SecretKey desKey = secretKeyFactory.generateSecret(desKeySpec);
+    /**
+     * Decrypts {@code key}.
+     */
+    public static String decryptKey(String key) throws Exception {
+        BASE64Decoder base64Decoder = new BASE64Decoder();
+        byte[] decodeBuffer = base64Decoder.decodeBuffer(key);
+        byte[] bytes = decrypt(decodeBuffer, defaultKey.getBytes(ENCODE));
+        return new String(bytes, ENCODE);
+    }
+
+    /**
+     * Encrypts from {@code inputStream} and outputs to {@code outputStream}.
+     * Encryption is done using {@code key}.
+     */
+    private static void encrypt(String key, InputStream inputStream, OutputStream outputStream)
+            throws NoSuchAlgorithmException, InvalidKeyException, InvalidKeySpecException,
+            NoSuchPaddingException, IOException {
+
+        SecretKey desKey = getSecretKey(key);
         Cipher cipher = Cipher.getInstance("DES"); // DES/ECB/PKCS5Padding for SunJCE
 
-        if (mode == Cipher.ENCRYPT_MODE) {
-            cipher.init(Cipher.ENCRYPT_MODE, desKey);
-            CipherInputStream cipherInputStream = new CipherInputStream(inputStream, cipher);
-            hiding(cipherInputStream, outputStream);
-        } else if (mode == Cipher.DECRYPT_MODE) {
-            cipher.init(Cipher.DECRYPT_MODE, desKey);
-            CipherOutputStream cipherOutputStream = new CipherOutputStream(outputStream, cipher);
-            hiding(inputStream, cipherOutputStream);
-        }
-    }
-
-    /**
-     *  Cover the file (hiding the normal file)
-     */
-    public static void hiding(InputStream inputStream, OutputStream outputStream) throws IOException {
-        byte[] bytes = new byte[64];
-        int num;
-        while ((num = inputStream.read(bytes)) != -1) {
-            outputStream.write(bytes, 0, num);
-        }
-        outputStream.flush();
-        outputStream.close();
-        inputStream.close();
-    }
-
-    /**
-     * replace the file
-     */
-    public static boolean changeName(String from) {
-
-        File f0 = new File(from);
-        File f1 = new File(file);
-
-        return f0.renameTo(f1);
-
+        cipher.init(Cipher.ENCRYPT_MODE, desKey);
+        CipherInputStream cipherInputStream = new CipherInputStream(inputStream, cipher);
+        hiding(cipherInputStream, outputStream);
     }
     //@@author 592363789
     /**
-     * Use defaultkey to encrypt
-     * @param mykey
-     * @return
-     * @throws Exception
-     */
-    public static String encrypKey(String mykey) throws Exception {
-        byte[] byarray = encrypt(mykey.getBytes(ENCODE), defaultKey.getBytes(ENCODE));
-        String encryptkey = new BASE64Encoder().encode(byarray);
-        return encryptkey;
-    }
-
-    /**
-     * Convert the bytearray of string into encrypt key.
+     * Encrypts {@code content} using {@code key}.
      *
-     * @param mykey
-     * @param key
-     *
-     * @return
-     * @throws Exception
+     * @param content content to encrypt.
+     * @param key key to encrypt with.
      */
-    public static byte[] encrypt(byte[] mykey, byte[] key) throws Exception {
+    private static byte[] encrypt(byte[] content, byte[] key) throws Exception {
         SecureRandom secureRandom = new SecureRandom();
 
         DESKeySpec desKeySpec = new DESKeySpec(key);
@@ -143,36 +122,32 @@ public class CipherEngine {
 
         cipher.init(javax.crypto.Cipher.ENCRYPT_MODE, securekey, secureRandom);
 
-        return cipher.doFinal(mykey);
+        return cipher.doFinal(content);
     }
 
     /**
-     * Use defaultkey to decrypt
-     * @param yourkey
-     * @return
-     * @throws Exception
-     * @throws IOException
+     * Decrypts from {@code inputStream} and outputs to {@code outputStream}.
+     * Decryption is done using {@code key}.
      */
-    public static String decryptKey(String yourkey) throws IOException, Exception {
-        if (yourkey == null) {
-            return null;
-        }
-        BASE64Decoder base64Decoder = new BASE64Decoder();
-        byte[] decodeBuffer = base64Decoder.decodeBuffer(yourkey);
-        byte[] bytes = decrypt(decodeBuffer, defaultKey.getBytes(ENCODE));
-        return new String(bytes, ENCODE);
+    private static void decrypt(String key, InputStream inputStream, OutputStream outputStream)
+            throws NoSuchAlgorithmException, InvalidKeyException, InvalidKeySpecException,
+            NoSuchPaddingException, IOException {
+
+        SecretKey desKey = getSecretKey(key);
+        Cipher cipher = Cipher.getInstance("DES"); // DES/ECB/PKCS5Padding for SunJCE
+
+        cipher.init(Cipher.DECRYPT_MODE, desKey);
+        CipherOutputStream cipherOutputStream = new CipherOutputStream(outputStream, cipher);
+        hiding(inputStream, cipherOutputStream);
     }
 
     /**
-     * Convert the bytearray of string into decrypt key.
+     * Decrypts {@code content} using {@code key}.
      *
-     * @param yourkey
-     * @param key
-     *
-     * @return
-     * @throws Exception
+     * @param content content to decrypt.
+     * @param key key to decrypt with.
      */
-    private static byte[] decrypt(byte[] yourkey, byte[] key) throws Exception {
+    private static byte[] decrypt(byte[] content, byte[] key) throws Exception {
 
         SecureRandom secureRandom = new SecureRandom();
 
@@ -185,6 +160,65 @@ public class CipherEngine {
 
         cipher.init(javax.crypto.Cipher.DECRYPT_MODE, securekey, secureRandom);
 
-        return cipher.doFinal(yourkey);
+        return cipher.doFinal(content);
     }
+
+    /**
+     * Obtains a {@link SecretKey} from {@code key} to be used in encryption and decryption.
+     */
+    private static SecretKey getSecretKey(String key) throws InvalidKeyException,
+            NoSuchAlgorithmException, InvalidKeySpecException {
+        String paddedKey = StringUtil.rightPad(key, ' ', 8);
+        DESKeySpec desKeySpec = new DESKeySpec(paddedKey.getBytes());
+        SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance("DES");
+        return secretKeyFactory.generateSecret(desKeySpec);
+    }
+
+    /**
+     *  Cover the file (hiding the normal file)
+     */
+    private static void hiding(InputStream inputStream, OutputStream outputStream) throws IOException {
+        byte[] bytes = new byte[64];
+        int num;
+        while ((num = inputStream.read(bytes)) != -1) {
+            outputStream.write(bytes, 0, num);
+        }
+        outputStream.flush();
+        outputStream.close();
+        inputStream.close();
+    }
+
+    /**
+     * Replaces the file at {@code toReplace} with the file at {@code replacement}.
+     */
+    private static void replaceFile(String toReplace, String replacement) throws IOException {
+
+        File dest = new File(toReplace);
+        File src = new File(replacement);
+
+        copyFileUsingStream(src, dest);
+        src.delete();
+    }
+
+    // Reused from https://www.journaldev.com/861/java-copy-file
+    /**
+     * Copies the content of {@code source} into {@code dest}.
+     */
+    private static void copyFileUsingStream(File source, File dest) throws IOException {
+        InputStream is = null;
+        OutputStream os = null;
+        try {
+            is = new FileInputStream(source);
+            os = new FileOutputStream(dest);
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = is.read(buffer)) > 0) {
+                os.write(buffer, 0, length);
+            }
+        } finally {
+            is.close();
+            os.close();
+        }
+    }
+
 }

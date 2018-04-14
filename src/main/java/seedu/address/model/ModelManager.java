@@ -10,24 +10,16 @@ import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
-import com.google.common.eventbus.Subscribe;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import seedu.address.commons.core.ComponentManager;
-import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 
 import seedu.address.commons.events.model.AliasListChangedEvent;
 import seedu.address.commons.events.model.BookShelfChangedEvent;
-import seedu.address.commons.events.model.FileDecryptEvent;
-import seedu.address.commons.events.model.FileEncryptEvent;
-import seedu.address.commons.events.model.XmlFileDecryptEvent;
-import seedu.address.commons.events.model.XmlFileEncryptEvent;
-import seedu.address.logic.CipherEngine;
-import seedu.address.logic.KeyControl;
+import seedu.address.logic.LockManager;
 import seedu.address.model.alias.Alias;
 import seedu.address.model.alias.ReadOnlyAliasList;
 import seedu.address.model.alias.UniqueAliasList;
@@ -52,7 +44,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final UniqueBookCircularList recentBooks;
     private final UniqueAliasList aliases;
     private final ObservableList<Alias> displayAliasList;
-    private final UserPrefs userPrefs;
+
     /**
      * Initializes a ModelManager with the given bookShelf, userPrefs, recentBooksList, and aliasList.
      */
@@ -70,21 +62,10 @@ public class ModelManager extends ComponentManager implements Model {
         this.sortedBookList = new SortedList<>(this.filteredBookList, DEFAULT_BOOK_COMPARATOR);
         this.displayBookList = sortedBookList;
         this.searchResults = new BookShelf();
-        this.userPrefs = userPrefs;
 
-        try {
-            if (!userPrefs.getKey().equals("")) {
-                KeyControl.getInstance().encrypt();
-                EventsCenter.getInstance().post(new FileEncryptEvent());
-                updateBookListFilter(PREDICATE_HIDE_ALL_BOOKS);
-                KeyControl.getInstance().setKey(CipherEngine.decryptKey(userPrefs.getKey()));
-            } else {
-                KeyControl.getInstance().setKey("");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (LockManager.getInstance().isLocked()) {
+            updateBookListFilter(PREDICATE_HIDE_ALL_BOOKS);
         }
-
 
         this.recentBooks = new UniqueBookCircularList();
         List<Book> list = recentBooksList.getBookList();
@@ -294,18 +275,6 @@ public class ModelManager extends ComponentManager implements Model {
                 && searchResults.equals(other.searchResults)
                 && recentBooks.equals(other.recentBooks)
                 && aliases.equals(other.aliases);
-    }
-
-    @Subscribe
-    public void handleFileEncryptEvent(FileEncryptEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event, "File encrypted; saving to file"));
-        raise(new XmlFileEncryptEvent(bookShelf));
-    }
-
-    @Subscribe
-    public void handleFileDecryptEvent(FileDecryptEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event, "File decrypted; saving to file"));
-        raise(new XmlFileDecryptEvent(bookShelf));
     }
 
 }

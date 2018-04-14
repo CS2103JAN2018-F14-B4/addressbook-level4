@@ -7,15 +7,11 @@ import java.util.logging.Logger;
 import com.google.common.eventbus.Subscribe;
 
 import seedu.address.commons.core.ComponentManager;
-import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AliasListChangedEvent;
 import seedu.address.commons.events.model.BookShelfChangedEvent;
-import seedu.address.commons.events.model.FileEncryptEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
-import seedu.address.logic.CipherEngine;
-import seedu.address.logic.KeyControl;
 import seedu.address.model.ReadOnlyBookShelf;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.alias.ReadOnlyAliasList;
@@ -78,12 +74,6 @@ public class StorageManager extends ComponentManager implements Storage {
     @Override
     public void saveBookShelf(ReadOnlyBookShelf bookShelf) throws IOException {
         saveBookShelf(bookShelf, bookShelfStorage.getBookShelfFilePath());
-        if (KeyControl.getInstance().getKey().equals("")) {
-            logger.info("no need encryt");
-        } else {
-            CipherEngine.encryptFile("data/bookshelf.xml");
-            EventsCenter.getInstance().post(new FileEncryptEvent());
-        }
     }
 
     @Override
