@@ -24,7 +24,7 @@ public class UnlockCommand extends Command {
     private String key;
 
     public UnlockCommand(String key) {
-        this.key = key;
+        this.key = key.trim();
     }
 
     @Override

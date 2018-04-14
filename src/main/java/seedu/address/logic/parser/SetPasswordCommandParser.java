@@ -27,12 +27,12 @@ public class SetPasswordCommandParser implements Parser<SetPasswordCommand> {
 
         String oldKey = LockManager.NO_PASSWORD;
         if (argMultimap.getValue(PREFIX_OLD).isPresent()) {
-            oldKey = String.valueOf(ParserUtil.parseKey(argMultimap.getValue(PREFIX_OLD).get()));
+            oldKey = String.valueOf(argMultimap.getValue(PREFIX_OLD).get().trim());
         }
 
         String newKey = LockManager.NO_PASSWORD;
         if (argMultimap.getValue(PREFIX_NEW).isPresent()) {
-            newKey = String.valueOf(ParserUtil.parseKey(argMultimap.getValue(PREFIX_NEW).get()));
+            newKey = String.valueOf(argMultimap.getValue(PREFIX_NEW).get().trim());
         }
 
         boolean isValid = CollectionUtil.isAnyNonNull(oldKey) || CollectionUtil.isAnyNonNull(newKey);

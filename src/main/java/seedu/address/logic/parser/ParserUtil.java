@@ -130,16 +130,6 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String key} into a {@code Key}.
-     * Leading and trailing whitespaces will be trimmed.
-     */
-    protected static String parseKey(String key) {
-        requireNonNull(key);
-        String trimmedKey = key.trim();
-        return new String(trimmedKey);
-    }
-
-    /**
      * Parses the given {@code statusString} and returns a {@code Status}.
      *
      * @throws ParseException if the string does not represent a valid status.

@@ -178,7 +178,7 @@ public class BookShelfParser {
             return new UndoCommand();
 
         case UnlockCommand.COMMAND_WORD:
-            return new UnlockCommandParser().parse(arguments);
+            return new UnlockCommand(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
