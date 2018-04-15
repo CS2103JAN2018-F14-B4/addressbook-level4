@@ -742,7 +742,7 @@ An addition class `CipherEngine` is added to the `Bookshelf` class. This class c
 
   * ** Every time user set the new `password` **
 
-  . The `Setpasswordcommand` will check the `password`.
+  . The `Setpwcommand` will check the `password`.
   . If the new `password` is equal to "", the `Lockmanager` will set `isProtected` to be false.
   . The isProtect will be checked by `xmlBookshelfstorage` whether to  encrypt the "Bookshelf.xml" and save
    the data into `Bookshelf.xml`.
@@ -771,13 +771,13 @@ NOTE:  . The `Bookshelf` cannot be run any command except `unlock` and `help` co
   . If the password is corrct, the unlock will be run successfully, otherwise it will send a WRONG_PASSWORD commandresult.
   . `UnlockCommand` is processed to set isLock(LockManager) to be false.
 
-  * **When `setPassword` command is entered**
+  * **When `setpw` command is entered**
 
-  . `setPasswordCommandParser` will extract the old key and new key from the user input.
-  . `setPasswordCommandParser` checks that  two parameters are present, and that the parameters are valid.
-  . `setPasswordCommandParser` creates an `setPasswordCommand` with the parameters.
-  . `setPasswordCommand` is preprocessed to check that oldKey is correct.
-  . If the oldKey is correct, `setPasswordCommand` will post a `passwordChangedevent`.
+  . `setpwCommandParser` will extract the old key and new key from the user input.
+  . `setpwParser` checks that  two parameters are valid.
+  . `setpwCommandParser` creates an `setpwCommand` with the parameters.
+  . `setpwCommand` is preprocessed to check that oldKey is correct using `LockManager`.
+  . If the oldKey is correct, `setpwCommand` will post a `passwordChangedevent`.
   . MainApp will handle it, and set `UserPrefs.password` to be new encoded `password`(using cipherEngine).
 
   * The encode key are implement in this way:
@@ -843,7 +843,7 @@ NOTE:  . The `Bookshelf` cannot be run any command except `unlock` and `help` co
 * **Alternative 1 (current choice):** Use three commands to do the lock, unlock and setpassword actions.
 ** Pros: Users can clearly know what they can do about the password.
 ** Cons: Users should learn two more commands.
-* **Alternative 2:** Use only one setpassword command to solve all three features.
+* **Alternative 2:** Use only one `setpw` command to solve all three features.
 ** Pros: Seem that users can eliminate the typing.
 ** Cons: Users will feel confuse, not so clear about the command.
 
