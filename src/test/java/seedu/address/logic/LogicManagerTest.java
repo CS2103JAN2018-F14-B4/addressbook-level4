@@ -8,6 +8,7 @@ import static org.mockito.Mockito.mock;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -39,6 +40,11 @@ public class LogicManagerTest {
 
     @Before
     public void setUp() {
+        LockManager.getInstance().initialize(LockManager.NO_PASSWORD);
+    }
+
+    @After
+    public void tearDown() {
         LockManager.getInstance().initialize(LockManager.NO_PASSWORD);
     }
 
