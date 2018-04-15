@@ -49,13 +49,14 @@ some books.
 *** Added in the data file encryption enhancement. (Pull requests https://github.com/CS2103JAN2018-F14-B4/main/pull/134[#134])
 *** Added one case insensitive feature. (Pull requests https://github.com/CS2103JAN2018-F14-B4/main/pull/179[#179])
 ** Documentation:
-*** Added my major and minor feature into UserGuide and DeveloperGuide, adding my Project Portfolio: https://github.com/CS2103JAN2018-F14-B4/main/pull/193[#193].
+*** Added my major and minor feature into UserGuide and DeveloperGuide, adding my Project Portfolio. (https://github.com/CS2103JAN2018-F14-B4/main/pull/193[#193])
 ** Community:
-*** PRs reviewed : https://github.com[#12], https://github.com/CS2103JAN2018-F14-B4/main/pull/84[#84], https://github.com/CS2103JAN2018-F14-B4/main/pull/79[#79], https://github.com/CS2103JAN2018-F14-B4/main/pull/68[#68], https://github.com/CS2103JAN2018-F14-B4/main/pull/44[#44]
-*** Reported bugs and suggestions for other teams in the class : https://github.com/CS2103JAN2018-F11-B3/main/issues/116[#116],
+*** PRs reviewed. (https://github.com[#12], https://github.com/CS2103JAN2018-F14-B4/main/pull/84[#84], https://github.com/CS2103JAN2018-F14-B4/main/pull/79[#79],
+https://github.com/CS2103JAN2018-F14-B4/main/pull/68[#68], https://github.com/CS2103JAN2018-F14-B4/main/pull/44[#44])
+*** Reported bugs and suggestions for other teams in the class. (https://github.com/CS2103JAN2018-F11-B3/main/issues/116[#116],
 https://github.com/CS2103JAN2018-F11-B3/main/issues/119[#119], https://github.com/CS2103JAN2018-F11-B3/main/issues/133[#133],
 https://github.com/CS2103JAN2018-F11-B3/main/issues/137[#137], https://github.com/CS2103JAN2018-F11-B3/main/issues/118[#118],
-https://github.com/CS2103JAN2018-F11-B3/main/issues/123[#123]
+https://github.com/CS2103JAN2018-F11-B3/main/issues/123[#123])
 
 == Contributions to the User Guide
 
