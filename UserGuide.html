@@ -50,13 +50,17 @@
 <li><a href="#addalias-command">6.4. Adding a command alias : <code>addalias</code> <em>(since v1.5)</em></a></li>
 <li><a href="#aliases-command">6.5. Listing command aliases : <code>aliases</code> <em>(since v1.5)</em></a></li>
 <li><a href="#deletealias-command">6.6. Delete a command alias : <code>deletealias</code> <em>(since v1.5)</em></a></li>
-<li><a href="#command-autocorrection-em-since-v1-5-em">6.7. Command autocorrection <em>(since v1.5)</em></a></li>
+<li><a href="#hint-system-em-since-v1-5-em">6.7. Hint system <em>(since v1.5)</em></a></li>
+<li><a href="#command-autocorrection-em-since-v1-5-em">6.8. Command autocorrection <em>(since v1.5)</em></a></li>
 </ul>
 </li>
 <li><a href="#other-features">7. Other Features</a>
 <ul class="sectlevel2">
 <li><a href="#displaying-quote-of-the-day">7.1. Displaying quote of the day</a></li>
 <li><a href="#theme-command">7.2. Changing theme : <code>theme</code> <em>(since v1.2)</em></a></li>
+<li><a href="#setKey-command">7.3. Changing/Setting a password : <code>setpw</code> <em>(since v1.5)</em></a></li>
+<li><a href="#Encrypt-command">7.4. Locking the app : <code>lock</code> <em>(since v1.5)</em></a></li>
+<li><a href="#Decrypt-command">7.5. Unlocking the app : <code>unlock</code> <em>(since v1.5)</em></a></li>
 </ul>
 </li>
 <li><a href="#upcoming-features">8. Upcoming Features</a>
@@ -67,10 +71,7 @@
 <li><a href="#import-command">8.4. Importing books from other E-Readers : <code>import</code> <em>(coming in v2.0)</em></a></li>
 <li><a href="#fontsize-command">8.5. Changing font size : <code>fontsize</code> <em>(coming in v2.0)</em></a></li>
 <li><a href="#autpcomplete-command">8.6. Autocompleting commands : <code>Tab</code> <em>(coming in v2.0)</em></a></li>
-<li><a href="#setKey-command">8.7. Changing/Setting a password : <code>setpw</code> <em>(coming in v1.5)</em></a></li>
-<li><a href="#Encrypt-command">8.8. Lock the app : <code>lock</code> <em>(coming in v1.5)</em></a></li>
-<li><a href="#Decrypt-command">8.9. Unlock the app : <code>unlock</code> <em>(coming in v1.5)</em></a></li>
-<li><a href="#settings-command">8.10. Changing settings: <code>settings</code> <em>(coming in v2.0)</em></a></li>
+<li><a href="#settings-command">8.7. Changing settings: <code>settings</code> <em>(coming in v2.0)</em></a></li>
 </ul>
 </li>
 <li><a href="#faq">9. FAQ</a></li>
@@ -98,7 +99,7 @@ You can use Bibliotek to search for books, manage your reading list and track th
 </div>
 <div class="paragraph">
 <p>If you <strong>prefer to use a desktop app</strong>, like <strong>working with a Command Line Interface</strong> (<a href="#cli">CLI</a>)
-while still having the benefits of a Graphical User Interface (<a href="#gui">GUI</a>) or can <strong>type fast</strong>, Bibliotek is just for you!</p>
+while still having the benefits of a Graphical User Interface (<a href="#gui">GUI</a>) or <strong>can type fast</strong>, Bibliotek is just for you!</p>
 </div>
 <div class="paragraph">
 <p>Interested? Jump to <a href="#installing-bibliotek">Section 2, &#8220;Installing Bibliotek&#8221;</a> to get started. Enjoy!</p>
@@ -361,7 +362,7 @@ This may take some time since an external service is being called to fetch your 
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/SearchCommandSearching.png" alt="SearchCommandSearching" width="675">
+<img src="images/SearchCommandSearching.png" alt="SearchCommandSearching" width="650">
 </div>
 </div>
 <div class="paragraph">
@@ -370,7 +371,7 @@ search results in the left panel.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/SearchCommandFound.png" alt="SearchCommandFound" width="675">
+<img src="images/SearchCommandFound.png" alt="SearchCommandFound" width="650">
 </div>
 </div>
 <div class="admonitionblock note">
@@ -430,24 +431,24 @@ Format: <code>select INDEX</code></p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/SearchCommandFound.png" alt="SearchCommandFound" width="675">
+<img src="images/SearchCommandFound.png" alt="SearchCommandFound" width="650">
 </div>
 </div>
 <div class="paragraph">
 <p>If you are interested in <code>The Ivory Tower and Harry Potter</code> and wish to view more information,
-enter <code>select 3</code>.</p>
+enter <code>select 2</code>.</p>
 </div>
 <div class="paragraph">
-<p>Bibliotek shows <code>Selected Book: 3</code> to indicate that your <code>select</code> is successful. The left panel
+<p>Bibliotek shows <code>Selected Book: 2</code> to indicate that your <code>select</code> is successful. The left panel
 is auto-scrolled to the selected book and the right panel shows detailed information of the book.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/SelectCommand.png" alt="SelectCommand" width="675">
+<img src="images/SelectCommand.png" alt="SelectCommand" width="650">
 </div>
 </div>
 <div class="paragraph">
-<p>Alternatively, instead of entering <code>select 3</code>, you can directly select <code>The Ivory Tower and Harry Potter</code>
+<p>Alternatively, instead of entering <code>select 2</code>, you can directly select <code>The Ivory Tower and Harry Potter</code>
 by clicking on it in the left panel.</p>
 </div>
 <div class="paragraph">
@@ -456,7 +457,7 @@ will be shown in this case.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/SelectCommandUI.png" alt="SelectCommandUI" width="675">
+<img src="images/SelectCommandUI.png" alt="SelectCommandUI" width="650">
 </div>
 </div>
 <div class="paragraph">
@@ -523,11 +524,11 @@ You also need Internet connection.
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/SearchCommandFound.png" alt="SearchCommandFound" width="675">
+<img src="images/SearchCommandFound.png" alt="SearchCommandFound" width="650">
 </div>
 </div>
 <div class="paragraph">
-<p>If you want to add <code>Harry Potter and the Classical World</code> to your book shelf, enter <code>add 2</code>.</p>
+<p>If you want to add <code>Harry Potter and the Classical World</code> to your book shelf, enter <code>add 3</code>.</p>
 </div>
 <div class="paragraph">
 <p>Bibliotek shows <code>Adding the book into your book shelf&#8230;&#8203;</code> to indicate that your <code>add</code> is being processed.
@@ -536,7 +537,7 @@ the book before adding it to your book shelf.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/AddCommandAdding.png" alt="AddCommandAdding" width="675">
+<img src="images/AddCommandAdding.png" alt="AddCommandAdding" width="650">
 </div>
 </div>
 <div class="paragraph">
@@ -544,7 +545,7 @@ the book before adding it to your book shelf.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/AddCommandAdded.png" alt="AddCommandAdded" width="675">
+<img src="images/AddCommandAdded.png" alt="AddCommandAdded" width="650">
 </div>
 </div>
 <div class="paragraph">
@@ -552,7 +553,7 @@ the book before adding it to your book shelf.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/AddCommandAddedConfirmation.png" alt="AddCommandAddedConfirmation" width="675">
+<img src="images/AddCommandAddedConfirmation.png" alt="AddCommandAddedConfirmation" width="650">
 </div>
 </div>
 <div class="paragraph">
@@ -675,7 +676,7 @@ The left panel will show all the books in your book shelf.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/ListCommand.png" alt="ListCommand" width="675">
+<img src="images/ListCommand.png" alt="ListCommand" width="650">
 </div>
 </div>
 <div class="paragraph">
@@ -740,17 +741,39 @@ You can only perform <code>edit</code> when the list shown is from your book she
 </table>
 </div>
 <div class="paragraph">
-<p>Examples:</p>
+<p>Suppose you have a few unread books in your book shelf.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/EditCommandStart.png" alt="EditCommandStart" width="650">
+</div>
+</div>
+<div class="paragraph">
+<p>You may want to differentiate them based on how eager you are to read each book.
+This helps you to better keep track of what you plan to read next, and also allows you to view the books in a more useful order.<br>
+For example, if you feel that reading <code>Gel Electrophoresis of Proteins</code> is more urgent than reading the other books, you can change its priority to high using <code>edit 3 p/high</code>.</p>
+</div>
+<div class="paragraph">
+<p>Bibliotek shows <code>Edited Book: TITLE - Authors: AUTHORS</code> to indicate that the <code>edit</code> was successful.
+In the left panel, you can see that the priority label of <code>Gel Electrophoresis of Proteins</code> is changed to <code>High</code>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/EditCommandMid.png" alt="EditCommandMid" width="650">
+</div>
+</div>
+<div class="paragraph">
+<p>Other examples:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>edit 1 p/high</code><br>
-Changes the priority of the 1st book to <code>HIGH</code>.</p>
+<p><code>edit 1 s/reading</code><br>
+Marks the 1st book as <code>Reading</code>.</p>
 </li>
 <li>
 <p><code>edit 2 s/read r/5</code><br>
-Marks the 2nd book as <code>READ</code> and changes its rating to <code>5</code>.</p>
+Marks the 2nd book as <code>Read</code> and changes its rating to <code>5</code>.</p>
 </li>
 </ul>
 </div>
@@ -808,11 +831,11 @@ They may serve as useful reference in the future.
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/ListCommand.png" alt="ListCommand" width="675">
+<img src="images/ListCommand.png" alt="ListCommand" width="650">
 </div>
 </div>
 <div class="paragraph">
-<p>If you no longer want to read <code>Harry Potter and the Classical World</code> and wish to remove it from your book shelf, enter <code>delete 3</code>.</p>
+<p>If you no longer want to read <code>Artificial Intelligence</code> and wish to remove it from your book shelf, enter <code>delete 3</code>.</p>
 </div>
 <div class="paragraph">
 <p>Bibliotek shows <code>Deleted Book: TITLE - Authors: AUTHORS</code> to indicate that your <code>delete</code> is successful.
@@ -820,7 +843,7 @@ The book no longer exist in the left panel.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/DeleteCommand.png" alt="DeleteCommand" width="675">
+<img src="images/DeleteCommand.png" alt="DeleteCommand" width="650">
 </div>
 </div>
 <div class="paragraph">
@@ -863,14 +886,14 @@ The left panel is now empty.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/ClearCommand.png" alt="ClearCommand" width="675">
+<img src="images/ClearCommand.png" alt="ClearCommand" width="650">
 </div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="reviews-command"><a class="anchor" href="#reviews-command"></a>5.9. Viewing book reviews : <code>reviews</code> <em>(since v1.3)</em></h3>
 <div class="paragraph">
-<p>If a book catches your eyes but you are not sure whether it&#8217;s worth the read, use
+<p>If a book catches your eye but you are not sure whether it&#8217;s worth the read, use
 <code>reviews</code> to find out what other readers think.<br>
 Format: <code>reviews INDEX</code></p>
 </div>
@@ -908,11 +931,11 @@ You can only perform <code>reviews</code> with Internet connection.
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/SearchCommandFound.png" alt="SearchCommandFound" width="675">
+<img src="images/SearchCommandFound.png" alt="SearchCommandFound" width="650">
 </div>
 </div>
 <div class="paragraph">
-<p>If you want to view book reviews for <code>The Ivory Tower and Harry Potter</code>, enter <code>reviews 3</code>.</p>
+<p>If you want to view book reviews for <code>The Ivory Tower and Harry Potter</code>, enter <code>reviews 2</code>.</p>
 </div>
 <div class="paragraph">
 <p>Bibliotek shows <code>Showing reviews for book: TITLE - Authors: AUTHORS.</code> and displays a browser at the right panel.
@@ -921,7 +944,7 @@ Once the web page has loaded, you will be able to see the reviews, as shown belo
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/ReviewsCommandLoaded.png" alt="ReviewsCommandLoaded" width="675">
+<img src="images/ReviewsCommandLoaded.png" alt="ReviewsCommandLoaded" width="650">
 </div>
 </div>
 <div class="paragraph">
@@ -940,7 +963,7 @@ Shows online reviews of 1st book in the search results.</p>
 <div class="sect2">
 <h3 id="library-command"><a class="anchor" href="#library-command"></a>5.10. Finding a book in the library : <code>library</code> <em>(since v1.5)</em></h3>
 <div class="paragraph">
-<p>If you want to know whether a book is available in the library, use <code>library</code>.<br>
+<p>If you want to check whether a book is available in the library, use <code>library</code>.<br>
 Format: <code>library INDEX</code></p>
 </div>
 <div class="sidebarblock">
@@ -948,7 +971,7 @@ Format: <code>library INDEX</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p>Check for the availability of a book in a <a href="#settings-library">pre-configured library</a>.</p>
+<p>Checks for the availability of the book at <code>INDEX</code> in a <a href="#settings-library">pre-configured library</a>.</p>
 </li>
 <li>
 <p>Default library searched is National Library Board.</p>
@@ -974,7 +997,7 @@ You can only perform <code>library</code> with Internet connection.
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/ListCommand.png" alt="ListCommand" width="675">
+<img src="images/LibraryCommandBefore.png" alt="LibraryCommandBefore" width="650">
 </div>
 </div>
 <div class="paragraph">
@@ -986,12 +1009,12 @@ This may take some time since data is being loaded from the online library catal
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/LibraryCommandSearching.png" alt="LibraryCommandSearching" width="675">
+<img src="images/LibraryCommandSearching.png" alt="LibraryCommandSearching" width="650">
 </div>
 </div>
 <div class="paragraph">
 <p>Once the data is ready, Bibliotek shows <code>Showing availability of book: TITLE - Authors: AUTHORS</code>.
-You will be able to see the availability of the book in the library in the right panel shortly after, as shown below.</p>
+The availability of the book in the library will show up in the right panel shortly after, as shown below.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1019,7 +1042,7 @@ In the event that loading isn&#8217;t completed after a long time, you should tr
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/LibraryCommandAfter.png" alt="LibraryCommandAfter" width="675">
+<img src="images/LibraryCommandAfter.png" alt="LibraryCommandAfter" width="650">
 </div>
 </div>
 <div class="admonitionblock note">
@@ -1099,7 +1122,7 @@ Format: <code>recent</code></p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/SelectCommand.png" alt="SelectCommand" width="675">
+<img src="images/SelectCommand.png" alt="SelectCommand" width="650">
 </div>
 </div>
 <div class="paragraph">
@@ -1108,17 +1131,17 @@ you regret not adding <code>The Ivory Tower and Harry Potter</code> into your bo
 performing the search again, you can enter <code>recent</code> to view recently selected books.</p>
 </div>
 <div class="paragraph">
-<p>Bibliotek shows <code>Listed all recently selected books.</code> to indicate that your <code>recent</code> command
+<p>Bibliotek shows <code>Listed xx recently selected books.</code> to indicate that your <code>recent</code> command
 is successful. You can scroll down the left panel to locate <code>The Ivory Tower and Harry Potter</code>
-(index 4 in this case).</p>
+(index 7 in this case).</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/RecentCommand.png" alt="RecentCommand" width="675">
+<img src="images/RecentCommand.png" alt="RecentCommand" width="650">
 </div>
 </div>
 <div class="paragraph">
-<p>You can then enter <code>add 4</code> to add the book into your book shelf.</p>
+<p>You can then enter <code>add 7</code> to add the book into your book shelf.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1159,7 +1182,7 @@ Format: <code>undo</code></p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Undoable commands: those commands that modify the book shelf&#8217;s content (<code>add</code>, <code>edit</code>, <code>delete</code>, and <code>clear</code>).</p>
+<p>Undoable commands are commands that modify the book shelf&#8217;s content (<code>add</code>, <code>edit</code>, <code>delete</code>, and <code>clear</code>).</p>
 </div>
 </td>
 </tr>
@@ -1170,7 +1193,7 @@ Format: <code>undo</code></p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/DeleteCommand.png" alt="DeleteCommand" width="675">
+<img src="images/DeleteCommand.png" alt="DeleteCommand" width="650">
 </div>
 </div>
 <div class="paragraph">
@@ -1178,11 +1201,11 @@ Format: <code>undo</code></p>
 </div>
 <div class="paragraph">
 <p>Bibliotek shows <code>Successfully undone deleting of TITLE - Authors: AUTHORS.</code>
-to indicate that your <code>undo</code> of the deletion is successful. <code>Harry Potter and the Classical World</code> is back in your book shelf as seen in the left panel.</p>
+to indicate that your <code>undo</code> of the deletion is successful. <code>Artificial Intelligence</code> is back in your book shelf as seen in the left panel.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/UndoCommand.png" alt="UndoCommand" width="675">
+<img src="images/UndoCommand.png" alt="UndoCommand" width="650">
 </div>
 </div>
 <div class="admonitionblock note">
@@ -1229,6 +1252,9 @@ Format: <code>history</code></p>
 <ul>
 <li>
 <p>Lists the previous commands in reverse chronological order.</p>
+</li>
+<li>
+<p>Commands that deal with passwords (such as <a href="#setKey-command"><code>setpw</code></a>) will not be recorded in history.</p>
 </li>
 </ul>
 </div>
@@ -1346,7 +1372,7 @@ The right panel will display a list of all your command aliases.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/AliasesCommand.png" alt="AliasesCommand" width="675">
+<img src="images/AliasesCommand.png" alt="AliasesCommand" width="650">
 </div>
 </div>
 </div>
@@ -1387,7 +1413,44 @@ Deletes the command alias with the name <code>read</code>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="command-autocorrection-em-since-v1-5-em"><a class="anchor" href="#command-autocorrection-em-since-v1-5-em"></a>6.7. Command autocorrection <em>(since v1.5)</em></h3>
+<h3 id="hint-system-em-since-v1-5-em"><a class="anchor" href="#hint-system-em-since-v1-5-em"></a>6.7. Hint system <em>(since v1.5)</em></h3>
+<div class="paragraph">
+<p>We understand that Bibliotek has many commands and it is difficult to remember the syntax of every command. With the hint system,
+you can reduce the burden on your memory and count on Bibliotek to remind you instead!</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Provides hints on the syntax of commands based on the command word and/or parameters that you typed.</p>
+</li>
+<li>
+<p>Distinguishes between valid and invalid commands using black and red text color respectively.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Simply type the command word to view hints about the parameters that the command takes in.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/HintSystem.png" alt="HintSystem" width="650">
+</div>
+</div>
+<div class="paragraph">
+<p>You can also see whether your command is valid, and if it isn&#8217;t, what parameter should come next.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/HintSystemNextParameter.png" alt="HintSystemNextParameter" width="650">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="command-autocorrection-em-since-v1-5-em"><a class="anchor" href="#command-autocorrection-em-since-v1-5-em"></a>6.8. Command autocorrection <em>(since v1.5)</em></h3>
 <div class="paragraph">
 <p>It is common to mispell words when you are typing fast, and when this happens, it is always a hassle to have to correct it and try again.
 With the command autocorrection system, this may only be one keypress away.</p>
@@ -1400,11 +1463,40 @@ With the command autocorrection system, this may only be one keypress away.</p>
 <p>Corrects mispelled command words which are one letter away from an actual command word, and suggests the correction to you.</p>
 </li>
 <li>
+<p>Corrects to alias names too.</p>
+</li>
+<li>
 <p>You can execute the corrected command by pressing <kbd>Enter</kbd>.</p>
 </li>
 </ul>
 </div>
 </div>
+</div>
+<div class="paragraph">
+<p>If you accidentally typed <code>delte 1</code> instead of <code>delete 1</code>, there is no need to deliberately go back and correct it. Instead, you could just hit <kbd>Enter</kbd>.</p>
+</div>
+<div class="paragraph">
+<p>Bibliotek attempts to correct your command, and if successful, you will see a message <code>Did you mean: COMMAND &#8230;&#8203;</code>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/CommandAutocorrection.png" alt="CommandAutocorrection" width="650">
+</div>
+</div>
+<div class="paragraph">
+<p>Press <kbd>Enter</kbd> if the shown <code>COMMAND</code> was indeed what you meant to type. The <code>COMMAND</code> will be executed as per normal.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+If you have aliases with closely matching names, the accuracy of the autocorrection system will degrade.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -1452,7 +1544,7 @@ Format: <code>theme THEME_NAME</code></p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/ThemeWhite.png" alt="ThemeWhite" width="675">
+<img src="images/ThemeWhite.png" alt="ThemeWhite" width="650">
 </div>
 </div>
 <div class="paragraph">
@@ -1460,7 +1552,7 @@ Format: <code>theme THEME_NAME</code></p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/ThemeLight.png" alt="ThemeLight" width="675">
+<img src="images/ThemeLight.png" alt="ThemeLight" width="650">
 </div>
 </div>
 <div class="paragraph">
@@ -1468,8 +1560,166 @@ Format: <code>theme THEME_NAME</code></p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/ThemeDark.png" alt="ThemeDark" width="675">
+<img src="images/ThemeDark.png" alt="ThemeDark" width="650">
 </div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="setKey-command"><a class="anchor" href="#setKey-command"></a>7.3. Changing/Setting a password : <code>setpw</code> <em>(since v1.5)</em></h3>
+<div class="paragraph">
+<p>If you want to keep your data secure, you can opt to set a password for Bibliotek. This password will be used to encrypt your data.
+After starting up Bibliotek, you will have to unlock it using your password before being able to perform any commands.<br>
+Format: <code>setpw [old/OLD_PASSWORD] [new/NEW_PASSWORD]</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Changes the password from <code>OLD_PASSWORD</code> to <code>NEW_PASSWORD</code>.</p>
+</li>
+<li>
+<p><code>OLD_PASSWORD</code> and <code>NEW_PASSWORD</code> are case sensitive.</p>
+</li>
+<li>
+<p>At least one of the 2 fields must be provided.</p>
+</li>
+<li>
+<p>By default, there is no password.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+To set a password, use <code>setpw new/NEW_PASSWORD</code>.<br>
+Similarly, to delete the password, use <code>setpw old/OLD_PASSWORD</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+You should remember your password after setting a new one.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="Encrypt-command"><a class="anchor" href="#Encrypt-command"></a>7.4. Locking the app : <code>lock</code> <em>(since v1.5)</em></h3>
+<div class="paragraph">
+<p>If you are going away for a moment and want to prevent others from messing with the application, you can perform <code>lock</code>.<br>
+Format: <code>lock</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Locks the app. No commands can be performed other than <code>help</code> and <code>unlock</code>.</p>
+</li>
+<li>
+<p>The app is locked upon start up if you have a password.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If you perform <code>lock</code> without a password, anyone can <code>unlock</code> your application.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>When you perform <code>lock</code>, Bibliotek responds with <code>Successfully locked the app.</code> to indicate that your <code>lock</code> is successful.
+All your displayed books will be hidden and the welcome panel will be shown on the right panel.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/LockCommand.png" alt="LockCommand" width="650">
+</div>
+</div>
+<div class="paragraph">
+<p>If your application is locked, you cannot perform any commands other than <code>help</code> and <code>unlock</code>.
+Performing any other valid commands, for example <code>list</code>, will be responded with <code>The app is locked, please unlock it first!</code>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/LockCommandMessage.png" alt="LockCommandMessage" width="650">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="Decrypt-command"><a class="anchor" href="#Decrypt-command"></a>7.5. Unlocking the app : <code>unlock</code> <em>(since v1.5)</em></h3>
+<div class="paragraph">
+<p>If you previously performed <code>lock</code>, use <code>unlock</code> to unlock the app.<br>
+Format: <code>unlock PASSWORD</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Unlocks the app.</p>
+</li>
+<li>
+<p><code>PASSWORD</code> is case sensitive. Leading and trailing spaces are ignored.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If you did not set a password, simply type <code>unlock</code> to unlock the app.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>When you perform <code>unlock</code> with your password, Bibliotek responds with <code>Succesfully unlocked the app.</code> to indicate that your <code>unlock</code> is successful.
+All the books in your book shelf will be displayed.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/UnlockCommand.png" alt="UnlockCommand" width="650">
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+If you really forgot your password and cannot unlock the system, you can reset Bibliotek by deleting all your data files.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -1611,142 +1861,14 @@ Format: <code>fontsize FONT_SIZE</code></p>
 <div class="sect2">
 <h3 id="autpcomplete-command"><a class="anchor" href="#autpcomplete-command"></a>8.6. Autocompleting commands : <code>Tab</code> <em>(coming in v2.0)</em></h3>
 <div class="paragraph">
-<p>Do want to type faster? Fret not! Just press 'Tab' and Bibliotek will automatically
+<p>Do you want to type faster? Fret not! Just press <kbd>Tab</kbd> and Bibliotek will automatically
 complete your commands for you.<br></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="setKey-command"><a class="anchor" href="#setKey-command"></a>8.7. Changing/Setting a password : <code>setpw</code> <em>(coming in v1.5)</em></h3>
-<div class="paragraph">
-<p>If you want to keep your data secure, you can opt to set a password for Bibliotek. This password will be used to encrypt your data.
-After starting up Bibliotek, you will have to unlock it using your password before being able to perform any commands.<br>
-Format: <code>setpw old/OLDPW new/NEWPW</code></p>
-</div>
-<div class="sidebarblock">
-<div class="content">
-<div class="ulist">
-<ul>
-<li>
-<p>Changes the password from <code>OLDPW</code> to <code>NEWPW</code>.</p>
-</li>
-<li>
-<p><code>OLDPW</code> and <code>NEWPW</code> are case sensitive.</p>
-</li>
-<li>
-<p>By default, there is no password.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-To set a password, use <code>setpw new/NEWPW</code>.<br>
-Similarly, to delete the password, use <code>setpw old/OLDPW</code>.
-</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-You should remember your password after setting a new one.
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect2">
-<h3 id="Encrypt-command"><a class="anchor" href="#Encrypt-command"></a>8.8. Lock the app : <code>lock</code> <em>(coming in v1.5)</em></h3>
-<div class="paragraph">
-<p>If you are going away for a moment and want to prevent others from messing with the application, you can perform <code>lock</code>.<br>
-Format: <code>lock</code></p>
-</div>
-<div class="sidebarblock">
-<div class="content">
-<div class="ulist">
-<ul>
-<li>
-<p>Locks the app. No commands can be performed other than <code>help</code> and <code>unlock</code>.</p>
-</li>
-<li>
-<p>The app is locked upon start up if you have a password.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-If you perform <code>lock</code> without a password, anyone can <code>unlock</code> your application.
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect2">
-<h3 id="Decrypt-command"><a class="anchor" href="#Decrypt-command"></a>8.9. Unlock the app : <code>unlock</code> <em>(coming in v1.5)</em></h3>
-<div class="paragraph">
-<p>If you previously performed <code>lock</code>, use <code>unlock</code> to unlock the app.<br>
-Format: <code>unlock PASSWORD</code></p>
-</div>
-<div class="sidebarblock">
-<div class="content">
-<div class="ulist">
-<ul>
-<li>
-<p>Unlocks the app.</p>
-</li>
-<li>
-<p><code>PASSWORD</code> is case sensitive.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-If you did not set a password, simply type <code>unlock</code> to unlock the app.
-</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-If you really forgot your password and cannot unlock the system, you can reset Bibliotek by deleting all your data files.
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect2">
-<h3 id="settings-command"><a class="anchor" href="#settings-command"></a>8.10. Changing settings: <code>settings</code> <em>(coming in v2.0)</em></h3>
+<h3 id="settings-command"><a class="anchor" href="#settings-command"></a>8.7. Changing settings: <code>settings</code> <em>(coming in v2.0)</em></h3>
 <div class="sect3">
-<h4 id="settings-library"><a class="anchor" href="#settings-library"></a>8.10.1. Library <em>(coming in v2.0)</em></h4>
+<h4 id="settings-library"><a class="anchor" href="#settings-library"></a>8.7.1. Library <em>(coming in v2.0)</em></h4>
 <div class="paragraph">
 <p>If you want to search for books in other libraries, you can change your settings.<br>
 Format: <code>settings lib/LIBRARY</code></p>
@@ -1782,7 +1904,7 @@ if there are other libraries you wish are supported.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="settings-order"><a class="anchor" href="#settings-order"></a>8.10.2. Online shopping site <em>(coming in v2.0)</em></h4>
+<h4 id="settings-order"><a class="anchor" href="#settings-order"></a>8.7.2. Online shopping site <em>(coming in v2.0)</em></h4>
 <div class="paragraph">
 <p>If you want to purchase books on other online booksellers, you can change your settings.<br>
 Format: <code>settings order/SITE</code></p>
@@ -1930,16 +2052,16 @@ if there are other sites you wish are supported.</p>
 <p class="tableblock">e.g. <code>search t/Babylon&#8217;s Ashes c/Science Fiction</code></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Set password</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>setpw [old/OLDPW] [new/NEWPW]</code></p>
-<p class="tableblock">e.g. <code>setpw old/admin new/haha</code></p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Select a book</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>select INDEX</code></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Change theme</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Set a new password</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>setpw [old/OLD_PASSWORD] [new/NEW_PASSWORD]</code></p>
+<p class="tableblock">e.g. <code>setpw old/admin new/haha</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Change the theme</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>theme THEME_NAME</code></p></td>
 </tr>
 <tr>
@@ -1979,7 +2101,7 @@ The 13-digit ISBN, which is used by Bibliotek to identify books, has been in use
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-15 05:33:11 UTC
+Last updated 2018-04-15 12:05:24 UTC
 </div>
 </div>
 </body>

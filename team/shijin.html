@@ -182,23 +182,45 @@ You can only perform <code>edit</code> when the list shown is from your book she
 </table>
 </div>
 <div class="paragraph">
-<p>Examples:</p>
+<p>Suppose you have a few unread books in your book shelf.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/EditCommandStart.png" alt="EditCommandStart" width="650">
+</div>
+</div>
+<div class="paragraph">
+<p>You may want to differentiate them based on how eager you are to read each book.
+This helps you to better keep track of what you plan to read next, and also allows you to view the books in a more useful order.<br>
+For example, if you feel that reading <code>Gel Electrophoresis of Proteins</code> is more urgent than reading the other books, you can change its priority to high using <code>edit 3 p/high</code>.</p>
+</div>
+<div class="paragraph">
+<p>Bibliotek shows <code>Edited Book: TITLE - Authors: AUTHORS</code> to indicate that the <code>edit</code> was successful.
+In the left panel, you can see that the priority label of <code>Gel Electrophoresis of Proteins</code> is changed to <code>High</code>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/EditCommandMid.png" alt="EditCommandMid" width="650">
+</div>
+</div>
+<div class="paragraph">
+<p>Other examples:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>edit 1 p/high</code><br>
-Changes the priority of the 1st book to <code>HIGH</code>.</p>
+<p><code>edit 1 s/reading</code><br>
+Marks the 1st book as <code>Reading</code>.</p>
 </li>
 <li>
 <p><code>edit 2 s/read r/5</code><br>
-Marks the 2nd book as <code>READ</code> and changes its rating to <code>5</code>.</p>
+Marks the 2nd book as <code>Read</code> and changes its rating to <code>5</code>.</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Encrypt-command"><a class="anchor" href="#Encrypt-command"></a>Lock the app : <code>lock</code> <em>(coming in v1.5)</em></h3>
+<h3 id="Encrypt-command"><a class="anchor" href="#Encrypt-command"></a>Locking the app : <code>lock</code> <em>(since v1.5)</em></h3>
 <div class="paragraph">
 <p>If you are going away for a moment and want to prevent others from messing with the application, you can perform <code>lock</code>.<br>
 Format: <code>lock</code></p>
@@ -229,9 +251,27 @@ If you perform <code>lock</code> without a password, anyone can <code>unlock</co
 </tr>
 </table>
 </div>
+<div class="paragraph">
+<p>When you perform <code>lock</code>, Bibliotek responds with <code>Successfully locked the app.</code> to indicate that your <code>lock</code> is successful.
+All your displayed books will be hidden and the welcome panel will be shown on the right panel.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/LockCommand.png" alt="LockCommand" width="650">
+</div>
+</div>
+<div class="paragraph">
+<p>If your application is locked, you cannot perform any commands other than <code>help</code> and <code>unlock</code>.
+Performing any other valid commands, for example <code>list</code>, will be responded with <code>The app is locked, please unlock it first!</code>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/LockCommandMessage.png" alt="LockCommandMessage" width="650">
+</div>
+</div>
 </div>
 <div class="sect2">
-<h3 id="Decrypt-command"><a class="anchor" href="#Decrypt-command"></a>Unlock the app : <code>unlock</code> <em>(coming in v1.5)</em></h3>
+<h3 id="Decrypt-command"><a class="anchor" href="#Decrypt-command"></a>Unlocking the app : <code>unlock</code> <em>(since v1.5)</em></h3>
 <div class="paragraph">
 <p>If you previously performed <code>lock</code>, use <code>unlock</code> to unlock the app.<br>
 Format: <code>unlock PASSWORD</code></p>
@@ -244,7 +284,7 @@ Format: <code>unlock PASSWORD</code></p>
 <p>Unlocks the app.</p>
 </li>
 <li>
-<p><code>PASSWORD</code> is case sensitive.</p>
+<p><code>PASSWORD</code> is case sensitive. Leading and trailing spaces are ignored.</p>
 </li>
 </ul>
 </div>
@@ -261,6 +301,15 @@ If you did not set a password, simply type <code>unlock</code> to unlock the app
 </td>
 </tr>
 </table>
+</div>
+<div class="paragraph">
+<p>When you perform <code>unlock</code> with your password, Bibliotek responds with <code>Succesfully unlocked the app.</code> to indicate that your <code>unlock</code> is successful.
+All the books in your book shelf will be displayed.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/UnlockCommand.png" alt="UnlockCommand" width="650">
+</div>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -630,7 +679,7 @@ If you really forgot your password and cannot unlock the system, you can reset B
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-15 05:33:11 UTC
+Last updated 2018-04-15 12:05:24 UTC
 </div>
 </div>
 </body>
