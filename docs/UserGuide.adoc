@@ -509,7 +509,7 @@ Format: `lock `
 
 [NOTE]
 ====
-. You should remember your password before you do this command.
+You should remember your password before you do this command.
 ====
 * If you enter the lock command.
 
