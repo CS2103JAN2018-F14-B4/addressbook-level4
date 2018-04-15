@@ -149,10 +149,10 @@ public class BookShelfParser {
 
         case ListCommand.COMMAND_WORD:
             return new ListCommandParser().parse(arguments);
-
+        //@@author 592363789
         case LockCommand.COMMAND_WORD:
             return new LockCommand();
-
+        //@@author
         case RecentCommand.COMMAND_WORD:
             return new RecentCommand();
 
@@ -164,19 +164,19 @@ public class BookShelfParser {
 
         case SelectCommand.COMMAND_WORD:
             return new SelectCommandParser().parse(arguments);
-
+        //@@author 592363789
         case SetPasswordCommand.COMMAND_WORD:
             return new SetPasswordCommandParser().parse(arguments);
-
+        //@@author
         case ThemeCommand.COMMAND_WORD:
             return new ThemeCommandParser().parse(arguments);
 
         case UndoCommand.COMMAND_WORD:
             return new UndoCommand();
-
+        //@@author 592363789
         case UnlockCommand.COMMAND_WORD:
             return new UnlockCommand(arguments);
-
+        //@@author
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
