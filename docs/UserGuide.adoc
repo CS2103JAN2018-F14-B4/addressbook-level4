@@ -696,15 +696,6 @@ Deletes the command alias with the name `rm`.
 Deletes the command alias with the name `read`.
 // end::alias[]
 
-=== Command case insensitivity _(since v1.5)_
-
-It is common that you will mistype some letter to be upper case or lower case
-wrongly. It is better to have a command case insensitively feature to solve this problem.
-
-****
-* Set all command to be case insensitively.
-****
-
 === Hint system _(since v1.5)_
 We understand that Bibliotek has many commands and it is difficult to remember the syntax of every command. With the hint system,
 you can reduce the burden on your memory and count on Bibliotek to remind you instead!
