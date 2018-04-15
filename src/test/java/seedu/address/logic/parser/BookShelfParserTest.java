@@ -6,6 +6,8 @@ import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMAND;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NEW;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_OLD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_RATING;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
@@ -28,8 +30,11 @@ import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.LibraryCommand;
+import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.ReviewsCommand;
+import seedu.address.logic.commands.SetPasswordCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.UnlockCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.alias.Alias;
 import seedu.address.model.book.Priority;
@@ -126,6 +131,19 @@ public class BookShelfParserTest {
     }
 
     @Test
+    public void parseCommand_unlock() throws Exception {
+        UnlockCommand command = (UnlockCommand) parser.parseCommand(UnlockCommand.COMMAND_WORD + " " + "key");
+        assertEquals(new UnlockCommand("key"), command);
+    }
+
+    @Test
+    public void parseCommand_setPassword() throws Exception {
+        SetPasswordCommand command = (SetPasswordCommand) parser.parseCommand(SetPasswordCommand.COMMAND_WORD + " "
+                + PREFIX_OLD + "oldkey" + " " + PREFIX_NEW + "newkey");
+        assertEquals(new SetPasswordCommand("oldkey", "newkey"), command);
+    }
+
+    @Test
     public void parseCommand_library() throws Exception {
         LibraryCommand command = (LibraryCommand) parser.parseCommand(LibraryCommand.COMMAND_WORD + " 1");
         assertEquals(new LibraryCommand(INDEX_FIRST_BOOK), command);
@@ -155,6 +173,31 @@ public class BookShelfParserTest {
         assertTrue(parser.parseCommand("undo 3") instanceof UndoCommand);
     }
 
+    //@@author fishTT
+    @Test
+    public void parseCommand_mixedCaseCommandWord_success() throws Exception {
+        /* Case: first character is uppercase */
+        char[] commandWord = ListCommand.COMMAND_WORD.toCharArray();
+        commandWord[0] = Character.toUpperCase(commandWord[0]);
+        String firstCharUppercaseCommand = String.copyValueOf(commandWord);
+        assertTrue(parser.parseCommand(firstCharUppercaseCommand) instanceof ListCommand);
+
+        /* Case: last character is uppercase */
+        commandWord[commandWord.length - 1] = Character.toUpperCase(commandWord[commandWord.length - 1]);
+        String lastCharUppercaseCommand = String.copyValueOf(commandWord);
+        assertTrue(parser.parseCommand(lastCharUppercaseCommand) instanceof ListCommand);
+
+        /* Case: middle character is uppercase */
+        commandWord[commandWord.length / 2] = Character.toUpperCase(commandWord[commandWord.length / 2]);
+        String middleCharUppercaseCommand = String.copyValueOf(commandWord);
+        assertTrue(parser.parseCommand(middleCharUppercaseCommand) instanceof ListCommand);
+
+        /* Case: all character is uppercase */
+        String allCharUppercaseCommand = ListCommand.COMMAND_WORD.toUpperCase();
+        assertTrue(parser.parseCommand(allCharUppercaseCommand) instanceof ListCommand);
+    }
+    //@@author
+
     @Test
     public void parseCommand_unrecognisedInput_throwsParseException() throws Exception {
         thrown.expect(ParseException.class);
@@ -167,47 +210,5 @@ public class BookShelfParserTest {
         thrown.expect(ParseException.class);
         thrown.expectMessage(MESSAGE_UNKNOWN_COMMAND);
         parser.parseCommand("unknownCommand");
-    }
-
-    @Test
-    public void attemptCommandAutoCorrection_add() throws Exception {
-        assertEquals("list by/title", parser.attemptCommandAutoCorrection("lst by/title"));
-        assertEquals("add 1", parser.attemptCommandAutoCorrection("dd 1"));
-        assertEquals("deletealias r", parser.attemptCommandAutoCorrection("deletealia r"));
-    }
-
-    @Test
-    public void attemptCommandAutoCorrection_remove() throws Exception {
-        assertEquals("edit 1 s/r", parser.attemptCommandAutoCorrection("eedit 1 s/r"));
-        assertEquals("delete 1", parser.attemptCommandAutoCorrection("deletee 1"));
-        assertEquals("aliases", parser.attemptCommandAutoCorrection("alliases"));
-    }
-
-    @Test
-    public void attemptCommandAutoCorrection_replace() throws Exception {
-        assertEquals("edit 1 s/r", parser.attemptCommandAutoCorrection("adit 1 s/r"));
-        assertEquals("recent", parser.attemptCommandAutoCorrection("resent"));
-        assertEquals("addalias a cmd/add", parser.attemptCommandAutoCorrection("addaliae a cmd/add"));
-    }
-
-    @Test
-    public void attemptCommandAutoCorrection_unknownCommand_throwsParseException() throws Exception {
-        thrown.expect(ParseException.class);
-        thrown.expectMessage(MESSAGE_UNKNOWN_COMMAND);
-        parser.attemptCommandAutoCorrection("addbook 1");
-    }
-
-    @Test
-    public void attemptCommandAutoCorrection_tooDifferent_throwsParseException() throws Exception {
-        thrown.expect(ParseException.class);
-        thrown.expectMessage(MESSAGE_UNKNOWN_COMMAND);
-        parser.attemptCommandAutoCorrection("eidt 1 s/r");
-    }
-
-    @Test
-    public void attemptCommandAutoCorrection_longText_throwsParseException() throws Exception {
-        thrown.expect(ParseException.class);
-        thrown.expectMessage(MESSAGE_UNKNOWN_COMMAND);
-        parser.attemptCommandAutoCorrection("thisismetryingtomakeyoursystemcrashbygivingareallylongstring 1");
     }
 }

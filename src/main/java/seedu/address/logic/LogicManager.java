@@ -15,6 +15,8 @@ import seedu.address.commons.events.ui.BookListSelectionChangedEvent;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.SetPasswordCommand;
+import seedu.address.logic.commands.UnlockCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.BookShelfParser;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -65,7 +67,7 @@ public class LogicManager extends ComponentManager implements Logic {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
         }
 
-        String commandWord = matcher.group("commandWord");
+        final String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
 
         return new String[] {commandWord, arguments};
@@ -79,8 +81,19 @@ public class LogicManager extends ComponentManager implements Logic {
 
         logger.info("----------------[USER COMMAND][" + commandText + "]");
 
+        boolean addToHistory = true;
         try {
             Command command = getCommand(commandText);
+
+            if (LockManager.getInstance().isLocked()
+                    && !(command instanceof HelpCommand || command instanceof UnlockCommand)) {
+                return new CommandResult("The app is locked, please unlock it first!");
+            }
+
+            if (command instanceof UnlockCommand || command instanceof SetPasswordCommand) {
+                addToHistory = false;
+            }
+
             command.setData(model, network, history, undoStack);
             CommandResult result = command.execute();
             undoStack.push(command);
@@ -88,7 +101,9 @@ public class LogicManager extends ComponentManager implements Logic {
         } catch (ParseException e) {
             return attemptCommandAutoCorrection(commandText, e);
         } finally {
-            history.add(commandText);
+            if (addToHistory) {
+                history.add(commandText);
+            }
         }
     }
 
@@ -104,7 +119,7 @@ public class LogicManager extends ComponentManager implements Logic {
         if (!e.getMessage().equals(Messages.MESSAGE_UNKNOWN_COMMAND)) {
             throw e;
         }
-        correctedCommand = bookShelfParser.attemptCommandAutoCorrection(processedText);
+        correctedCommand = CommandAutocorrection.attemptCommandAutoCorrection(this, processedText);
         return new CommandResult(String.format(Messages.MESSAGE_CORRECTED_COMMAND, correctedCommand));
     }
 
@@ -130,21 +145,6 @@ public class LogicManager extends ComponentManager implements Logic {
     @Override
     public ObservableList<Book> getActiveList() {
         return model.getActiveList();
-    }
-
-    @Override
-    public ObservableList<Book> getDisplayBookList() {
-        return model.getDisplayBookList();
-    }
-
-    @Override
-    public ObservableList<Book> getSearchResultsList() {
-        return model.getSearchResultsList();
-    }
-
-    @Override
-    public ObservableList<Book> getRecentBooksList() {
-        return model.getRecentBooksList();
     }
 
     @Override
