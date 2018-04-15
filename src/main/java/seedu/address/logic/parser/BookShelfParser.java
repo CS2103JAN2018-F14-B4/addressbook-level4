@@ -149,10 +149,10 @@ public class BookShelfParser {
 
         case ListCommand.COMMAND_WORD:
             return new ListCommandParser().parse(arguments);
-        //@@author 592363789
+
         case LockCommand.COMMAND_WORD:
             return new LockCommand();
-        //@@author
+
         case RecentCommand.COMMAND_WORD:
             return new RecentCommand();
 
