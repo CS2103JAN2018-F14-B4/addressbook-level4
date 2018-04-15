@@ -237,21 +237,4 @@ public class StringUtilTest {
     public void leftTrim_rightNotTrimmed_success() {
         assertEquals("hello ", StringUtil.leftTrim("     hello "));
     }
-
-    //---------------- Tests for rightPad --------------------------------------
-
-    @Test
-    public void rightPad_success() {
-        assertEquals("helloooo", StringUtil.rightPad("hello", 'o', 8));
-    }
-
-    @Test
-    public void rightPad_emptyString_success() {
-        assertEquals("        ", StringUtil.rightPad("", ' ', 8));
-    }
-
-    @Test
-    public void rightPad_longEnough_success() {
-        assertEquals("helloooo", StringUtil.rightPad("helloooo", 'o', 5));
-    }
 }

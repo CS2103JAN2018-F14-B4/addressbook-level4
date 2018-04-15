@@ -7,11 +7,15 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Base64;
+import java.util.Random;
 
 /**
  * Helper functions for handling strings.
  */
 public class StringUtil {
+
+    private static final int RANDOM_BYTE_LENGTH = 9;
 
     /**
      * Returns true if the {@code sentence} contains the {@code word}.
@@ -129,17 +133,12 @@ public class StringUtil {
     }
 
     /**
-     * Returns {@code target} padded at the end with {@code charToPad} until it is longer than {@code length}.
+     * Returns a random 8 character string to be used as a prefix to a filename.
      */
-    public static String rightPad(String target, char charToPad, int length) {
-        if (target.length() >= length) {
-            return target;
-        }
-
-        StringBuilder sb = new StringBuilder(target);
-        while (sb.length() < length) {
-            sb.append(charToPad);
-        }
-        return sb.toString();
+    public static String generateRandomPrefix() {
+        byte[] randomBytes = new byte[RANDOM_BYTE_LENGTH];
+        new Random().nextBytes(randomBytes);
+        byte[] encodedBytes = Base64.getEncoder().encode(randomBytes);
+        return new String(encodedBytes).replace("/", "-");
     }
 }
