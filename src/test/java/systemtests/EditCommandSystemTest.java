@@ -1,5 +1,5 @@
 package systemtests;
-//@@author 592363789
+
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_RATING;
