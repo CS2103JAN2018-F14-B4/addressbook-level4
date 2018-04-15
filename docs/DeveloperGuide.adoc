@@ -567,8 +567,7 @@ This allows the user to easily look back for a particular book, and to add it in
 ==== Current implementation
 
 Recently selected books are stored in a `UniqueBookCircularList` which resides in `ModelManager`.
-`Model` exposes a method `addRecentBook(Book)` to handle new book selections. Whenever a new book is selected, `LogicManager` handles the `BookListSelectionChangedEvent`
-and adds the book into the list.
+`Model` exposes a method `addRecentBook(Book)` to add new book selections. Whenever a new book is selected, `LogicManager` handles the `BookListSelectionChangedEvent` and adds the book into the list.
 
 When `recent` is entered, it will be parsed into a `RecentCommand`, which when executed, sets the `ActiveListType` to `RECENT_BOOKS`.
 It then posts `ActiveListChangedEvent` to the `EventCenter` to signal this change. The interaction between components is shown in the diagram below.
