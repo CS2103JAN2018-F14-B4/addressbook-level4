@@ -23,7 +23,7 @@ Bibliotek is a free book cataloguing application that is simple, fast, and easy 
 ** What it does: Allows the user to view his recently selected books.
 ** Justification: The user may have recently selected a book in one of his/her searches, and regret not adding that book into his/her book shelf. With this function, he/she can easily locate that book without having to perform the searches again.
 
-* *Code contributed*: [https://github.com/CS2103JAN2018-F14-B4/main/blob/master/collated/functional/qiu-siqi.md[Functional code]] [https://github.com/CS2103JAN2018-F14-B4/main/blob/master/collated/test/qiu-siqi.md.com[Test code]]
+* *Code contributed*: [https://github.com/CS2103JAN2018-F14-B4/main/blob/master/collated/functional/qiu-siqi.md[Functional code]] [https://github.com/CS2103JAN2018-F14-B4/main/blob/master/collated/test/qiu-siqi.md[Test code]]
 
 * *Other contributions*:
 
