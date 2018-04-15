@@ -704,16 +704,17 @@ image::ThemeDark.png[width="650"]
 
 If you want to keep your data secure, you can opt to set a password for Bibliotek. This password will be used to encrypt your data.
 After starting up Bibliotek, you will have to unlock it using your password before being able to perform any commands. +
-Format: `setpw old/OLDPW new/NEWPW`
+Format: `setpw [old/OLD_PASSWORD] [new/NEW_PASSWORD]`
 
 ****
-* Changes the password from `OLDPW` to `NEWPW`.
-* `OLDPW` and `NEWPW` are case sensitive.
+* Changes the password from `OLD_PASSWORD` to `NEW_PASSWORD`.
+* `OLD_PASSWORD` and `NEW_PASSWORD` are case sensitive.
+* At least one of the 2 fields must be provided.
 * By default, there is no password.
 ****
 
-NOTE: To set a password, use `setpw new/NEWPW`. +
-Similarly, to delete the password, use `setpw old/OLDPW`.
+NOTE: To set a password, use `setpw new/NEW_PASSWORD`. +
+Similarly, to delete the password, use `setpw old/OLD_PASSWORD`.
 
 TIP: You should remember your password after setting a new one.
 
@@ -925,7 +926,7 @@ e.g. `list s/unread by/priorityd`
 
 e.g. `search t/Babylon's Ashes c/Science Fiction`
 |*Select a book* |`select INDEX`
-|*Set a new password* |`setpw [old/OLDPW] [new/NEWPW]`
+|*Set a new password* |`setpw [old/OLD_PASSWORD] [new/NEW_PASSWORD]`
 
 e.g. `setpw old/admin new/haha`
 |*Change the theme* |`theme THEME_NAME`
