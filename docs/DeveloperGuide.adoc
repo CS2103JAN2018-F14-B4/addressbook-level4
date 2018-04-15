@@ -613,15 +613,6 @@ of `BookShelf`. This data is read and converted to `UniqueBookCircularList` upon
 
 ==== Design considerations
 
-===== Aspect: Whether to store recently selected books
-
-* **Alternative 1 (current choice):** Stores the recently selected books upon closing Bibliotek.
-** Pros: Users can look up books selected in the last session.
-** Cons: Extra file dependency and data clutter if unused.
-* **Alternative 2:** Don't store recently selected books.
-** Pros: Eliminate the need to modify `Storage` component.
-** Cons: Recently selected books list is limited to selections in the current session.
-
 ===== Aspect: Type of selected books that are shown
 
 * **Alternative 1 (current choice):** All books selected from the user's book shelf or search results.
