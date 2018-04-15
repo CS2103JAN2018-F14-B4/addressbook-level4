@@ -17,6 +17,7 @@ import org.junit.rules.TemporaryFolder;
 
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.FileUtil;
+import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.LockManager;
 import seedu.address.model.BookShelf;
 import seedu.address.model.ReadOnlyBookShelf;
@@ -80,7 +81,8 @@ public class XmlBookShelfStorageTest {
 
     @Test
     public void readAndSaveBookShelf_allInOrder_success() throws Exception {
-        String filePath = testFolder.getRoot().getPath() + File.separator + "TempBookShelf.xml";
+        String filePath = testFolder.getRoot().getPath() + File.separator
+                + StringUtil.generateRandomPrefix() + "temp.xml";
         BookShelf original = getTypicalBookShelf();
         XmlBookShelfStorage xmlBookShelfStorage = new XmlBookShelfStorage(filePath);
 
@@ -107,7 +109,8 @@ public class XmlBookShelfStorageTest {
 
     @Test
     public void readAndSaveBookShelf_withPassword_success() throws Exception {
-        String filePath = testFolder.getRoot().getPath() + File.separator + "TempBookShelf.xml";
+        String filePath = testFolder.getRoot().getPath() + File.separator
+                + StringUtil.generateRandomPrefix() + "temp.xml";
         BookShelf original = getTypicalBookShelf();
         XmlBookShelfStorage xmlBookShelfStorage = new XmlBookShelfStorage(filePath);
 
@@ -125,10 +128,17 @@ public class XmlBookShelfStorageTest {
         LockManager.getInstance().initialize(LockManager.NO_PASSWORD);
         LockManager.getInstance().setPassword(LockManager.NO_PASSWORD, "newpw");
 
-        String filePath = FileUtil.getPath("./src/test/data/XmlUtilTest/validBookShelf.xml");
-        String tempPath = testFolder.getRoot().getPath() + File.separator + "TempBookShelf.xml";
-        File tempFile = new File(tempPath);
+        String filePath = testFolder.getRoot().getPath() + File.separator
+                + StringUtil.generateRandomPrefix() + "temp.xml";
+        BookShelf original = getTypicalBookShelf();
+        XmlBookShelfStorage xmlBookShelfStorage = new XmlBookShelfStorage(filePath);
+        xmlBookShelfStorage.saveBookShelf(original, filePath);
 
+        LockManager.getInstance().setPassword("newpw", "hunter2");
+
+        String tempPath = testFolder.getRoot().getPath() + File.separator
+                + StringUtil.generateRandomPrefix() + "temp.xml";
+        File tempFile = new File(tempPath);
         try {
             FileUtil.copyFile(new File(filePath), tempFile);
             thrown.expect(DataConversionException.class);

@@ -44,7 +44,7 @@ public class CipherEngine {
      *  Encrypts file at {@code fileName} using {@code key}.
      */
     public static void encryptFile(String fileName, String key) {
-        String tempFileName = "data/" + StringUtil.generateRandomPrefix() + "_temp.enc";
+        String tempFileName = "data" + File.separator + StringUtil.generateRandomPrefix() + "_temp.enc";
         FileInputStream fis = null;
         FileOutputStream fos = null;
         try {
@@ -66,7 +66,7 @@ public class CipherEngine {
      *  Decrypts file at {@code fileName} using {@code key}.
      */
     public static void decryptFile(String fileName, String key) {
-        String tempFileName = "data/" + StringUtil.generateRandomPrefix() + "_temp.enc";
+        String tempFileName = "data" + File.separator + StringUtil.generateRandomPrefix() + "_temp.enc";
         FileInputStream fis = null;
         FileOutputStream fos = null;
         try {

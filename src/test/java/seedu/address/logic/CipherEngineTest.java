@@ -14,6 +14,7 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import seedu.address.commons.util.FileUtil;
+import seedu.address.commons.util.StringUtil;
 
 //@@author qiu-siqi
 public class CipherEngineTest {
@@ -34,7 +35,8 @@ public class CipherEngineTest {
     @Test
     public void encryptDecryptFile() throws Exception {
         File validBookShelf = new File(VALID_BOOK_SHELF);
-        String tempFile = testFolder.getRoot().getPath() + File.separator + "TempFile.xml";
+        String tempFile = testFolder.getRoot().getPath() + File.separator
+                + StringUtil.generateRandomPrefix() + "temp.xml";
         File copy = new File(tempFile);
 
         try {
