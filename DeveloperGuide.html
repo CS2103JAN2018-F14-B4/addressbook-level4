@@ -99,7 +99,9 @@
 <ul class="sectlevel2">
 <li><a href="#launch-and-shutdown">H.1. Launch and Shutdown</a></li>
 <li><a href="#deleting-a-book">H.2. Deleting a book</a></li>
-<li><a href="#saving-data">H.3. Saving data</a></li>
+<li><a href="#searching-for-a-book-in-the-library">H.3. Searching for a book in the library</a></li>
+<li><a href="#viewing-recently-selected-books">H.4. Viewing recently selected books</a></li>
+<li><a href="#saving-data">H.5. Saving data</a></li>
 </ul>
 </li>
 </ul>
@@ -3821,9 +3823,6 @@ Expected: The most recent window size and location is retained.</p>
 </li>
 </ol>
 </div>
-<div class="paragraph">
-<p><em>{ more test cases &#8230;&#8203; }</em></p>
-</div>
 </div>
 <div class="sect2">
 <h3 id="deleting-a-book"><a class="anchor" href="#deleting-a-book"></a>H.2. Deleting a book</h3>
@@ -3853,12 +3852,140 @@ Expected: Similar to previous.</p>
 </li>
 </ol>
 </div>
-<div class="paragraph">
-<p><em>{ more test cases &#8230;&#8203; }</em></p>
+</div>
+<div class="sect2">
+<h3 id="searching-for-a-book-in-the-library"><a class="anchor" href="#searching-for-a-book-in-the-library"></a>H.3. Searching for a book in the library</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Prerequisites: Have a non-empty list of books in the left panel.</p>
+</li>
+<li>
+<p>Test case: <code>library 1</code><br></p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Immediately: Bibliotek shows <code>Searching for the book in the library&#8230;&#8203;</code>. Everything else remains the same. You are still able to interact with the GUI.<br></p>
+</li>
+<li>
+<p>After some time: Bibliotek shows <code>Showing availability of book: TITLE - Authors: AUTHORS</code>. The right panel should start loading (a white screen is first seen).<br></p>
+</li>
+<li>
+<p>When loading is complete: A table with the availability of the book at different libraries is shown in the right panel.<br></p>
+</li>
+<li>
+<p>Exception: Bibliotek shows <code>Failed to retrieve information from online.</code> if the request has failed or timed out (10s). This may be because you are not connected to the internet, or the response from NLB Catalogue is slow.</p>
+</li>
+<li>
+<p>Interrupted: If you performed other commands when <code>library</code> is in progress, note that the webpage will still load when the search is done and replace whatever is in the right panel.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Test case: <code>library 0</code>, <code>library x</code> (where x is larger than the list size)<br></p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Expected: Bibliotek shows <code>The book index provided is invalid</code>. No change should happen other than the message showing.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Test case: <code>librar 1</code> (Test integration with command autocorrect)<br></p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Expected: Bibliotek asks whether you meant <code>library 1</code>.</p>
+</li>
+<li>
+<p>If you press Enter, the command should execute the same fashion as test case in (b).</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Test case: <code>LiBrArY 1</code> (Test for case insensitivity)<br></p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Expected: The command executes in the same fashion as test case in (b).</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Test case: <code>library</code> (Test for invalid format)<br></p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Expected: Bibliotek shows message on correct use of <code>library</code>.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
 </div>
 </div>
 <div class="sect2">
-<h3 id="saving-data"><a class="anchor" href="#saving-data"></a>H.3. Saving data</h3>
+<h3 id="viewing-recently-selected-books"><a class="anchor" href="#viewing-recently-selected-books"></a>H.4. Viewing recently selected books</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Prerequisites: Have a non-empty list of books in the left panel.</p>
+</li>
+<li>
+<p>Assumes: Have not recently selected any books.</p>
+</li>
+<li>
+<p>Test case: <code>list</code>, <code>select 1</code>, <code>recent</code><br></p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Expected: There is one book in the recently selected books list.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Test case: <code>search hello</code>, <code>select 1</code>, <code>recent</code><br></p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Assumes: Searched completed successfully and selection is made, which is different from selection above.</p>
+</li>
+<li>
+<p>Expected: There is another book in the recently selected book list, at index 1.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Test case: <code>list</code>, <code>select 1</code>, <code>recent</code><br></p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Expected: The first book is brought up to the first index in the recent books list</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Test case: <code>select 2</code> (in the recent book list)<br></p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Expected: The position of the book selected in the recent book list does not change in the list.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="saving-data"><a class="anchor" href="#saving-data"></a>H.5. Saving data</h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -3882,7 +4009,7 @@ Expected: Similar to previous.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-15 15:51:39 UTC
+Last updated 2018-04-15 15:53:00 UTC
 </div>
 </div>
 </body>
