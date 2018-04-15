@@ -773,9 +773,9 @@ NOTE:  . The `Bookshelf` cannot be run any command except `unlock` and `help` co
 
   * **When `setpw` command is entered**
 
-  . `setpwCommandParser` will extract the old key and new key from the user input.
+  . `setpasswordCommandParser` will extract the old key and new key from the user input.
   . `setpwParser` checks that  two parameters are valid.
-  . `setpwCommandParser` creates an `setpwCommand` with the parameters.
+  . `setpasswordCommandParser` creates an `setpwCommand` with the parameters.
   . `setpwCommand` is preprocessed to check that oldKey is correct using `LockManager`.
   . If the oldKey is correct, `setpwCommand` will post a `passwordChangedevent`.
   . MainApp will handle it, and set `UserPrefs.password` to be new encoded `password`(using cipherEngine).
