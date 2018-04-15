@@ -42,7 +42,7 @@ some books.
 ** Project management:
 ** Enhancements to existing features:
 *** Added the `ratingbook` command.
-*** Added in `Edit` book command (Pull requests https://github.com/CS2103JAN2018-F14-B4/main/pull/111[#111]).
+*** Added in `Edit` book command. (Pull requests https://github.com/CS2103JAN2018-F14-B4/main/pull/111[#111])
 *** Added in `lock` command.
 *** Added in `unlock` and `setpw` command.
 *** Added in data file encryption and decryption features.
