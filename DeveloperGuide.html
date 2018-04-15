@@ -48,7 +48,7 @@
 <li><a href="#undo-feature">4.2. Undo feature</a></li>
 <li><a href="#edit-status-priority-and-rating-of-books-code-edit-code-command">4.3. Edit status, priority, and rating of books: <code>edit</code> command</a></li>
 <li><a href="#view-recently-selected-books-code-recent-code-command">4.4. View recently selected books: <code>recent</code> command</a></li>
-<li><a href="#find-a-book-in-nlb-library-code-library-code-command">4.5. Find a book in NLB library: <code>library</code> command</a></li>
+<li><a href="#check-for-availability-of-book-in-nlb-library-code-library-code-command">4.5. Check for availability of book in NLB library: <code>library</code> command</a></li>
 <li><a href="#data-encryption">4.6. Data Encryption</a></li>
 <li><a href="#logging">4.7. Logging</a></li>
 <li><a href="#Implementation-Configuration">4.8. Configuration</a></li>
@@ -1287,8 +1287,7 @@ This allows the user to easily look back for a particular book, and to add it in
 <h4 id="current-implementation-4"><a class="anchor" href="#current-implementation-4"></a>4.4.1. Current implementation</h4>
 <div class="paragraph">
 <p>Recently selected books are stored in a <code>UniqueBookCircularList</code> which resides in <code>ModelManager</code>.
-Whenever a new book is selected, <code>ModelManager</code> handles the <code>BookListSelectionChangedEvent</code>
-and adds the book into the list.</p>
+<code>Model</code> exposes a method <code>addRecentBook(Book)</code> to add new book selections. Whenever a new book is selected, <code>LogicManager</code> handles the <code>BookListSelectionChangedEvent</code> and adds the book into the list.</p>
 </div>
 <div class="paragraph">
 <p>When <code>recent</code> is entered, it will be parsed into a <code>RecentCommand</code>, which when executed, sets the <code>ActiveListType</code> to <code>RECENT_BOOKS</code>.
@@ -1306,21 +1305,18 @@ It then posts <code>ActiveListChangedEvent</code> to the <code>EventCenter</code
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-The commands that users can perform on different <code>ActiveListType</code> differ, for example users cannot delete books if the <code>ActiveListType</code> is <code>RECENT_BOOKS</code>.
+<code>ActiveListType</code> is needed because the commands that users can perform on different lists differ. For example, users cannot delete books if the <code>ActiveListType</code> is <code>RECENT_BOOKS</code>.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p><code>ActiveListChangedEvent</code> is handled by <code>MainWindow</code>.</p>
+<p><code>ActiveListChangedEvent</code> is handled by <code>MainWindow</code>, which updates the list displayed in <code>BookListPanel</code>.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/SequenceDiagramRecentCommandEvent.png" alt="SequenceDiagramRecentCommandEvent" width="550">
+<img src="images/SequenceDiagramRecentCommandEvent.png" alt="SequenceDiagramRecentCommandEvent" width="450">
 </div>
-</div>
-<div class="paragraph">
-<p><code>MainWindow</code> sets the list shown in <code>BookListPanel</code> to the list of recently selected books.</p>
 </div>
 <div class="paragraph">
 <p><code>UniqueBookCircularList</code> has size 50 by default. For illustration purposes, assume we have a
@@ -1378,8 +1374,7 @@ from the list and added again so that it is in the first index of the list (most
 </div>
 <div class="paragraph">
 <p>Note that the <code>UniqueBookCircularList</code> is currently full. When user performs <code>select 3</code>, since
-<code>Three</code> is not in the list, the book at the last index is removed to make space for <code>Three</code>.
-This is because the book at the last index (<code>Two</code> in this case) is the least recent selection.</p>
+<code>Three</code> is not in the list, the book at the last index (the least recent selection) is removed to make space for <code>Three</code> (<code>Two</code> in this case).</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -1402,55 +1397,9 @@ This is because the book at the last index (<code>Two</code> in this case) is th
 <p>When Bibliotek is exited, the data in the <code>UniqueBookCircularList</code> is stored in the format
 of <code>BookShelf</code>. This data is read and converted to <code>UniqueBookCircularList</code> upon opening Bibliotek.</p>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Since <code>UniqueBookCircularList</code> only supports <code>addToFront(Book)</code>, take note to add books in reverse
-order when converting from other data structures such as <code>BookShelf</code>.
-</td>
-</tr>
-</table>
-</div>
 </div>
 <div class="sect3">
 <h4 id="design-considerations-4"><a class="anchor" href="#design-considerations-4"></a>4.4.2. Design considerations</h4>
-<div class="sect4">
-<h5 id="aspect-whether-to-store-recently-selected-books"><a class="anchor" href="#aspect-whether-to-store-recently-selected-books"></a>Aspect: Whether to store recently selected books</h5>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Alternative 1 (current choice):</strong> Stores the recently selected books upon closing Bibliotek.</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Pros: Users can look up books selected in the last session.</p>
-</li>
-<li>
-<p>Cons: Extra file dependency and data clutter if unused.</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p><strong>Alternative 2:</strong> Don&#8217;t store recently selected books.</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Pros: Eliminate the need to modify <code>Storage</code> component.</p>
-</li>
-<li>
-<p>Cons: Recently selected books list is limited to selections in the current session.</p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-</div>
 <div class="sect4">
 <h5 id="aspect-type-of-selected-books-that-are-shown"><a class="anchor" href="#aspect-type-of-selected-books-that-are-shown"></a>Aspect: Type of selected books that are shown</h5>
 <div class="ulist">
@@ -1495,7 +1444,7 @@ by only showing these books.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Can make the size limit and add mechanism as a property of the new list.</p>
+<p>Pros: Can make the size limit and add mechanism a property of the new list.</p>
 </li>
 <li>
 <p>Cons: Have to deal with multiple data structures to hold data for different purposes.</p>
@@ -1511,7 +1460,7 @@ by only showing these books.</p>
 <p>Pros: Re-use of existing data structure.</p>
 </li>
 <li>
-<p>Cons: BookShelf supports functionalities that are not needed to store recently selected books.</p>
+<p>Cons: <code>BookShelf</code> supports functionalities that are not needed to store recently selected books.</p>
 </li>
 </ul>
 </div>
@@ -1522,7 +1471,7 @@ by only showing these books.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="find-a-book-in-nlb-library-code-library-code-command"><a class="anchor" href="#find-a-book-in-nlb-library-code-library-code-command"></a>4.5. Find a book in NLB library: <code>library</code> command</h3>
+<h3 id="check-for-availability-of-book-in-nlb-library-code-library-code-command"><a class="anchor" href="#check-for-availability-of-book-in-nlb-library-code-library-code-command"></a>4.5. Check for availability of book in NLB library: <code>library</code> command</h3>
 <div class="paragraph">
 <p>The <code>library</code> command allows the user to easily check for the availability of books in NLB libraries.
 This eliminates the need to manually enter search information into the NLB catalogue. The user can use this information to decide when or whether to read a book.</p>
@@ -1533,7 +1482,7 @@ This eliminates the need to manually enter search information into the NLB catal
 <p>When a <code>library</code> command is entered, a <code>LibraryCommand</code> will be created if the parsing of the command was successful, which will
 make a call to <code>searchLibraryForBook(Book)</code> on the <code>Network</code> API. This will result in an asynchronous HTTP request being made to
 <a href="https://catalogue.nlb.gov.sg/cgi-bin/spydus.exe/MSGTRN/EXPNOS/NLBHOME?HOMEPRMS=NLBGENPARAMS">NLB Catalogue</a>.
-Once the HTTP request completes, the operations in the <code>.thenApply(&#8230;&#8203;)</code> s, as seen in the code block below, will execute.</p>
+Once the HTTP request completes, the operations in the <code>.thenApply(&#8230;&#8203;)</code>, shown in the code block below, will execute.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1552,12 +1501,13 @@ Once the HTTP request completes, the operations in the <code>.thenApply(&#8230;&
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/LibraryCommandActivityDiagram.png" alt="LibraryCommandActivityDiagram" width="650">
+<img src="images/LibraryCommandActivityDiagram.png" alt="LibraryCommandActivityDiagram" width="600">
 </div>
 </div>
 <div class="paragraph">
 <p>The <code>CompletableFuture</code> completes exceptionally if the content type or status code is wrong.
-Else, a URL of the page showing availability of the target book, if any, is obtained. This depends on the type of the response page, which can be categorized into the following:</p>
+Else, a URL of the page showing availability of the target book, if any, is obtained.
+This depends on the response HTML, which can be categorized into the following:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1577,15 +1527,15 @@ Else, a URL of the page showing availability of the target book, if any, is obta
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>    private void onSuccessfulRequest(String result, Book book) {
-        EventsCenter.getInstance().post(new ShowLibraryResultRequestEvent(result));
-        EventsCenter.getInstance().post(new NewResultAvailableEvent(
-                String.format(MESSAGE_SUCCESS, book)));
-    }</pre>
+<pre class="CodeRay highlight"><code data-lang="java">    <span class="directive">private</span> <span class="type">void</span> onSuccessfulRequest(<span class="predefined-type">String</span> result, <span class="predefined-type">Book</span> book) {
+        EventsCenter.getInstance().post(<span class="keyword">new</span> ShowLibraryResultRequestEvent(result));
+        EventsCenter.getInstance().post(<span class="keyword">new</span> NewResultAvailableEvent(
+                <span class="predefined-type">String</span>.format(MESSAGE_SUCCESS, book)));
+    }</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p><code>ShowLibraryResultRequestEvent</code> is handled by <code>MainWindow</code> and <code>BookInLibraryPanel</code> to load the URL using a <code>WebView</code> and show it.
+<p><code>ShowLibraryResultRequestEvent</code> is handled by <code>MainWindow</code> and <code>BookInLibraryPanel</code> to load the URL using a <code>WebView</code> and display the webpage.
 The loaded page is post-processed using a script to show only the relevant section.</p>
 </div>
 </div>
@@ -1629,7 +1579,7 @@ The loaded page is post-processed using a script to show only the relevant secti
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Alternative 1 (current choice):</strong> Use basic search, using a HTTP GET request.</p>
+<p><strong>Alternative 1 (current choice):</strong> Perform basic search, using a HTTP GET request.</p>
 <div class="ulist">
 <ul>
 <li>
@@ -1642,7 +1592,7 @@ The loaded page is post-processed using a script to show only the relevant secti
 </div>
 </li>
 <li>
-<p><strong>Alternative 2:</strong> Use advanced search, using a HTTP POST request.</p>
+<p><strong>Alternative 2:</strong> Perform advanced search, using a HTTP POST request.</p>
 <div class="ulist">
 <ul>
 <li>
@@ -3780,7 +3730,7 @@ Expected: Similar to previous.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-14 20:13:06 UTC
+Last updated 2018-04-15 05:33:11 UTC
 </div>
 </div>
 </body>
