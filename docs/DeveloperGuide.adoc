@@ -529,13 +529,6 @@ Sequence Diagram
 
 image::editseq.png[width="550"]
 
-Default value of the book.
-
-image::defaultbook.png[width="550"]
-
-The book after you edit (r/4, s/r, p/h).
-
-image::newbook.png[width="550"]
 
 ==== Design considerations
 
@@ -847,21 +840,21 @@ NOTE:  . The `Bookshelf` cannot be run any command except `unlock` and `help` co
 
 ===== Aspect: Whether to use three commands instead of only one
 
-* **Alternative 1 (current choice):** Use three commands to do the encrypt, decrypt and setkey actions
-** Pros: Users can clearly know what they can do about the key.
-** Cons: Users should learn two more commands
-* **Alternative 2:** Use only one setKey command to solve all three features.
+* **Alternative 1 (current choice):** Use three commands to do the lock, unlock and setpassword actions.
+** Pros: Users can clearly know what they can do about the password.
+** Cons: Users should learn two more commands.
+* **Alternative 2:** Use only one setpassword command to solve all three features.
 ** Pros: Seem that users can eliminate the typing.
 ** Cons: Users will feel confuse, not so clear about the command.
 
-===== Aspect: Whether to encode the key before store it
+===== Aspect: Whether to encode the password before store it
 
-* **Alternative 1 (current choice):** Stores the encoded key.
-** Pros: Others cannot know users' key easily.
+* **Alternative 1 (current choice):** Stores the encoded password.
+** Pros: Others cannot know users' passwords easily.
 ** Cons: Difficult to implement.
-* **Alternative 2:** Store the text form key.
+* **Alternative 2:** Store the text form password.
 ** Pros: Easy to implement.
-** Cons: Others can know users' key easily.
+** Cons: Others can know users' passwords easily.
 
 === Logging
 

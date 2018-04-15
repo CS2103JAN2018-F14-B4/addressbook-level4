@@ -305,6 +305,20 @@ Format: `edit INDEX [s/STATUS] [p/PRIORITY] [r/RATING]`
 
 WARNING: You can only edit books from the list using the index.
 
+Suppose you have the following list of books. As you can see, for the first book,
+it has a default value of rating, status and priority.
+
+image::edit1.png[width="675"]
+
+When you finishing reading the book, you may want to rating and change the status and priority
+of this book. Then you can type in the following command: `edit 1 s/r p/h r/3`.
+
+image::edit2.png[width="675"]
+
+After you press `Enter`, the edited book will be updated as below.
+
+image::edit3.png[width="675"]
+
 Examples:
 
 * `edit 3 p/low` +
@@ -432,6 +446,62 @@ image::LibraryCommandAfter.png[width="675"]
 NOTE: If Bibliotek shows `Failed to retrieve information from online.`,
 it means your search request has timed out. You should try again after some time.
 // end::library[]
+
+// tag::encrypt[]
+[[setPassword-command]]
+=== Setting a new password to bookshelf : `setpassword` _(coming in v1.5)_
+
+If you want to keep your data secure, you can opt to set a password for bookshelf. +
+Format: `setpassword old/OLDPASSWORD new/NEWPASSWORD`
+
+=====
+NOTE: You will be given a default password: "", when you open bookshelf for the first time.
+=====
+=====
+TIP: You should remember your password after setting a new one.
+=====
+* If you entered old password is correct.
+
+image::setpassword1.png[width="650"]
+
+* If you entered old password is incorrect.
+
+image::setpassword2.png[width="650"]
+
+
+[[Unlock-command]]
+=== Unlock the bookshelf : `unlock` _(coming in v1.5)_
+
+If you want to unlock your bookshelf if your bookshelf is locked, you can lock it using UnlockCommand. +
+Format: `unlock YOUR_PASSWORD`
+
+[NOTE]
+====
+You will be given a default password: "", when you open bibliotek for the first time.
+====
+* If your entered password is correct
+
+image::unlock1.png[width="650"]
+
+* If your entered password is wrong
+
+image::unlock2.png[width="650"]
+
+[[Lock-command]]
+=== Lock the bookshelf : `lock` _(coming in v1.5)_
+
+If you want to lock your bookshelf, you can lock it using LockCommand. +
+Format: `lock `
+
+[NOTE]
+====
+. You should remember your password before you do this command.
+====
+* If you enter the lock command.
+
+image::lock1.png[width="650"]
+
+// end::encrypt[]
 
 [[exit-command]]
 === Closing the app : `exit`
@@ -611,6 +681,15 @@ Deletes the command alias with the name `rm`.
 Deletes the command alias with the name `read`.
 // end::alias[]
 
+=== Command case insensitivity _(since v1.5)_
+
+It is common that you will mistype some letter to be upper case or lower case
+wrongly. It is better to have a command case insensitively feature to solve this problem.
+
+****
+* Set all command to be case insensitively.
+****
+
 === Command autocorrection _(since v1.5)_
 
 It is common to mispell words when you are typing fast, and when this happens, it is always a hassle to have to correct it and try again.
@@ -725,61 +804,6 @@ Think the font size is too small or large for your liking? You can customize the
 font size to your own needs. +
 Format: `fontsize FONT_SIZE`
 
-// tag::encrypt[]
-[[setPassword-command]]
-=== Setting a new password to bookshelf : `setpassword` _(coming in v1.5)_
-
-If you want to keep your data secure, you can opt to set a key for bibliotek. +
-Format: `setpassword old/OLDPASSWORD new/NEWPASSWORD`
-
-=====
-NOTE: You will be given a default password: "", when you open bookshelf for the first time.
-=====
-=====
-TIP: You should remember your key after setting a new one.
-=====
-* If you entered old key is correct.
-
-image::setsuccess.png[width="650"]
-
-* If you entered old key is incorrect.
-
-image::wrongkey(set).png[width="650"]
-
-
-[[Unlock-command]]
-=== Unlock the bookshelf : `unlock` _(coming in v1.5)_
-
-If you want to decrypt your bookshelf if your bookshelf is locked, you can lock it using UnlockCommand. +
-Format: `unlock YOUR_KEY`
-
-[NOTE]
-====
-You will be given a default key: "", when you open bibliotek for the first time.
-====
-* If your entered key is correct
-
-image::correctkey.png[width="650"]
-
-* If your entered key is wrong
-
-image::wrongkey.png[width="650"]
-
-[[Lock-command]]
-=== Lock the bookshelf : `lock` _(coming in v1.5)_
-
-If you want to lock your bookshelf, you can lock it using LockCommand. +
-Format: `lock `
-
-[NOTE]
-====
-. You should remember your key before you do this command.
-====
-* If you enter a wrong key.
-
-image::shouldbedecryptfirst.png[width="650"]
-
-// end::encrypt[]
 
 [[settings-command]]
 === Changing settings: `settings` _(coming in v2.0)_
@@ -847,14 +871,14 @@ e.g. `add 1`
 e.g. `addalias read cmd/edit s/read p/none`
 |*List existing aliases* |`aliases`
 |*Clear book shelf* |`clear`
-|*Decrypt* |`decrypt YOUR_KEY`
+|*Close the app* |`exit`
 |*Delete book from book shelf* |`delete INDEX`
 |*Delete an existing alias* |`deletealias ALIAS_NAME`
 |*Edit book in book shelf* |`edit INDEX [s/STATUS] [p/PRIORITY] [r/RATING]`
 
 e.g. `edit 2 s/READ r/5`
-|*Encrypt* |`encrypt`
-|*Close the app* |`exit`
+|*Lock* |`lock`
+|*Unlock* |`unlock YOUR_PASSWORD`
 |*View help* |`help`
 |*View previous commands* |`history`
 |*Search for book in library* |`library INDEX`
@@ -868,9 +892,9 @@ e.g. `list s/unread by/priorityd`
 |*Search for books* |`search [SEARCH_TERM] [i/ISBN] [t/TITLE] [a/AUTHOR] [c/CATEGORY]`
 
 e.g. `search t/Babylon's Ashes c/Science Fiction`
-|*SetKey* |`setKey [old/OLDKEY] [new/NEWKEY]`
+|*SetPassword* |`setpassword [old/OLDPASSWORD] [new/NEWPASSWORD]`
 
-e.g. `setkey old/admin new/haha`
+e.g. `setpassword old/admin new/haha`
 |*Select a book* |`select INDEX`
 |*Change theme* |`theme THEME_NAME`
 |*Undo previous change* |`undo`
