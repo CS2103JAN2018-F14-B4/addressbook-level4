@@ -347,7 +347,7 @@ Suppose you have the following books in your book shelf.
 
 image::ListCommand.png[width="650"]
 
-If you no longer want to read `Harry Potter and the Classical World` and wish to remove it from your book shelf, enter `delete 3`.
+If you no longer want to read `Artificial Intelligence` and wish to remove it from your book shelf, enter `delete 3`.
 
 Bibliotek shows `Deleted Book: TITLE - Authors: AUTHORS` to indicate that your `delete` is successful.
 The book no longer exist in the left panel.
@@ -424,7 +424,7 @@ WARNING: You can only perform `library` with Internet connection.
 
 Suppose you have the following books in your display list.
 
-image::ListCommand.png[width="650"]
+image::LibraryCommandBefore.png[width="650"]
 
 If you want to search the library for `Harry Potter and the Classical World`, enter `library 3`.
 
@@ -522,7 +522,7 @@ image::DeleteCommand.png[width="650"]
 If you regret your deletion and wish to undo it, enter `undo`.
 
 Bibliotek shows `Successfully undone deleting of TITLE - Authors: AUTHORS.`
-to indicate that your `undo` of the deletion is successful. `Harry Potter and the Classical World` is back in your book shelf as seen in the left panel.
+to indicate that your `undo` of the deletion is successful. `Artificial Intelligence` is back in your book shelf as seen in the left panel.
 
 image::UndoCommand.png[width="650"]
 
