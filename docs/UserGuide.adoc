@@ -290,34 +290,20 @@ Lists `Science Fiction` books in your book shelf that contains `Babylon's Ashes`
 [[edit-command]]
 === Editing a book : `edit` _(since v1.4)_
 
-When you using the Bibliotek to read books, you may want to rate on one book you read, set the status to remind you the reading situation,
-or set the priority of the book to remind yourself what to read next. These can be done using `edit`. +
+After reading a book, you may want to give the book a rating or set the book as read.
+Or, you may want to change the priority of books to remind yourself what you should read next. These can be done using `edit`. +
 Format: `edit INDEX [s/STATUS] [p/PRIORITY] [r/RATING]`
 
 ****
-* For the index, you should provide a integer which in the range of your list.
-* You should provide at least one field to edit.
-* Before you edit, every book has a default value for rating("-1"), status("none") and priority("unread").
-* For the rating format, the range of the rating should be between -1 and 5. (-1 is for unrated books).
-* For the status format, you should choose one of aliases(or full name) following: `read`(`r`), `unread`(`ur`), or `reading`(`rd`).
-* For the priority format, you should choose one of aliases(or full name) following: `none`(`n`), `low`(`l`), `medium`(`m`) or `high`(`h`).
+* Edits the book at the specified `INDEX`. The index refers to the index number shown in the most recent listing. The index *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+* `STATUS` must be one of the following (items in parenthesis are aliases): `read` (`r`), `unread` (`u`), or `reading` (`rd`).
+* `PRIORITY` must be one of the following (items in parenthesis are aliases): `none` (`n`), `low` (`l`), `medium` (`m`), or `high` (`h`).
+* `RATING` must be a valid rating from 0 to 5, or -1 to remove rating.
 ****
 
-WARNING: You can only edit books from the list using the index.
-
-Suppose you have the following list of books. As you can see, for the first book,
-it has a default value of rating, status and priority.
-
-image::edit1.png[width="675"]
-
-When you finishing reading the book, you may want to rating and change the status and priority
-of this book. Then you can type in the following command: `edit 1 s/r p/h r/3`.
-
-image::edit2.png[width="675"]
-
-After you press `Enter`, the edited book will be updated as below.
-
-image::edit3.png[width="675"]
+WARNING: You can only edit books from your book shelf.
 
 Suppose you have a few unread books in your book shelf.
 
@@ -336,8 +322,8 @@ Other examples:
 
 * `edit 3 p/low` +
 Changes the priority of the 3rd book to `LOW`.
-* `edit 1 s/read p/low r/4` +
-Marks the 1nd book as `READ`, changes its priority to `LOW`, and changes its rating to `4`.
+* `edit 2 s/read r/5` +
+Marks the 2nd book as `READ` and changes its rating to `5`.
 
 // end::edit[]
 
@@ -461,62 +447,6 @@ NOTE: If Bibliotek shows `Failed to retrieve information from online.`,
 it means your search request has timed out. You should try again after some time.
 // end::library[]
 
-// tag::encrypt[]
-[[setpw-command]]
-=== Setting a new password to bookshelf : `setpw` _(coming in v1.5)_
-
-If you want to keep your data secure, you can opt to set a password for bookshelf. +
-Format: `setpw old/OLDPASSWORD new/NEWPASSWORD`
-
-=====
-NOTE: You will be given a default password: "", when you open bookshelf for the first time.
-=====
-=====
-TIP: You should remember your password after setting a new one.
-=====
-* If you entered old password is correct.
-
-image::setpassword1.png[width="650"]
-
-* If you entered old password is incorrect.
-
-image::setpassword2.png[width="650"]
-
-
-[[Unlock-command]]
-=== Unlock the bookshelf : `unlock` _(coming in v1.5)_
-
-If you want to unlock your bookshelf if your bookshelf is locked, you can lock it using UnlockCommand. +
-Format: `unlock YOUR_PASSWORD`
-
-[NOTE]
-====
-You will be given a default password: "", when you open bibliotek for the first time.
-====
-* If your entered password is correct
-
-image::unlock1.png[width="650"]
-
-* If your entered password is wrong
-
-image::unlock2.png[width="650"]
-
-[[Lock-command]]
-=== Lock the bookshelf : `lock` _(coming in v1.5)_
-
-If you want to lock your bookshelf, you can lock it using LockCommand. +
-Format: `lock `
-
-[NOTE]
-====
-. You should remember your password before you do this command.
-====
-* If you enter the lock command.
-
-image::lock1.png[width="650"]
-
-// end::encrypt[]
-
 [[exit-command]]
 === Closing the app : `exit`
 
@@ -619,7 +549,7 @@ Format: `history`
 
 ****
 * Lists the previous commands in reverse chronological order.
-* Commands that deal with passwords (such as <<setKey-command, `setpw`>>) will not be recorded in history.
+* Commands that deal with passwords (such as <<setpw-command, `setpw`>>) will not be recorded in history.
 ****
 
 [NOTE]
@@ -770,7 +700,8 @@ And `theme dark`:
 
 image::ThemeDark.png[width="650"]
 
-[[setKey-command]]
+// tag::encrypt[]
+[[setpw-command]]
 === Changing/Setting a password : `setpw` _(since v1.5)_
 
 If you want to keep your data secure, you can opt to set a password for Bibliotek. This password will be used to encrypt your data.
@@ -787,10 +718,19 @@ Format: `setpw [old/OLD_PASSWORD] [new/NEW_PASSWORD]`
 NOTE: To set a password, use `setpw new/NEW_PASSWORD`. +
 Similarly, to delete the password, use `setpw old/OLD_PASSWORD`.
 
+If the `OLD_PASSWORD` that you provided is correct, Bibliotek shows `Successfully changed your password` to indicate that your password is changed.
+
+image::setpassword1.png[width="650"]
+
+On the other hand, if the `OLD_PASSWORD` that you provided is incorrect, Bibliotek shows `Incorrect old password. Please try again.` to indicate that your password is not changed.
+
+image::setpassword2.png[width="650"]
+
+NOTE: If you provide a `OLD_PASSWORD` when you in fact have no password, it is considered to be incorrect.
+
 TIP: You should remember your password after setting a new one.
 
-// tag::encrypt[]
-[[Encrypt-command]]
+[[Lock-command]]
 === Locking the app : `lock` _(since v1.5)_
 
 If you are going away for a moment and want to prevent others from messing with the application, you can perform `lock`. +
@@ -813,7 +753,7 @@ Performing any other valid commands, for example `list`, will be responded with 
 
 image::LockCommandMessage.png[width="650"]
 
-[[Decrypt-command]]
+[[Unlock-command]]
 === Unlocking the app : `unlock` _(since v1.5)_
 
 If you previously performed `lock`, use `unlock` to unlock the app. +
@@ -832,7 +772,6 @@ All the books in your book shelf will be displayed.
 image::UnlockCommand.png[width="650"]
 
 TIP: If you really forgot your password and cannot unlock the system, you can reset Bibliotek by deleting all your data files.
-
 // end::encrypt[]
 
 == Upcoming Features
@@ -977,14 +916,12 @@ e.g. `add 1`
 e.g. `addalias read cmd/edit s/read p/none`
 |*List existing aliases* |`aliases`
 |*Clear book shelf* |`clear`
-|*Close the app* |`exit`
 |*Delete book from book shelf* |`delete INDEX`
 |*Delete an existing alias* |`deletealias ALIAS_NAME`
 |*Edit book in book shelf* |`edit INDEX [s/STATUS] [p/PRIORITY] [r/RATING]`
 
 e.g. `edit 2 s/READ r/5`
-|*Lock* |`lock`
-|*Unlock* |`unlock YOUR_PASSWORD`
+|*Close the app* |`exit`
 |*View help* |`help`
 |*View previous commands* |`history`
 |*Search for book in library* |`library INDEX`
@@ -1005,6 +942,7 @@ e.g. `setpw old/admin new/haha`
 |*Change the theme* |`theme THEME_NAME`
 |*Undo previous change* |`undo`
 |*Unlock the app* |`unlock PASSWORD`
+|=======================================================================
 
 [appendix]
 == Glossary
