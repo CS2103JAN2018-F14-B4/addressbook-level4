@@ -195,8 +195,8 @@ public class ListCommand extends Command {
         // Clear to prevent invalid selections due to changes in observed list
         EventsCenter.getInstance().post(new ClearMainContentRequestEvent());
 
-        model.updateBookListSorter(bookComparator);
         model.updateBookListFilter(filterDescriptor.buildCombinedFilter());
+        model.updateBookListSorter(bookComparator);
         model.setActiveListType(ActiveListType.BOOK_SHELF);
         EventsCenter.getInstance().post(new ActiveListChangedEvent());
         return new CommandResult(String.format(MESSAGE_SUCCESS, model.getDisplayBookList().size()));
@@ -600,6 +600,8 @@ public class AddAliasCommandParser implements Parser<AddAliasCommand> {
      */
     private static final Pattern ALIASED_COMMAND_FORMAT =
             Pattern.compile(" *(?<aliasName>\\S+)(?<unnamedArgs>((?! [\\w]+\\/.*)[\\S ])*)(?<namedArgs>.*)");
+
+    private static final int MAX_COMMAND_WORD_LENGTH = 12;
 
     private final ReadOnlyAliasList aliases;
 
