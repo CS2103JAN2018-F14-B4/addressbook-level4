@@ -182,7 +182,7 @@ public class EditCommandSystemTest extends BibliotekSystemTest {
 
         /* Case: valid status + invalid priority -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_BOOK.getOneBased() + " "
-                + PREFIX_PRIORITY + "highpriority" + " " +PREFIX_STATUS
+                + PREFIX_PRIORITY + "highpriority" + " " + PREFIX_STATUS
                 + "r", Messages.MESSAGE_INVALID_PRIORITY);
         //@@author
     }
