@@ -136,13 +136,10 @@ public class XmlBookShelfStorageTest {
 
         LockManager.getInstance().setPassword("newpw", "hunter2");
 
-        String tempPath = testFolder.getRoot().getPath() + File.separator
-                + StringUtil.generateRandomPrefix() + "temp.xml";
-        File tempFile = new File(tempPath);
+        File tempFile = new File(filePath);
         try {
-            FileUtil.copyFile(new File(filePath), tempFile);
             thrown.expect(DataConversionException.class);
-            new XmlBookShelfStorage("TempBookShelf.xml").readBookShelf(tempPath);
+            new XmlBookShelfStorage("TempBookShelf.xml").readBookShelf(filePath);
         } finally {
             tempFile.delete();
         }

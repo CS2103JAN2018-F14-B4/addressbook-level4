@@ -44,7 +44,7 @@ public class CipherEngine {
      *  Encrypts file at {@code fileName} using {@code key}.
      */
     public static void encryptFile(String fileName, String key) {
-        String tempFileName = "data" + File.separator + StringUtil.generateRandomPrefix() + "_temp.enc";
+        String tempFileName = StringUtil.generateRandomPrefix() + "_temp.enc";
         FileInputStream fis = null;
         FileOutputStream fos = null;
         try {
@@ -54,7 +54,6 @@ public class CipherEngine {
         } catch (Exception e) {
             logger.warning("Could not encrypt file " + fileName);
             logger.warning(StringUtil.getDetails(e));
-            return;
         } finally {
             closeStreams(fis, fos);
         }
@@ -66,7 +65,7 @@ public class CipherEngine {
      *  Decrypts file at {@code fileName} using {@code key}.
      */
     public static void decryptFile(String fileName, String key) {
-        String tempFileName = "data" + File.separator + StringUtil.generateRandomPrefix() + "_temp.enc";
+        String tempFileName = StringUtil.generateRandomPrefix() + "_temp.enc";
         FileInputStream fis = null;
         FileOutputStream fos = null;
         try {
@@ -76,7 +75,6 @@ public class CipherEngine {
         } catch (Exception e) {
             logger.warning("Could not decrypt file " + fileName);
             logger.warning(StringUtil.getDetails(e));
-            return;
         } finally {
             closeStreams(fis, fos);
         }
@@ -204,8 +202,8 @@ public class CipherEngine {
      */
     private static void closeStreams(InputStream input, OutputStream output) {
         try {
-            output.flush();
             input.close();
+            output.flush();
             output.close();
         } catch (Exception e) {
             logger.warning(e.getMessage());

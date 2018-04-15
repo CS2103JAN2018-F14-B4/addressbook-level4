@@ -77,6 +77,7 @@ public abstract class BibliotekSystemTest {
 
     @After
     public void tearDown() {
+        LockManager.getInstance().initialize(LockManager.NO_PASSWORD);
         setupHelper.tearDownStage();
         EventsCenter.clearSubscribers();
         WebViewManager.getInstance().cleanUp();
