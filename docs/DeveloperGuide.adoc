@@ -403,7 +403,11 @@ If such updates are not done on the JavaFX thread, JavaFX will throw an `Illegal
 // end::search2[]
 
 // tag::undoredo[]
-=== Undo feature
+=== Undo previous command
+
+The `undo` command allows the user to undo a previous command that caused changes to the book shelf.
+This allows the user to easily reverse their actions.
+
 ==== Current Implementation
 
 The undo mechanism is facilitated by an `UndoStack`, which resides inside `LogicManager`. It supports undoing of commands that modifies the state of the book shelf (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
@@ -511,7 +515,9 @@ image::UndoRedoActivityDiagram.png[width="550"]
 // end::undoredo[]
 
 // tag::edit[]
-=== Edit status, priority, and rating of books: `edit` command
+=== Edit status, priority, and rating of books
+
+The `edit` command allows the user to change the priority, status and rating of books in his/her book shelf to facilitate organization and management of books.
 
 ==== Current implementation
 
@@ -552,7 +558,7 @@ image::editseq.png[width="550"]
 // end::edit[]
 
 // tag::recent[]
-=== View recently selected books: `recent` command
+=== View recently selected books
 
 The `recent` command allows the user to view books that he/she recently selected.
 This allows the user to easily look back for a particular book, and to add it into his/her book shelf without having to perform a search again.
@@ -628,7 +634,7 @@ by only showing these books.
 // end::recent[]
 
 // tag::library[]
-=== Check for availability of book in NLB library: `library` command
+=== Check for availability of book in NLB library
 
 The `library` command allows the user to easily check for the availability of books in NLB libraries.
 This eliminates the need to manually enter search information into the NLB catalogue. The user can use this information to decide when or whether to read a book.
@@ -795,7 +801,9 @@ The resulting command, `edit 12 s/reading p/high`, will then be parsed and execu
 // end::alias[]
 
 // tag::encrypt[]
-=== Data encryption
+=== Encrypt data
+
+This allows the user to protect his book shelf data with a password so that others cannot gain access to these data.
 
 ==== Current implementation
 
