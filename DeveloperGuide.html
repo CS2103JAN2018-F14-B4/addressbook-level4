@@ -45,12 +45,12 @@
 <li><a href="#implementation">4. Implementation</a>
 <ul class="sectlevel2">
 <li><a href="#search-feature">4.1. Search feature</a></li>
-<li><a href="#undo-feature">4.2. Undo feature</a></li>
-<li><a href="#edit-status-priority-and-rating-of-books-code-edit-code-command">4.3. Edit status, priority, and rating of books: <code>edit</code> command</a></li>
-<li><a href="#view-recently-selected-books-code-recent-code-command">4.4. View recently selected books: <code>recent</code> command</a></li>
-<li><a href="#check-for-availability-of-book-in-nlb-library-code-library-code-command">4.5. Check for availability of book in NLB library: <code>library</code> command</a></li>
+<li><a href="#undo-previous-command">4.2. Undo previous command</a></li>
+<li><a href="#edit-status-priority-and-rating-of-books">4.3. Edit status, priority, and rating of books</a></li>
+<li><a href="#view-recently-selected-books">4.4. View recently selected books</a></li>
+<li><a href="#check-for-availability-of-book-in-nlb-library">4.5. Check for availability of book in NLB library</a></li>
 <li><a href="#command-aliasing">4.6. Command aliasing</a></li>
-<li><a href="#data-encryption">4.7. Data encryption</a></li>
+<li><a href="#encrypt-data">4.7. Encrypt data</a></li>
 <li><a href="#logging">4.8. Logging</a></li>
 <li><a href="#Implementation-Configuration">4.9. Configuration</a></li>
 </ul>
@@ -928,7 +928,11 @@ If such updates are not done on the JavaFX thread, JavaFX will throw an <code>Il
 </div>
 </div>
 <div class="sect2">
-<h3 id="undo-feature"><a class="anchor" href="#undo-feature"></a>4.2. Undo feature</h3>
+<h3 id="undo-previous-command"><a class="anchor" href="#undo-previous-command"></a>4.2. Undo previous command</h3>
+<div class="paragraph">
+<p>The <code>undo</code> command allows the user to undo a previous command that caused changes to the book shelf.
+This allows the user to easily reverse their actions.</p>
+</div>
 <div class="sect3">
 <h4 id="current-implementation-2"><a class="anchor" href="#current-implementation-2"></a>4.2.1. Current Implementation</h4>
 <div class="paragraph">
@@ -1164,7 +1168,10 @@ If the <code>undoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect2">
-<h3 id="edit-status-priority-and-rating-of-books-code-edit-code-command"><a class="anchor" href="#edit-status-priority-and-rating-of-books-code-edit-code-command"></a>4.3. Edit status, priority, and rating of books: <code>edit</code> command</h3>
+<h3 id="edit-status-priority-and-rating-of-books"><a class="anchor" href="#edit-status-priority-and-rating-of-books"></a>4.3. Edit status, priority, and rating of books</h3>
+<div class="paragraph">
+<p>The <code>edit</code> command allows the user to change the priority, status and rating of books in his/her book shelf to facilitate organization and management of books.</p>
+</div>
 <div class="sect3">
 <h4 id="current-implementation-3"><a class="anchor" href="#current-implementation-3"></a>4.3.1. Current implementation</h4>
 <div class="paragraph">
@@ -1198,22 +1205,6 @@ If the <code>undoStack</code> is empty, then there are no other commands left to
 <div class="imageblock">
 <div class="content">
 <img src="images/editseq.png" alt="editseq" width="550">
-</div>
-</div>
-<div class="paragraph">
-<p>Default value of the book.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/defaultbook.png" alt="defaultbook" width="550">
-</div>
-</div>
-<div class="paragraph">
-<p>The book after you edit (r/4, s/r, p/h).</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/newbook.png" alt="newbook" width="550">
 </div>
 </div>
 </div>
@@ -1288,7 +1279,7 @@ If the <code>undoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect2">
-<h3 id="view-recently-selected-books-code-recent-code-command"><a class="anchor" href="#view-recently-selected-books-code-recent-code-command"></a>4.4. View recently selected books: <code>recent</code> command</h3>
+<h3 id="view-recently-selected-books"><a class="anchor" href="#view-recently-selected-books"></a>4.4. View recently selected books</h3>
 <div class="paragraph">
 <p>The <code>recent</code> command allows the user to view books that he/she recently selected.
 This allows the user to easily look back for a particular book, and to add it into his/her book shelf without having to perform a search again.</p>
@@ -1481,7 +1472,7 @@ by only showing these books.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="check-for-availability-of-book-in-nlb-library-code-library-code-command"><a class="anchor" href="#check-for-availability-of-book-in-nlb-library-code-library-code-command"></a>4.5. Check for availability of book in NLB library: <code>library</code> command</h3>
+<h3 id="check-for-availability-of-book-in-nlb-library"><a class="anchor" href="#check-for-availability-of-book-in-nlb-library"></a>4.5. Check for availability of book in NLB library</h3>
 <div class="paragraph">
 <p>The <code>library</code> command allows the user to easily check for the availability of books in NLB libraries.
 This eliminates the need to manually enter search information into the NLB catalogue. The user can use this information to decide when or whether to read a book.</p>
@@ -1798,139 +1789,152 @@ Using <code>rd 12 p/high</code> as the user input, this process is demonstrated 
 </div>
 </div>
 <div class="sect2">
-<h3 id="data-encryption"><a class="anchor" href="#data-encryption"></a>4.7. Data encryption</h3>
+<h3 id="encrypt-data"><a class="anchor" href="#encrypt-data"></a>4.7. Encrypt data</h3>
+<div class="paragraph">
+<p>This allows the user to protect his book shelf data with a password so that others cannot gain access to these data.</p>
+</div>
 <div class="sect3">
 <h4 id="current-implementation-7"><a class="anchor" href="#current-implementation-7"></a>4.7.1. Current implementation</h4>
+<div class="sect4">
+<h5 id="encrypt-the-bookshelf-xml"><a class="anchor" href="#encrypt-the-bookshelf-xml"></a>Encrypt the Bookshelf.xml</h5>
+<div class="paragraph">
+<p>An addition class <code>CipherEngine</code> is added to the <code>Bookshelf</code> class. This class contatins some methods
+  to encrypt or decrypt file(<code>Bookshelf.xml</code>)and <code>password</code>.<br>
+  Note that when 'CipherEngine' encrypt the file, it will use the (encryped)<code>password</code>.</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>When <code>encrypt</code> command is entered</strong></p>
+<p><strong> Every time user make change in <code>Bookshelf</code> </strong></p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><code>EncryptCommand</code> is processed to set isEncrypt to be true.</p>
+<p>The <code>model manager</code> will post an <code>BookshelfChangedEvent</code>.</p>
 </li>
 <li>
-<p>The <code>Bibliotek</code> cannot be run any command except <code>decrypt</code> and <code>help</code> command.</p>
+<p>Before saving the data into <code>Bookshelf.xml</code>, the system will check whether <code>Bookshelf</code> is protected by the <code>password</code>(checking
+whether the <code>password</code> is <code>defaultpassword</code>: "").</p>
+</li>
+<li>
+<p>When the <code>password</code> is not default, the <code>Bookshelf.xml</code> will be encrypted.</p>
 </li>
 </ol>
 </div>
 </li>
 <li>
-<p>If you enter a wrong key.</p>
-</li>
-</ul>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/shouldbedecryptfirst.png" alt="shouldbedecryptfirst" width="650">
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>When the <code>Bibliotek</code> is encrypted and <code>decrypt</code> command is entered</strong></p>
+<p><strong> Every time user set the new <code>password</code> </strong></p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><code>DecryptCommandParser</code> will extract key from the user input.</p>
+<p>The <code>Setpwcommand</code> will check the <code>password</code>.</p>
 </li>
 <li>
-<p><code>DecryptCommandParser</code> creates an <code>DecryptCommand</code> the key.</p>
+<p>If the new <code>password</code> is equal to "", the <code>Lockmanager</code> will set <code>isProtected</code> to be false.</p>
 </li>
 <li>
-<p><code>DecryptCommand</code> is preprocessed to check that key is correct(decode the key from the storage).</p>
-</li>
-<li>
-<p><code>DecryptCommand</code> is processed to set isEncrypt to be false.</p>
+<p>The isProtect will be checked by <code>xmlBookshelfstorage</code> whether to  encrypt the "Bookshelf.xml" and save
+the data into <code>Bookshelf.xml</code>.</p>
 </li>
 </ol>
 </div>
 </li>
 <li>
-<p>If your entered key is correct</p>
-</li>
-</ul>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/correctkey.png" alt="correctkey" width="650">
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>If your entered key is wrong</p>
-</li>
-</ul>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/wrongkey.png" alt="wrongkey" width="650">
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>When <code>setKey</code> command is entered</strong></p>
+<p><strong> When the system need to be encrypt </strong></p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><code>setKeyCommandParser</code> will extract the old key and new key from the user input.</p>
+<p>The <code>password</code> will be encode, and set it to be a key to encrypt the file(<code>Bookshelf.xml</code>).</p>
+</li>
+</ol>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="lock-the-book-shelf"><a class="anchor" href="#lock-the-book-shelf"></a>Lock the book shelf</h5>
+<div class="paragraph">
+<p>An addition class <code>LockManager</code> is added to save the password and the situation of the locking system.<br>
+The default <code>password</code> provided for the new user is defaultpassword(""), which means that the <code>Bookshelf</code> is not locked.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong> When <code>Lock</code> command is entered </strong></p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>LockCommand</code> is processed to set <code>isLock</code>(<code>LockManager</code>) to be true.</p>
+</li>
+</ol>
+</div>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+. The <code>Bookshelf</code> cannot be run any command except <code>unlock</code> and <code>help</code> command.
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>When the <code>Bookshelf</code> is locked and <code>unlock</code> command is entered</strong></p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>UnlockCommandParser</code> will extract <code>password</code> from the user input.</p>
 </li>
 <li>
-<p><code>setKeyCommandParser</code> checks that  two parameters are present, and that the parameters are valid.</p>
+<p><code>UnlockCommandParser</code> creates an <code>UnlockCommand</code> for the <code>password</code>.</p>
 </li>
 <li>
-<p><code>setKeyCommandParser</code> creates an <code>setPasswordCommand</code> with the parameters.</p>
+<p><code>UnlockCommand</code> is preprocessed to execute `LockManager&#8217;s unlock(password).</p>
 </li>
 <li>
-<p><code>setPasswordCommand</code> is preprocessed to check that oldPassword is correct.</p>
+<p>If the password is corrct, the unlock will be run successfully, otherwise it will send a WRONG_PASSWORD commandresult.</p>
 </li>
 <li>
-<p>If the oldKye is correct, <code>setPasswordCommand</code> will send a setKey command to LogicManager.</p>
-</li>
-<li>
-<p>LogicManager will send set_new_key request to ModelManger.</p>
-</li>
-<li>
-<p>ModelManager indicate the keyChangedevent and handle it, and set the bookshelf&#8217;s key to be new key.</p>
-</li>
-<li>
-<p>ModelManager will encode the key, before indicate the keyChangedevent.</p>
-</li>
-<li>
-<p>StorageManager handle the event by update the bibliotek with the new key(encoded key).</p>
+<p><code>UnlockCommand</code> is processed to set isLock(LockManager) to be false.</p>
 </li>
 </ol>
 </div>
 </li>
 <li>
-<p>If you entered old key is correct.</p>
-</li>
-</ul>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/setsuccess.png" alt="setsuccess" width="650">
-</div>
-</div>
-<div class="ulist">
-<ul>
+<p><strong>When <code>setpw</code> command is entered</strong></p>
+<div class="olist arabic">
+<ol class="arabic">
 <li>
-<p>If you entered old key is incorrect.</p>
+<p><code>setpasswordCommandParser</code> will extract the old key and new key from the user input.</p>
 </li>
-</ul>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/wrongkey(set).png" alt="wrongkey(set)" width="650">
-</div>
-</div>
-<div class="ulist">
-<ul>
 <li>
-<p>The encode key are implement in this way:</p>
+<p><code>setpwParser</code> checks that  two parameters are valid.</p>
+</li>
+<li>
+<p><code>setpasswordCommandParser</code> creates an <code>setpwCommand</code> with the parameters.</p>
+</li>
+<li>
+<p><code>setpwCommand</code> is preprocessed to check that oldKey is correct using <code>LockManager</code>.</p>
+</li>
+<li>
+<p>If the oldKey is correct, <code>setpwCommand</code> will post a <code>passwordChangedevent</code>.</p>
+</li>
+<li>
+<p>MainApp will handle it, and set <code>UserPrefs.password</code> to be new encoded <code>password</code>(using cipherEngine).</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>The encode key are implement in this way:
+[source,java]</p>
 </li>
 </ul>
 </div>
@@ -1994,13 +1998,6 @@ Using <code>rd 12 p/high</code> as the user input, this process is demonstrated 
     }</pre>
 </div>
 </div>
-<div class="paragraph">
-<p>The default key "admin" will be stored as:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/password_admin.png" alt="password admin" width="650">
-</div>
 </div>
 </div>
 <div class="sect3">
@@ -2010,20 +2007,20 @@ Using <code>rd 12 p/high</code> as the user input, this process is demonstrated 
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Alternative 1 (current choice):</strong> Use three commands to do the encrypt, decrypt and setkey actions</p>
+<p><strong>Alternative 1 (current choice):</strong> Use three commands to do the lock, unlock and setpassword actions.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Users can clearly know what they can do about the key.</p>
+<p>Pros: Users can clearly know what they can do about the password.</p>
 </li>
 <li>
-<p>Cons: Users should learn two more commands</p>
+<p>Cons: Users should learn two more commands.</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p><strong>Alternative 2:</strong> Use only one setKey command to solve all three features.</p>
+<p><strong>Alternative 2:</strong> Use only one <code>setpw</code> command to solve all three features.</p>
 <div class="ulist">
 <ul>
 <li>
@@ -2039,15 +2036,15 @@ Using <code>rd 12 p/high</code> as the user input, this process is demonstrated 
 </div>
 </div>
 <div class="sect4">
-<h5 id="aspect-whether-to-encode-the-key-before-store-it"><a class="anchor" href="#aspect-whether-to-encode-the-key-before-store-it"></a>Aspect: Whether to encode the key before store it</h5>
+<h5 id="aspect-whether-to-encode-the-password-before-store-it"><a class="anchor" href="#aspect-whether-to-encode-the-password-before-store-it"></a>Aspect: Whether to encode the password before store it</h5>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Alternative 1 (current choice):</strong> Stores the encoded key.</p>
+<p><strong>Alternative 1 (current choice):</strong> Stores the encoded password.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Pros: Others cannot know users' key easily.</p>
+<p>Pros: Others cannot know users' passwords easily.</p>
 </li>
 <li>
 <p>Cons: Difficult to implement.</p>
@@ -2056,14 +2053,14 @@ Using <code>rd 12 p/high</code> as the user input, this process is demonstrated 
 </div>
 </li>
 <li>
-<p><strong>Alternative 2:</strong> Store the text form key.</p>
+<p><strong>Alternative 2:</strong> Store the text form password.</p>
 <div class="ulist">
 <ul>
 <li>
 <p>Pros: Easy to implement.</p>
 </li>
 <li>
-<p>Cons: Others can know users' key easily.</p>
+<p>Cons: Others can know users' passwords easily.</p>
 </li>
 </ul>
 </div>
@@ -3885,7 +3882,7 @@ Expected: Similar to previous.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-15 14:32:39 UTC
+Last updated 2018-04-15 15:18:10 UTC
 </div>
 </div>
 </body>

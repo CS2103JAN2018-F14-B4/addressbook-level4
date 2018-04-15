@@ -15,17 +15,28 @@
 <h1>SHI JIN - Project Portfolio</h1>
 </div>
 <div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>This portfolio highlights my contributions to the project when studying in School of Computing, National University of Singapore.</p>
+</div>
+</div>
+</div>
 <div class="sect1">
-<h2 id="project-bibliotek"><a class="anchor" href="#project-bibliotek"></a>PROJECT: Bibliotek</h2>
+<h2 id="project-a-href-https-github-com-cs2103jan2018-f14-b4-main-bibliotek-a"><a class="anchor" href="#project-a-href-https-github-com-cs2103jan2018-f14-b4-main-bibliotek-a"></a>PROJECT: <a href="https://github.com/CS2103JAN2018-F14-B4/main">Bibliotek</a></h2>
 <div class="sectionbody">
 <hr>
+<div class="paragraph">
+<p>Bibliotek is a free book cataloguing application that is simple, fast and easy to use.
+You can use Bibliotek to search for books, manage your reading list and track the availability of your books.</p>
+</div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="overview"><a class="anchor" href="#overview"></a>Overview</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Bibliotek is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.</p>
+<p>Bibliotek is a desktop book management application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.</p>
 </div>
 </div>
 </div>
@@ -35,15 +46,41 @@
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Mark a book as read, change the priority of a book and rate books</strong> (major)</p>
+<p><strong>Encrypt data with a password</strong> (major)</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Added attributes rating</p>
+<p>Add two class cipherEngine and LockManagement to help encrypt/decrypt the data/password and keep the data safe.</p>
 </li>
 <li>
-<p>Added <code>edit</code> command that allows user to rate, set status and change priority of
+<p>Add an ecrypt data function to let bookshelf.xml to be encrypted when user set a non-default password.</p>
+</li>
+<li>
+<p>Add one check of isProtect value in LockManagement to decide whether encrypt the bookshelf.xml before saving the data.</p>
+</li>
+<li>
+<p>Add <code>lock</code>, <code>unlock</code> and <code>setpw</code> command to do lock management. If password is not default(""), everytime user open the application,
+he should unlock the bookshelf using password before he can do further instructions.</p>
+</li>
+<li>
+<p>This allows users to keep their data private and safe.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Mark a book as read, change the priority of a book and rate books</strong> (minor)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Added attributes rating, (status and priority by others).</p>
+</li>
+<li>
+<p>Added <code>edit</code> command that allows user to <code>rating</code>, set <code>status</code> and change <code>priority</code> of
 some books.</p>
+</li>
+<li>
+<p>Added parser for three attributes.</p>
 </li>
 <li>
 <p>This allows the user to keep track of what to read and what have been read and give recommendations to others.</p>
@@ -52,14 +89,14 @@ some books.</p>
 </div>
 </li>
 <li>
-<p><strong>Encrypt data with a password</strong> (minor)</p>
+<p><strong>Set command to be case insensitive</strong>(minor)</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Add an <code>encrypt</code> command to encrypt data with a password.</p>
+<p>Added case insensitive to the command.</p>
 </li>
 <li>
-<p>This allows users to keep their data private and safe.</p>
+<p>This allows the user to type in command without worry about the case, and make user easy to use our application.</p>
 </li>
 </ul>
 </div>
@@ -79,16 +116,25 @@ some books.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Add the rating book command.</p>
+<p>Added the <code>ratingbook</code> command.</p>
 </li>
 <li>
-<p>Add in Edit book command (Pull requests <a href="https://github.com/CS2103JAN2018-F14-B4/main/pull/111">#111</a>).</p>
+<p>Added in <code>Edit</code> book command. (Pull requests <a href="https://github.com/CS2103JAN2018-F14-B4/main/pull/111">#111</a>)</p>
 </li>
 <li>
-<p>Add in encrypt command.</p>
+<p>Added in <code>lock</code> command.</p>
 </li>
 <li>
-<p>Add in decrypt and setkey command (Pull requests <a href="https://github.com/CS2103JAN2018-F14-B4/main/pull/134">#134</a>)</p>
+<p>Added in <code>unlock</code> and <code>setpw</code> command.</p>
+</li>
+<li>
+<p>Added in data file encryption and decryption features.</p>
+</li>
+<li>
+<p>Added in the data file encryption enhancement. (Pull requests <a href="https://github.com/CS2103JAN2018-F14-B4/main/pull/134">#134</a>)</p>
+</li>
+<li>
+<p>Added one case insensitive feature. (Pull requests <a href="https://github.com/CS2103JAN2018-F14-B4/main/pull/179">#179</a>)</p>
 </li>
 </ul>
 </div>
@@ -98,7 +144,7 @@ some books.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Did cosmetic tweaks to existing contents of the User Guide: <a href="https://github.com">#14</a></p>
+<p>Added my major and minor feature into UserGuide and DeveloperGuide, adding my Project Portfolio. (<a href="https://github.com/CS2103JAN2018-F14-B4/main/pull/193">#193</a>)</p>
 </li>
 </ul>
 </div>
@@ -108,13 +154,17 @@ some books.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>PRs reviewed : <a href="https://github.com">#12</a>, <a href="https://github.com/CS2103JAN2018-F14-B4/main/pull/84">#84</a>, <a href="https://github.com/CS2103JAN2018-F14-B4/main/pull/79">#79</a>, <a href="https://github.com/CS2103JAN2018-F14-B4/main/pull/68">#68</a>, <a href="https://github.com/CS2103JAN2018-F14-B4/main/pull/44">#44</a></p>
+<p>PRs reviewed. (<a href="https://github.com">#12</a>, <a href="https://github.com/CS2103JAN2018-F14-B4/main/pull/84">#84</a>, <a href="https://github.com/CS2103JAN2018-F14-B4/main/pull/79">#79</a>,
+<a href="https://github.com/CS2103JAN2018-F14-B4/main/pull/68">#68</a>, <a href="https://github.com/CS2103JAN2018-F14-B4/main/pull/44">#44</a>)</p>
+</li>
+<li>
+<p>Reported bugs and suggestions for other teams in the class. (Issues <a href="https://github.com/CS2103JAN2018-F11-B3/main/issues/116">#116</a>,
+<a href="https://github.com/CS2103JAN2018-F11-B3/main/issues/119">#119</a>, <a href="https://github.com/CS2103JAN2018-F11-B3/main/issues/133">#133</a>,
+<a href="https://github.com/CS2103JAN2018-F11-B3/main/issues/137">#137</a>, <a href="https://github.com/CS2103JAN2018-F11-B3/main/issues/118">#118</a>,
+<a href="https://github.com/CS2103JAN2018-F11-B3/main/issues/123">#123</a>)</p>
 </li>
 </ul>
 </div>
-</li>
-<li>
-<p>Tools:</p>
 </li>
 </ul>
 </div>
@@ -176,7 +226,7 @@ Format: <code>edit INDEX [s/STATUS] [p/PRIORITY] [r/RATING]</code></p>
 <i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-You can only perform <code>edit</code> when the list shown is from your book shelf.
+You can only edit books from your book shelf.
 </td>
 </tr>
 </table>
@@ -209,18 +259,99 @@ In the left panel, you can see that the priority label of <code>Gel Electrophore
 <div class="ulist">
 <ul>
 <li>
-<p><code>edit 1 s/reading</code><br>
-Marks the 1st book as <code>Reading</code>.</p>
+<p><code>edit 3 p/low</code><br>
+Changes the priority of the 3rd book to <code>LOW</code>.</p>
 </li>
 <li>
 <p><code>edit 2 s/read r/5</code><br>
-Marks the 2nd book as <code>Read</code> and changes its rating to <code>5</code>.</p>
+Marks the 2nd book as <code>READ</code> and changes its rating to <code>5</code>.</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Encrypt-command"><a class="anchor" href="#Encrypt-command"></a>Locking the app : <code>lock</code> <em>(since v1.5)</em></h3>
+<h3 id="setpw-command"><a class="anchor" href="#setpw-command"></a>Changing/Setting a password : <code>setpw</code> <em>(since v1.5)</em></h3>
+<div class="paragraph">
+<p>If you want to keep your data secure, you can opt to set a password for Bibliotek. This password will be used to encrypt your data.
+After starting up Bibliotek, you will have to unlock it using your password before being able to perform any commands.<br>
+Format: <code>setpw [old/OLD_PASSWORD] [new/NEW_PASSWORD]</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Changes the password from <code>OLD_PASSWORD</code> to <code>NEW_PASSWORD</code>.</p>
+</li>
+<li>
+<p><code>OLD_PASSWORD</code> and <code>NEW_PASSWORD</code> are case sensitive.</p>
+</li>
+<li>
+<p>At least one of the 2 fields must be provided.</p>
+</li>
+<li>
+<p>By default, there is no password.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+To set a password, use <code>setpw new/NEW_PASSWORD</code>.<br>
+Similarly, to delete the password, use <code>setpw old/OLD_PASSWORD</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>If the <code>OLD_PASSWORD</code> that you provided is correct, Bibliotek shows <code>Successfully changed your password</code> to indicate that your password is changed.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/setpassword1.png" alt="setpassword1" width="650">
+</div>
+</div>
+<div class="paragraph">
+<p>On the other hand, if the <code>OLD_PASSWORD</code> that you provided is incorrect, Bibliotek shows <code>Incorrect old password. Please try again.</code> to indicate that your password is not changed.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/setpassword2.png" alt="setpassword2" width="650">
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If you provide a <code>OLD_PASSWORD</code> when you in fact have no password, it is considered to be incorrect.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+You should remember your password after setting a new one.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="Lock-command"><a class="anchor" href="#Lock-command"></a>Locking the app : <code>lock</code> <em>(since v1.5)</em></h3>
 <div class="paragraph">
 <p>If you are going away for a moment and want to prevent others from messing with the application, you can perform <code>lock</code>.<br>
 Format: <code>lock</code></p>
@@ -271,7 +402,7 @@ Performing any other valid commands, for example <code>list</code>, will be resp
 </div>
 </div>
 <div class="sect2">
-<h3 id="Decrypt-command"><a class="anchor" href="#Decrypt-command"></a>Unlocking the app : <code>unlock</code> <em>(since v1.5)</em></h3>
+<h3 id="Unlock-command"><a class="anchor" href="#Unlock-command"></a>Unlocking the app : <code>unlock</code> <em>(since v1.5)</em></h3>
 <div class="paragraph">
 <p>If you previously performed <code>lock</code>, use <code>unlock</code> to unlock the app.<br>
 Format: <code>unlock PASSWORD</code></p>
@@ -340,7 +471,10 @@ If you really forgot your password and cannot unlock the system, you can reset B
 </tbody>
 </table>
 <div class="sect2">
-<h3 id="edit-status-priority-and-rating-of-books-code-edit-code-command"><a class="anchor" href="#edit-status-priority-and-rating-of-books-code-edit-code-command"></a>Edit status, priority, and rating of books: <code>edit</code> command</h3>
+<h3 id="edit-status-priority-and-rating-of-books"><a class="anchor" href="#edit-status-priority-and-rating-of-books"></a>Edit status, priority, and rating of books</h3>
+<div class="paragraph">
+<p>The <code>edit</code> command allows the user to change the priority, status and rating of books in his/her book shelf to facilitate organization and management of books.</p>
+</div>
 <div class="sect3">
 <h4 id="current-implementation"><a class="anchor" href="#current-implementation"></a>Current implementation</h4>
 <div class="paragraph">
@@ -374,22 +508,6 @@ If you really forgot your password and cannot unlock the system, you can reset B
 <div class="imageblock">
 <div class="content">
 <img src="../images/editseq.png" alt="editseq" width="550">
-</div>
-</div>
-<div class="paragraph">
-<p>Default value of the book.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="../images/defaultbook.png" alt="defaultbook" width="550">
-</div>
-</div>
-<div class="paragraph">
-<p>The book after you edit (r/4, s/r, p/h).</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="../images/newbook.png" alt="newbook" width="550">
 </div>
 </div>
 </div>
@@ -464,139 +582,152 @@ If you really forgot your password and cannot unlock the system, you can reset B
 </div>
 </div>
 <div class="sect2">
-<h3 id="data-encryption"><a class="anchor" href="#data-encryption"></a>Data encryption</h3>
+<h3 id="encrypt-data"><a class="anchor" href="#encrypt-data"></a>Encrypt data</h3>
+<div class="paragraph">
+<p>This allows the user to protect his book shelf data with a password so that others cannot gain access to these data.</p>
+</div>
 <div class="sect3">
 <h4 id="current-implementation-2"><a class="anchor" href="#current-implementation-2"></a>Current implementation</h4>
+<div class="sect4">
+<h5 id="encrypt-the-bookshelf-xml"><a class="anchor" href="#encrypt-the-bookshelf-xml"></a>Encrypt the Bookshelf.xml</h5>
+<div class="paragraph">
+<p>An addition class <code>CipherEngine</code> is added to the <code>Bookshelf</code> class. This class contatins some methods
+  to encrypt or decrypt file(<code>Bookshelf.xml</code>)and <code>password</code>.<br>
+  Note that when 'CipherEngine' encrypt the file, it will use the (encryped)<code>password</code>.</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>When <code>encrypt</code> command is entered</strong></p>
+<p><strong> Every time user make change in <code>Bookshelf</code> </strong></p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><code>EncryptCommand</code> is processed to set isEncrypt to be true.</p>
+<p>The <code>model manager</code> will post an <code>BookshelfChangedEvent</code>.</p>
 </li>
 <li>
-<p>The <code>Bibliotek</code> cannot be run any command except <code>decrypt</code> and <code>help</code> command.</p>
+<p>Before saving the data into <code>Bookshelf.xml</code>, the system will check whether <code>Bookshelf</code> is protected by the <code>password</code>(checking
+whether the <code>password</code> is <code>defaultpassword</code>: "").</p>
+</li>
+<li>
+<p>When the <code>password</code> is not default, the <code>Bookshelf.xml</code> will be encrypted.</p>
 </li>
 </ol>
 </div>
 </li>
 <li>
-<p>If you enter a wrong key.</p>
-</li>
-</ul>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="../images/shouldbedecryptfirst.png" alt="shouldbedecryptfirst" width="650">
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>When the <code>Bibliotek</code> is encrypted and <code>decrypt</code> command is entered</strong></p>
+<p><strong> Every time user set the new <code>password</code> </strong></p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><code>DecryptCommandParser</code> will extract key from the user input.</p>
+<p>The <code>Setpwcommand</code> will check the <code>password</code>.</p>
 </li>
 <li>
-<p><code>DecryptCommandParser</code> creates an <code>DecryptCommand</code> the key.</p>
+<p>If the new <code>password</code> is equal to "", the <code>Lockmanager</code> will set <code>isProtected</code> to be false.</p>
 </li>
 <li>
-<p><code>DecryptCommand</code> is preprocessed to check that key is correct(decode the key from the storage).</p>
-</li>
-<li>
-<p><code>DecryptCommand</code> is processed to set isEncrypt to be false.</p>
+<p>The isProtect will be checked by <code>xmlBookshelfstorage</code> whether to  encrypt the "Bookshelf.xml" and save
+the data into <code>Bookshelf.xml</code>.</p>
 </li>
 </ol>
 </div>
 </li>
 <li>
-<p>If your entered key is correct</p>
-</li>
-</ul>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="../images/correctkey.png" alt="correctkey" width="650">
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>If your entered key is wrong</p>
-</li>
-</ul>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="../images/wrongkey.png" alt="wrongkey" width="650">
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>When <code>setKey</code> command is entered</strong></p>
+<p><strong> When the system need to be encrypt </strong></p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><code>setKeyCommandParser</code> will extract the old key and new key from the user input.</p>
+<p>The <code>password</code> will be encode, and set it to be a key to encrypt the file(<code>Bookshelf.xml</code>).</p>
+</li>
+</ol>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="lock-the-book-shelf"><a class="anchor" href="#lock-the-book-shelf"></a>Lock the book shelf</h5>
+<div class="paragraph">
+<p>An addition class <code>LockManager</code> is added to save the password and the situation of the locking system.<br>
+The default <code>password</code> provided for the new user is defaultpassword(""), which means that the <code>Bookshelf</code> is not locked.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong> When <code>Lock</code> command is entered </strong></p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>LockCommand</code> is processed to set <code>isLock</code>(<code>LockManager</code>) to be true.</p>
+</li>
+</ol>
+</div>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+. The <code>Bookshelf</code> cannot be run any command except <code>unlock</code> and <code>help</code> command.
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>When the <code>Bookshelf</code> is locked and <code>unlock</code> command is entered</strong></p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>UnlockCommandParser</code> will extract <code>password</code> from the user input.</p>
 </li>
 <li>
-<p><code>setKeyCommandParser</code> checks that  two parameters are present, and that the parameters are valid.</p>
+<p><code>UnlockCommandParser</code> creates an <code>UnlockCommand</code> for the <code>password</code>.</p>
 </li>
 <li>
-<p><code>setKeyCommandParser</code> creates an <code>setPasswordCommand</code> with the parameters.</p>
+<p><code>UnlockCommand</code> is preprocessed to execute `LockManager&#8217;s unlock(password).</p>
 </li>
 <li>
-<p><code>setPasswordCommand</code> is preprocessed to check that oldPassword is correct.</p>
+<p>If the password is corrct, the unlock will be run successfully, otherwise it will send a WRONG_PASSWORD commandresult.</p>
 </li>
 <li>
-<p>If the oldKye is correct, <code>setPasswordCommand</code> will send a setKey command to LogicManager.</p>
-</li>
-<li>
-<p>LogicManager will send set_new_key request to ModelManger.</p>
-</li>
-<li>
-<p>ModelManager indicate the keyChangedevent and handle it, and set the bookshelf&#8217;s key to be new key.</p>
-</li>
-<li>
-<p>ModelManager will encode the key, before indicate the keyChangedevent.</p>
-</li>
-<li>
-<p>StorageManager handle the event by update the bibliotek with the new key(encoded key).</p>
+<p><code>UnlockCommand</code> is processed to set isLock(LockManager) to be false.</p>
 </li>
 </ol>
 </div>
 </li>
 <li>
-<p>If you entered old key is correct.</p>
-</li>
-</ul>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="../images/setsuccess.png" alt="setsuccess" width="650">
-</div>
-</div>
-<div class="ulist">
-<ul>
+<p><strong>When <code>setpw</code> command is entered</strong></p>
+<div class="olist arabic">
+<ol class="arabic">
 <li>
-<p>If you entered old key is incorrect.</p>
+<p><code>setpasswordCommandParser</code> will extract the old key and new key from the user input.</p>
 </li>
-</ul>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="../images/wrongkey(set).png" alt="wrongkey(set)" width="650">
-</div>
-</div>
-<div class="ulist">
-<ul>
 <li>
-<p>The encode key are implement in this way:</p>
+<p><code>setpwParser</code> checks that  two parameters are valid.</p>
+</li>
+<li>
+<p><code>setpasswordCommandParser</code> creates an <code>setpwCommand</code> with the parameters.</p>
+</li>
+<li>
+<p><code>setpwCommand</code> is preprocessed to check that oldKey is correct using <code>LockManager</code>.</p>
+</li>
+<li>
+<p>If the oldKey is correct, <code>setpwCommand</code> will post a <code>passwordChangedevent</code>.</p>
+</li>
+<li>
+<p>MainApp will handle it, and set <code>UserPrefs.password</code> to be new encoded <code>password</code>(using cipherEngine).</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>The encode key are implement in this way:
+[source,java]</p>
 </li>
 </ul>
 </div>
@@ -660,17 +791,7 @@ If you really forgot your password and cannot unlock the system, you can reset B
     }</pre>
 </div>
 </div>
-<div class="paragraph">
-<p>The default key "admin" will be stored as:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="../images/password_admin.png" alt="password admin" width="650">
-</div>
-</div>
 <hr>
-<div class="paragraph">
-<p><em>{Optionally, you may include other projects in your portfolio.}</em></p>
 </div>
 </div>
 </div>
@@ -679,7 +800,7 @@ If you really forgot your password and cannot unlock the system, you can reset B
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-15 14:32:39 UTC
+Last updated 2018-04-15 15:18:10 UTC
 </div>
 </div>
 </body>

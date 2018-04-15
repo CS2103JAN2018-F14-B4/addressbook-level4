@@ -58,9 +58,9 @@
 <ul class="sectlevel2">
 <li><a href="#displaying-quote-of-the-day">7.1. Displaying quote of the day</a></li>
 <li><a href="#theme-command">7.2. Changing theme : <code>theme</code> <em>(since v1.2)</em></a></li>
-<li><a href="#setKey-command">7.3. Changing/Setting a password : <code>setpw</code> <em>(since v1.5)</em></a></li>
-<li><a href="#Encrypt-command">7.4. Locking the app : <code>lock</code> <em>(since v1.5)</em></a></li>
-<li><a href="#Decrypt-command">7.5. Unlocking the app : <code>unlock</code> <em>(since v1.5)</em></a></li>
+<li><a href="#setpw-command">7.3. Changing/Setting a password : <code>setpw</code> <em>(since v1.5)</em></a></li>
+<li><a href="#Lock-command">7.4. Locking the app : <code>lock</code> <em>(since v1.5)</em></a></li>
+<li><a href="#Unlock-command">7.5. Unlocking the app : <code>unlock</code> <em>(since v1.5)</em></a></li>
 </ul>
 </li>
 <li><a href="#upcoming-features">8. Upcoming Features</a>
@@ -735,7 +735,7 @@ Format: <code>edit INDEX [s/STATUS] [p/PRIORITY] [r/RATING]</code></p>
 <i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-You can only perform <code>edit</code> when the list shown is from your book shelf.
+You can only edit books from your book shelf.
 </td>
 </tr>
 </table>
@@ -768,12 +768,12 @@ In the left panel, you can see that the priority label of <code>Gel Electrophore
 <div class="ulist">
 <ul>
 <li>
-<p><code>edit 1 s/reading</code><br>
-Marks the 1st book as <code>Reading</code>.</p>
+<p><code>edit 3 p/low</code><br>
+Changes the priority of the 3rd book to <code>LOW</code>.</p>
 </li>
 <li>
 <p><code>edit 2 s/read r/5</code><br>
-Marks the 2nd book as <code>Read</code> and changes its rating to <code>5</code>.</p>
+Marks the 2nd book as <code>READ</code> and changes its rating to <code>5</code>.</p>
 </li>
 </ul>
 </div>
@@ -1254,7 +1254,7 @@ Format: <code>history</code></p>
 <p>Lists the previous commands in reverse chronological order.</p>
 </li>
 <li>
-<p>Commands that deal with passwords (such as <a href="#setKey-command"><code>setpw</code></a>) will not be recorded in history.</p>
+<p>Commands that deal with passwords (such as <a href="#setpw-command"><code>setpw</code></a>) will not be recorded in history.</p>
 </li>
 </ul>
 </div>
@@ -1565,7 +1565,7 @@ Format: <code>theme THEME_NAME</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="setKey-command"><a class="anchor" href="#setKey-command"></a>7.3. Changing/Setting a password : <code>setpw</code> <em>(since v1.5)</em></h3>
+<h3 id="setpw-command"><a class="anchor" href="#setpw-command"></a>7.3. Changing/Setting a password : <code>setpw</code> <em>(since v1.5)</em></h3>
 <div class="paragraph">
 <p>If you want to keep your data secure, you can opt to set a password for Bibliotek. This password will be used to encrypt your data.
 After starting up Bibliotek, you will have to unlock it using your password before being able to perform any commands.<br>
@@ -1604,6 +1604,34 @@ Similarly, to delete the password, use <code>setpw old/OLD_PASSWORD</code>.
 </tr>
 </table>
 </div>
+<div class="paragraph">
+<p>If the <code>OLD_PASSWORD</code> that you provided is correct, Bibliotek shows <code>Successfully changed your password</code> to indicate that your password is changed.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/setpassword1.png" alt="setpassword1" width="650">
+</div>
+</div>
+<div class="paragraph">
+<p>On the other hand, if the <code>OLD_PASSWORD</code> that you provided is incorrect, Bibliotek shows <code>Incorrect old password. Please try again.</code> to indicate that your password is not changed.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/setpassword2.png" alt="setpassword2" width="650">
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If you provide a <code>OLD_PASSWORD</code> when you in fact have no password, it is considered to be incorrect.
+</td>
+</tr>
+</table>
+</div>
 <div class="admonitionblock tip">
 <table>
 <tr>
@@ -1618,7 +1646,7 @@ You should remember your password after setting a new one.
 </div>
 </div>
 <div class="sect2">
-<h3 id="Encrypt-command"><a class="anchor" href="#Encrypt-command"></a>7.4. Locking the app : <code>lock</code> <em>(since v1.5)</em></h3>
+<h3 id="Lock-command"><a class="anchor" href="#Lock-command"></a>7.4. Locking the app : <code>lock</code> <em>(since v1.5)</em></h3>
 <div class="paragraph">
 <p>If you are going away for a moment and want to prevent others from messing with the application, you can perform <code>lock</code>.<br>
 Format: <code>lock</code></p>
@@ -1669,7 +1697,7 @@ Performing any other valid commands, for example <code>list</code>, will be resp
 </div>
 </div>
 <div class="sect2">
-<h3 id="Decrypt-command"><a class="anchor" href="#Decrypt-command"></a>7.5. Unlocking the app : <code>unlock</code> <em>(since v1.5)</em></h3>
+<h3 id="Unlock-command"><a class="anchor" href="#Unlock-command"></a>7.5. Unlocking the app : <code>unlock</code> <em>(since v1.5)</em></h3>
 <div class="paragraph">
 <p>If you previously performed <code>lock</code>, use <code>unlock</code> to unlock the app.<br>
 Format: <code>unlock PASSWORD</code></p>
@@ -2101,7 +2129,7 @@ The 13-digit ISBN, which is used by Bibliotek to identify books, has been in use
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-15 14:32:39 UTC
+Last updated 2018-04-15 15:18:10 UTC
 </div>
 </div>
 </body>
