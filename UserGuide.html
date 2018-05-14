@@ -50,17 +50,17 @@
 <li><a href="#addalias-command">6.4. Adding a command alias : <code>addalias</code> <em>(since v1.5)</em></a></li>
 <li><a href="#aliases-command">6.5. Listing command aliases : <code>aliases</code> <em>(since v1.5)</em></a></li>
 <li><a href="#deletealias-command">6.6. Delete a command alias : <code>deletealias</code> <em>(since v1.5)</em></a></li>
-<li><a href="#hint-system-em-since-v1-5-em">6.7. Hint system <em>(since v1.5)</em></a></li>
-<li><a href="#command-autocorrection-em-since-v1-5-em">6.8. Command autocorrection <em>(since v1.5)</em></a></li>
+<li><a href="#hint-system">6.7. Hint system <em>(since v1.5)</em></a></li>
+<li><a href="#command-autocorrection">6.8. Command autocorrection <em>(since v1.5)</em></a></li>
 </ul>
 </li>
 <li><a href="#other-features">7. Other Features</a>
 <ul class="sectlevel2">
-<li><a href="#displaying-quote-of-the-day">7.1. Displaying quote of the day</a></li>
+<li><a href="#quote-of-the-day">7.1. Displaying quote of the day</a></li>
 <li><a href="#theme-command">7.2. Changing theme : <code>theme</code> <em>(since v1.2)</em></a></li>
 <li><a href="#setpw-command">7.3. Changing/Setting a password : <code>setpw</code> <em>(since v1.5)</em></a></li>
-<li><a href="#Lock-command">7.4. Locking the app : <code>lock</code> <em>(since v1.5)</em></a></li>
-<li><a href="#Unlock-command">7.5. Unlocking the app : <code>unlock</code> <em>(since v1.5)</em></a></li>
+<li><a href="#lock-command">7.4. Locking the app : <code>lock</code> <em>(since v1.5)</em></a></li>
+<li><a href="#unlock-command">7.5. Unlocking the app : <code>unlock</code> <em>(since v1.5)</em></a></li>
 </ul>
 </li>
 <li><a href="#upcoming-features">8. Upcoming Features</a>
@@ -70,7 +70,7 @@
 <li><a href="#suggest-command">8.3. Getting book recommendations : <code>suggest</code> <em>(coming in v2.0)</em></a></li>
 <li><a href="#import-command">8.4. Importing books from other E-Readers : <code>import</code> <em>(coming in v2.0)</em></a></li>
 <li><a href="#fontsize-command">8.5. Changing font size : <code>fontsize</code> <em>(coming in v2.0)</em></a></li>
-<li><a href="#autpcomplete-command">8.6. Autocompleting commands : <code>Tab</code> <em>(coming in v2.0)</em></a></li>
+<li><a href="#autocomplete-command">8.6. Autocompleting commands : <code>Tab</code> <em>(coming in v2.0)</em></a></li>
 <li><a href="#settings-command">8.7. Changing settings: <code>settings</code> <em>(coming in v2.0)</em></a></li>
 </ul>
 </li>
@@ -397,8 +397,8 @@ You should try again after some time.
 Returns a list of books containing the word <code>Artemis</code>, where <code>Andy Weir</code> matches one of the authors.</p>
 </li>
 <li>
-<p><code>search t/Babylon&#8217;s Ashes c/Science Fiction</code><br>
-Returns a list of <code>Science Fiction</code> books that contains <code>Babylon&#8217;s Ashes</code> in the title.</p>
+<p><code>search t/Babylon&#8217;s Ashes c/Fiction</code><br>
+Returns a list of <code>Fiction</code> books that contains <code>Babylon&#8217;s Ashes</code> in the title.</p>
 </li>
 </ul>
 </div>
@@ -562,7 +562,7 @@ the book before adding it to your book shelf.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>search t/Babylon&#8217;s Ashes c/Science Fiction</code><br>
+<p><code>search t/Babylon&#8217;s Ashes c/Fiction</code><br>
 <code>add 1</code><br>
 Adds the 1st book in the search results.</p>
 </li>
@@ -689,8 +689,8 @@ The left panel will show all the books in your book shelf.</p>
 Lists books in your book shelf that contains <code>Andy Weir</code> in one of the authors' name, and sort them in alphabetical order according to their titles.</p>
 </li>
 <li>
-<p><code>list t/Babylon&#8217;s Ashes c/Science Fiction</code><br>
-Lists <code>Science Fiction</code> books in your book shelf that contains <code>Babylon&#8217;s Ashes</code> in the title.</p>
+<p><code>list t/Babylon&#8217;s Ashes c/Fiction</code><br>
+Lists <code>Fiction</code> books in your book shelf that contains <code>Babylon&#8217;s Ashes</code> in the title.</p>
 </li>
 </ul>
 </div>
@@ -953,7 +953,7 @@ Once the web page has loaded, you will be able to see the reviews, as shown belo
 <div class="ulist">
 <ul>
 <li>
-<p><code>search t/Babylon&#8217;s Ashes c/Science Fiction</code><br>
+<p><code>search t/Babylon&#8217;s Ashes c/Fiction</code><br>
 <code>reviews 1</code><br>
 Shows online reviews of 1st book in the search results.</p>
 </li>
@@ -1189,7 +1189,7 @@ Format: <code>undo</code></p>
 </table>
 </div>
 <div class="paragraph">
-<p>Suppose you just deleted a book <code>Harry Potter and the Classical World</code>.</p>
+<p>Suppose you just deleted a book <code>Artificial Intelligence</code>.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -1413,7 +1413,7 @@ Deletes the command alias with the name <code>read</code>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="hint-system-em-since-v1-5-em"><a class="anchor" href="#hint-system-em-since-v1-5-em"></a>6.7. Hint system <em>(since v1.5)</em></h3>
+<h3 id="hint-system"><a class="anchor" href="#hint-system"></a>6.7. Hint system <em>(since v1.5)</em></h3>
 <div class="paragraph">
 <p>We understand that Bibliotek has many commands and it is difficult to remember the syntax of every command. With the hint system,
 you can reduce the burden on your memory and count on Bibliotek to remind you instead!</p>
@@ -1450,7 +1450,7 @@ you can reduce the burden on your memory and count on Bibliotek to remind you in
 </div>
 </div>
 <div class="sect2">
-<h3 id="command-autocorrection-em-since-v1-5-em"><a class="anchor" href="#command-autocorrection-em-since-v1-5-em"></a>6.8. Command autocorrection <em>(since v1.5)</em></h3>
+<h3 id="command-autocorrection"><a class="anchor" href="#command-autocorrection"></a>6.8. Command autocorrection <em>(since v1.5)</em></h3>
 <div class="paragraph">
 <p>It is common to mispell words when you are typing fast, and when this happens, it is always a hassle to have to correct it and try again.
 With the command autocorrection system, this may only be one keypress away.</p>
@@ -1508,7 +1508,7 @@ If you have aliases with closely matching names, the accuracy of the autocorrect
 <p>This section documents some additional features in Bibliotek that do not fall into the above categories.</p>
 </div>
 <div class="sect2">
-<h3 id="displaying-quote-of-the-day"><a class="anchor" href="#displaying-quote-of-the-day"></a>7.1. Displaying quote of the day</h3>
+<h3 id="quote-of-the-day"><a class="anchor" href="#quote-of-the-day"></a>7.1. Displaying quote of the day</h3>
 <div class="paragraph">
 <p>When the right panel is empty (e.g. on start up), Bibliotek displays a default panel containing a random quote of the day about books.</p>
 </div>
@@ -1646,7 +1646,7 @@ You should remember your password after setting a new one.
 </div>
 </div>
 <div class="sect2">
-<h3 id="Lock-command"><a class="anchor" href="#Lock-command"></a>7.4. Locking the app : <code>lock</code> <em>(since v1.5)</em></h3>
+<h3 id="lock-command"><a class="anchor" href="#lock-command"></a>7.4. Locking the app : <code>lock</code> <em>(since v1.5)</em></h3>
 <div class="paragraph">
 <p>If you are going away for a moment and want to prevent others from messing with the application, you can perform <code>lock</code>.<br>
 Format: <code>lock</code></p>
@@ -1697,7 +1697,7 @@ Performing any other valid commands, for example <code>list</code>, will be resp
 </div>
 </div>
 <div class="sect2">
-<h3 id="Unlock-command"><a class="anchor" href="#Unlock-command"></a>7.5. Unlocking the app : <code>unlock</code> <em>(since v1.5)</em></h3>
+<h3 id="unlock-command"><a class="anchor" href="#unlock-command"></a>7.5. Unlocking the app : <code>unlock</code> <em>(since v1.5)</em></h3>
 <div class="paragraph">
 <p>If you previously performed <code>lock</code>, use <code>unlock</code> to unlock the app.<br>
 Format: <code>unlock PASSWORD</code></p>
@@ -1887,7 +1887,7 @@ Format: <code>fontsize FONT_SIZE</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="autpcomplete-command"><a class="anchor" href="#autpcomplete-command"></a>8.6. Autocompleting commands : <code>Tab</code> <em>(coming in v2.0)</em></h3>
+<h3 id="autocomplete-command"><a class="anchor" href="#autocomplete-command"></a>8.6. Autocompleting commands : <code>Tab</code> <em>(coming in v2.0)</em></h3>
 <div class="paragraph">
 <p>Do you want to type faster? Fret not! Just press <kbd>Tab</kbd> and Bibliotek will automatically
 complete your commands for you.<br></p>
@@ -2077,7 +2077,7 @@ if there are other sites you wish are supported.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Search for books</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>search [SEARCH_TERM] [i/ISBN] [t/TITLE] [a/AUTHOR] [c/CATEGORY]</code></p>
-<p class="tableblock">e.g. <code>search t/Babylon&#8217;s Ashes c/Science Fiction</code></p></td>
+<p class="tableblock">e.g. <code>search t/Babylon&#8217;s Ashes c/Fiction</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Select a book</strong></p></td>
@@ -2129,7 +2129,7 @@ The 13-digit ISBN, which is used by Bibliotek to identify books, has been in use
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-04-15 15:53:00 UTC
+Last updated 2018-05-14 08:49:23 UTC
 </div>
 </div>
 </body>
